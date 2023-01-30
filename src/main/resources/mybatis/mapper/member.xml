@@ -27,4 +27,20 @@
 			mlogintype = #{loginType}
 	</select>
 	
+	<insert id="insertOne" parameterType="member">
+		insert into member 
+		(
+			mid, mpassword, mname, memail, mphone, 
+			mtel, mzipcode, maddress1, maddress2, mbirth,
+			mgender, mrefid, mlogintype, mtosno, menabled,
+			mrole, mgrade, mmileage
+		) 
+		values(
+			#{id}, #{password}, #{name}, #{email}, #{phone},
+			#{tel}, #{zipcode}, #{address1}, #{address2}, #{birth},
+			#{gender}, #{refId}, #{loginType}, #{tosNo}, #{enabled},
+			#{role}, #{grade}, #{mileage}
+		)
+	</insert>
+	
 </mapper> 

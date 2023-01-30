@@ -4,6 +4,6 @@
 <configuration>
     <typeAliases>
         <typeAlias type="com.wck.domain.SampleVO" alias="sample"/>
-        <typeAlias type="com.wck.security.domain.Account" alias="account"/>
+        <typeAlias type="com.wck.domain.MemberVO" alias="member"/>
     </typeAliases>  
 </configuration>

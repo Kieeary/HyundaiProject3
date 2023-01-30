@@ -1,6 +1,7 @@
 # application.properties 는 각자 환경에 맞춰 .template 확장자가 붙은 파일을 보고 작성
 application.properties
 
+.DS_Store
 
 # Compiled class file
 *.class

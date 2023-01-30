@@ -3,8 +3,28 @@
 
 <mapper namespace="com.wck.mapper.MemberMapper">
 
-	<select id="getAccountByUserId" resultType="account">
-		
+	<select id="findOneByEmail" resultType="member">
+		select 
+			mid id, 
+			mpassword password, 
+			mname name, 
+			memail email, 
+			mphone phone, 
+			mtel tel, 
+			mzipcode zipcode, 
+			maddress1 address1,
+			maddress2 address2,
+			mbirth birth,
+			mgender gender,
+			mrefid refId,
+			mlogintype loginType,
+			menabled enabled,
+			mrole role,
+			mgrade grade,
+			mmileage mileage
+		from member
+		where memail = #{email} and 
+			mlogintype = #{loginType}
 	</select>
 	
 </mapper> 

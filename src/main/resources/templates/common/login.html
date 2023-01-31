@@ -773,9 +773,75 @@
   </head>
 
   <body class="back">
+    <script>
+      (function () {
+        if (document.cookie.indexOf('thehyundai=true') > -1) {
+          var d = new Date();
+          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
+          document.cookie =
+            'sslvisit=true; expires=' + d.toUTCString() + '; path=/';
+        } else if (document.cookie.indexOf('rakuten=') > -1) {
+          var d = new Date();
+          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
+          document.cookie =
+            'sslvisit1=true; expires=' + d.toUTCString() + '; path=/';
+        } else if (document.cookie.indexOf('hyundaihmall=true') > -1) {
+          var d = new Date();
+          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
+          document.cookie =
+            'sslvisit2=true; expires=' + d.toUTCString() + '; path=/';
+        } else if (document.cookie.indexOf('fromSite') > -1) {
+          var d = new Date();
+          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
+          document.cookie =
+            'sslvisit3=' + '' + '; expires=' + d.toUTCString() + '; path=/';
+        } else if (document.cookie.indexOf('recommender') > -1) {
+          var d = new Date();
+          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
+          document.cookie = 'sslvisit4=' + '' + '; path=/';
+        }
+      })();
+    </script>
+    <!-- Loading -->
+    <div style="display: none">
+      <div id="loadingBarDiv" style="display: none"></div>
+    </div>
+    <!-- //Loading -->
+
+    <form id="CSRFForm" action="/ko/member/login" method="post">
+      <div>
+        <input
+          type="hidden"
+          name="CSRFToken"
+          value="13c48883-1706-4f5a-810b-2f670f464334" />
+      </div>
+    </form>
+    <div
+      id="mapleMainPopwrap"
+      style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 81.333333%;
+        z-index: 805;
+        transform: translate(-50%, -50%);
+        display: none;
+      "></div>
+
+    <div class="layerArea" id="mapleLayer" style="display: none">
+      <div class="layerBg"></div>
+    </div>
+
     <!-- ################## hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
     <div class="hsome_allContents_wrapper">
       <div class="hsome_allContents">
+        <script type="text/javascript">
+          function goMainpage() {
+            window.sessionStorage.removeItem('moveYn');
+            location.href = '/ko/main';
+          }
+        </script>
+
         <!-- ################## header ################## -->
         <header class="hsome_header">
           <h1 class="h_ttl ellipsis" id="headerTitle">로그인</h1>
@@ -807,8 +873,8 @@
           var tempData = '';
           $(document).ready(function () {
             $('#login_btn').click(function () {
-              var id = $('#loginForm_custom').find('#username').val();
-              var pw = $('#loginForm_custom').find('#password').val();
+              var id = $('#loginForm').find('#j_username').val();
+              var pw = $('#loginForm').find('#j_password').val();
 
               if (true) {
                 if (id == '') {
@@ -825,7 +891,21 @@
                 }
               }
 
-              $('#loginForm_custom').submit();
+              // 에러 메시지 영역을 초기화
+              displayHpErrMsg('');
+              //                displayOtpErrMsg("");
+
+              return false;
+            });
+
+            $('#_spring_security_remember_me').click(function () {
+              if ($('#_spring_security_remember_me').is(':checked')) {
+                $('#hp_spring_security_remember_me').val('1');
+                $('#bio_spring_security_remember_me').val('1');
+              } else {
+                $('#hp_spring_security_remember_me').val('');
+                $('#bio_spring_security_remember_me').val('');
+              }
             });
           });
 
@@ -845,15 +925,18 @@
         <!-- ID/PWD Login contents s -->
         <div class="hsome_contents mem_ct_wrap id_login" id="handsomeCust">
           <div class="mem_login_input_area">
-            <form id="loginForm_custom" action="/login" method="post">
+            <form
+              id="loginForm"
+              action="/ko/j_spring_security_check"
+              method="post">
               <!-- 로그인 정보 입력 -->
               <div class="input_group">
                 <input type="hidden" name="inputId" id="inputId" value="" />
                 <!-- 아이디 입력 -->
                 <div class="input_login_id">
                   <input
-                    id="username"
-                    name="username"
+                    id="j_username"
+                    name="j_username"
                     type="text"
                     class="login_id"
                     placeholder="아이디/이메일을 입력하세요."
@@ -863,8 +946,8 @@
                 <div class="input_login_pw">
                   <input
                     type="password"
-                    id="password"
-                    name="password"
+                    id="j_password"
+                    name="j_password"
                     placeholder="비밀번호를 입력하세요."
                     title="비밀번호를 입력하세요." />
                 </div>

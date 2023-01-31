@@ -51,12 +51,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.and()
 			// form login 방식
 			.formLogin()
-//			.loginPage("/login")
+			.loginPage("/login")
+			.permitAll()
 		.and()
 			.oauth2Login()
+			.loginPage("/login")
 		.and()
-			.csrf().disable()
-		.logout();
+			.csrf()
+			.disable()
+			
+		.logout()
+		.logoutSuccessUrl("/")
+		
+		;
 		
 	}
 	

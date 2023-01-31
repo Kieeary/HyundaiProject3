@@ -10,4 +10,9 @@ public class CommonController {
 	public String loginForm() {
 		return "common/login";
 	}
+	
+	@GetMapping("/join")
+	public String joinForm() {
+		return "common/join";
+	}
 }

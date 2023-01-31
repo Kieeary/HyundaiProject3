@@ -17,4 +17,9 @@ public class WckController {
 	public String joinForm() {
 		return "wck/join";
 	}
+	
+	@GetMapping("/sampleProductDetail")
+	public String samplePD() {
+		return "wck/sample/prod_detail";
+	}
 }

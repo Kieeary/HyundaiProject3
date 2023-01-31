@@ -5,16 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/wck/")
+@RequestMapping("/wck")
 public class WckController {
 
 	@GetMapping("/login")
 	public String loginForm() {
-		return "common/login";
+		return "wck/login";
 	}
 	
 	@GetMapping("/join")
 	public String joinForm() {
-		return "common/join";
+		return "wck/join";
 	}
 }

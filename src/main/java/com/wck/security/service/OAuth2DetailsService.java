@@ -25,7 +25,7 @@ import lombok.extern.log4j.Log4j2;
 
 @Service
 @Log4j2
-public class Oauth2DetailsService extends DefaultOAuth2UserService{
+public class OAuth2DetailsService extends DefaultOAuth2UserService{
 	
 	@Autowired
 	private MemberMapper memberMapper;

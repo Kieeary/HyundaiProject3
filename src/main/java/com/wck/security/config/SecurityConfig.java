@@ -46,14 +46,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 			// url 경로 접근 권한 체크
 			.authorizeHttpRequests()
+			.antMatchers("/user").hasRole("USER")
 			.anyRequest().permitAll()
 		.and()
 			// form login 방식
 			.formLogin()
-//			.loginPage("/login")
+			.loginPage("/login")
+			.permitAll()
 		.and()
-			.csrf().disable()
-		.logout();
+			.oauth2Login()
+			.loginPage("/login")
+		.and()
+			.csrf()
+			.disable()
+			
+		.logout()
+		.logoutSuccessUrl("/")
+		
+		;
 		
 	}
 	

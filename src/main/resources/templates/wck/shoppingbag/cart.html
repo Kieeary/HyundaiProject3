@@ -1,0 +1,164 @@
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="wck/includes/headTag :: head_tag(title='쇼핑백 | 더한섬닷컴')"></th:block>
+
+<body class="back">
+  <style>
+    .swiper-wrapper {
+      height: auto;
+    }
+  </style>
+
+  <div id="mapleMainPopwrap" style="
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 81.333333%;
+  z-index: 805;
+  transform: translate(-50%, -50%);
+  display: none;">
+  </div>
+
+  <div class="layerArea" id="mapleLayer" style="display: none">
+    <div class="layerBg"></div>
+  </div>
+
+  <!-- ########## hsome_allContents_wrapper ########## -->
+  <div class="hsome_allContents_wrapper">
+    <div class="hsome_allContents fixed_btn_on">
+
+      <!-- ########## header start ########## -->
+      <header class="hsome_header">
+        <h1 class="h_ttl ellipsis" id="headerTitle">쇼핑백</h1>
+        <a href="#" class="h_top_home"><span>홈</span></a>
+        <a href="#" onclick="goBack();" class="h_prev">이전 페이지로 가기</a>
+        <ul class="h_gnbMenu">
+          <li class="search">
+            <a href="#" onclick=""><span>search</span></a>
+          </li>
+          <li class="cart">
+            <a href="/wck/shoppingbag/"><span>cart</span><i>$$</i></a>
+          </li>
+        </ul>
+      </header>
+      <!-- ########## header end ########## -->
+
+      <!-- ########## contents start ########## -->
+      <div id="contents" class="hsome_contents shoppingbag_list_wrap">
+        <ul class="tab_head_num3 gray_tab shoppingbag_tab rm">
+          <li class="tab_li_delivery on" />
+          <li class="tab_li_store" />
+          <li class="tab_li_quick" />
+        </ul>
+
+        <div class="shopingbag_tab_desc_box">
+        </div>
+
+        <!-- ########## cart block ########## -->
+        <div id="shoppingbagCartView">
+          <script type="text/javascript">
+            
+            $('.goods_list_wrap').on(
+              'click',
+              '.gl_top_btns a',
+              function () {
+                //상품 리스트 상단 버튼
+                if ($(this).hasClass('btn_gl_restock') == false) {
+                  $(this).toggleClass('icon_btn_on');
+                }
+              }
+            );
+
+            <!-- 2019.11.12 쇼핑백 최초 진입 시 선택 상품 없도록 수정 - 하단 합계 금액 계산 -->
+            $('.gl_check_all').click(function () {
+              var cartDivision = $('#ordersheetCartDivision').val();
+              var onlyFourPm = $('#onlyFourPm').is(':checked');
+
+              if ($(this).is(':checked') == true) {
+                var entryPkList = ',';
+                $("input[name='cartlist']").each(function () {
+                  if (
+                    $(this)
+                      .parents('#entryProductInfo')
+                      .data('outofstock') != true
+                  ) {
+                    var deliveryKind = $(this).data('deliverykind');
+                    if (onlyFourPm) {
+                      if (deliveryKind == 'FOUR_PM') {
+                        entryPkList += $(this).data('pk');
+                        entryPkList += ',';
+                      }
+                    } else {
+                      entryPkList += $(this).data('pk');
+                      entryPkList += ',';
+                    }
+                  }
+                });
+                cartListCheckPrice(entryPkList, true);
+              } else {
+                cartListCheckPrice(',', true);
+              }
+            });
+          </script>
+
+          <!-- ########## Goods list start ########## -->
+          <h3 class="section_tit mb0 gl_tit gl_4pm">
+            <div class="check_stl gl_check_all_wrap">
+              <!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
+              <input type="checkbox" id="gl_check_all" class="gl_check_all" value="" />
+              <label for="gl_check_all">담은 상품<span>($$개)</span></label>
+            </div>
+          </h3>
+
+          <ul class="goods_list_wrap">
+            <!-- 활성화 : gl_item에 품절상품 : gl_status_soldout, 4PM상품 : gl_status_4pm 클래스 추가/삭제 -->
+            <!-- ########## forEach 로 상품 정보 나열 <li></li> ########## -->
+            <li>
+              <div
+                class="gl_item"
+                id="entryProductInfo"
+                data-pk="11136041156652"
+                data-outofstock="false">
+
+                <!-- ########## Goods sub CheckBox ########## -->
+                <div class="check_stl">
+                  <input
+                      type="checkbox"
+                      id="gl_check_2"
+                      name="cartlist"
+                      data-pk="11136041156652"
+                      data-division=""
+                      data-deliverykind=""
+                      value="2"
+                      data-soldout="N"
+                      onclick="checkTotalPrice(this);" />
+                      <label for="gl_check_2"></label>
+                </div>
+
+
+                </div>
+            </li>
+
+          </ul>
+
+
+
+          <!-- ########## Goods list end ########## -->
+
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>

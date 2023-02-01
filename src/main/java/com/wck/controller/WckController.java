@@ -22,4 +22,5 @@ public class WckController {
 	public String samplePD() {
 		return "wck/sample/prod_detail";
 	}
+	
 }

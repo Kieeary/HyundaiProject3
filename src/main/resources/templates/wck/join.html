@@ -1,6 +1,6 @@
 <!--https://www.thehandsome.com/ko/member/joininfoform -->
 
-<html lang="ko" class="">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -806,21 +806,6 @@
         }
       }
     </script>
-    <script>
-      var ko_time = '20230131111126'; // 현재시간
-
-      // 스타일라이브 (20210901 이전 접근불가)
-      if (
-        Number(ko_time) < 20210901000000 &&
-        'https://www.thehandsome.com/WEB-INF/views/handsomemobile/pages/member/joinInfoFormPage.jsp'.indexOf(
-          '/sns/'
-        ) > -1
-      ) {
-        location.replace(
-          'http://www.thehandsome.com/ko/magazine/newsDetailtemplatetype4?newsCode=8802187958044'
-        );
-      }
-    </script>
     <script
       type="text/javascript"
       async=""
@@ -845,60 +830,6 @@
   </head>
 
   <body>
-    <script>
-      (function () {
-        if (document.cookie.indexOf('thehyundai=true') > -1) {
-          var d = new Date();
-          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
-          document.cookie =
-            'sslvisit=true; expires=' + d.toUTCString() + '; path=/';
-        } else if (document.cookie.indexOf('rakuten=') > -1) {
-          var d = new Date();
-          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
-          document.cookie =
-            'sslvisit1=true; expires=' + d.toUTCString() + '; path=/';
-        } else if (document.cookie.indexOf('hyundaihmall=true') > -1) {
-          var d = new Date();
-          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
-          document.cookie =
-            'sslvisit2=true; expires=' + d.toUTCString() + '; path=/';
-        } else if (document.cookie.indexOf('fromSite') > -1) {
-          var d = new Date();
-          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
-          document.cookie =
-            'sslvisit3=' + '' + '; expires=' + d.toUTCString() + '; path=/';
-        } else if (document.cookie.indexOf('recommender') > -1) {
-          var d = new Date();
-          d.setTime(d.getTime() + 365 * 24 * 60 * 60 * 1000);
-          document.cookie = 'sslvisit4=' + '' + '; path=/';
-        }
-      })();
-    </script>
-    <!-- Loading -->
-    <div style="display: none">
-      <div id="loadingBarDiv" style="display: none"></div>
-    </div>
-    <!-- //Loading -->
-
-    <form id="CSRFForm" action="/ko/member/joininfoform" method="post">
-      <div>
-        <input
-          type="hidden"
-          name="CSRFToken"
-          value="86d2e550-6b55-475b-aa4c-9d8f6bd3bf32" />
-      </div>
-    </form>
-    <div
-      id="mapleMainPopwrap"
-      style="
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        width: 81.333333%;
-        z-index: 805;
-        transform: translate(-50%, -50%);
-        display: none;
-      "></div>
 
     <div class="layerArea" id="mapleLayer" style="display: none">
       <div class="layerBg"></div>
@@ -943,6 +874,82 @@
         <script type="text/javascript">
           //<![CDATA[
           $(document).ready(function () {
+            var btnConfirmText = '확인';
+            var btnCancleText = '취소';
+            var btnCloseText = '닫기';
+            var layerConfirm = function (msg, confirmMsg, cancleMsg) {
+              var t = this;
+
+              var t = this;
+              this.confirmAction = function () {
+                //console.log('함수를 재정의 해주세요!');
+              };
+              this.cancleAction = function () {
+                //console.log('함수를 재정의 해주세요!');
+              };
+
+              if (confirmMsg != '') {
+                btnConfirmText = confirmMsg;
+              } else {
+                btnConfirmText = '확인';
+              }
+              if (cancleMsg != '') {
+                btnCancleText = cancleMsg;
+              } else {
+                btnCancleText = '취소';
+              }
+
+              var confirmTag = '';
+              confirmTag += '<div class="dvp_container">';
+              confirmTag +=
+                '	<div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>' +
+                btnCloseText +
+                '</span></div>';
+              confirmTag += '	<div class="dvp_content">';
+              confirmTag += '		<div class="desc_box">' + msg + '</div>';
+              confirmTag += '	</div>';
+              confirmTag += '	<div class="btn_wrap btns">';
+              confirmTag +=
+                '		<button class="btn btn_bd_g btn-alert-close">' +
+                btnCancleText +
+                '</button>';
+              confirmTag +=
+                '		<button class="btn btn_bg_b btn-alert-confirm">' +
+                btnConfirmText +
+                '</button>';
+              confirmTag += '	</div>';
+              confirmTag += '</div>';
+
+              $('#popAlertConfirmDiv').html(confirmTag);
+
+              $('.divpop_wrap_dev.pop_alert_confirm').bPopup({
+                follow: [false, false],
+                escClose: false,
+                modalClose: false,
+                opacity: 0.3,
+                positionStyle: 'fixed',
+                onClose: function () {
+                  holdBodyHide();
+                  $('#popAlertConfirmDiv').html('');
+                },
+              });
+              holdBodyShow();
+
+              $('#popAlertConfirmDiv')
+                .find('.btn-alert-close')
+                .click(function () {
+                  $('#confirmCloseDiv').click();
+                  t.cancleAction();
+                });
+
+              $('#popAlertConfirmDiv')
+                .find('.btn-alert-confirm')
+                .click(function () {
+                  $('#confirmCloseDiv').click();
+                  t.confirmAction();
+                });
+            };
+
             var nowYear = parseInt('2009');
             var nowMonth = parseInt('01');
             var nowDay = parseInt('31');
@@ -1129,8 +1136,6 @@
               }
             });
 
-            //    emailTypeDomainSelectController("#emailDomain","#emailDomainSel");
-
             $('#pw').keypress(function (event) {
               if (capsLock(event)) {
                 $('#pwMsg').text('<Caps Lock>이 켜져 있습니다.');
@@ -1171,65 +1176,17 @@
                 $('#pwcMsg').text('비밀번호가 일치하지 않습니다');
                 $('#pwConfirmChk').val('');
                 return true;
+              }else{
+            	  $('#pwConfirmChk').val('Y');
+                  $('#pwcMsg').text('비밀번호가 확인되었습니다.');
               }
-              $('#pwConfirmChk').val('Y');
-              $('#pwcMsg').text('비밀번호가 확인되었습니다.');
+              
             });
 
-            $('#chk_email').click(function () {
-              if ($(this).is(':checked')) {
-                var email = 'asdvg154@naver.com';
-                $('#emailAddress').val(email);
-                chkEmail();
-              }
+            $('#emailAddress').change(function () {
+              $('#emailDuplChk').val('F');
+              $('#check_dup_btn').attr('disabled',false);
             });
-
-            // 20201120 이메일 필수입력 항목 X
-            $('#emailAddress').keyup(function () {
-              var chkVal = $('#emailAddress').val();
-              if (chkVal != '') {
-                var email1 = 'asdvg154@naver.com';
-                var email2 = $('#emailAddress').val();
-
-                if (email1 != email2) {
-                  $('#chk_email').prop('checked', false);
-                  $('#chk_email').attr('checked', false);
-                }
-                chkEmail();
-              }
-            });
-
-            chkEmail = function () {
-              var vc = new ValidationCheck();
-              vc.checkIdList = ['emailAddress'];
-              vc.msgFn = function (msg) {
-                $('#emailMsg').text(msg);
-              };
-              if (vc.isValid()) {
-                $.ajax({
-                  type: 'GET',
-                  url:
-                    '/ko/member/isduplemail?email=' + $('#emailAddress').val(),
-                  success: function (response) {
-                    if (response == true) {
-                      $('#emailMsg').text('이미 사용중인 이메일입니다.');
-                      $('#emailDuplChk').val('N');
-                    } else {
-                      if (validateEmail($('#emailAddress').val())) {
-                        $('#emailMsg').text('사용 가능한 이메일입니다.');
-                        $('#emailDuplChk').val('Y');
-                      } else {
-                        $('#emailMsg').text('잘못된 E-mail 형식입니다.');
-                        $('#emailDuplChk').val('N');
-                      }
-                    }
-                  },
-                  error: function (e) {
-                    console.log(e);
-                  },
-                });
-              }
-            };
 
             $('#cancleBtn').click(function () {
               var lc = new layerConfirm(
@@ -1238,14 +1195,51 @@
                 '취소'
               );
               lc.confirmAction = function () {
-                location.href = '/ko/';
+                location.href = '/wck';
               };
             });
+
+            $('#check_dup_btn').click(function (e) {
+            	
+              var email = $('#emailAddress').val();
+              e.preventDefault();
+              // TODO : 중복 확인 컨트롤러 호출
+              $.ajax({
+				  url: "/api/member/isExist", // 클라이언트가 HTTP 요청을 보낼 서버의 URL 주소
+				  data: { email: email },  // HTTP 요청과 함께 서버로 보낼 데이터
+				  method: "GET",   // HTTP 요청 메소드(GET, POST 등)
+				  dataType: "json" // 서버에서 보내줄 데이터의 타입
+				})
+				.success(function(data){
+					console.log(data);
+					if(data == false){
+						$("#check_dup_btn").attr('disabled',true);
+						$('#emailDuplChk').val('Y');
+			            $('#emailMsg').text('');
+					}else{
+						$('#emailMsg').text('이미 사용 중인 이메일입니다.');
+					}
+				})
+            });
+            
 
             $('#joinBtn').click(function () {
               var pwTypeChk = $('#pwTypeChk').val();
               var pwConfirmChk = $('#pwConfirmChk').val();
               var emailDuplChk = $('#emailDuplChk').val();
+
+              var email = $('#emailAddress').val();
+              if (email == '') {
+                $('#emailMsg').text('잘못된 E-mail 형식입니다.');
+                $('#emailAddress').focus();
+                return;
+              }
+
+              if (emailDuplChk !== 'Y') {
+                $('#emailMsg').text('E-mail 중복확인이 되지 않았습니다.');
+                $('#emailAddress').focus();
+                return;
+              }
 
               if ($.trim($('#pw').val()) == '') {
                 $('#pwMsg').text('비밀번호를 입력하세요.');
@@ -1277,27 +1271,6 @@
 
               $('#pwcMsg').text('');
 
-              if ($('#emailAddress').val() != '') {
-                if (emailDuplChk !== 'Y') {
-                  $('#emailMsg').text('E-mail 중복확인이 되지 않았습니다.');
-                  $('#emailAddress').focus();
-                  return;
-                }
-
-                var email = $('#emailAddress').val();
-                if (!validateEmail(email)) {
-                  $('#emailMsg').text('잘못된 E-mail 형식입니다.');
-                  $('#emailAddress').focus();
-                  return;
-                }
-              } else {
-                if ($('#chk_agree').is(':checked')) {
-                  $('#emailMsg').text('이메일(정보수신용) 을 입력해 주세요.');
-                  $('#emailAddress').focus();
-                  return;
-                }
-              }
-
               $('#emailMsg').text('');
 
               if ($.trim($('#name').val()) == '') {
@@ -1322,22 +1295,14 @@
               $('#cancleBtn').attr('disabled', true);
               $('#joinBtn').attr('disabled', true);
 
-              $('#collectionAgreementYN').val('N');
-
               $('#sBirthday').val(
                 $('#selYear').val() + $('#selMonth').val() + $('#selDay').val()
               );
-              $('#memberJoinForm').attr('action', '/ko/member/joincomplete');
-
-              showLoadingLp(); //로딩레이어 호출
+              $('#memberJoinForm').attr('action', '/wck/join');
 
               $('#memberJoinForm').submit();
             });
           });
-
-          function validateEmail(email) {
-            return true;
-          }
 
           //]]>
         </script>
@@ -1357,6 +1322,9 @@
             padding: 11px 10px 9px 14px;
             vertical-align: top;
           }
+          #check_dup_btn:disabled{
+          	background-color: #cccccc;
+          }
         </style>
 
         <!-- contents s -->
@@ -1367,7 +1335,8 @@
           <div class="mem_ct_wrap">
             <form
               id="memberJoinForm"
-              action="/ko/member/joininfoform"
+              th:object="${insertMember}"
+              action="/wck/join"
               method="POST">
               <input
                 type="hidden"
@@ -1387,19 +1356,6 @@
                 id="pwConfirmChk"
                 value=""
                 title="비밀번호 일치" />
-              <input
-                type="hidden"
-                id="uid"
-                name="uid"
-                value="asdvg154@naver.com" />
-              <!-- <input type="hidden" id="emailAddress" name="emailAddress" value="" /> -->
-              <input type="hidden" id="sBirthday" name="sBirthday" value="" />
-              <input type="hidden" id="gender" name="gender" value="" />
-              <input
-                type="hidden"
-                id="collectionAgreementYN"
-                name="collectionAgreementYN"
-                value="" />
               <div class="req_txt" style="padding-top: 0px">
                 <i class="txt_point">*</i>표시는 필수항목입니다.
               </div>
@@ -1409,6 +1365,7 @@
                   <input
                     type="text"
                     id="emailAddress"
+                    th:field="*{email}"
                     name="emailAddress"
                     class="user_email"
                     placeholder="이메일을 입력하세요."
@@ -1424,12 +1381,14 @@
                 </div>
                 <div class="err_wrap">
                   <p class="err_txt" id="emailMsg"></p>
+                  <p class="err_txt" th:errors="*{email}"></p>
                 </div>
                 <div class="input_group">
                   <h5 class="w_helper">비밀번호</h5>
                   <div class="input_user_pw">
                     <input
                       type="password"
+                      th:field="*{password}"
                       id="pw"
                       name="passwd"
                       class="user_pw"
@@ -1439,9 +1398,8 @@
                   </div>
                   <!-- [TO DEV] Error msg here. -->
                   <div class="err_wrap">
-                    <p class="err_txt" id="pwMsg">
-                      <!-- 비밀번호는 8~15자리 이하로 영문/숫자/특수문자를 혼합하세요. -->
-                    </p>
+                    <p class="err_txt" id="pwMsg"></p>
+                    <p class="err_txt" th:errors="*{password}"></p>
                   </div>
                   <div class="input_user_pw">
                     <input
@@ -1463,6 +1421,7 @@
                   <div class="input_user_name">
                     <input
                       type="text"
+                      th:field="*{name}"
                       id="name"
                       name="name"
                       class="user_name"
@@ -1473,11 +1432,14 @@
                   <!-- [TO DEV] Error msg here. -->
                   <div class="err_wrap">
                     <p class="err_txt" id="nameMsg"></p>
+                    <p class="err_txt" th:errors="*{name}"></p>
+                    
                   </div>
                   <h5 class="pd_title">휴대폰<i class="txt_point">*</i></h5>
                   <div class="input_user_phone" style="display: flex">
                     <select
                       id="easy_hp"
+                      th:name="phoneFront"
                       name="hp0_num1"
                       title="휴대폰 번호 앞자리"
                       class="hp_num1">
@@ -1491,6 +1453,7 @@
                     <div class="form_hyphen">-</div>
                     <input
                       title="휴대폰 번호 중간자리"
+                      th:field="*{phoneMiddle}"
                       class="hp_num2"
                       type="text"
                       name="hp0_num3"
@@ -1501,6 +1464,7 @@
 
                     <input
                       title="휴대폰 번호 뒷자리"
+                      th:field="*{phoneBack}"
                       class="hp_num2"
                       type="text"
                       name="hp0_num3"
@@ -1513,7 +1477,7 @@
                   <div class="input_user_bday">
                     <div class="bday_year">
                       <div class="select_box">
-                        <select id="selYear">
+                        <select id="selYear" th:field="*{birthYear}">
                           <option value="">년</option>
                           <option value="2009">2009</option>
                           <option value="2008">2008</option>
@@ -1630,7 +1594,7 @@
                     </div>
                     <div class="bday_month">
                       <div class="select_box">
-                        <select id="selMonth">
+                        <select id="selMonth" th:field="*{birthMonth}">
                           <option value="">월</option>
                           <option value="01">01</option>
                           <option value="02">02</option>
@@ -1649,7 +1613,7 @@
                     </div>
                     <div class="bday_day">
                       <div class="select_box">
-                        <select id="selDay">
+                        <select id="selDay" th:field="*{birthDay}">
                           <option value="">일</option>
                           <option value="01">01</option>
                           <option value="02">02</option>
@@ -1689,6 +1653,9 @@
                   <!-- [TO DEV] Error msg here. -->
                   <div class="err_wrap">
                     <p class="err_txt" id="bdayMsg">
+                    <p class="err_txt" th:errors="*{birthYear}"></p>
+                    <p class="err_txt" th:errors="*{birthMonth}"></p>
+                    <p class="err_txt" th:errors="*{birthDay}"></p>
                       <!-- 생년월일을 입력하세요. -->
                     </p>
                   </div>
@@ -1696,9 +1663,11 @@
                   <h5 class="pd_title">성별<i class="txt_point">*</i></h5>
                   <div>
                     <input
+                    th:field="*{gender}"
                       type="radio"
                       name="gender"
                       value="1"
+                      th:value="1"
                       checked
                       style="
                         opacity: initial;
@@ -1707,8 +1676,10 @@
                       " />
                     남자
                     <input
+                    th:field="*{gender}"
                       type="radio"
                       name="gender"
+                      th:value="2"
                       value="2"
                       style="
                         opacity: initial;
@@ -1732,6 +1703,9 @@
             <!-- 20180625 버튼 클래스명 수정 e -->
           </div>
         </div>
+        <div
+          class="divpop_wrap_dev pop_mbr pop_alert_confirm"
+          id="popAlertConfirmDiv"></div>
 
         <!-- //################## contents ################## -->
       </div>

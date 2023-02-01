@@ -1,10 +1,9 @@
 package com.wck.mapper;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.UUID;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,14 +21,14 @@ public class MemberMapperTest {
 	private MemberMapper memberMapper;
 	
 	@Test
-	void getMemberByEmail() throws SQLException {
+	void getMemberByEmail()  {
 		MemberVO member =  memberMapper.findOneByEmail("user1@gmail.com", "Email");
-		Assertions.assertThat(member.getEmail()).isEqualTo("user1@gmail.com");
+		Assertions.assertEquals(member.getEmail(),"user1@gmail.com" );
 	}
 	
 	@Test
 	@Transactional
-	void insertOne() throws SQLException{
+	void insertOne(){
 		MemberVO member = new MemberVO();
 		String email = "test@gmail.com";
 		String id = UUID.randomUUID().toString().substring(10);
@@ -58,10 +57,10 @@ public class MemberMapperTest {
 		member.setMileage(mileage);
 		
 		int row = memberMapper.insertOne(member);
-		Assertions.assertThat(row).isEqualTo(1);
+		Assertions.assertEquals(row,1);
 		
 		MemberVO findMember = memberMapper.findOneByEmail(email, "Google");
-		Assertions.assertThat(findMember.getEmail()).isEqualTo("test@gmail.com");
+		Assertions.assertEquals(findMember.getEmail(),"test@gmail.com");
 		
 	}
 

@@ -9,6 +9,6 @@ import com.wck.domain.MemberVO;
 @Mapper
 public interface MemberMapper {
 
-	public MemberVO findOneByEmail(String email, String loginType) throws SQLException;
-	public int insertOne(MemberVO member) throws SQLException;
+	public MemberVO findOneByEmail(String email, String loginType);
+	public int insertOne(MemberVO member);
 }

@@ -1,4 +1,4 @@
-<html lang="ko" class="back">
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -773,8 +773,11 @@
   </head>
 
   <body class="back">
-    <!-- ################## hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
-    <div class="hsome_allContents_wrapper">
+  <style>
+  	.mem_login_input_area {
+	    margin-top: 50px;
+	}
+  </style>
       <div class="hsome_allContents">
         <!-- ################## header ################## -->
         <header class="hsome_header">
@@ -827,17 +830,16 @@
 
               $('#loginForm_custom').submit();
             });
+            
+            $('.btn_signup').click(function(e){
+            	e.preventDefault();
+            	location.href="/wck/join";
+            	console.log('ttt')
+              });
           });
 
-          var bioType = '';
-          var loginMethod = '';
 
-          //바이오인증 등록 페이지 이동전 로그인화면 제어를 위한  COOKIE설정값 조회
-          var registerBioLoginYn = getCookieAndDelete('registerBioLogin');
-
-          function hpSsoSuccess() {
-            $('#hpointLoginForm').submit();
-          }
+         
 
           //]]>
         </script>
@@ -845,7 +847,7 @@
         <!-- ID/PWD Login contents s -->
         <div class="hsome_contents mem_ct_wrap id_login" id="handsomeCust">
           <div class="mem_login_input_area">
-            <form id="loginForm_custom" action="/login" method="post">
+            <form id="loginForm_custom" action="/wck/login" method="post">
               <!-- 로그인 정보 입력 -->
               <div class="input_group">
                 <input type="hidden" name="inputId" id="inputId" value="" />
@@ -941,8 +943,7 @@
             </div>
             <div class="btn_wrap btn_wrap_div1">
               <button
-                class="btnstl3 border_btn_gray btn_signup"
-                onclick="goMemberRegistration();">
+                class="btnstl3 border_btn_gray btn_signup">
                 회원가입
               </button>
             </div>

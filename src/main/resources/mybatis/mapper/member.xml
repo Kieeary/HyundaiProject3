@@ -24,7 +24,8 @@
 			mmileage mileage
 		from member
 		where memail = #{email} and 
-			mlogintype = #{loginType}
+			mlogintype = #{loginType} and
+			menabled = 1
 	</select>
 	
 	<insert id="insertOne" parameterType="member">

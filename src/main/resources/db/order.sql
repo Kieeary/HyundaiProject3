@@ -1,13 +1,6 @@
--- 생성자 Oracle SQL Developer Data Modeler 22.2.0.165.1149
---   위치:        2023-01-31 10:09:01 KST
---   사이트:      Oracle Database 11g
---   유형:      Oracle Database 11g
-
-
-
--- predefined type, no DDL - MDSYS.SDO_GEOMETRY
-
--- predefined type, no DDL - XMLTYPE
+drop table order_item cascade constraint purge;
+drop table orders cascade constraint purge;
+drop table payment_method cascade constraint purge;
 
 CREATE TABLE order_item (
     psid         VARCHAR2(25 BYTE) NOT NULL,

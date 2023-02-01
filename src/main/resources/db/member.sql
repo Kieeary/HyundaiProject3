@@ -1,3 +1,13 @@
+drop table cart cascade constraint purge;
+drop table coupon_detail cascade constraint purge;
+drop table event cascade constraint purge;
+drop table home_img cascade constraint purge;
+drop table home_order cascade constraint purge;
+drop table likes cascade constraint purge;
+drop table member cascade constraint purge;
+drop table today cascade constraint purge;
+
+
 CREATE TABLE cart (
     mid       VARCHAR2(30 BYTE) NOT NULL,
     psid      VARCHAR2(25 BYTE) NOT NULL,

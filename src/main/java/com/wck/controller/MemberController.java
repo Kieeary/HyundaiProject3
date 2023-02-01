@@ -8,14 +8,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/member")
 public class MemberController {
 
+	// TODO : 3개 컨트롤러 구현
 	
 	@GetMapping("/findIdPw")
 	public String findIdPw() {
 		return "member/find_id_pw";
 	}
 	
-	@GetMapping("/findIdResult")
-	public String findIdResult() {
-		return "member/find_id_result";
+	@GetMapping("/findIdComplete")
+	public String findIdComplete() {
+		return "member/find_id_comp";
+	}
+	
+	
+	// TODO : 메일링 할 껀지 />>
+	@GetMapping("/findPwComplete")
+	public String findPwComplete() {
+		return "member/find_pw_comp";
 	}
 }

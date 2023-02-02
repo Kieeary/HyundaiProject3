@@ -133,7 +133,21 @@ mrole, mgrade, mmileage
 ) 
 values(
 '123123', '{noop}1111', '왕종휘', 'user1@gmail.com', '01023398197',
-'0222222222', '07285', '서울특별시 영등포구 선유로9나길 8 (문래동5가, 문래두산위브)', '103동708호', sysdate,
+'0222222222', '07285', '서울특별시 영등포구 선유로9나길 8 (문래동5가, 문래두산위브)', '103동708호', '1997-07-27',
+1, '1', 'Email', 1, 1,
+'ROLE_USER', 1, 1000
+);
+
+insert into member 
+(
+mid, mpassword, mname, memail, mphone, 
+mtel, mzipcode, maddress1, maddress2, mbirth,
+mgender, mrefid, mlogintype, mtosno, menabled,
+mrole, mgrade, mmileage
+) 
+values(
+'123333', '{noop}1111', '왕종휘', 'wangjh789@gmail.com', '01023398194',
+'0222222222', '07285', '서울특별시 영등포구 선유로9나길 8 (문래동5가, 문래두산위브)', '103동708호', '1997-07-27',
 1, '1', 'Email', 1, 1,
 'ROLE_USER', 1, 1000
 );

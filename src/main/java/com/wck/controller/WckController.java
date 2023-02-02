@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wck.domain.InsertMemberDTO;
-import com.wck.mapper.MemberMapper;
 import com.wck.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +21,7 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RequiredArgsConstructor
 public class WckController {
+	
 	
 	private final MemberService memberService;
 	

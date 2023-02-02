@@ -1,4 +1,4 @@
-<html lang="ko" class="">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -23,20 +23,6 @@
     <link
       rel="shortcut icon"
       href="http://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico" />
-    <link
-      rel="apple-touch-icon"
-      href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-    <link
-      rel="apple-touch-icon-precomposed"
-      href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-    <link
-      rel="apple-touch-icon-120x120"
-      href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-    <link
-      rel="apple-touch-icon-120x120-precomposed"
-      href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-
-    <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> -->
 
     <link rel="shortcut icon" type="image/x-icon" media="all" href="//" />
 
@@ -223,24 +209,28 @@
 
                 <!-- Start: easyId finding result -->
                 <div class="txt_wrap result id">
-                  <p>다음 정보로 가입된 아이디가 총 2개 있습니다.</p>
+                  <p th:text="'다음 정보로 가입된 아이디가 총 '+ ${#lists.size(members)} +' 개 있습니다.'">다음 정보로 가입된 아이디가 총 0개 있습니다.</p>
                 </div>
+                <!--TODO : 가져온 member 출력 ,만약 없다면? -->
                 <div class="txt_wrap">
                   <div class="dot_list_wrap">
-                    <ul class="dot_list">
+                  	<p th:if="${#lists.isEmpty(members)}">조회된 ID가 없습니다.</p>
+                     <ul class="dot_list" th:if="${!#lists.isEmpty(members)}">
                       <li>
                         <span>구매자 성명</span
-                        ><span class="simple_name">왕종휘</span>
+                        ><span class="simple_name" th:text="${members[0].name}">이름</span>
                       </li>
                       <li>
                         <span>생년월일</span
-                        ><span class="simple_bday">1997-07-27</span>
+                        ><span class="simple_bday" th:text="${members[0].birth}">생년월일</span>
                       </li>
                       <li>
-                        <span>아이디</span
-                        ><span class="simple_id"
-                          >wan******@gmail.com<br />asd*****@naver.com</span
-                        >
+                        <span>아이디</span>
+                        <span class="simple_id">
+                        <div th:each="member : ${members}">
+                        	<div th:text="${member.email}">email</div>
+                        </div>
+                        </span>
                       </li>
                     </ul>
                   </div>

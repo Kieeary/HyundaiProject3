@@ -1,8 +1,8 @@
 package com.wck.security.service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -76,7 +76,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 		String id = UUID.randomUUID().toString().substring(10);
 		String name = "user" + id;
 		String phone = "01000000000";
-		Date birth = new Date();
+		Date birth = new Date(new java.util.Date().getTime());
 		int gender = 1;
 		String loginType = "Google";
 		int tosNo = 1;

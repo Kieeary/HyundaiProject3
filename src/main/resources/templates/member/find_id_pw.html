@@ -1,4 +1,4 @@
-<html lang="ko" class="">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -19,45 +19,6 @@
     <!-- //Mobile Smart Banner for IOS Device -->
     <meta property="og:title" content="아이디/비밀번호찾기 | 더한섬닷컴" />
     <meta property="og:type" content="website" />
-    <script></script>
-    <script type="text/javascript">
-      var appYn = 'N';
-      var appOs = ''; //ios, android
-
-      var uid = '';
-      var pageUid = 'hsFindIdPwPage';
-      var chkScreenPage = [];
-
-      if (appYn == 'Y') {
-        //appì¼ëë§ ì²´í¬
-        if (
-          uid == 'snsMain' ||
-          uid == 'snsDetail' ||
-          uid == 'snsMyProfile' ||
-          uid == 'snsCollectionDetail' ||
-          uid == 'snsSearchList' ||
-          chkScreenPage.indexOf(pageUid) > -1
-        ) {
-          //íì©íì´ì§
-          if (appOs == 'ios') {
-            //ios
-            webkit.messageHandlers.screenShotEnable.postMessage('false');
-          } else {
-            //android
-            Android.screenShotEnable('false');
-          }
-        } else {
-          //ì¬ì©ìí¨
-          if (appOs == 'ios') {
-            //ios
-            webkit.messageHandlers.screenShotEnable.postMessage('true');
-          } else {
-            //android
-            Android.screenShotEnable('true');
-          }
-        }
-      }
-    </script>
 
     <title>아이디/비밀번호찾기 | 더한섬닷컴</title>
     <link
@@ -200,21 +161,68 @@
   </head>
 
   <body>
+  	<script th:inline="javascript">
+    	let init_tab = "[[${tab}]]"
+    </script>
     <script>
       $(document).ready(function () {
-        console.log('ttt');
-        var tabs = $('.ui_tab > li');
-        var conts = $('.cont');
+        let tabs = $('.ui_tab > li');
+        let conts = $('.cont');
+        
+        console.log('inittab',init_tab);
+        
+        // init tab 
+        tabs.removeClass('on');
+        $(tabs.get(init_tab-1)).addClass('on');
+        conts.css('display', 'none');
+        $('#tab_0' + (init_tab)).css('display', 'block');
+        
+        // tab click
         tabs.each(function (idx, el) {
           $(el).click(function (e) {
             tabs.removeClass('on');
             $(this).addClass('on');
-
-            console.log(idx);
             conts.css('display', 'none');
             $('#tab_0' + (idx + 1)).css('display', 'block');
           });
         });
+        
+        // id find btn click
+		let id_form = $('#easyIdSearchForm');
+		let id_btn = $('#searchIDBtn');
+		
+	      $("#searchIDBtn").click(function(){
+	          if ($.trim($("#iUserName").val()) == "") {
+	            $("#easyIdMsgErr").text("이름을 입력하세요.");
+	            $("#iUserName").focus();
+	            return;
+	          }
+	          
+	          if ( ($.trim($("#selYear").val()) == "") || ($.trim($("#selMonth").val()) == "") || ($.trim($("#selDay").val()) == "") ) {
+	            $("#easyIdMsgErr").text("생년월일을 입력하세요.");
+	            return;
+	          }
+
+	          $("#easyIdSearchForm").attr("action", "/member/findId");
+	          $("#easyIdSearchForm").submit();
+	          
+	      });
+	      
+	      $("#searchPWBtn").click(function(){
+	          if ($.trim($("#pUserName").val()) == "") {
+	              $("#easyPwMsgErr").text("이름을 입력하세요.");
+	              $("#pUserName").focus();
+	              return;
+	            }
+	            
+	            if ($.trim($("#pUserEmail").val()) == "") {
+	              $("#easyPwMsgErr").text("이메일 아이디를 입력하세요.");
+	              $("#pUserEmail").focus();
+	              return;
+	            }
+	            $('#easyPwSearch').attr("action", "/member/findPw");
+	            $('#easyPwSearch').submit();
+	      });	
       });
     </script>
     <div class="hsome_allContents_wrapper">
@@ -246,22 +254,6 @@
         </header>
         <!-- //################## header ################## -->
 
-        <form id="resultSend" action="/ko/member/findIdPwPage" method="POST">
-          <input type="hidden" name="tabSelct" id="tabSelct" value="findId" />
-          <input
-            type="hidden"
-            name="selectedVal"
-            id="selectedVal"
-            value="phoneAuth" />
-          <input type="hidden" name="idVelidation" id="idVelidation" value="" />
-          <input type="hidden" name="sName" id="customerName" value="" />
-          <input type="hidden" name="authName" id="authName" value="" />
-          <input
-            type="hidden"
-            name="sendName"
-            id="sendName"
-            value="sendEmail" />
-        </form>
         <!-- contents s -->
         <div class="hsome_contents simplemember_wrap">
           <ul class="grey_bg_header_tab">
@@ -278,7 +270,6 @@
           <div
             id="tabIdPw"
             class="mem_ct_wrap simple_mbr_wrap idpw_find_result">
-            <!-- <div class="mem_ct_wrap simple_mbr_wrap idpw_find_result"> -->
 
             <ul class="ui_tab red_border_tab active">
               <li class="on" id="findId"><a href="#tab_01">아이디 찾기</a></li>
@@ -291,16 +282,18 @@
               <div class="cont on" id="tab_01" style="display: block">
                 <!-- Start: easyId Input -->
                 <form
+                 th:object="${findId}"
                   id="easyIdSearchForm"
                   name="easyIdSearchForm"
-                  action="/ko/member/findIdPwPage"
+                  action="/member/findId"
                   method="POST">
                   <div class="input_group">
                     <div class="txt_wrap">
-                      간편회원 가입 시 입력한 이름, 생년월일을 입력하세요.
+                     	이메일 가입 시 입력한 이름, 생년월일을 입력하세요.
                     </div>
                     <div class="input_user_name">
                       <input
+                        th:field="*{name}"
                         type="text"
                         id="iUserName"
                         name="iUserName"
@@ -312,7 +305,7 @@
                     <div class="input_user_bday">
                       <div class="bday_year">
                         <div class="select_box">
-                          <select name="selYear" id="selYear" title="년도 선택">
+                          <select th:name="birthYear" name="selYear" id="selYear" title="년도 선택">
                             <option value="">년</option>
                             <option value="2009">2009</option>
                             <option value="2008">2008</option>
@@ -429,7 +422,7 @@
                       </div>
                       <div class="bday_month">
                         <div class="select_box">
-                          <select id="selMonth" title="월 선택">
+                          <select th:name="birthMonth" id="selMonth" title="월 선택">
                             <option value="">월</option>
                             <option value="01">01</option>
                             <option value="02">02</option>
@@ -448,7 +441,7 @@
                       </div>
                       <div class="bday_day">
                         <div class="select_box">
-                          <select id="selDay" title="일 선택">
+                          <select th:name="birthDay" id="selDay" title="일 선택">
                             <option value="">일</option>
                             <option value="01">01</option>
                             <option value="02">02</option>
@@ -487,14 +480,8 @@
                     </div>
                     <!-- [TO DEV] Error msg here. -->
                     <div class="err_wrap">
-                      <p class="err_txt" id="easyIdMsgErr"></p>
+                    <p class="err_txt" id="easyIdMsgErr"></p>
                     </div>
-                  </div>
-                  <div>
-                    <input
-                      type="hidden"
-                      name="CSRFToken"
-                      value="9a118ffa-472f-4387-b507-0a382b074af9" />
                   </div>
                 </form>
                 <div class="btn_wrap">
@@ -511,13 +498,18 @@
               <div class="cont" id="tab_02" style="display: none">
                 <!-- Start: easyPw finding Input -->
                 <div id="easyPwForm">
-                  <form id="easyPwSearch" name="easyPwSearch">
+                  <form
+                  method="post"
+                  th:object="${findPw}" 
+                  id="easyPwSearch" 
+                  name="easyPwSearch">
                     <div class="input_group">
                       <div class="txt_wrap easyPwInputDiv">
                         간편회원 가입 시 입력한 이름과 이메일을 입력하세요.
                       </div>
                       <div class="input_user_name easyPwInputDiv">
                         <input
+                          th:field="*{name}"
                           type="text"
                           id="pUserName"
                           name="pUserName"
@@ -527,6 +519,7 @@
                       </div>
                       <div class="input_user_email easyPwInputDiv">
                         <input
+                          th:field="*{email}"
                           type="text"
                           id="pUserEmail"
                           name="pUserEmail"

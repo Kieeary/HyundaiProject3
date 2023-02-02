@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wck.domain.FindPwDTO;
@@ -21,6 +22,9 @@ public class MemberMapperTest {
 	
 	@Autowired
 	private MemberMapper memberMapper;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Test
 	void getMemberByEmail()  {
@@ -86,5 +90,18 @@ public class MemberMapperTest {
 		log.info(member);
 		Assertions.assertEquals(member.getEmail(), email);
 	}
+	
+	@Test
+	@Transactional
+	void updatePasswordOne() {
+		String email = "user1@gmail.com";
+		String pw = "1234";
+		String encodedPw = passwordEncoder.encode(pw);
+		
+		memberMapper.updatePasswordOne(email, encodedPw);
+		MemberVO member = memberMapper.findOneByEmail(email, "Email");
+		Assertions.assertEquals(member.getPassword(), encodedPw);
+	}
+	
 
 }

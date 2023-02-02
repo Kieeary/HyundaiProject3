@@ -91,5 +91,10 @@
 		where mname = #{name} and 
 			memail = #{email}
 	</select>
+	<update id="updatePasswordOne">
+		update member
+		set mpassword = #{pw}
+		where memail = #{email}
+	</update>
 	
 </mapper> 

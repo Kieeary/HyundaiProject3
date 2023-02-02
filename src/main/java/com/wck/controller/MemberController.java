@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 @Controller
-@RequestMapping("/member")
+@RequestMapping("/wck/member")
 @RequiredArgsConstructor
 @Log4j2
 public class MemberController {
@@ -41,7 +41,7 @@ public class MemberController {
 			@ModelAttribute("findId") FindIdDTO findIdDto, RedirectAttributes redirect) {
 		List<MemberVO> members = memberService.findMemberListByNameAndBirth(findIdDto);
 		redirect.addFlashAttribute("members",members);
-		return "redirect:/member/findIdComplete";
+		return "redirect:/wck/member/findIdComplete";
 	}
 
 	@PostMapping("/findPw")
@@ -51,8 +51,11 @@ public class MemberController {
 		log.info(findPwDTO);
 		boolean isExist = memberService.findMemberByNameAndEmail(findPwDTO);
 		redirect.addAttribute("isExist",isExist);
-		// TODO : 메일링 할 껀지 />>존재하는 경우 비밀번호 바꾸고 메일을 보냄
-		return "redirect:/member/findPwComplete";
+		
+		// 존재하는 경우 비밀번호 바꾸고 메일을 보냄
+		if(isExist) 
+			memberService.resetPasswordByEmail(findPwDTO.getEmail());
+		return "redirect:/wck/member/findPwComplete";
 	}
 
 	@GetMapping("/findIdComplete")
@@ -61,7 +64,7 @@ public class MemberController {
 	}
 
 	@GetMapping("/findPwComplete")
-	public String findPwComplete() {
+	public String findPwComplete(@ModelAttribute("isExist") boolean isExist) {
 		return "member/find_pw_comp";
 	}
 }

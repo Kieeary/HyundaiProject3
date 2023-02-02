@@ -203,7 +203,7 @@
 	            return;
 	          }
 
-	          $("#easyIdSearchForm").attr("action", "/member/findId");
+	          $("#easyIdSearchForm").attr("action", "/wck/member/findId");
 	          $("#easyIdSearchForm").submit();
 	          
 	      });
@@ -220,7 +220,7 @@
 	              $("#pUserEmail").focus();
 	              return;
 	            }
-	            $('#easyPwSearch').attr("action", "/member/findPw");
+	            $('#easyPwSearch').attr("action", "/wck/member/findPw");
 	            $('#easyPwSearch').submit();
 	      });	
       });
@@ -258,10 +258,10 @@
         <div class="hsome_contents simplemember_wrap">
           <ul class="grey_bg_header_tab">
             <li class="" id="h1">
-              <a href="#none" class="tab_li_hs_mem"><span>로그인</span></a>
+              <a href="/wck/login" class="tab_li_hs_mem"><span>로그인</span></a>
             </li>
             <li id="e1">
-              <a href="#none" class="tab_li_simple_mem"
+              <a href="/wck/join" class="tab_li_simple_mem"
                 ><span>회원가입</span></a
               >
             </li>
@@ -285,7 +285,7 @@
                  th:object="${findId}"
                   id="easyIdSearchForm"
                   name="easyIdSearchForm"
-                  action="/member/findId"
+                  action="/wck/member/findId"
                   method="POST">
                   <div class="input_group">
                     <div class="txt_wrap">

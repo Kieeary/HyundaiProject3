@@ -20,44 +20,6 @@
     <meta property="og:title" content="한섬로그인 | 더한섬닷컴" />
     <meta property="og:type" content="website" />
     <script></script>
-    <script type="text/javascript">
-      var appYn = 'N';
-      var appOs = ''; //ios, android
-
-      var uid = '';
-      var pageUid = 'hsLoginPage';
-      var chkScreenPage = [];
-
-      if (appYn == 'Y') {
-        //appì¼ëë§ ì²´í¬
-        if (
-          uid == 'snsMain' ||
-          uid == 'snsDetail' ||
-          uid == 'snsMyProfile' ||
-          uid == 'snsCollectionDetail' ||
-          uid == 'snsSearchList' ||
-          chkScreenPage.indexOf(pageUid) > -1
-        ) {
-          //íì©íì´ì§
-          if (appOs == 'ios') {
-            //ios
-            webkit.messageHandlers.screenShotEnable.postMessage('false');
-          } else {
-            //android
-            Android.screenShotEnable('false');
-          }
-        } else {
-          //ì¬ì©ìí¨
-          if (appOs == 'ios') {
-            //ios
-            webkit.messageHandlers.screenShotEnable.postMessage('true');
-          } else {
-            //android
-            Android.screenShotEnable('true');
-          }
-        }
-      }
-    </script>
 
     <title>한섬로그인 | 더한섬닷컴</title>
     <link
@@ -112,34 +74,6 @@
       rel="stylesheet"
       type="text/css" />
 
-    <script type="text/javascript">
-      var handsomePageId = 'hsLoginPage';
-      var main_bul = false;
-    </script>
-
-    <script type="text/javascript">
-      var goToMySmartFilterYn = 'N';
-      var gnbType = 'br';
-      var UserAgent = navigator.platform;
-      var userPhoneOs = '';
-      if (UserAgent.match(/i(Phone|Pod|Pad)/i) != null) {
-        userPhoneOs = 'IOS';
-      } else {
-        userPhoneOs = 'ANDROID';
-      }
-    </script>
-
-    <script type="text/javascript">
-      var handsomeUserLoginYn = 'N';
-    </script>
-    <script type="text/javascript">
-      var isoKoYn = 'Y';
-    </script>
-    <script type="text/javascript">
-      var handsomeIsoCode = 'ko';
-      var handsomeContextPath = '/ko';
-    </script>
-
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.min.js"></script>
@@ -174,9 +108,7 @@
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/echarts.min.js"></script>
-    <script
-      type="text/javascript"
-      src="http://www.thehandsome.com/_ui/handsomemobile/js/common.js?20210501"></script>
+    
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/assist_common.js?v=20220630"></script>
@@ -199,9 +131,7 @@
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/makePCookie.js"></script>
-    <script
-      type="text/javascript"
-      src="http://www.thehandsome.com/_ui/handsomemobile/js/content.js"></script>
+   
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/e-smart-zoom-jquery.min.js"></script>
@@ -223,797 +153,210 @@
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/unorm.js"></script>
-
-    <script type="text/javascript">
-      var setDimensionData = function () {
-        //GA 설정 sessionStorage 페이지 이동시 초기화
-        window.sessionStorage.removeItem('main_new_ecommerceDataList');
-        window.sessionStorage.removeItem('main_best_ecommerceDataList');
-        var smartListSize = window.sessionStorage.getItem(
-          'smart_ecommerceDataList_size'
-        );
-        for (var i = 0; i <= smartListSize; i++) {
-          window.sessionStorage.removeItem('smart_ecommerceDataList_' + i);
-        }
-        window.sessionStorage.removeItem('smart_ecommerceDataList_size');
-        window.sessionStorage.removeItem('smart_more_ecommerceDataList');
-        window.sessionStorage.removeItem('search_recommend_ecommerceDataList');
-        window.sessionStorage.removeItem('ecommerceDataList');
-        window.sessionStorage.removeItem('yours_lately_ecommerceDataList');
-        window.sessionStorage.removeItem('yours_shoppingbag_ecommerceDataList');
-        window.sessionStorage.removeItem('yours_wish_ecommerceDataList');
-        window.sessionStorage.removeItem('yours_recommend_ecommerceDataList');
-        window.sessionStorage.removeItem('ou_main_ecommerceDataList');
-
-        var categoryListSize = window.sessionStorage.getItem(
-          'category_ecommerceDataList_size'
-        );
-        for (var i = 0; i <= categoryListSize; i++) {
-          window.sessionStorage.removeItem(
-            'normal_cate_ecommerceDataList_' + i
-          );
-        }
-        window.sessionStorage.removeItem('category_ecommerceDataList_size');
-
-        var cid = getCid();
-        var device = '';
-
-        if (getCookie2('app') == null || getCookie2('app') == '') {
-          device = 'MO_WEB';
-        } else {
-          device = 'APP';
-        }
-
-        var entrySite = '';
-
-        entrySite = 'KO';
-
-        var oneDepthPage; // 없을 경우 undifined 그대로 넘겨야 하기 때문에 초기화 X
-        var pageTitle = '';
-        var tmp = getPageDepth();
-        if (tmp != '') {
-          oneDepthPage = tmp;
-          pageTitle = getGAPageTitle(oneDepthPage);
-          if (pageTitle == '') {
-            oneDepthPage = undefined;
-            pageTitle = document.title;
-          }
-        } else {
-          pageTitle = document.title;
-        }
-
-        var pageviewObj = new Object();
-        pageviewObj.dimension1 = cid; //고객_ClientID
-        pageviewObj.dimension15 = device; //채널_채널유형
-        pageviewObj.dimension16 = entrySite; //채널_언어 - #2846 삭제요청 hychung, #2846 복원요청 hychung
-        pageviewObj.dimension18 = oneDepthPage; //페이지_1Depth (페이지depth 없는경우 undefined처리)
-        pageviewObj.title = pageTitle; //페이지제목     (페이지제목 없는경우 document.title 입력)
-
-        //로그인 했을경우만 추가 dimension 세팅
-
-        // 검색 결과 페이지 일 경우만 처리
-        if (window.location.pathname.indexOf('/hssearch/searchCount') > -1) {
-          pageviewObj.dimension17 = ''; //검색_검색어(검색결과페이지일때 사용)
-        }
-
-        return pageviewObj;
-      };
-
-      // 고객_ClientID
-      function getCid() {
-        var cookieData = document.cookie;
-        var Cookies = cookieData.split(';');
-        var clientId = '';
-        for (var i = 0; i < Cookies.length; i++) {
-          if (
-            Cookies[i].split('=')[0] == '_ga' ||
-            Cookies[i].split('=')[0] == ' _ga'
-          ) {
-            clientId = Cookies[i].split('=')[1];
-          }
-        }
-        if (clientId != '') {
-          clientId = clientId.substring(6);
-        }
-        if (clientId == '') {
-          try {
-            ga(function (tracker) {
-              clientId = tracker.get('clientId');
-            });
-          } catch (e) {
-            console.log(e);
-          }
-        }
-        return clientId;
-      }
-
-      function getPageDepth() {
-        var returnDepth = '';
-        var target_url = document.location.href;
-
-        if (target_url.substring(target_url.indexOf('/ko/') + 4) == '') {
-          returnDepth = '메인';
-        } else if (target_url.substring(target_url.indexOf('/ko') + 3) == '') {
-          returnDepth = '메인';
-        } else if (target_url.indexOf('/p/') > -1) {
-          returnDepth = '상품상세';
-        } else if (target_url.indexOf('/b/') > -1) {
-          returnDepth = '브랜드';
-        } else if (target_url.indexOf('/c/ou_') > -1) {
-          returnDepth = '아울렛';
-        } else if (target_url.indexOf('/c/') > -1) {
-          // if'/c/카테고리코드' : /가 한개면
-
-          if (
-            target_url.substring(target_url.indexOf('/c/') + 3).indexOf('/') >
-            -1
-          ) {
-            if (
-              target_url
-                .toLowerCase()
-                .substring(target_url.indexOf('/c/') + 3)
-                .indexOf('br') > -1
-            ) {
-              returnDepth = '브랜드';
-            } else {
-              returnDepth = '카테고리';
-            }
-          } else {
-            returnDepth = '카테고리';
-          }
-        } else if (target_url.indexOf('/mypage/care/') > -1) {
-          returnDepth = '케어';
-        } else if (target_url.indexOf('/mypage') > -1) {
-          returnDepth = '마이페이지';
-        } else if (target_url.indexOf('/magazine/events') > -1) {
-          returnDepth = '이벤트';
-        } else if (target_url.indexOf('/magazine/') > -1) {
-          returnDepth = '매거진';
-        } else if (target_url.indexOf('/shoppingbag') > -1) {
-          returnDepth = '쇼핑백';
-        } else if (target_url.indexOf('/ou/') > -1) {
-          returnDepth = '아울렛';
-        } else if (target_url.indexOf('/checkout/') > -1) {
-          returnDepth = '주문';
-        } else if (target_url.indexOf('/member/') > -1) {
-          returnDepth = '로그인';
-        } else if (target_url.indexOf('/login/') > -1) {
-          returnDepth = '로그인';
-        } else if (target_url.indexOf('/sns/') > -1) {
-          returnDepth = 'SNS';
-        } else if (target_url.indexOf('/prodqna/') > -1) {
-          returnDepth = '상품Q&A';
-        } else if (target_url.indexOf('/svcenter/') > -1) {
-          returnDepth = '고객센터';
-        } else if (target_url.indexOf('/item/') > -1) {
-          returnDepth = '아이템';
-        } else if (target_url.indexOf('/store-finder/') > -1) {
-          returnDepth = '매장안내';
-        } else if (target_url.indexOf('/footer/') > -1) {
-          returnDepth = 'FOOTER';
-        } else if (target_url.indexOf('/appDownloadSMS/') > -1) {
-          returnDepth = 'APP 다운로드';
-        } else if (target_url.indexOf('/intro/') > -1) {
-          returnDepth = '당신만의 한섬';
-        } else if (target_url.indexOf('/mobilecommon/mainIntro') > -1) {
-          returnDepth = '공통';
-        } else if (target_url.indexOf('/mobilecommon/search') > -1) {
-          returnDepth = '공통';
-        } else if (target_url.indexOf('/hssearch') > -1) {
-          returnDepth = '검색';
-        } else if (target_url.indexOf('/product/') > -1) {
-          returnDepth = '상품';
-        } else if (target_url.indexOf('/globalMain') > -1) {
-          returnDepth = '메인';
-        } else if (target_url.indexOf('/main') > -1) {
-          returnDepth = '메인';
-        } else {
-          returnDepth = '';
-        }
-        return returnDepth;
-      }
-
-      function getGAPageTitle(oneDepthPage) {
-        var returnTitle = '';
-        var target_url = document.location.href;
-        //if(target_url.substring(target_url.indexOf("/ko/")+4).indexOf("/") == -1){
-        if (target_url.substring(target_url.indexOf('/ko/') + 4) == '') {
-          returnTitle = oneDepthPage;
-        } else if (target_url.substring(target_url.indexOf('/ko') + 3) == '') {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/p/') > -1) {
-          returnTitle = oneDepthPage + '>';
-        } else if (target_url.indexOf('/c//') > -1) {
-          returnTitle = oneDepthPage + '>>전체보기';
-        } else if (target_url.indexOf('/b/fourmMain') > -1) {
-          returnTitle = oneDepthPage + '>FOURM 메인';
-        } else if (target_url.indexOf('/b//brand') > -1) {
-          returnTitle = oneDepthPage + '>>소개';
-        } else if (target_url.indexOf('/b//storeInformation') > -1) {
-          returnTitle = oneDepthPage + '>>매장';
-        } else if (
-          target_url.indexOf('/b//lookBookDetail?lookBookCode=') > -1
-        ) {
-          returnTitle = oneDepthPage + '>>룩북>';
-        } else if (target_url.indexOf('/b//lookBook') > -1) {
-          returnTitle = oneDepthPage + '>>룩북';
-        } else if (target_url.indexOf('/b/') > -1) {
-          returnTitle = oneDepthPage + '>>브랜드 메인';
-        } else if (target_url.indexOf('/c//ou') > -1) {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/c//') > -1) {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/c/') > -1) {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/mypage/order/myordersAthome') > -1) {
-          returnTitle = oneDepthPage + '>앳홈신청 및 결제';
-        } else if (target_url.indexOf('/mypage/order/myorders') > -1) {
-          returnTitle = oneDepthPage + '>주문/배송조회';
-        } else if (target_url.indexOf('/mypage/myGradeInfo') > -1) {
-          returnTitle = oneDepthPage + '>나의 회원등급';
-        } else if (target_url.indexOf('/mypage/voucher') > -1) {
-          returnTitle = oneDepthPage + '>쿠폰';
-        } else if (target_url.indexOf('/mypage/mypoint') > -1) {
-          returnTitle = oneDepthPage + '>혜택관리>나의 한섬마일리지';
-        } else if (target_url.indexOf('/mypage/myEGiftCard') > -1) {
-          returnTitle = oneDepthPage + '>혜택관리>e-giftcard';
-        } else if (target_url.indexOf('/mypage/myWish') > -1) {
-          returnTitle = oneDepthPage + '>위시리스트';
-        } else if (target_url.indexOf('/mypage/rsalarm') > -1) {
-          returnTitle = oneDepthPage + '>재입고 알림';
-        } else if (
-          target_url.indexOf('/mypage/personInfomationChangePWCheck') > -1
-        ) {
-          returnTitle = oneDepthPage + '>개인정보 변경/탈퇴';
-        } else if (target_url.indexOf('/mypage/mydelivery') > -1) {
-          returnTitle = oneDepthPage + '>배송지 관리';
-        } else if (target_url.indexOf('/mypage/oneClick') > -1) {
-          returnTitle = oneDepthPage + '>나의 정보관리>원클릭 결제 관리';
-        } else if (target_url.indexOf('/mypage/myreview') > -1) {
-          returnTitle = oneDepthPage + '>내 상품평';
-        } else if (target_url.indexOf('/mypage/myqna') > -1) {
-          returnTitle = oneDepthPage + '>상품 Q&A';
-        } else if (target_url.indexOf('/mypage/mymantomaninquiry') > -1) {
-          returnTitle = oneDepthPage + '>1:1 문의';
-        } else if (target_url.indexOf('/mypage/mypageFloatingPopup') > -1) {
-          returnTitle = oneDepthPage + '>메인';
-        } else if (target_url.indexOf('/mypage/mypoint/mobile') > -1) {
-          returnTitle = oneDepthPage + '>나의 혜택';
-        } else if (target_url.indexOf('/mypage/event/myevents') > -1) {
-          returnTitle = oneDepthPage + '>나의 이벤트';
-        } else if (target_url.indexOf('/mypage/oneBuy') > -1) {
-          returnTitle = oneDepthPage + '>원클릭 결제 설정';
-        } else if (target_url.indexOf('/mypage/care/mycares') > -1) {
-          returnTitle = oneDepthPage + '>내역조회';
-        } else if (
-          target_url.indexOf('/mypage/care/careRequestComplete') > -1
-        ) {
-          returnTitle = oneDepthPage + '>신청완료';
-        } else if (target_url.indexOf('/mypage/care/careRequest') > -1) {
-          returnTitle = oneDepthPage + '>신청하기';
-        } else if (target_url.endsWith('/ko/mypage/', target_url.length)) {
-          returnTitle = oneDepthPage + '>메인';
-        } else if (target_url.endsWith('/ko/mypage', target_url.length)) {
-          returnTitle = oneDepthPage + '>메인';
-        } else if (target_url.indexOf('/magazine/events/') > -1) {
-          returnTitle = oneDepthPage + '>상세>';
-        } else if (target_url.indexOf('/magazine/events') > -1) {
-          if (getCookie2('app') == null || getCookie2('app') == '') {
-            returnTitle = oneDepthPage + '>리스트';
-          } else {
-            returnTitle = oneDepthPage + '>모바일썸네일';
-          }
-        } else if (target_url.indexOf('/magazine/editorials/') > -1) {
-          returnTitle = oneDepthPage + '>에디토리얼>상세>';
-        } else if (target_url.indexOf('/magazine/editorials') > -1) {
-          returnTitle = oneDepthPage + '>에디토리얼>리스트';
-        } else if (target_url.indexOf('/magazine/exhibitions/') > -1) {
-          returnTitle = oneDepthPage + '>기획전>상세>';
-        } else if (target_url.indexOf('/magazine/exhibitions') > -1) {
-          returnTitle = oneDepthPage + '>기획전>리스트';
-        } else if (target_url.indexOf('/magazine/handpeople') > -1) {
-          returnTitle = oneDepthPage + '>핸썸피플 리스트';
-        } else if (target_url.indexOf('/magazine/instagram') > -1) {
-          returnTitle = oneDepthPage + '>인스타그램';
-        } else if (target_url.indexOf('/magazine/lookbookDetail/') > -1) {
-          returnTitle = oneDepthPage + '>룩북>상세>';
-        } else if (target_url.indexOf('/magazine/lookbook') > -1) {
-          returnTitle = oneDepthPage + '>룩북>리스트';
-        } else if (
-          target_url.indexOf('/magazine/newsDetailtemplatetype') > -1
-        ) {
-          returnTitle = oneDepthPage + '>뉴스>상세>';
-        } else if (target_url.indexOf('/magazine/news') > -1) {
-          returnTitle = oneDepthPage + '>뉴스>리스트';
-        } else if (target_url.indexOf('/magazine/weeklypick') > -1) {
-          returnTitle = oneDepthPage + '>위클리 픽 리스트';
-        } else if (target_url.indexOf('/magazine/submain') > -1) {
-          returnTitle = oneDepthPage + '>THE매거진 메인';
-        } else if (target_url.indexOf('/magazine/youtubeList') > -1) {
-          returnTitle = oneDepthPage + '>비디오';
-        } else if (target_url.indexOf('/shoppingbag') > -1) {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/ou/outletMain') > -1) {
-          returnTitle = oneDepthPage + '>메인';
-        } else if (target_url.indexOf('/c/ou_/ou') > -1) {
-          returnTitle = oneDepthPage + '>';
-        } else if (target_url.indexOf('/mobilecommon/search') > -1) {
-          returnTitle = oneDepthPage + '>키워드';
-        } else if (target_url.indexOf('/hssearch/') > -1) {
-          returnTitle = oneDepthPage + '>검색결과';
-        } else if (target_url.indexOf('/checkout/ordersheet') > -1) {
-          returnTitle = oneDepthPage + '>주문서 작성';
-        } else if (target_url.indexOf('/checkout/orderConfirmation') > -1) {
-          returnTitle = oneDepthPage + '>주문 완료';
-        } else if (target_url.indexOf('/member/login') > -1) {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/login/checkout') > -1) {
-          returnTitle = oneDepthPage + '>미로그인시로그인유도';
-        } else if (target_url.indexOf('/member/pwChange') > -1) {
-          returnTitle = oneDepthPage + '>비밀번호 변경 대상';
-        } else if (target_url.indexOf('/member/findIdPwPage') > -1) {
-          returnTitle = oneDepthPage + '>한섬회원 아이디/비밀번호 찾기';
-        } else if (target_url.indexOf('/member/globaljoincomplete') > -1) {
-          returnTitle = oneDepthPage + '>가입완료';
-        } else if (target_url.indexOf('/member/joincomplete') > -1) {
-          returnTitle = oneDepthPage + '>가입완료';
-        } else if (target_url.indexOf('/member/joinGuidePage') > -1) {
-          returnTitle = oneDepthPage + '>회원가입안내';
-        } else if (target_url.indexOf('/member/joininfoform') > -1) {
-          returnTitle = oneDepthPage + '>간편회원 정보입력';
-        } else if (target_url.indexOf('/member/joinstart') > -1) {
-          returnTitle = oneDepthPage + '>간편회원 이메일';
-        } else if (target_url.indexOf('/member/nonMemberLogin') > -1) {
-          returnTitle = oneDepthPage + '>비회원 주문조회';
-        } else if (target_url.indexOf('/sns/main') > -1) {
-          returnTitle = oneDepthPage + '>메인';
-        } else if (target_url.indexOf('/sns/detail?') > -1) {
-          returnTitle = oneDepthPage + '>포스트상세보기';
-        } else if (target_url.indexOf('/sns/myNotice') > -1) {
-          returnTitle = oneDepthPage + '>나의알림';
-        } else if (target_url.indexOf('/sns/collectionDetail?') > -1) {
-          returnTitle = oneDepthPage + '>콜렉션상세';
-        } else if (target_url.indexOf('/sns/followerList?') > -1) {
-          returnTitle = oneDepthPage + '>팔로워리스트';
-        } else if (target_url.indexOf('/sns/followingList?') > -1) {
-          returnTitle = oneDepthPage + '>팔로윙리스트';
-        } else if (target_url.indexOf('/sns/snsSearch?searchWord=') > -1) {
-          returnTitle = oneDepthPage + '>태그검색';
-        } else if (target_url.indexOf('/sns/message?') > -1) {
-          returnTitle = oneDepthPage + '>메시지';
-        } else if (target_url.indexOf('/sns/messageList') > -1) {
-          returnTitle = oneDepthPage + '>메시지리스트';
-        } else if (target_url.indexOf('/sns/myLevel') > -1) {
-          returnTitle = oneDepthPage + '>나의레벨';
-        } else if (target_url.indexOf('/sns/myProfile?') > -1) {
-          returnTitle = oneDepthPage + '>나의프로필';
-        } else if (target_url.indexOf('/sns/weeklyBest') > -1) {
-          returnTitle = oneDepthPage + '>위클리베스트';
-        } else if (target_url.indexOf('/sns/write') > -1) {
-          returnTitle = oneDepthPage + '>포스팅작성';
-        } else if (target_url.indexOf('/mobilecommon/mainIntro') > -1) {
-          returnTitle = oneDepthPage + '>인트로';
-        } else if (target_url.indexOf('/prodqna/listProdQnA?') > -1) {
-          returnTitle = oneDepthPage + '>';
-        } else if (target_url.indexOf('/svcenter/submain') > -1) {
-          returnTitle = oneDepthPage + '>서브메인';
-        } else if (target_url.indexOf('/svcenter/notice') > -1) {
-          returnTitle = oneDepthPage + '>공지사항';
-        } else if (target_url.indexOf('/svcenter/mantomaninquiry') > -1) {
-          returnTitle = oneDepthPage + '>1:1 문의';
-        } else if (target_url.indexOf('/svcenter/faq') > -1) {
-          returnTitle = oneDepthPage + '>FAQ';
-        } else if (target_url.indexOf('/svcenter/mending') > -1) {
-          returnTitle = oneDepthPage + '>수선진행조회';
-        } else if (target_url.indexOf('/svcenter/memberjoinguide') > -1) {
-          returnTitle = oneDepthPage + '>쇼핑가이드>회원가입';
-        } else if (target_url.indexOf('/svcenter/theClubInfo') > -1) {
-          returnTitle = oneDepthPage + '>쇼핑가이드>온라인 멤버십';
-        } else if (target_url.indexOf('/svcenter/memberbenefitguide') > -1) {
-          returnTitle = oneDepthPage + '>쇼핑가이드>한섬 VVIP 혜택';
-        } else if (target_url.indexOf('/svcenter/pointguide') > -1) {
-          returnTitle = oneDepthPage + '>쇼핑가이드>한섬마일리지 혜택';
-        } else if (target_url.indexOf('/svcenter/couponguide') > -1) {
-          returnTitle = oneDepthPage + '>쇼핑가이드>쿠폰';
-        } else if (target_url.indexOf('/svcenter/asguide') > -1) {
-          returnTitle = oneDepthPage + '>쇼핑가이드>배송/반품/AS';
-        } else if (target_url.indexOf('/svcenter/paymentguide') > -1) {
-          returnTitle = oneDepthPage + '>쇼핑가이드>주문/결제';
-        } else if (target_url.indexOf('/svcenter/athomeInfo') > -1) {
-          returnTitle = oneDepthPage + '>at HOME';
-        } else if (target_url.indexOf('/svcenter/footerAthomeInfo') > -1) {
-          returnTitle = oneDepthPage + '>딜리버리서비스';
-        } else if (target_url.indexOf('/svcenter/mobilemain') > -1) {
-          returnTitle = oneDepthPage + '>메인';
-        } else if (target_url.indexOf('/svcenter/mobilenotice') > -1) {
-          returnTitle = oneDepthPage + '>공지사항';
-        } else if (target_url.indexOf('/svcenter/mobilefaq') > -1) {
-          returnTitle = oneDepthPage + '>FAQ';
-        } else if (target_url.indexOf('/svcenter/mobilemending') > -1) {
-          returnTitle = oneDepthPage + '>수선진행조회';
-        } else if (
-          target_url.indexOf('/svcenter/serviceguide?targetSlide=0') > -1
-        ) {
-          returnTitle = oneDepthPage + '>서비스소개>간편서비스';
-        } else if (
-          target_url.indexOf('/svcenter/serviceguide?targetSlide=1') > -1
-        ) {
-          returnTitle = oneDepthPage + '>서비스소개>스마트쇼핑';
-        } else if (
-          target_url.indexOf('/svcenter/serviceguide?targetSlide=2') > -1
-        ) {
-          returnTitle = oneDepthPage + '>서비스소개>유니크한섬';
-        } else if (target_url.indexOf('/svcenter/serviceguide') > -1) {
-          returnTitle = oneDepthPage + '>서비스소개';
-        } else if (target_url.indexOf('/product/reviewList/') > -1) {
-          returnTitle = oneDepthPage + '>상품평>';
-        } else if (target_url.indexOf('/item/we') > -1) {
-          returnTitle = oneDepthPage + '>WE';
-        } else if (target_url.indexOf('/item/me') > -1) {
-          returnTitle = oneDepthPage + '>ME';
-        } else if (target_url.indexOf('/store-finder/') > -1) {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/footer/footerBrandintro') > -1) {
-          returnTitle = oneDepthPage + '>브랜드소개';
-        } else if (target_url.indexOf('/footer/footerCEOGreetings') > -1) {
-          returnTitle = oneDepthPage + '>CEO 메시지';
-        } else if (target_url.indexOf('/footer/footerCompanyIntro') > -1) {
-          returnTitle = oneDepthPage + '>회사소개>한섬소개';
-        } else if (target_url.indexOf('/footer/footerCEOGreetings') > -1) {
-          returnTitle = oneDepthPage + '>회사소개>CEO 메시지';
-        } else if (target_url.indexOf('/footer/footerBrandintro') > -1) {
-          returnTitle = oneDepthPage + '>회사소개>브랜드소개';
-        } else if (target_url.indexOf('/footer/footerGovernance') > -1) {
-          returnTitle = oneDepthPage + '>투자정보>기업지배구조';
-        } else if (target_url.indexOf('/footer/footerFinancialInfo') > -1) {
-          returnTitle = oneDepthPage + '>투자정보>재무정보';
-        } else if (target_url.indexOf('/footer/footerStockInfo') > -1) {
-          returnTitle = oneDepthPage + '>투자정보>주가정보';
-        } else if (target_url.indexOf('/footer/footerIR') > -1) {
-          returnTitle = oneDepthPage + '>투자정보>IR';
-        } else if (
-          target_url.indexOf('/footer/footerCorporatePartnership') > -1
-        ) {
-          returnTitle = oneDepthPage + '>동반성장>소개';
-        } else if (target_url.indexOf('/footer/footerCoreFourPractices') > -1) {
-          returnTitle = oneDepthPage + '>동반성장>4대 실천사항';
-        } else if (
-          target_url.indexOf('/footer/footerCooperatorSelection') > -1
-        ) {
-          returnTitle = oneDepthPage + '>동반성장>협력업체 선정';
-        } else if (target_url.indexOf('/footer/footerSupportProgram') > -1) {
-          returnTitle = oneDepthPage + '>동반성장>지원제도';
-        } else if (target_url.indexOf('/footer/footerContactUs') > -1) {
-          returnTitle = oneDepthPage + '>동반성장>소통의 장';
-        } else if (target_url.indexOf('/appDownloadSMS/') > -1) {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/intro/mainYours') > -1) {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/globalMain') > -1) {
-          returnTitle = oneDepthPage;
-        } else if (target_url.indexOf('/main') > -1) {
-          returnTitle = oneDepthPage;
-        }
-
-        return returnTitle;
-      }
-
-      function getCookie2(cname) {
-        var name = cname + '=';
-        var decodedCookie = unescape(document.cookie);
-        var ca = decodedCookie.split(';');
-        var cookieValue = '';
-        for (var i = 0; i < ca.length; i++) {
-          var c = ca[i];
-          while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-            cookieValue = c.substring(name.length, c.length);
-          }
-        }
-        return cookieValue;
-      }
-
-      function GA_Event(Category, Action, Label) {
-        Label = unescape(Label)
-          .replace(/\&#039;/gi, "'")
-          .replace(/\&amp;/g, '&');
-
-        var v_Label = Label;
-        var v_Category = Category;
-        var v_Action = Action;
-        //공백처리을  _ 처리
-        if (Category != null) {
-          v_Category = Category.replace(/\s{2,}/gi, ' ')
-            .trim()
-            .replace(/\s/gi, '_');
-        }
-        if (Action != null) {
-          v_Action = Action.replace(/\s{2,}/gi, ' ')
-            .trim()
-            .replace(/\s/gi, '_');
-        }
-        if (Label != null) {
-          v_Label = Label.replace(/\s{2,}/gi, ' ')
-            .trim()
-            .replace(/\s/gi, '_');
-        }
-        console.log(v_Category, v_Action, v_Label);
-        ga('gp.send', 'event', v_Category, v_Action, v_Label);
-      }
-
-      if (!String.prototype.endsWith) {
-        String.prototype.endsWith = function (searchString, position) {
-          var subjectString = this.toString();
-          if (
-            typeof position !== 'number' ||
-            !isFinite(position) ||
-            Math.floor(position) !== position ||
-            position > subjectString.length
-          ) {
-            position = subjectString.length;
-          }
-          position -= searchString.length;
-          var lastIndex = subjectString.indexOf(searchString, position);
-          return lastIndex !== -1 && lastIndex === position;
-        };
-      }
-
-      function gaIsoCodeEncoding(isoCode) {
-        if (isoCode.toLowerCase() == 'ko') {
-          GA_Event('공통', '푸터_CNT', 'LANGUAGE_한국어');
-        } else if (isoCode.toLowerCase() == 'en') {
-          GA_Event('공통', '푸터_CNT', 'LANGUAGE_영어');
-        } else if (isoCode.toLowerCase() == 'zh') {
-          GA_Event('공통', '푸터_CNT', 'LANGUAGE_중국어');
-        }
-      }
-    </script>
   </head>
 
   <body class="back">
-  <style>
-  	.mem_login_input_area {
-	    margin-top: 50px;
-	}
-  </style>
-      <div class="hsome_allContents">
-        <!-- ################## header ################## -->
-        <header class="hsome_header">
-          <h1 class="h_ttl ellipsis" id="headerTitle">로그인</h1>
-          <a href="/ko/main" class="h_top_home"><span>홈</span></a>
+    <style>
+      .mem_login_input_area {
+        margin-top: 50px;
+      }
+    </style>
+    <div class="hsome_allContents">
+      <!-- ################## header ################## -->
+      <header class="hsome_header">
+        <h1 class="h_ttl ellipsis" id="headerTitle">로그인</h1>
+        <a href="/ko/main" class="h_top_home"><span>홈</span></a>
 
-          <a href="javascript:noLink();" onclick="goBack();" class="h_prev"
-            >이전 페이지로 가기</a
-          >
-          <ul class="h_gnbMenu">
-            <li class="search">
-              <a
-                href="/ko/mobilecommon/search"
-                onclick="GA_Event('공통', '헤더', '검색');"
-                ><span>search</span></a
-              >
-            </li>
-            <li class="cart">
-              <a
-                href="/ko/shoppingbag"
-                onclick="GA_Event('공통', '헤더', '쇼핑백');"
-                ><span>cart</span><i>0</i></a
-              >
-            </li>
-          </ul>
-        </header>
-        <!-- //################## header ################## -->
-        <script type="text/javascript">
-          //<![CDATA[
-          var tempData = '';
-          $(document).ready(function () {
-            $('#login_btn').click(function () {
-              var id = $('#loginForm_custom').find('#username').val();
-              var pw = $('#loginForm_custom').find('#password').val();
+        <a href="javascript:noLink();" onclick="goBack();" class="h_prev"
+          >이전 페이지로 가기</a
+        >
+        <ul class="h_gnbMenu">
+          <li class="search">
+            <a
+              href="/ko/mobilecommon/search"
+              onclick="GA_Event('공통', '헤더', '검색');"
+              ><span>search</span></a
+            >
+          </li>
+          <li class="cart">
+            <a
+              href="/ko/shoppingbag"
+              onclick="GA_Event('공통', '헤더', '쇼핑백');"
+              ><span>cart</span><i>0</i></a
+            >
+          </li>
+        </ul>
+      </header>
+      <!-- //################## header ################## -->
+      <script type="text/javascript">
+        //<![CDATA[
+        var tempData = '';
+        $(document).ready(function () {
+          $('#login_btn').click(function () {
+            var id = $('#loginForm_custom').find('#username').val();
+            var pw = $('#loginForm_custom').find('#password').val();
 
-              if (true) {
-                if (id == '') {
-                  document.getElementById('hpErrMsg').textContent =
-                    '아이디/이메일을 입력하세요.';
+            if (true) {
+              if (id == '') {
+                document.getElementById('hpErrMsg').textContent =
+                  '아이디/이메일을 입력하세요.';
 
-                  return;
-                }
-
-                if (pw == '') {
-                  document.getElementById('hpErrMsg').textContent =
-                    '비밀번호를 입력하세요.';
-                  return;
-                }
+                return;
               }
 
-              $('#loginForm_custom').submit();
-            });
-            
-            $('.btn_signup').click(function(e){
-            	e.preventDefault();
-            	location.href="/wck/join";
-            	console.log('ttt')
-              });
+              if (pw == '') {
+                document.getElementById('hpErrMsg').textContent =
+                  '비밀번호를 입력하세요.';
+                return;
+              }
+            }
+
+            $('#loginForm_custom').submit();
           });
 
+          $('.btn_signup').click(function (e) {
+            e.preventDefault();
+            location.href = '/wck/join';
+            console.log('ttt');
+          });
+          
+          
+          $('.btn_fdid').click(function(e){
+        	  e.preventDefault();
+        	  location.href="/wck/member/findIdPw";
+          });
+        });
 
-         
+        //]]>
+      </script>
 
-          //]]>
-        </script>
-
-        <!-- ID/PWD Login contents s -->
-        <div class="hsome_contents mem_ct_wrap id_login" id="handsomeCust">
-          <div class="mem_login_input_area">
-            <form id="loginForm_custom" action="/wck/login" method="post">
-              <!-- 로그인 정보 입력 -->
-              <div class="input_group">
-                <input type="hidden" name="inputId" id="inputId" value="" />
-                <!-- 아이디 입력 -->
-                <div class="input_login_id">
-                  <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    class="login_id"
-                    placeholder="아이디/이메일을 입력하세요."
-                    title="아이디/이메일을 입력하세요." />
-                </div>
-                <!-- 패스워드 입력 -->
-                <div class="input_login_pw">
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="비밀번호를 입력하세요."
-                    title="비밀번호를 입력하세요." />
-                </div>
-                <!-- [TO DEV] Error msg here. -->
-                <div class="err_wrap">
-                  <p id="hpErrMsg" class="err_txt"></p>
-                </div>
-                <div class="btn_wrap">
-                  <button
-                    type="button"
-                    id="login_btn"
-                    class="btn btn_bg_b btn_login btn_popup">
-                    로그인
-                  </button>
-                </div>
-                <div class="login_option bio">
-                  <ul>
-                    <li class="check_area">
-                      <input
-                        id="_spring_security_remember_me"
-                        name="_spring_security_remember_me"
-                        path="_spring_security_remember_me"
-                        class="check"
-                        type="checkbox"
-                        checked="" />
-                      <label
-                        for="_spring_security_remember_me"
-                        class="check_txt"
-                        >자동 로그인</label
-                      >
-                    </li>
-                    <li>
-                      <!-- 지문/페이스로그인 : 비활성화되는 옵션의 a태그에 hidden(display:none;)클래스 적용 -->
-                    </li>
-                  </ul>
-                </div>
-                <div class="btn_wrap">
-                  <button
-                    type="button"
-                    id="google_login_btn"
-                    class="btn btn_bg_b btn_login btn_popup">
-                    구글로그인
-                  </button>
-                </div>
+      <!-- ID/PWD Login contents s -->
+      <div class="hsome_contents mem_ct_wrap id_login" id="handsomeCust">
+        <div class="mem_login_input_area">
+          <form id="loginForm_custom" action="/wck/login" method="post">
+            <!-- 로그인 정보 입력 -->
+            <div class="input_group">
+              <input type="hidden" name="inputId" id="inputId" value="" />
+              <!-- 아이디 입력 -->
+              <div class="input_login_id">
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  class="login_id"
+                  placeholder="아이디/이메일을 입력하세요."
+                  title="아이디/이메일을 입력하세요." />
               </div>
-              <input type="hidden" name="returnType" value="" />
-            </form>
+              <!-- 패스워드 입력 -->
+              <div class="input_login_pw">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  placeholder="비밀번호를 입력하세요."
+                  title="비밀번호를 입력하세요." />
+              </div>
+              <!-- [TO DEV] Error msg here. -->
+              <div class="err_wrap" >
+                <p id="hpErrMsg" class="err_txt"
+                th:text="${error}"></p>
+              </div>
+              <div class="btn_wrap">
+                <button
+                  type="button"
+                  id="login_btn"
+                  class="btn btn_bg_b btn_login btn_popup">
+                  로그인
+                </button>
+              </div>
+              <div class="login_option bio">
+                <ul>
+                  <li class="check_area">
+                    <input
+                      id="_spring_security_remember_me"
+                      name="_spring_security_remember_me"
+                      path="_spring_security_remember_me"
+                      class="check"
+                      type="checkbox"
+                      checked="" />
+                    <label for="_spring_security_remember_me" class="check_txt"
+                      >자동 로그인</label
+                    >
+                  </li>
+                  <li>
+                    <!-- 지문/페이스로그인 : 비활성화되는 옵션의 a태그에 hidden(display:none;)클래스 적용 -->
+                  </li>
+                </ul>
+              </div>
+              <div class="btn_wrap">
+                <button
+                  type="button"
+                  id="google_login_btn"
+                  class="btn btn_bg_b btn_login btn_popup">
+                  구글로그인
+                </button>
+              </div>
+            </div>
+            <input type="hidden" name="returnType" value="" />
+          </form>
+        </div>
+      </div>
+      <!-- //################## contents ################## -->
+      <!-- ################## footer ################## -->
+      <footer class="hsome_footer mem_ct_wrap_bg id_login">
+        <div class="login_find_area">
+          <p class="tit">아이디/비밀번호를 잊으셨나요?</p>
+          <div class="btn_wrap btn_wrap_div2">
+            <button
+            	style="width:100%;"
+              class="btnstl3 border_btn_gray btn_fdid">
+              아이디 / 비밀번호 찾기
+            </button>
           </div>
         </div>
-        <!-- //################## contents ################## -->
-        <!-- ################## footer ################## -->
-        <footer class="hsome_footer mem_ct_wrap_bg id_login">
-          <div class="login_find_area">
-            <p class="tit">아이디/비밀번호를 잊으셨나요?</p>
-            <div class="btn_wrap btn_wrap_div2">
-              <button
-                class="btnstl3 border_btn_gray btn_fdid"
-                onclick="hpIdFind();">
-                아이디 찾기
-              </button>
-              <button
-                class="btnstl3 border_btn_gray btn_fdpw"
-                onclick="hpPasswordFind();">
-                비밀번호 찾기
-              </button>
-            </div>
+        <div class="login_signup_area">
+          <div class="txt_wrap">
+            <p class="tit">더 큰 혜택으로 보다 즐거운 쇼핑을!</p>
+            <p class="sub_tit">
+              더한섬닷컴 회원에게만 드리는 특별한 혜택을 경험하세요.
+            </p>
           </div>
-          <div class="login_signup_area">
-            <div class="txt_wrap">
-              <p class="tit">더 큰 혜택으로 보다 즐거운 쇼핑을!</p>
-              <p class="sub_tit">
-                더한섬닷컴 회원에게만 드리는 특별한 혜택을 경험하세요.
-              </p>
-            </div>
-            <div class="btn_wrap btn_wrap_div1">
-              <button
-                class="btnstl3 border_btn_gray btn_signup">
-                회원가입
-              </button>
-            </div>
+          <div class="btn_wrap btn_wrap_div1">
+            <button class="btnstl3 border_btn_gray btn_signup">회원가입</button>
           </div>
+        </div>
 
-          <!-- [TO DEV] 20180625 고객센터 추가 s -->
-          <div class="cscenter_area">
-            <div class="txt_wrap">
-              <ul>
-                <li>
-                  <p class="sub_tit">고객센터</p>
-                  <a href="tel:1800-5700"> 1800-5700</a>
-                </li>
-                <li>
-                  <a href="mailto:shophelp@thehandsome.com"
-                    >shophelp@thehandsome.com</a
-                  >
-                </li>
-              </ul>
-              <p class="sub_tit">
-                운영시간 평일(월~금) AM 9:00~PM 18:00 토/일/공휴일 휴무
-              </p>
-            </div>
-            <div class="btn_wrap btn_wrap_div1">
-              <a
-                href="/ko/svcenter/mobilemain?uiel=Mobile"
-                class="btnstl3 border_btn_gray btn_cscenter"
-                >고객센터</a
-              >
-            </div>
+        <!-- [TO DEV] 20180625 고객센터 추가 s -->
+        <div class="cscenter_area">
+          <div class="txt_wrap">
+            <ul>
+              <li>
+                <p class="sub_tit">고객센터</p>
+                <a href="tel:1800-5700"> 1800-5700</a>
+              </li>
+              <li>
+                <a href="mailto:shophelp@thehandsome.com"
+                  >shophelp@thehandsome.com</a
+                >
+              </li>
+            </ul>
+            <p class="sub_tit">
+              운영시간 평일(월~금) AM 9:00~PM 18:00 토/일/공휴일 휴무
+            </p>
           </div>
-          <!-- 20180625 고객센터 추가 e -->
-        </footer>
-        <!-- //################## footer ################## -->
-      </div>
+          <div class="btn_wrap btn_wrap_div1">
+            <a
+              href="/ko/svcenter/mobilemain?uiel=Mobile"
+              class="btnstl3 border_btn_gray btn_cscenter"
+              >고객센터</a
+            >
+          </div>
+        </div>
+        <!-- 20180625 고객센터 추가 e -->
+      </footer>
+      <!-- //################## footer ################## -->
     </div>
     <!-- ################## //hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
-    <script type="text/javascript">
-      var inicisCookieFlag = true;
-      var inicisMethod = '';
-      var authData = '';
-
-      var uagentLow = navigator.userAgent.toLocaleLowerCase();
-      if (uagentLow.search('android') > -1) {
-      } else if (uagentLow.search('iphone') > -1) {
-        var isSafari = navigator.userAgent.toLowerCase().indexOf('safari') > -1;
-        var isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
-        if (isSafari) {
-          if (isChrome) {
-            isSafari = false;
-          } else {
-            if (navigator.userAgent.toLowerCase().indexOf('crios') > -1) {
-              isSafari = false;
-            }
-            inicisCookieFlag = false;
-          }
-        }
-      }
-
-      // var WPAY_CARD_INFO = [];
-      // WPAY_CARD_INFO['03'] = { name: '롯데카드', cls: 'cd_kind_lotte' };
-      // WPAY_CARD_INFO['04'] = { name: '현대카드', cls: 'cd_kind_hyundai' };
-      // WPAY_CARD_INFO['06'] = { name: '국민카드', cls: 'cd_kind_kb' };
-      // WPAY_CARD_INFO['11'] = { name: 'BC카드', cls: 'cd_kind_bc' };
-      // WPAY_CARD_INFO['12'] = { name: '삼성카드', cls: 'cd_kind_samsung' };
-      // WPAY_CARD_INFO['14'] = { name: '신한카드', cls: 'cd_kind_shinhan' };
-      // WPAY_CARD_INFO['16'] = { name: 'NH카드', cls: 'cd_kind_nh' };
-      // WPAY_CARD_INFO['01'] = { name: '하나카드', cls: 'cd_kind_hana' };
-      // WPAY_CARD_INFO['17'] = { name: '하나카드', cls: 'cd_kind_hana' };
-    </script>
 
     <div
       class="divpop_wrap_dev pop_mbr pop_alert_confirm"

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wck.domain.InsertMemberDTO;
 import com.wck.service.MemberService;
@@ -26,7 +27,9 @@ public class WckController {
 	private final MemberService memberService;
 	
 	@GetMapping("/login")
-	public String loginForm() {
+	public String loginForm(@RequestParam(required = false, name = "error") String error,
+			Model model) {
+		model.addAttribute("error",error);
 		return "wck/login";
 	}
 	

@@ -1,5 +1,6 @@
 package com.wck.security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -19,17 +21,20 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
     
+	@Autowired
+	private AuthenticationFailureHandler authenticationFailureHandler;
 	
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
     
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// 정적파일에 대해선 security 적용 X
 		web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
+	
+	@Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
 	
 	@Bean
 	public RoleHierarchyImpl roleHierarchyImpl() {
@@ -52,12 +57,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			// form login 방식
 			.formLogin()
 			.loginPage("/wck/login")
-			.loginProcessingUrl("/wck/login")
-			.permitAll()
+			.failureHandler(authenticationFailureHandler)
+			.defaultSuccessUrl("/wck/")
+			
 		.and()
 			.oauth2Login()
 			.loginPage("/wck/login")
-			.loginProcessingUrl("/wck/login")
+			.defaultSuccessUrl("/wck/")
 			
 		.and()
 			.csrf()

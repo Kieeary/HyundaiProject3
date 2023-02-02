@@ -15,4 +15,5 @@ public interface MemberMapper {
 	public int insertOne(MemberVO member);
 	public List<MemberVO> findAllByNameAndBirth(String name, Date birth);
 	public MemberVO findOneByNameAndEmail(FindPwDTO findPw);
+	public int updatePasswordOne(String email, String pw);
 }

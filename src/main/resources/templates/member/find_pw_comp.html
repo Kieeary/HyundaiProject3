@@ -1,4 +1,4 @@
-<html lang="ko" class="">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -108,9 +108,7 @@
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/echarts.min.js"></script>
-    <script
-      type="text/javascript"
-      src="http://www.thehandsome.com/_ui/handsomemobile/js/common.js?20210501"></script>
+    
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/assist_common.js?v=20220630"></script>
@@ -132,13 +130,8 @@
 
     <script
       type="text/javascript"
-      src="http://www.thehandsome.com/_ui/handsomemobile/js/instagramAPI.js"></script>
-    <script
-      type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/makePCookie.js"></script>
-    <script
-      type="text/javascript"
-      src="http://www.thehandsome.com/_ui/handsomemobile/js/content.js"></script>
+    
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/e-smart-zoom-jquery.min.js"></script>
@@ -163,6 +156,19 @@
   </head>
 
   <body class="">
+  	<script type="text/javascript">
+  		$(document).ready(function(e){
+  			$('.btn_login').click(function(){
+  				location.href="/wck/login";
+  			})
+  			
+  			$('#findId').click(function(){
+  				location.href="/wck/member/findIdPw?tab=1";
+  			})
+  			
+  		})
+  	</script>
+  
     <div class="hsome_allContents_wrapper">
       <div class="hsome_allContents">
         <!-- ################## header ################## -->
@@ -192,27 +198,15 @@
         </header>
         <!-- //################## header ################## -->
 
-        <form id="resultSend" action="/ko/member/searchEasyId" method="POST">
-          <input type="hidden" name="tabSelct" id="tabSelct" value="findPw" />
-          <input
-            type="hidden"
-            name="selectedVal"
-            id="selectedVal"
-            value="phoneAuth" />
-          <input type="hidden" name="idVelidation" id="idVelidation" value="" />
-          <input type="hidden" name="sName" id="customerName" value="" />
-          <input type="hidden" name="authName" id="authName" value="" />
-          <input type="hidden" name="sendName" id="sendName" value="sendSms" />
-        </form>
         <!-- contents s -->
         <div class="hsome_contents simplemember_wrap">
           <ul class="grey_bg_header_tab">
             <li class="" id="h1">
-              <a href="#none" class="tab_li_hs_mem"><span>한섬회원</span></a>
+              <a href="/wck/login" class="tab_li_hs_mem"><span>로그인</span></a>
             </li>
-            <li id="e1" class="on">
-              <a href="#none" class="tab_li_simple_mem"
-                ><span>간편회원</span></a
+            <li id="e1">
+              <a href="/wck/join" class="tab_li_simple_mem"
+                ><span>회원가입</span></a
               >
             </li>
           </ul>
@@ -230,28 +224,21 @@
               <li class="fcs" style="transform: translateX(158.078px)"></li>
             </ul>
 
-            <!-- ********************************************************************************************** -->
-            <!-- ********************************************************************************************** -->
-            <!-- ********************************************************************************************** -->
-            <!-- ********************************************************************************************** -->
-            <!-- ********************************************************************************************** -->
-            <!-- ********************************************************************************************** -->
-
             <div class="tab_cont" id="easyM" style="">
               <!-- tab_02 비밀번호 찾기 s -->
               <div class="cont on" id="tab_02" style="display: block">
                 <!-- Start: easyPw finding result -->
                 <div id="easyPwComplete" style="">
                   <div class="txt_wrap result pw">
-                    <p>
+                  <p th:if="${!isExist }">조회된 ID가 없습니다.</p>
+                    <p th:if="${isExist}">
                       회원정보에 등록된 이메일주소로<br />임시비밀번호가
                       발송되었습니다.<!-- 회원정보에 등록된 이메일주소로<br>임시비밀번호가 발송되었습니다. -->
                     </p>
                   </div>
                   <div class="btn_wrap">
                     <button
-                      class="btn btn_bg_b btn_login"
-                      onclick="javascript:goPage('/ko/member/login');">
+                      class="btn btn_bg_b btn_login">
                       로그인
                     </button>
                   </div>

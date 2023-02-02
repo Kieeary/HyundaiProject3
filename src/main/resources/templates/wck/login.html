@@ -225,6 +225,11 @@
         	  e.preventDefault();
         	  location.href="/wck/member/findIdPw";
           });
+          
+          $('.btn_google').click(function(e){
+        	  e.preventDefault();
+        	  location.href="/oauth2/authorization/google";
+          })
         });
 
         //]]>
@@ -292,7 +297,7 @@
                 <button
                   type="button"
                   id="google_login_btn"
-                  class="btn btn_bg_b btn_login btn_popup">
+                  class="btn btn_bg_b btn_login btn_popup btn_google">
                   구글로그인
                 </button>
               </div>

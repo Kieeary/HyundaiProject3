@@ -65,7 +65,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 			Account account = new Account(member.getId(), member.getEmail(), member.getPassword(), member.getName(),
 					member.getGender(), member.getLoginType(), authorities, oAuth2User.getAttributes());
 			return account;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
 		}
@@ -85,6 +85,13 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 		int grade = 1;
 		int mileage = 0;
 		log.info("saveOAuth2Member 시작");
+		
+		MemberVO emailMember = memberMapper.findOneByEmail(email, "Email");
+		if(emailMember != null) {
+			log.info("이미 Email 회원으로 가입되어 있음");
+			throw new RuntimeException("이미 Email 회원으로 가입됨");
+		}
+		
 		MemberVO member = memberMapper.findOneByEmail(email, "Google");
 
 		// 기존 member가 있다면 리턴
@@ -92,6 +99,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 			log.info("기존 회원");
 			return member;
 		}
+		
 
 		// 기존 member가 없다면 저장 후 리턴
 		member = new MemberVO();

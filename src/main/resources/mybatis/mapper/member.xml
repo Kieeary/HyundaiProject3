@@ -65,7 +65,8 @@
 			mmileage mileage
 		from member
 		where mname = #{name} and
-			TO_CHAR(mbirth,'YYYY-MM-DD') = TO_CHAR(#{birth},'YYYY-MM-DD')
+			TO_CHAR(mbirth,'YYYY-MM-DD') = TO_CHAR(#{birth},'YYYY-MM-DD') and
+			mlogintype = 'Email'
 	</select>
 	
 	<select id="findOneByNameAndEmail" resultType="member">
@@ -89,7 +90,8 @@
 			mmileage mileage
 		from member
 		where mname = #{name} and 
-			memail = #{email}
+			memail = #{email} and
+			mlogintype = 'Email'
 	</select>
 	<update id="updatePasswordOne">
 		update member

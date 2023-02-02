@@ -23,4 +23,9 @@ public class WckController {
 		return "wck/sample/prod_detail";
 	}
 	
+	@GetMapping("/shoppingbag")
+	public String cartForm() {
+		return "wck/shoppingbag/cart";
+	}
+	
 }

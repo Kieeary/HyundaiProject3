@@ -1433,14 +1433,10 @@
     const style = getComputedStyle(f_info);
     const display = style.display;
 
-    console.log(display);
-    
     if(display === 'none'){
-      console.log("none으로 정보 보이지 않음");
       $(".f_info").prop("style", "display:block");
       $(".f_info_viewer").prop("class", "f_info_viewer active");
     } else {
-      console.log("block으로 정보 보임!");
       $(".f_info").prop("style", "display:none");
       $(".f_info_viewer").prop("class", "f_info_viewer");
     }

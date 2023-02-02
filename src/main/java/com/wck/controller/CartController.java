@@ -10,10 +10,9 @@ import lombok.extern.log4j.Log4j2;
 @Controller
 @RequestMapping("/wck/shoppingbag")
 public class CartController {
-	
-	@GetMapping("/")
-	public String cartForm() {
-		return "wck/shoppingbag/cart";
-	}
+	// 장바구니 수량 변경
+	// 장바구니 조회
+	// 장바구니 상품 제거
+	// 상바구니 상품 추
 
 }

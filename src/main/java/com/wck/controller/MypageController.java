@@ -19,7 +19,7 @@ public class MypageController {
 	}
 	
 	@GetMapping("/myorderdetail")
-	public String orderDetailForm(@RequestParam long code, Model model) {
+	public String orderDetailForm(@RequestParam String code, Model model) {
 		//?code=230202P16631539
 		log.info("주문 번호 : "+code);
 		return "wck/order/my_order_detail";

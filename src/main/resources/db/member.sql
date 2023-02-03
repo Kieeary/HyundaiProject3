@@ -127,3 +127,6 @@ values(
 1, '1', 'Email', 1, 1,
 'ROLE_USER', 1, 1000
 );
+
+insert into cart (MID, PSID, PQUANTITY)
+values ('123123', 'TM2D1TPC424W_IV_61', 1);

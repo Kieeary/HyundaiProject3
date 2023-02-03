@@ -1,0 +1,1260 @@
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="wck/includes/headTag :: head_tag(title='쇼핑백 | 더한섬닷컴')"></th:block>
+
+<body class="back">
+  <style>
+    .swiper-wrapper {
+      height: auto;
+    }
+
+    .check_stl input[type="checkbox"]+label:before {
+      top: 0px;
+    }
+
+  </style>
+
+  <div id="mapleMainPopwrap" style="
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 81.333333%;
+  z-index: 805;
+  transform: translate(-50%, -50%);
+  display: none;">
+  </div>
+
+  <div class="layerArea" id="mapleLayer" style="display: none">
+    <div class="layerBg"></div>
+  </div>
+
+  <!-- ########## hsome_allContents_wrapper ########## -->
+  <div class="hsome_allContents_wrapper">
+    <div class="hsome_allContents fixed_btn_on">
+
+      <!-- ########## header start ########## -->
+      <header class="hsome_header">
+        <h1 class="h_ttl ellipsis" id="headerTitle">쇼핑백</h1>
+        <a href="#" class="h_top_home"><span>홈</span></a>
+        <a href="#" onclick="goBack();" class="h_prev">이전 페이지로 가기</a>
+        <ul class="h_gnbMenu">
+          <li class="search">
+            <a href="#" onclick=""><span>search</span></a>
+          </li>
+          <li class="cart">
+            <a href="/wck/shoppingbag/"><span>cart</span><i>$$</i></a>
+          </li>
+        </ul>
+      </header>
+      <!-- ########## header end ########## -->
+
+      <!-- ########## contents start ########## -->
+      <div id="contents" class="hsome_contents shoppingbag_list_wrap">
+        <ul class="tab_head_num3 gray_tab shoppingbag_tab rm">
+          <li class="tab_li_delivery on" />
+          <li class="tab_li_store" />
+          <li class="tab_li_quick" />
+        </ul>
+
+        <div class="shopingbag_tab_desc_box">
+        </div>
+
+        <!-- ########## cart block ########## -->
+        <div id="shoppingbagCartView">
+          <script type="text/javascript">
+
+            $('.goods_list_wrap').on(
+              'click',
+              '.gl_top_btns a',
+              function () {
+                //상품 리스트 상단 버튼
+                if ($(this).hasClass('btn_gl_restock') == false) {
+                  $(this).toggleClass('icon_btn_on');
+                }
+              }
+            );
+
+            <!-- 2019.11.12 쇼핑백 최초 진입 시 선택 상품 없도록 수정 - 하단 합계 금액 계산 -->
+            $('.gl_check_all').click(function () {
+              var cartDivision = $('#ordersheetCartDivision').val();
+              var onlyFourPm = $('#onlyFourPm').is(':checked');
+
+              if ($(this).is(':checked') == true) {
+                var entryPkList = ',';
+                $("input[name='cartlist']").each(function () {
+                  if (
+                    $(this)
+                      .parents('#entryProductInfo')
+                      .data('outofstock') != true
+                  ) {
+                    var deliveryKind = $(this).data('deliverykind');
+                    if (onlyFourPm) {
+                      if (deliveryKind == 'FOUR_PM') {
+                        entryPkList += $(this).data('pk');
+                        entryPkList += ',';
+                      }
+                    } else {
+                      entryPkList += $(this).data('pk');
+                      entryPkList += ',';
+                    }
+                  }
+                });
+                cartListCheckPrice(entryPkList, true);
+              } else {
+                cartListCheckPrice(',', true);
+              }
+            });
+
+            function continueUrl() {
+              location.href = '/wck/home/';
+            }
+          </script>
+
+          <!-- ########## Goods list start ########## -->
+          <h3 class="section_tit mb0 gl_tit gl_4pm">
+            <div class="check_stl gl_check_all_wrap">
+              <!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
+              <input type="checkbox" id="gl_check_all" class="gl_check_all" value="" />
+              <label for="gl_check_all">담은 상품<span>($$개)</span></label>
+            </div>
+          </h3>
+
+          <ul class="goods_list_wrap">
+            <!-- 활성화 : gl_item에 품절상품 : gl_status_soldout, 4PM상품 : gl_status_4pm 클래스 추가/삭제 -->
+            <!-- ########## forEach 로 상품 정보 나열 <li></li> ########## -->
+            <li>
+              <div class="gl_item" id="entryProductInfo" data-pk="11136041156652" data-deliverykind=""
+                data-outofstock="false">
+
+                <!-- ########## Goods sub CheckBox start ########## -->
+                <div class="check_stl">
+                  <input type="checkbox" id="gl_check_2" name="cartlist" data-pk="11136041156652" data-division=""
+                    data-deliverykind="" value="2" data-soldout="N" onclick="checkTotalPrice(this);" />
+                  <label for="gl_check_2"></label>
+                </div>
+                <!-- ########## Goods sub CheckBox end ########## -->
+
+                <!-- ########## Goods status start ########## -->
+                <ul class="gl_status">
+                  <li>
+                    <div class="icon_soldout"><span>SOLD OUT</span></div>
+                  </li>
+                  <li>
+                    <div class="icon_quick_delivery"><span>4PM</span></div>
+                  </li>
+                </ul>
+                <!-- ########## Goods status end ########## -->
+
+                <!-- ########## Goods icon btn(좋아요, 삭제) ########## -->
+                <ul class="gl_top_btns">
+                  <!-- goods_list_item s -->
+                  <!-- 활성화 : gl_item에 품절상품 : gl_status_soldout 클래스 추가/삭제 -->
+                  <li>
+                    <a href="javascript:;" class="icon_btn btn_gl_like"
+                      onclick="addWishList('CM2D1WOT105W_LE_82');"><span>좋아요</span></a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" class="icon_btn btn_gl_del"
+                      onclick="deleteBtnEvent('0');"><span>삭제</span></a>
+                  </li>
+                </ul>
+
+                <!-- ########## Goods info start ########## -->
+                <div class="gl_mid">
+                  <div class="gl_tit">
+                    <a href="/ko/p/CM2D1WOT105W_LE_82" onclick="setEcommerceData('1', 'Click ADD');">
+                      <img src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_S01.jpg/dims/resize/"
+                        class="gl_thumbimg" alt="" />
+                    </a>
+                  </div>
+                  <ul class="gl_con">
+                    <a href="/ko/p/CM2D1WOT105W_LE_82" onclick="setEcommerceData('1', 'Click ADD');">
+                      <li class="gl_con_brand">the CASHMERE</li>
+                      <li class="gl_con_name">린넨 블렌드 오버사이즈 재킷</li>
+                    </a>
+                    <li class="gl_con_price">
+                      ₩745,000<input type="hidden" id="checkZeroPrice0" name="checkZeroPrice" value="745000.0" />
+                    </li>
+                  </ul>
+                </div>
+                <!-- ########## Goods info end ########## -->
+
+                <!-- ########## Goods option info start ########## -->
+                <div class="gl_btm">
+                  <ul class="gl_info">
+                    <li>
+                      <div class="gl_tit">옵션수량</div>
+                      <div class="gl_con">
+                        LIGHT BEIGE&nbsp;<span class="and_line">/</span> 82 /
+                        1개
+                      </div>
+                    </li>
+                    <li>
+                      <div class="gl_tit">적립 마일리지</div>
+                      <div class="gl_con">37,250M</div>
+                    </li>
+                    <li>
+                      <div class="gl_tit">적립 H.Point</div>
+                      <div class="gl_con">745P</div>
+                    </li>
+                  </ul>
+                  <a href="javascript:void(0);" class="border_btn btn_option_edit"
+                    id="optOpenLayer^0^CM2D1WOT105W_LE"><span>변경</span></a>
+                </div>
+                <!-- ########## Goods option info end ########## -->
+              </div>
+            </li>
+
+            <li>
+              <div class="gl_item" id="entryProductInfo" data-pk="11136041156652" data-deliverykind=""
+                data-outofstock="false">
+
+                <!-- ########## Goods sub CheckBox start ########## -->
+                <div class="check_stl">
+                  <input type="checkbox" id="gl_check_2" name="cartlist" data-pk="11136041156652" data-division=""
+                    data-deliverykind="" value="2" data-soldout="N" onclick="checkTotalPrice(this);" />
+                  <label for="gl_check_2"></label>
+                </div>
+                <!-- ########## Goods sub CheckBox end ########## -->
+
+                <!-- ########## Goods status start ########## -->
+                <ul class="gl_status">
+                  <li>
+                    <div class="icon_soldout"><span>SOLD OUT</span></div>
+                  </li>
+                  <li>
+                    <div class="icon_quick_delivery"><span>4PM</span></div>
+                  </li>
+                </ul>
+                <!-- ########## Goods status end ########## -->
+
+                <!-- ########## Goods icon btn(좋아요, 삭제) ########## -->
+                <ul class="gl_top_btns">
+                  <!-- goods_list_item s -->
+                  <!-- 활성화 : gl_item에 품절상품 : gl_status_soldout 클래스 추가/삭제 -->
+                  <li>
+                    <a href="javascript:;" class="icon_btn btn_gl_like"
+                      onclick="addWishList('CM2D1WOT105W_LE_82');"><span>좋아요</span></a>
+                  </li>
+                  <li>
+                    <a href="javascript:;" class="icon_btn btn_gl_del"
+                      onclick="deleteBtnEvent('0');"><span>삭제</span></a>
+                  </li>
+                </ul>
+
+                <!-- ########## Goods info start ########## -->
+                <div class="gl_mid">
+                  <div class="gl_tit">
+                    <a href="/ko/p/CM2D1WOT105W_LE_82" onclick="setEcommerceData('1', 'Click ADD');">
+                      <img src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_S01.jpg/dims/resize/"
+                        class="gl_thumbimg" alt="" />
+                    </a>
+                  </div>
+                  <ul class="gl_con">
+                    <a href="/ko/p/CM2D1WOT105W_LE_82" onclick="setEcommerceData('1', 'Click ADD');">
+                      <li class="gl_con_brand">the CASHMERE</li>
+                      <li class="gl_con_name">린넨 블렌드 오버사이즈 재킷</li>
+                    </a>
+                    <li class="gl_con_price">
+                      ₩745,000<input type="hidden" id="checkZeroPrice0" name="checkZeroPrice" value="745000.0" />
+                    </li>
+                  </ul>
+                </div>
+                <!-- ########## Goods info end ########## -->
+
+                <!-- ########## Goods option info start ########## -->
+                <div class="gl_btm">
+                  <ul class="gl_info">
+                    <li>
+                      <div class="gl_tit">옵션수량</div>
+                      <div class="gl_con">
+                        LIGHT BEIGE&nbsp;<span class="and_line">/</span> 82 /
+                        1개
+                      </div>
+                    </li>
+                    <li>
+                      <div class="gl_tit">적립 마일리지</div>
+                      <div class="gl_con">37,250M</div>
+                    </li>
+                    <li>
+                      <div class="gl_tit">적립 H.Point</div>
+                      <div class="gl_con">745P</div>
+                    </li>
+                  </ul>
+                  <a href="javascript:void(0);" class="border_btn btn_option_edit"
+                    id="optOpenLayer^0^CM2D1WOT105W_LE"><span>변경</span></a>
+                </div>
+                <!-- ########## Goods option info end ########## -->
+              </div>
+            </li>
+
+          </ul>
+          <!-- ########## Goods list end ########## -->
+
+          <!-- ########## Goods list edit btn start ########## -->
+          <div class="gl_edit_btn_wrap">
+            <!-- 수정(46107) : 20180709 s -->
+            <!-- added -->
+            <div class="order_goods_summary_wrap">
+              <div class="ordgd_tit">
+                총 <b><span id="selectProductCount">2</span></b>개 상품
+              </div>
+              <ul class="ordgd_detail total_price_detail">
+                <li>
+                  <div class="ttpd_tit">상품 합계</div>
+                  <div class="ttpd_con">
+                    <span id="cartDataSubtotal">₩1,490,000</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="ttpd_tit">배송비</div>
+                  <div class="ttpd_con">
+                    <span id="cartDataDeliveryCost">₩0</span>
+                  </div>
+                </li>
+                <li class="total_sum">
+                  <div class="ttpd_tit">합계</div>
+                  <div class="ttpd_con">
+                    <span id="cartDataTotalPrice">₩1,490,000</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!-- 수정(46107) : 20180709 e -->
+
+            <div class="btn_wrap btn_wrap_div2">
+              <a href="#none" class="btnstl3 border_btn_gray gleb_soldout_del" onclick="outOfStockRemove()"><span>품절상품
+                  삭제</span></a><!-- 품절상품삭제 -->
+              <a href="#none" class="btnstl3 border_btn_gray gleb_select_del" onclick="selectRemove();"><span>선택상품
+                  삭제</span></a><!-- 선택상품삭제 -->
+              <!-- 쇼핑 계속하기 버튼 s -->
+              <!-- 쇼핑 계속하기 버튼 e -->
+            </div>
+            <div class="btn_wrap btn_wrap btn_wrap_div1" id="orderButtonGroup">
+              <a href="javascript:checkoutPage('checkout');" class="btnstl3 solid_btn_blk gleb_order"><span>선택상품
+                  주문하기</span></a>
+            </div>
+          </div>
+          <!-- ########## Goods list edit btn end ########## -->
+
+          <!-- ########## Promotion start ########## -->
+          <script type="text/javascript">
+            $(document).ready(function () {
+              swiperPageActive('swiper_promotion'); //swiper 활성화
+            });
+          </script>
+
+          <div id="promotion_wrap"
+            class="promotion_wrap swiper-container swiper_promotion effw swiper-container-horizontal swiper-container-android swiper-container-wp8-horizontal">
+            <ul class="swiper-wrapper" style="
+              transition-duration: 0ms;
+              transform: translate3d(-2884px, 0px, 0px); ">
+              <li class="swiper-slide swiper-slide-duplicate swiper-slide-duplicate-active" data-swiper-slide-index="6"
+                style="width: 412px">
+                <a href="javascript:;" target="_blank">
+                  <div class="prmt_item prmt_type_1">
+                    <div class="prmt_img_box">
+                      <img
+                        src="http://www.thehandsome.com/medias/-.jpg?context=bWFzdGVyfHJvb3R8MTgzMDV8aW1hZ2UvanBlZ3xoOWIvaDg3LzkzNTQxNjkxNTU2MTQuanBnfGRlYjVlYWM2MzI4NjJkYzAxNjljOGUyZWI0MGRkZjg4ZmMwY2I0NjAwZTkyMmRjMzlhYzVjOWNjZDZhODhkODM"
+                        class="promotion_img" alt="프로모션" />
+                    </div>
+                    <div class="prmt_text_box">
+                      <div class="prmt_text_tit">
+                        더캐시미어 띵스 VERPAN 기프트 증정
+                      </div>
+                      <div class="prmt_text_con">
+                        구매하신 고객님께
+                        <span class="point_t">VERPAN 에코백 1종</span>을(를)
+                        드립니다.
+                      </div>
+                      <div class="prmt_text_con">
+                        기간 내 베르판 상품 구매 고객님께 베르판 에코백 1종을
+                        사은품으로 드립니다.<br />주문 1건당 1개 제공되며,
+                        사은품은 주문하신 배송지로 구매 상품과 함께
+                        발송됩니다. <br />- 기간 : 12월 08일 ~ 소진 시 (선착순
+                        증정)
+                      </div>
+                      <div class="prmt_text_con">2022.12.07 ~ 2023.12.31</div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="swiper-slide swiper-slide-duplicate-next" data-swiper-slide-index="0" style="width: 412px">
+                <a href="javascript:;" target="_blank">
+                  <div class="prmt_item prmt_type_1">
+                    <div class="prmt_img_box">
+                      <img
+                        src="http://www.thehandsome.com/medias/-.png?context=bWFzdGVyfHJvb3R8NTU4MzA0fGltYWdlL3BuZ3xoNWQvaGJlLzkzNjUzMDEwNjc4MDYucG5nfDg4ZDRjNzUwZTkxMWRiODM3MDI2NzJlMzkwZGI1ZTNjYzcxODQxN2RmYjdmZjhhZGY4NjdkMWQyOGU4NjcyZGU"
+                        class="promotion_img" alt="프로모션" />
+                    </div>
+                    <div class="prmt_text_box">
+                      <div class="prmt_text_tit">
+                        TALITHA KOUM 10만원 이상 구매 시 타올 1매 증정
+                      </div>
+                      <div class="prmt_text_con">
+                        100,000원 이상&nbsp; 구매하신 고객님께
+                        <span class="point_t">TALITHA KOUM 민들레 타올 1매</span>을(를) 드립니다.
+                      </div>
+                      <div class="prmt_text_con">
+                        더캐시미어띵스 내 탈리다쿰 제품을 10만원 이상 구매하신
+                        고객님께 "탈리다쿰 X Towelogist 민들레 타월 1매"를
+                        드립니다.<br />기간 : 1월 26일~소진 시 까지<br />TALITHA
+                        KOUM 탈리다쿰 상품 총 10만원 이상 구매<br />사은품은
+                        주문하신 상품과 함께 동봉하여 발송될 예정입니다.<br />본
+                        사은품은 주문번호당 1회 증정되며, 반품 및 교환 시
+                        사은품은 반드시 동봉하여 회수됩니다.
+                      </div>
+                      <div class="prmt_text_con">2023.01.25 ~ 2023.12.31</div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="swiper-slide swiper-slide-active" data-swiper-slide-index="6" style="width: 412px">
+                <a href="javascript:;" target="_blank">
+                  <div class="prmt_item prmt_type_1">
+                    <div class="prmt_img_box">
+                      <img
+                        src="http://www.thehandsome.com/medias/-.jpg?context=bWFzdGVyfHJvb3R8MTgzMDV8aW1hZ2UvanBlZ3xoOWIvaDg3LzkzNTQxNjkxNTU2MTQuanBnfGRlYjVlYWM2MzI4NjJkYzAxNjljOGUyZWI0MGRkZjg4ZmMwY2I0NjAwZTkyMmRjMzlhYzVjOWNjZDZhODhkODM"
+                        class="promotion_img" alt="프로모션" />
+                    </div>
+                    <div class="prmt_text_box">
+                      <div class="prmt_text_tit">
+                        더캐시미어 띵스 VERPAN 기프트 증정
+                      </div>
+                      <div class="prmt_text_con">
+                        구매하신 고객님께
+                        <span class="point_t">VERPAN 에코백 1종</span>을(를)
+                        드립니다.
+                      </div>
+                      <div class="prmt_text_con">
+                        기간 내 베르판 상품 구매 고객님께 베르판 에코백 1종을
+                        사은품으로 드립니다.<br />주문 1건당 1개 제공되며,
+                        사은품은 주문하신 배송지로 구매 상품과 함께
+                        발송됩니다. <br />- 기간 : 12월 08일 ~ 소진 시 (선착순
+                        증정)
+                      </div>
+                      <div class="prmt_text_con">2022.12.07 ~ 2023.12.31</div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="swiper-slide swiper-slide-duplicate swiper-slide-next" data-swiper-slide-index="0"
+                style="width: 412px">
+                <a href="javascript:;" target="_blank">
+                  <div class="prmt_item prmt_type_1">
+                    <div class="prmt_img_box">
+                      <img
+                        src="http://www.thehandsome.com/medias/-.png?context=bWFzdGVyfHJvb3R8NTU4MzA0fGltYWdlL3BuZ3xoNWQvaGJlLzkzNjUzMDEwNjc4MDYucG5nfDg4ZDRjNzUwZTkxMWRiODM3MDI2NzJlMzkwZGI1ZTNjYzcxODQxN2RmYjdmZjhhZGY4NjdkMWQyOGU4NjcyZGU"
+                        class="promotion_img" alt="프로모션" />
+                    </div>
+                    <div class="prmt_text_box">
+                      <div class="prmt_text_tit">
+                        TALITHA KOUM 10만원 이상 구매 시 타올 1매 증정
+                      </div>
+                      <div class="prmt_text_con">
+                        100,000원 이상&nbsp; 구매하신 고객님께
+                        <span class="point_t">TALITHA KOUM 민들레 타올 1매</span>을(를) 드립니다.
+                      </div>
+                      <div class="prmt_text_con">
+                        더캐시미어띵스 내 탈리다쿰 제품을 10만원 이상 구매하신
+                        고객님께 "탈리다쿰 X Towelogist 민들레 타월 1매"를
+                        드립니다.<br />기간 : 1월 26일~소진 시 까지<br />TALITHA
+                        KOUM 탈리다쿰 상품 총 10만원 이상 구매<br />사은품은
+                        주문하신 상품과 함께 동봉하여 발송될 예정입니다.<br />본
+                        사은품은 주문번호당 1회 증정되며, 반품 및 교환 시
+                        사은품은 반드시 동봉하여 회수됩니다.
+                      </div>
+                      <div class="prmt_text_con">2023.01.25 ~ 2023.12.31</div>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets">
+              <span class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span
+                class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span
+                class="swiper-pagination-bullet"></span><span class="swiper-pagination-bullet"></span><span
+                class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
+            </div>
+          </div>
+          <!-- ########## Promotion end ########## -->
+
+          <!-- ########## shoppingbag guid start ########## -->
+          <ul class="shoppingbag_guide_wrap btn_wrap btn_wrap_div1 last_box">
+            <li>
+              <a
+                href="javascript:shoppingbagInfoOpen();"
+                class="btnstl5 arrow_btn spb_guide"
+                data-layerpop-depth="depth1"
+                ><span>쇼핑백 이용안내</span></a>
+            </li>
+
+            <li>
+              <a
+                href=".product_card_pop"
+                class="btnstl5 arrow_btn spb_card_benefit btn_popup_trigger"
+                ><span>카드 행사 혜택(무이자, 청구, 즉시할인)</span></a>
+            </li>
+          </ul>
+          <!-- ########## shoppingbag guid end ########## -->
+
+          <!-- ########## card benefit start ########## -->
+          <div
+            class="hsome_layer_popup product_card_pop"
+            id="cardBenefitLayerPopup">
+            <!-- 카드사 혜택 -->
+            <!-- <div class="hsome_layer_popup product_card_pop"> -->
+            <h2 class="pop-comm-ttl">카드사 혜택</h2>
+            <ul class="ui_tab hs_red_border_tab size03">
+              <li class="on"><a href="#card_tab01">무이자 할부</a></li>
+              <li><a href="#card_tab02">청구할인</a></li>
+              <li><a href="#card_tab03">즉시할인</a></li>
+            </ul>
+            <div class="pop-comm-cnts">
+              <div class="tab_cont">
+                <div class="cont on" id="card_tab01">
+                  <div class="card_list_wrap">
+                    <h3 class="tit_txt">무이자 할부 행사</h3>
+                    <ul class="card_list">
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/shinhan.jpg?context=bWFzdGVyfHJvb3R8MjY1N3xpbWFnZS9qcGVnfGhkZS9oMmIvODgxNDE4MTUxNTI5NC5qcGd8NTAwMDYxM2ZmZmRlZGFhZDQ0ODNmODJjZTg2OTE3MGI3OWQ2ZmE3YzI0ZjA3MDY3NzIxYWVhNmY3NDQyYWUzMA"
+                            alt="신한카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">신한카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b
+                                  >신한카드 5만원이상 결제시 2~3개월 무이자
+                                  할부</b
+                                ><br />
+                                대상: 신한카드 전 회원<br />
+                                (신한BC 제외/ 법인,기프트,체크,선불카드
+                                제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/SAMSUNG.jpg?context=bWFzdGVyfHJvb3R8MzIxOXxpbWFnZS9qcGVnfGgzZC9oNGQvODgxNDE4MTYxMzU5OC5qcGd8ZGY1NDJiM2U1YWNmNGE5MTJkOTA0MTAxMDliMDc4ZjRlNTJmZjJlOTkxOTQzZTEwMDcxZWU2NGU2MjJmMWE2Mw"
+                            alt="삼성카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">삼성카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b
+                                  >삼성카드 5만원이상 결제시 2~3개월 무이자
+                                  할부</b
+                                ><br />
+                                대상: 삼성카드 전 회원<br />
+                                (법인,기프트,체크,선불카드 제외)
+                              </span>
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/BC.jpg?context=bWFzdGVyfHJvb3R8MjQ1OHxpbWFnZS9qcGVnfGhmMi9oMGQvODgxNDE4MTIyMDM4Mi5qcGd8MjZlZGU2ZGQyNDBkYzU5YmY2NWY0MDU3NDc1OTA0YWI5NmM4NDJjMDFiYjBiYjBjY2FhZjhmMzg3ZmE5NGU5Yw"
+                            alt="비씨카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">비씨카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b
+                                  >비씨카드 5만원이상 결제시 2~3개월 무이자
+                                  할부</b
+                                ><br />
+                                대상: 비씨카드 전 회원<br />(법인,기프트,체크,선불카드
+                                제외)
+                              </span>
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/HYUNDAI.jpg?context=bWFzdGVyfHJvb3R8MjYxMHxpbWFnZS9qcGVnfGg1ZC9oN2MvODgxNDE4MTcxMTkwMi5qcGd8YmM5ZWY0ZjlhODlkMzdmMjYyNmY4NjQ4OWU5NWVjOWFlMGY4ODIwYzZlNjA0MjBlNDkwNWI0ZDllYThjMWE5Mw"
+                            alt="현대카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">현대카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b
+                                  >현대카드 1만원이상 결제시 2~3개월 무이자
+                                  할부</b
+                                ><br />
+                                대상: 현대카드 전 회원<br />
+                                (법인,기프트,체크,선불카드 제외)
+                              </span>
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/kucmin.jpg?context=bWFzdGVyfHJvb3R8MzMwM3xpbWFnZS9qcGVnfGgyZS9oMzQvODgxNDE4MTAyMzc3NC5qcGd8MjM1YjEyN2I4OTljMGIxYzY3MjhjNDhkZWMyOTE5ODZjYmRiYWExNDdhOWZmNDQ3ZWNhNGIxZjYwYzk2MDA4Zg"
+                            alt="국민카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">국민카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b
+                                  >KB국민카드 5만원이상 결제시 2~3개월 무이자
+                                  할부</b
+                                ><br />
+                                대상: KB국민카드 전 회원<br />
+                                (NH농협, 국민BC 제외/ 법인,기프트,체크,선불카드
+                                제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/hanacard.gif?context=bWFzdGVyfHJvb3R8MTkzNXxpbWFnZS9naWZ8aDYwL2hmYi84ODE0MDU0OTY1Mjc4LmdpZnxhMGM5OWY0MDdhNDhjYzkwOTdiMzhkM2VmMDQ2YTI0NTAyNDBjZTljNTdiYzk4YWRhZmI0NjBhOWRhNzRiMGYw"
+                            alt="하나카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">하나카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b
+                                  >하나카드 5만원이상 결제시 2~8개월 무이자
+                                  할부</b
+                                ><br />
+                                대상: 하나카드 전 회원 (구 하나SK, 구 외환)<br />
+                                (하나BC카드 포함/법인,기프트,체크,선불카드
+                                제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/NH.jpg?context=bWFzdGVyfHJvb3R8Mzk3OXxpbWFnZS9qcGVnfGg4ZS9oMzYvODgxNDE4MTkwODUxMC5qcGd8ZWVlNmY1OWM0NDdmMjg2M2Y4NGZkNDZjYThmOTVkMWNmY2QwYWNkOWI1ODc5YTdiMTc5MjY4MThiZTkzYzNmMw"
+                            alt="NH카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">NH카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b
+                                  >NH농협카드 5만원이상 결제시 2~4개월 무이자
+                                  할부</b
+                                ><br />
+                                대상: NH농협카드 전 회원<br />
+                                (NH농협BC카드 포함/ 법인,기프트,체크,선불카드
+                                제외)
+                              </span>
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/LOTTE.jpg?context=bWFzdGVyfHJvb3R8MzI3MXxpbWFnZS9qcGVnfGhiMy9oNDcvODgxNDE4MTgxMDIwNi5qcGd8MDliOThkNzA1ZDc2ZDE4MzZhYmUzYjI2MDMxZDk0NGU3OTVjYzBhYTA1MmMzMjAyZmE0Y2U4OTZlNTU3NDU2Zg"
+                            alt="롯데카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">롯데카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b
+                                  >롯데카드 5만원이상 결제시 2~3개월 무이자
+                                  할부</b
+                                ><br />
+                                대상:롯데카드 전 회원<br />
+                                (법인,기프트,체크,선불카드 제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <h3 class="tit_txt mt">부분 무이자 할부 행사</h3>
+                    <ul class="card_list">
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/shinhan.jpg?context=bWFzdGVyfHJvb3R8MjY1N3xpbWFnZS9qcGVnfGhkZS9oMmIvODgxNDE4MTUxNTI5NC5qcGd8NTAwMDYxM2ZmZmRlZGFhZDQ0ODNmODJjZTg2OTE3MGI3OWQ2ZmE3YzI0ZjA3MDY3NzIxYWVhNmY3NDQyYWUzMA"
+                            alt="신한카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">신한카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>10개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3,4회차 고객부담, 잔여할부
+                                수수료 면제/법인,체크,기프트카드 제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/shinhan.jpg?context=bWFzdGVyfHJvb3R8MjY1N3xpbWFnZS9qcGVnfGhkZS9oMmIvODgxNDE4MTUxNTI5NC5qcGd8NTAwMDYxM2ZmZmRlZGFhZDQ0ODNmODJjZTg2OTE3MGI3OWQ2ZmE3YzI0ZjA3MDY3NzIxYWVhNmY3NDQyYWUzMA"
+                            alt="신한카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">신한카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>12개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3,4,5회차 고객부담,
+                                잔여할부 수수료 면제/법인,체크,기프트카드
+                                제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/SAMSUNG.jpg?context=bWFzdGVyfHJvb3R8MzIxOXxpbWFnZS9qcGVnfGgzZC9oNGQvODgxNDE4MTYxMzU5OC5qcGd8ZGY1NDJiM2U1YWNmNGE5MTJkOTA0MTAxMDliMDc4ZjRlNTJmZjJlOTkxOTQzZTEwMDcxZWU2NGU2MjJmMWE2Mw"
+                            alt="삼성카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">삼성카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>6개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3회차 고객 부담, 잔여할부
+                                수수료 면제/법인,체크,기프트카드 제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/SAMSUNG.jpg?context=bWFzdGVyfHJvb3R8MzIxOXxpbWFnZS9qcGVnfGgzZC9oNGQvODgxNDE4MTYxMzU5OC5qcGd8ZGY1NDJiM2U1YWNmNGE5MTJkOTA0MTAxMDliMDc4ZjRlNTJmZjJlOTkxOTQzZTEwMDcxZWU2NGU2MjJmMWE2Mw"
+                            alt="삼성카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">삼성카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>10개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3,4회차 고객 부담,
+                                잔여할부 수수료 면제/법인,체크,기프트카드
+                                제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/SAMSUNG.jpg?context=bWFzdGVyfHJvb3R8MzIxOXxpbWFnZS9qcGVnfGgzZC9oNGQvODgxNDE4MTYxMzU5OC5qcGd8ZGY1NDJiM2U1YWNmNGE5MTJkOTA0MTAxMDliMDc4ZjRlNTJmZjJlOTkxOTQzZTEwMDcxZWU2NGU2MjJmMWE2Mw"
+                            alt="삼성카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">삼성카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>12개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3,4,5회차 고객 부담,
+                                잔여할부 수수료 면제/법인,체크,기프트카드 제외)
+                              </span>
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/BC.jpg?context=bWFzdGVyfHJvb3R8MjQ1OHxpbWFnZS9qcGVnfGhmMi9oMGQvODgxNDE4MTIyMDM4Mi5qcGd8MjZlZGU2ZGQyNDBkYzU5YmY2NWY0MDU3NDc1OTA0YWI5NmM4NDJjMDFiYjBiYjBjY2FhZjhmMzg3ZmE5NGU5Yw"
+                            alt="비씨카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">비씨카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>우리BC 12개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3,4회차 고객부담, 잔여할부
+                                수수료 면제/법인,체크,기프트카드 제외)
+                              </span>
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/BC.jpg?context=bWFzdGVyfHJvb3R8MjQ1OHxpbWFnZS9qcGVnfGhmMi9oMGQvODgxNDE4MTIyMDM4Mi5qcGd8MjZlZGU2ZGQyNDBkYzU5YmY2NWY0MDU3NDc1OTA0YWI5NmM4NDJjMDFiYjBiYjBjY2FhZjhmMzg3ZmE5NGU5Yw"
+                            alt="비씨카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">비씨카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b> 우리BC 10개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3회차 고객부담, 잔여할부
+                                수수료 면제/법인,체크,기프트카드 제외)
+                              </span>
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2022.12.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/kucmin.jpg?context=bWFzdGVyfHJvb3R8MzMwM3xpbWFnZS9qcGVnfGgyZS9oMzQvODgxNDE4MTAyMzc3NC5qcGd8MjM1YjEyN2I4OTljMGIxYzY3MjhjNDhkZWMyOTE5ODZjYmRiYWExNDdhOWZmNDQ3ZWNhNGIxZjYwYzk2MDA4Zg"
+                            alt="국민카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">국민카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>6개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3회차 고객부담, 잔여할부
+                                수수료 면제/법인,체크,기프트카드 제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/kucmin.jpg?context=bWFzdGVyfHJvb3R8MzMwM3xpbWFnZS9qcGVnfGgyZS9oMzQvODgxNDE4MTAyMzc3NC5qcGd8MjM1YjEyN2I4OTljMGIxYzY3MjhjNDhkZWMyOTE5ODZjYmRiYWExNDdhOWZmNDQ3ZWNhNGIxZjYwYzk2MDA4Zg"
+                            alt="국민카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">국민카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>10개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3,4 회차 고객부담,
+                                잔여할부 수수료 면제/법인,체크,기프트카드
+                                제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/kucmin.jpg?context=bWFzdGVyfHJvb3R8MzMwM3xpbWFnZS9qcGVnfGgyZS9oMzQvODgxNDE4MTAyMzc3NC5qcGd8MjM1YjEyN2I4OTljMGIxYzY3MjhjNDhkZWMyOTE5ODZjYmRiYWExNDdhOWZmNDQ3ZWNhNGIxZjYwYzk2MDA4Zg"
+                            alt="국민카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">국민카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>12개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3,4,5 회차 고객부담,
+                                잔여할부 수수료 면제/법인,체크,기프트카드
+                                제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/hanacard.gif?context=bWFzdGVyfHJvb3R8MTkzNXxpbWFnZS9naWZ8aDYwL2hmYi84ODE0MDU0OTY1Mjc4LmdpZnxhMGM5OWY0MDdhNDhjYzkwOTdiMzhkM2VmMDQ2YTI0NTAyNDBjZTljNTdiYzk4YWRhZmI0NjBhOWRhNzRiMGYw"
+                            alt="하나카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">하나카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>10개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3회차 고객부담, 잔여할부
+                                수수료 면제/법인,체크,기프트카드 제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="card_logo">
+                          <img
+                            src="http://www.thehandsome.com/medias/hanacard.gif?context=bWFzdGVyfHJvb3R8MTkzNXxpbWFnZS9naWZ8aDYwL2hmYi84ODE0MDU0OTY1Mjc4LmdpZnxhMGM5OWY0MDdhNDhjYzkwOTdiMzhkM2VmMDQ2YTI0NTAyNDBjZTljNTdiYzk4YWRhZmI0NjBhOWRhNzRiMGYw"
+                            alt="하나카드" />
+                        </div>
+                        <div class="card_cont">
+                          <p class="name">하나카드</p>
+                          <div class="cont_area">
+                            <!-- 												<p class="tit">5만원 이상 결제 시 2~6개월 무이자 할부</p> -->
+                            <p class="text">
+                              <span
+                                ><b>12개월 부분무이자</b><br />
+                                (5만원이상 결제시/1,2,3,4회차 고객부담, 잔여할부
+                                수수료 면제/법인,체크,기프트카드 제외)</span
+                              >
+                              <!-- 													<span>(신한BC 제외 / 법인, 기프트, 체크, 선불카드 제외)</span> -->
+                              <span>2023.01.01 ~ 2023.01.31</span>
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <ul class="hs_bul_list btm">
+                      <li class="dot">
+                        ARS 무이자 할부는 해당 카드사 ARS 번호로 사전 신청을
+                        하신 경우에 한하여<br />무이자 혜택이 적용됩니다.(ARS
+                        부문 무이자 할부 포함)
+                      </li>
+                      <li class="dot">
+                        상기 부분 무이자 할부는 5만원 이상 결제 시 자동
+                        적용되며, 결제창에는 무이자 표시가 되지 않을 수
+                        있습니다.
+                      </li>
+                      <li class="dot">
+                        법인 / 체크 / 선불 / 기프트 / 은행 계열 카드는
+                        제외됩니다.
+                      </li>
+                      <li class="dot">
+                        고객 부담 수수료는 해당 카드사로 문의 바랍니다.
+                      </li>
+                      <li class="dot">
+                        본 행사는 카드사 사정에 따라 일부 내용이 변경 또는
+                        중단될 수 있습니다.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="cont" id="card_tab02">
+                  <div class="card_list_wrap">
+                    <ul class="card_list">
+                      <p class="no_data">카드행사가 없습니다.</p>
+                      <!-- 180615_카드행사 없음 케이스 추가 -->
+                    </ul>
+                    <ul class="hs_bul_list btm">
+                      <li class="dot">
+                        법인 / 체크 / 선불 / 기프트 / 은행 계열 카드는
+                        제외됩니다.
+                      </li>
+                      <li class="dot">
+                        본 행사는 카드사 사정에 따라 일부 내용이 변경 또는
+                        중단될 수 있습니다.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="cont" id="card_tab03">
+                  <div class="card_list_wrap">
+                    <ul class="card_list">
+                      <p class="no_data">카드행사가 없습니다.</p>
+                      <!-- 180615_카드행사 없음 케이스 추가 -->
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <a href="javascript:;" class="pop-comm-cls">닫기</a>
+            <!-- </div> -->
+            <!--// 카드사 혜택 -->
+          </div>
+          <!-- ########## card benefit end ########## -->
+
+          <!-- ########## payment bottom btn start ########## -->
+          <div class="payment_btn_wrap btm_fixed_wrap on">
+            <ul class="btn_wrap btn_wrap_div1">
+              <li class="pymt_select_first" style="display: none">
+                <a href="#none" class="btnstl6 solid_btn_gray"
+                  ><span>주문하실 상품을 선택해 주세요</span></a
+                >
+              </li>
+
+              <li class="pymt_order_apply" style="display: block">
+                <a
+                  href="javascript:checkoutPage('checkout');"
+                  class="btnstl6 solid_btn_point"
+                  id="oderBtn"
+                  ><span class="btn_t_1"><b>1,490,000</b> 원</span
+                  ><span class="btn_t_2">주문하기</span></a
+                >
+              </li>
+
+              <div style="display: none">
+                <!-- layerpop_wrap | 주문하기 s -->
+                <div
+                  class="layerpop_wrap lp_order_apply_wrap"
+                  id="order_layerpop">
+                  <!-- layerpop_top s -->
+                  <div class="lyrpp_top" id="lyrppTopColseArea">
+                    <!-- 		<a href="#none" class="lyrpp_close lyrpp_close_stl3  btn_lyrpp_close"><span>닫기</span></a> -->
+                    <a
+                      href="javascript:;"
+                      class="lyrpp_close lyrpp_close_stl3 btn_lyrpp_close"
+                      ><span>닫기</span></a
+                    >
+                  </div>
+                  <!-- layerpop_top e -->
+
+                  <!-- layerpop_middle s -->
+                  <div class="lyrpp_mid">
+                    <ul
+                      id="lpOrderApplyBtns"
+                      class="btn_wrap btn_wrap_div1 lp_order_apply_btns">
+                      <li>
+                        <a
+                          href="javascript:paymentProcess('checkout');"
+                          class="btnstl4 border_btn_blk"
+                          >배송&amp;결제정보 입력</a
+                        >
+                      </li>
+                      <li>
+                        <div class="lyrpp_desc ta_c">
+                          해외 배송을 원할 경우 thehandsome.com 의 <br />
+                          글로벌 서비스를 이용해주세요.
+                        </div>
+                      </li>
+                    </ul>
+
+                    <div style="margin: 40px auto 0px">
+                      <!-- <img
+                      src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/Spinner_1s_105px.png"
+                      alt="loading" id="imgLoadingAddtocart200218"
+                      style="display:none;width:32px;height:32px;margin: 0px
+                      auto 0px auto;">
+                      <p style="color: #222; text-align: center" ="">
+                        <span
+                          style="
+                            display: block;
+                            margin-top: 15px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            text-align: center;
+                          "
+                          >처리중입니다</span
+                        >
+                      </p>
+
+                      <p></p> -->
+                    </div>
+
+
+                    
+                    
+                  </div>
+                 
+                </div>
+                
+              </div>
+            </ul>
+          </div>
+          <!-- ########## payment bottom btn end ########## -->
+
+          <!-- ########## tooltip??? start ########## -->
+          <div class="hsome_tooltip_list">
+            <!-- í´í : ì¼íë°±ì¶ê° s -->
+            <div class="tooltip_html">
+              <div class="tooltip_wrap tooltip_shoppingbag_add">
+                <div class="tltp_close_btn btn_tltp_close">
+                  <span>닫기</span>
+                </div>
+                <h1 class="tltp_header">쇼핑백추가</h1>
+                <div class="tltp_content">
+                  <div class="shoppingbag_img">
+                    <img
+                      src="http://www.thehandsome.com/_ui/handsomemobile/images/order/img_shoppingbag.jpg"
+                      alt="쇼핑백" />
+                  </div>
+                  <ul class="ul_dot_blk">
+                    <li>
+                      선물용이나 이동 시, 편리하게 사용할 수 있는 쇼핑백에
+                      포장해 드립니다.
+                    </li>
+                    <li>
+                      브랜드 쇼핑백 또는 더한섬닷컴 전용 쇼핑백 중 1개로 무작위
+                      발송되며, 고객님의 요청사항이 반영되지는 않습니다.
+                    </li>
+                    <li>
+                      쇼핑백 선택 시, 기본 포장에 포함된 페이퍼 백은 동봉되지
+                      않습니다.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- í´í : ì¼íë°±ì¶ê° e -->
+            <div class="tooltip_html">
+              <div class="tooltip_wrap tooltip_buy_delivery_charge">
+                <div class="tltp_close_btn btn_tltp_close">
+                  <span>닫기</span>
+                </div>
+                <h1 class="tltp_header">배송비</h1>
+                <div class="tltp_content">
+                  <ul class="ul_dot_blk">
+                    <li>
+                      쿠폰/바우처 할인금액 및 한섬마일리지/H.Point 사용을 제외한
+                      실 결제금액 기준
+                      <strong>3만원 미만 결제 시 2,500원 배송비가 부과</strong
+                      >됩니다. (3만원 이상 구매 시 무료배송)
+                    </li>
+                    <li>도서산간 지역은 배송비가 추가 될 수 있습니다.</li>
+                    <li>
+                      한섬마일리지, H.Point, e-money로 배송비 결제가 불가합니다.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- í´í : í¬ì¸í¸ì¬ì© s -->
+            <div class="tooltip_html">
+              <div class="tooltip_wrap tooltip_discout_info">
+                <div class="tltp_close_btn btn_tltp_close">
+                  <span>닫기</span>
+                </div>
+                <h1 class="tltp_header">포인트 사용</h1>
+                <div class="tltp_content">
+                  <div class="desc_box">
+                    보유 한섬마일리지 / H.Point / 기프트카드 금액을 확인하시고
+                    사용하실 금액을 입력 후 [사용]을 선택하세요.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- í´í : í¬ì¸í¸ì¬ì© e -->
+
+            <!-- í´í : ì ë¦½ìì í¬ì¸í¸ s -->
+            <div class="tooltip_html">
+              <div class="tooltip_wrap tooltip_buy_point_guide">
+                <div class="tltp_close_btn btn_tltp_close">
+                  <span>닫기</span>
+                </div>
+                <h1 class="tltp_header">적립 예정 포인트</h1>
+                <div class="tltp_content">
+                  <ul class="ul_dot_blk">
+                    <li>
+                      기존 마이너스 포인트를 보유하고 있는 고객은 포인트가
+                      차감되어 적립됩니다. 적립 예정 포인트가 상이할 수
+                      있습니다.
+                    </li>
+                    <li>
+                      통합 멤버쉽으로 가입하시면, H.Point 적립 및 사용이
+                      가능합니다.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!-- í´í : ì ë¦½ìì í¬ì¸í¸ e -->
+          </div>
+          <!-- ########## tooltip??? end ########## -->
+
+          <!-- ########## hsome topBtn start ########## -->
+          <a href="#" class="hsome_topBtn upper" style="bottom: 60px">TOP</a>
+          <!-- ########## hsome topBtn end ########## -->
+        </div>
+
+        
+
+        
+      </div>
+
+      <!-- ########## footer add ########## -->
+      <footer th:replace="wck/includes/footer :: fragment-footer"></footer>
+
+    </div>
+  </div>
+
+  
+
+</body>
+
+</html>

@@ -10,7 +10,6 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@ToString
 @NoArgsConstructor
 public class MemberVO implements Serializable{
 

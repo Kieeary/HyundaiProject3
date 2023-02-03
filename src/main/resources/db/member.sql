@@ -138,6 +138,7 @@ values(
 'ROLE_USER', 1, 1000
 );
 
+
 insert into member 
 (
 mid, mpassword, mname, memail, mphone, 
@@ -159,4 +160,8 @@ edetailimg, ecoupontitle) values
 (123121, '신규회원님을 위한 특별 혜택', 'http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_01.jpg', sysdate, sysdate+1,
 1000, 30, 'http://cdn.thehandsome.com/mobile/event/list/banner/20221213_57502766621122035_ko.jpg',30, 1,
 'http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_02.jpg','가입 축하 쿠폰');
+
+
+insert into cart (MID, PSID, PQUANTITY)
+values ('123123', 'TM2D1TPC424W_IV_61', 1);
 

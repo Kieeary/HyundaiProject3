@@ -121,4 +121,5 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 		return member;
 	}
 
+	
 }

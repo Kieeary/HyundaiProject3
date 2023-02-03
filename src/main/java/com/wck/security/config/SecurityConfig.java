@@ -1,5 +1,6 @@
 package com.wck.security.config;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -24,17 +25,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private AuthenticationFailureHandler authenticationFailureHandler;
 	
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    }
     
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// 정적파일에 대해선 security 적용 X
 		web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
 	}
-	
-	@Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
 	
 	@Bean
 	public RoleHierarchyImpl roleHierarchyImpl() {
@@ -74,6 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		;
 		
+		
+
+	
+		
 	}
 	
 
@@ -84,3 +88,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 
 }
+

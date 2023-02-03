@@ -98,5 +98,4 @@
 		set mpassword = #{pw}
 		where memail = #{email}
 	</update>
-	
 </mapper> 

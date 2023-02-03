@@ -59,4 +59,16 @@ public class WckController {
 	public String joinComp() {
 		return "wck/join_complete";
 	}
+
+	@GetMapping("/sampleProductDetail")
+	public String samplePD() {
+		return "wck/sample/prod_detail";
+	}
+	
+	@GetMapping("/shoppingbag")
+	public String cartForm() {
+		return "wck/shoppingbag/cart";
+	}
+	
+
 }

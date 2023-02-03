@@ -33,7 +33,7 @@ public class MemberController {
 		model.addAttribute("findId", new FindIdDTO());
 		model.addAttribute("findPw", new FindPwDTO());
 
-		return "member/find_id_pw";
+		return "wck/member/find_id_pw";
 	}
 
 	@PostMapping("/findId")
@@ -60,11 +60,11 @@ public class MemberController {
 
 	@GetMapping("/findIdComplete")
 	public String findIdComplete() {
-		return "member/find_id_comp";
+		return "wck/member/find_id_comp";
 	}
 
 	@GetMapping("/findPwComplete")
 	public String findPwComplete(@ModelAttribute("isExist") boolean isExist) {
-		return "member/find_pw_comp";
+		return "wck/member/find_pw_comp";
 	}
 }

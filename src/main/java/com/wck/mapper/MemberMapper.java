@@ -1,3 +1,4 @@
+
 package com.wck.mapper;
 
 import java.sql.Date;
@@ -17,3 +18,4 @@ public interface MemberMapper {
 	public MemberVO findOneByNameAndEmail(FindPwDTO findPw);
 	public int updatePasswordOne(String email, String pw);
 }
+

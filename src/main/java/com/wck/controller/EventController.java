@@ -23,7 +23,7 @@ public class EventController {
 	
 	@GetMapping
 	public String eventList() {
-		return "event/event_list";
+		return "wck/event/event_list";
 	}
 	
 	@GetMapping("/{id}")
@@ -31,7 +31,7 @@ public class EventController {
 		log.info("eventDetail");
 		EventVO event = eventService.getEvent(eventId);
 		model.addAttribute("event", event);
-		return "event/event";
+		return "wck/event/event";
 	}
 	
 	

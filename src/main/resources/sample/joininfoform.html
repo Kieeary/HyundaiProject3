@@ -943,6 +943,82 @@
         <script type="text/javascript">
           //<![CDATA[
           $(document).ready(function () {
+            var btnConfirmText = '확인';
+            var btnCancleText = '취소';
+            var btnCloseText = '닫기';
+            var layerConfirm = function (msg, confirmMsg, cancleMsg) {
+              var t = this;
+
+              var t = this;
+              this.confirmAction = function () {
+                //console.log('함수를 재정의 해주세요!');
+              };
+              this.cancleAction = function () {
+                //console.log('함수를 재정의 해주세요!');
+              };
+
+              if (confirmMsg != '') {
+                btnConfirmText = confirmMsg;
+              } else {
+                btnConfirmText = '확인';
+              }
+              if (cancleMsg != '') {
+                btnCancleText = cancleMsg;
+              } else {
+                btnCancleText = '취소';
+              }
+
+              var confirmTag = '';
+              confirmTag += '<div class="dvp_container">';
+              confirmTag +=
+                '	<div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>' +
+                btnCloseText +
+                '</span></div>';
+              confirmTag += '	<div class="dvp_content">';
+              confirmTag += '		<div class="desc_box">' + msg + '</div>';
+              confirmTag += '	</div>';
+              confirmTag += '	<div class="btn_wrap btns">';
+              confirmTag +=
+                '		<button class="btn btn_bd_g btn-alert-close">' +
+                btnCancleText +
+                '</button>';
+              confirmTag +=
+                '		<button class="btn btn_bg_b btn-alert-confirm">' +
+                btnConfirmText +
+                '</button>';
+              confirmTag += '	</div>';
+              confirmTag += '</div>';
+
+              $('#popAlertConfirmDiv').html(confirmTag);
+
+              $('.divpop_wrap_dev.pop_alert_confirm').bPopup({
+                follow: [false, false],
+                escClose: false,
+                modalClose: false,
+                opacity: 0.3,
+                positionStyle: 'fixed',
+                onClose: function () {
+                  holdBodyHide();
+                  $('#popAlertConfirmDiv').html('');
+                },
+              });
+              holdBodyShow();
+
+              $('#popAlertConfirmDiv')
+                .find('.btn-alert-close')
+                .click(function () {
+                  $('#confirmCloseDiv').click();
+                  t.cancleAction();
+                });
+
+              $('#popAlertConfirmDiv')
+                .find('.btn-alert-confirm')
+                .click(function () {
+                  $('#confirmCloseDiv').click();
+                  t.confirmAction();
+                });
+            };
+
             var nowYear = parseInt('2009');
             var nowMonth = parseInt('01');
             var nowDay = parseInt('31');
@@ -1129,8 +1205,6 @@
               }
             });
 
-            //    emailTypeDomainSelectController("#emailDomain","#emailDomainSel");
-
             $('#pw').keypress(function (event) {
               if (capsLock(event)) {
                 $('#pwMsg').text('<Caps Lock>이 켜져 있습니다.');
@@ -1176,60 +1250,9 @@
               $('#pwcMsg').text('비밀번호가 확인되었습니다.');
             });
 
-            $('#chk_email').click(function () {
-              if ($(this).is(':checked')) {
-                var email = 'asdvg154@naver.com';
-                $('#emailAddress').val(email);
-                chkEmail();
-              }
+            $('#emailAddress').change(function () {
+              $('#emailDuplChk').val('F');
             });
-
-            // 20201120 이메일 필수입력 항목 X
-            $('#emailAddress').keyup(function () {
-              var chkVal = $('#emailAddress').val();
-              if (chkVal != '') {
-                var email1 = 'asdvg154@naver.com';
-                var email2 = $('#emailAddress').val();
-
-                if (email1 != email2) {
-                  $('#chk_email').prop('checked', false);
-                  $('#chk_email').attr('checked', false);
-                }
-                chkEmail();
-              }
-            });
-
-            chkEmail = function () {
-              var vc = new ValidationCheck();
-              vc.checkIdList = ['emailAddress'];
-              vc.msgFn = function (msg) {
-                $('#emailMsg').text(msg);
-              };
-              if (vc.isValid()) {
-                $.ajax({
-                  type: 'GET',
-                  url:
-                    '/ko/member/isduplemail?email=' + $('#emailAddress').val(),
-                  success: function (response) {
-                    if (response == true) {
-                      $('#emailMsg').text('이미 사용중인 이메일입니다.');
-                      $('#emailDuplChk').val('N');
-                    } else {
-                      if (validateEmail($('#emailAddress').val())) {
-                        $('#emailMsg').text('사용 가능한 이메일입니다.');
-                        $('#emailDuplChk').val('Y');
-                      } else {
-                        $('#emailMsg').text('잘못된 E-mail 형식입니다.');
-                        $('#emailDuplChk').val('N');
-                      }
-                    }
-                  },
-                  error: function (e) {
-                    console.log(e);
-                  },
-                });
-              }
-            };
 
             $('#cancleBtn').click(function () {
               var lc = new layerConfirm(
@@ -1238,14 +1261,34 @@
                 '취소'
               );
               lc.confirmAction = function () {
-                location.href = '/ko/';
+                location.href = '/wck';
               };
+            });
+
+            $('#check_dup_btn').click(function (e) {
+              e.preventDefault();
+              console.log('중복확인체크');
+              $('#emailDuplChk').val('Y');
+              $('#emailMsg').text('');
             });
 
             $('#joinBtn').click(function () {
               var pwTypeChk = $('#pwTypeChk').val();
               var pwConfirmChk = $('#pwConfirmChk').val();
               var emailDuplChk = $('#emailDuplChk').val();
+
+              var email = $('#emailAddress').val();
+              if (email == '') {
+                $('#emailMsg').text('잘못된 E-mail 형식입니다.');
+                $('#emailAddress').focus();
+                return;
+              }
+
+              if (emailDuplChk !== 'Y') {
+                $('#emailMsg').text('E-mail 중복확인이 되지 않았습니다.');
+                $('#emailAddress').focus();
+                return;
+              }
 
               if ($.trim($('#pw').val()) == '') {
                 $('#pwMsg').text('비밀번호를 입력하세요.');
@@ -1277,27 +1320,6 @@
 
               $('#pwcMsg').text('');
 
-              if ($('#emailAddress').val() != '') {
-                if (emailDuplChk !== 'Y') {
-                  $('#emailMsg').text('E-mail 중복확인이 되지 않았습니다.');
-                  $('#emailAddress').focus();
-                  return;
-                }
-
-                var email = $('#emailAddress').val();
-                if (!validateEmail(email)) {
-                  $('#emailMsg').text('잘못된 E-mail 형식입니다.');
-                  $('#emailAddress').focus();
-                  return;
-                }
-              } else {
-                if ($('#chk_agree').is(':checked')) {
-                  $('#emailMsg').text('이메일(정보수신용) 을 입력해 주세요.');
-                  $('#emailAddress').focus();
-                  return;
-                }
-              }
-
               $('#emailMsg').text('');
 
               if ($.trim($('#name').val()) == '') {
@@ -1322,25 +1344,14 @@
               $('#cancleBtn').attr('disabled', true);
               $('#joinBtn').attr('disabled', true);
 
-              $('#collectionAgreementYN').val('N');
-
               $('#sBirthday').val(
                 $('#selYear').val() + $('#selMonth').val() + $('#selDay').val()
               );
               $('#memberJoinForm').attr('action', '/ko/member/joincomplete');
 
-              showLoadingLp(); //로딩레이어 호출
-
               $('#memberJoinForm').submit();
             });
           });
-
-          function validateEmail(email) {
-            // var re =
-            //   /^((([^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+(\.[^<>()[\]\\.,;:\s@\"~`!@#$%^&*+={}|'/?]+)*))|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-            // return re.test(email);
-            return true;
-          }
 
           //]]>
         </script>
@@ -1735,6 +1746,9 @@
             <!-- 20180625 버튼 클래스명 수정 e -->
           </div>
         </div>
+        <div
+          class="divpop_wrap_dev pop_mbr pop_alert_confirm"
+          id="popAlertConfirmDiv"></div>
 
         <!-- //################## contents ################## -->
       </div>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wck.mapper.EventMapper">
+
+	<select id="getEventList" resultType="event">
+		select 
+		    no, title, content, issuedate, expiredate,
+		    limitcount, count, img, discount, status,
+		    detailimg, coupontitle
+		from (
+		    select rownum rn, 
+		        no, title, content, issuedate, expiredate, 
+		        limitcount, count, img, discount, status,
+		        detailimg, coupontitle
+		    from (
+		        select 
+		            eno no, etitle title, econtent content, eissuedate issuedate, eexpiredate expiredate,
+		            elimitcount limitcount, ecount count, eimg img, ediscount discount ,estatus status, 
+		            edetailimg detailimg, ecoupontitle coupontitle
+		        from event
+		        where 
+			<if test="past">
+	<![CDATA[
+				eexpiredate < sysdate
+	]]>
+			</if>
+			<if test="!past">
+	<![CDATA[
+				eexpiredate > sysdate
+	]]>
+			</if>
+	<![CDATA[
+		        order by eissuedate
+		    )
+		    where rownum <= #{currentPage} * #{pageSize}
+		)
+		where rn > (#{currentPage} - 1) * #{pageSize}
+	]]>
+	</select>
+	
+	<select id="getEvent" resultType="event">
+		select 
+			eno no, etitle title, econtent content, eissuedate issuedate, eexpiredate expiredate,
+		    elimitcount limitcount, ecount count, eimg img, ediscount discount ,estatus status, 
+		    edetailimg detailimg, ecoupontitle coupontitle
+		from event
+		where eno = #{eventId}
+	</select>
+	
+</mapper> 

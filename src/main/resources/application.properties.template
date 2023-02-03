@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
 spring.datasource.url=jdbc:oracle:thin:@localhost:1521/xepdb1
 spring.datasource.username=xciusername
@@ -22,3 +23,37 @@ logging.level.org.springframework.security.web=trace
 spring.security.oauth2.client.registration.google.client-id=XXXXXXXXXXXXXXXXXXXXXXX
 spring.security.oauth2.client.registration.google.client-secret=XXXXXXXXXXXXXXXXXXXXXXX
 spring.security.oauth2.client.registration.google.scope=email
+
+#Google smtp  (mail server)
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=xxx@gmail.com
+spring.mail.password=xxxxxx
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.auth=true
+=======
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521/xepdb1
+spring.datasource.username=xciusername
+spring.datasource.password=xcipassword
+
+#thymeleaf
+spring.thymeleaf.cache=false
+
+server.port=80
+
+# log4jdbc2
+logging.level.root=info
+
+#MyBatis
+mybatis.config-location=classpath:mybatis/mapper-config.xml
+mybatis.mapper-locations=classpath:mybatis/mapper/*.xml
+
+# Security
+logging.level.org.springframework.security.web=trace
+
+#Google OAuth2
+spring.security.oauth2.client.registration.google.client-id=XXXXXXXXXXXXXXXXXXXXXXX
+spring.security.oauth2.client.registration.google.client-secret=XXXXXXXXXXXXXXXXXXXXXXX
+spring.security.oauth2.client.registration.google.scope=email
+>>>>>>> main

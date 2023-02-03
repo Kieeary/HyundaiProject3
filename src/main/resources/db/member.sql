@@ -1,3 +1,13 @@
+drop table cart cascade constraint purge;
+drop table coupon_detail cascade constraint purge;
+drop table event cascade constraint purge;
+drop table home_img cascade constraint purge;
+drop table home_order cascade constraint purge;
+drop table likes cascade constraint purge;
+drop table member cascade constraint purge;
+drop table today cascade constraint purge;
+
+
 CREATE TABLE cart (
     mid       VARCHAR2(30 BYTE) NOT NULL,
     psid      VARCHAR2(25 BYTE) NOT NULL,
@@ -123,10 +133,35 @@ mrole, mgrade, mmileage
 ) 
 values(
 '123123', '{noop}1111', '왕종휘', 'user1@gmail.com', '01023398197',
-'0222222222', '07285', '서울특별시 영등포구 선유로9나길 8 (문래동5가, 문래두산위브)', '103동708호', sysdate,
+'0222222222', '07285', '서울특별시 영등포구 선유로9나길 8 (문래동5가, 문래두산위브)', '103동708호', '1997-07-27',
 1, '1', 'Email', 1, 1,
 'ROLE_USER', 1, 1000
 );
 
+
+insert into member 
+(
+mid, mpassword, mname, memail, mphone, 
+mtel, mzipcode, maddress1, maddress2, mbirth,
+mgender, mrefid, mlogintype, mtosno, menabled,
+mrole, mgrade, mmileage
+) 
+values(
+'123333', '{noop}1111', '왕종휘', 'wangjh789@gmail.com', '01023398194',
+'0222222222', '07285', '서울특별시 영등포구 선유로9나길 8 (문래동5가, 문래두산위브)', '103동708호', '1997-07-27',
+1, '1', 'Email', 1, 1,
+'ROLE_USER', 1, 1000
+);
+
+insert into event 
+(eno, etitle, econtent, eissuedate, eexpiredate, 
+elimitcount, ecount, eimg, ediscount, estatus,
+edetailimg, ecoupontitle) values
+(123121, '신규회원님을 위한 특별 혜택', 'http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_01.jpg', sysdate, sysdate+1,
+1000, 30, 'http://cdn.thehandsome.com/mobile/event/list/banner/20221213_57502766621122035_ko.jpg',30, 1,
+'http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_02.jpg','가입 축하 쿠폰');
+
+
 insert into cart (MID, PSID, PQUANTITY)
 values ('123123', 'TM2D1TPC424W_IV_61', 1);
+

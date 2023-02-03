@@ -151,3 +151,11 @@ values(
 1, '1', 'Email', 1, 1,
 'ROLE_USER', 1, 1000
 );
+
+insert into event 
+(eno, etitle, econtent, eissuedate, eexpiredate, 
+elimitcount, ecount, eimg, ediscount, estatus,
+edetailimg, ecoupontitle) values
+(123123, '신규회원님을 위한 특별 혜택', 'http://cdn.thehandsome.com/mobile/event/list/banner/20221213_57502766621122035_ko.jpg', sysdate, sysdate+1,
+1000, 30, 'http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_01.jpg',30, 1,
+'http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_02.jpg','가입 축하 쿠폰');

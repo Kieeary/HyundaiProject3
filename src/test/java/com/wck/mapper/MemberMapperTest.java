@@ -95,7 +95,7 @@ public class MemberMapperTest {
 	@Transactional
 	void updatePasswordOne() {
 		String email = "user1@gmail.com";
-		String pw = "1234";
+		String pw = "1111";
 		String encodedPw = passwordEncoder.encode(pw);
 		
 		memberMapper.updatePasswordOne(email, encodedPw);

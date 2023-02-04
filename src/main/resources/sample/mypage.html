@@ -176,22 +176,6 @@
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/unorm.js"></script>
 
-    <script>
-      var ko_time = '20230201175948'; // 현재시간
-
-      // 스타일라이브 (20210901 이전 접근불가)
-      if (
-        Number(ko_time) < 20210901000000 &&
-        'https://www.thehandsome.com/WEB-INF/views/handsomemobile/pages/common/mypageFloatingPopup.jsp'.indexOf(
-          '/sns/'
-        ) > -1
-      ) {
-        location.replace(
-          'http://www.thehandsome.com/ko/magazine/newsDetailtemplatetype4?newsCode=8802187958044'
-        );
-      }
-    </script>
-
     <link
       rel="stylesheet"
       type="text/css"
@@ -199,6 +183,11 @@
   </head>
 
   <body>
+    <style>
+      .swiper-wrapper {
+        height: auto;
+      }
+    </style>
     <div class="hsome_allContents_wrapper"></div>
 
     <a href="noLink();" class="hsome_topBtn upper" id="handsomeTopBtn"
@@ -314,750 +303,6 @@
     </div>
     <!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
     <div class="hsome_quickMenu_contents active absolute">
-      <script type="text/javascript">
-        $(function () {
-          $(document).on('click', '.myorderAddrModifyPopup', function () {
-            myOrderAddressModify($(this));
-          });
-
-          $(document).on('click', '.shippingInfoBtn', function () {
-            layerShippingInfo($(this).attr('ocode'), $(this).attr('pcode'));
-            return false;
-          });
-
-          $(document).on('click', '.layerpopupOpen', function (event) {
-            event.preventDefault();
-            var $this = $(this);
-            if ($this.data('loading') == true) return;
-            $this.data('loading', true);
-            callLayerPopupShow('depth1', function (obj) {
-              $.ajax({
-                url: $this.attr('href'),
-                type: 'get',
-                cache: false,
-                dataType: 'html',
-              })
-                .done(function (data) {
-                  var $l = $(obj);
-                  $l.html(data);
-                })
-                .always(function () {
-                  $this.data('loading', false);
-                });
-            });
-          });
-        });
-
-        var setDeliveryCompleted = function (
-          orderNo,
-          productCode,
-          entryNumber
-        ) {
-          var paramDatas =
-            'ocode=' +
-            orderNo +
-            '&pcode=' +
-            productCode +
-            '&entryNumber=' +
-            entryNumber;
-
-          msg =
-            '주문하신 상품을 수령하셨습니까?<br/>확인을 클릭하시면 주문상태가 배송완료로<br/>변경됩니다.';
-          var lc = new layerConfirm(msg, '확인', '취소');
-
-          lc.confirmAction = function () {
-            $.ajax({
-              type: 'get',
-              url: '/ko/mypage/order/setDeliveryCompleted',
-              data: paramDatas,
-              dataType: 'json',
-              error: function (request, status, error) {
-                layerAlert('배송완료 처리에 실패하였습니다.');
-                //console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
-              },
-              success: function (result) {
-                layerAlert('배송완료 처리 하였습니다.', true);
-              },
-            });
-          };
-        };
-
-        var layerShippingInfo = function (orderCode, productCode) {
-          var paramDatas = 'ocode=' + orderCode + '&pcode=' + productCode;
-          $.ajax({
-            type: 'get',
-            url: '/ko/mypage/order/getdelno',
-            data: paramDatas,
-            dataType: 'json',
-            cache: false,
-            error: function (request, status, error) {
-              alert(error);
-              //console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
-            },
-            success: function (result) {
-              if (true) {
-                if (result.companyName == '현대택배') {
-                  var documentResult = '';
-                  documentResult +=
-                    '<div class="layerArea" style="z-index;" allowtransparency="true">';
-                  documentResult += '<div class="layerBg"></div> ';
-                  documentResult +=
-                    '<div class="popwrap image_layer position2">';
-                  documentResult +=
-                    '<div class="pop_cls"><a href="#;" id="closeLayer"><img src="http://www.thehandsome.com/_ui/mobile/common/images/common/pop_cls.png" alt="닫기"></a></div>';
-                  documentResult +=
-                    '<div id="DeliveryFrame" style="margin-top: 63px;">' +
-                    result.hdHtml +
-                    '</div>';
-                  documentResult += '</div>';
-                  documentResult += '</div>';
-
-                  documentResult = documentResult.replace(
-                    '/images/lotte/Lotte_Global_Logistics_h_sm.png',
-                    'http://www.hydex.net/images/lotte/Lotte_Global_Logistics_h_sm.png'
-                  );
-                  documentResult = documentResult.replace(
-                    '/hydex/images/dot.gif',
-                    ''
-                  );
-                  documentResult = documentResult.replace(
-                    '/ehydex/css/home/style.css',
-                    ''
-                  );
-
-                  $('#DeliveryLayer').append(documentResult);
-
-                  var h = 0;
-                  $('#DeliveryFrame > table').each(function () {
-                    h += $(this).height();
-                  });
-
-                  $('.image_layer.position2').height(h - 30);
-
-                  $('#DeliveryFrame tbody').css('font-size', '10px');
-
-                  $('#DeliveryFrame img').each(function () {
-                    if ($(this).attr('src') == '') {
-                      $(this).remove();
-                    }
-                  });
-
-                  $(
-                    '#DeliveryFrame > table:eq(1) tbody tr:eq(1) > td:even'
-                  ).width('24%');
-
-                  $('#DeliveryFrame td').each(function () {
-                    if ($(this).text() == result.trackingNumber) {
-                      $(this).parent().find('td').width('25%');
-                    }
-                  });
-
-                  $('#closeLayer').click(function () {
-                    $('#DeliveryLayer').html('');
-                  });
-                } else if (result.companyName == 'DHL') {
-                  window.open(
-                    '' + result.trackingNumber + '&LAN=KOR&TID=us_en&LINKS=NO',
-                    '배송조회'
-                  ); //배송조회
-                } else if (result.companyName.indexOf('우체국') > -1) {
-                  var tempHtml = '';
-                  var tempHtml1 = result.epostHtml.substring(
-                    0,
-                    result.epostHtml.indexOf('<div class="header">')
-                  );
-                  var tempHtml2 = result.epostHtml.substring(
-                    result.epostHtml.indexOf('</div>'),
-                    result.epostHtml.indexOf('</article>')
-                  );
-                  var SCRIPT_REGEX =
-                    /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi;
-                  tempHtml = tempHtml1 + tempHtml2;
-                  while (SCRIPT_REGEX.test(tempHtml)) {
-                    tempHtml = tempHtml.replace(SCRIPT_REGEX, '');
-                  }
-
-                  var documentResult = '';
-                  documentResult +=
-                    '<div class="layerpop_wrap layerpop_wrap_full lp_edit_dlvr_wrap">';
-                  documentResult += '	<div class="lyrpp_top">';
-                  documentResult +=
-                    '		<a href="javascript:;" class="lyrpp_close lyrpp_close_stl1 btn_lyrpp_close"><span>닫기<!-- 닫기 --></span></a>';
-                  documentResult += '		<h2>배송조회<!-- 배송조회 --></h2>';
-                  documentResult += '	</div>';
-                  documentResult += '<div class="lyrpp_mid">';
-                  documentResult +=
-                    '<div id="DeliveryFrame" style=" height="100%" margin-top: 63px;">' +
-                    tempHtml +
-                    '</div>';
-                  documentResult += '</div>';
-                  documentResult += '</div>';
-                  documentResult += '<script>';
-                  documentResult += '$(document).ready(function(){';
-                  documentResult +=
-                    "$(\".tb_guide:eq(0) col:eq(0)\").css('width','16%');";
-                  documentResult +=
-                    '$(".tb_guide:eq(0) col:eq(0)").after("<col style=\'width: 18%;\'><col style=\'width: 30%;\'>");';
-                  documentResult +=
-                    '$(".popwrap col:eq(0)").after("<col style=\'width: 45px;\'>");';
-                  documentResult += '$(".card.mgma.overh").remove();';
-                  documentResult +=
-                    '$(".image_layer.position2").css("margin-top","23%");';
-                  documentResult += '$("#DeliveryFrame .btntype").remove();';
-                  documentResult += '});';
-                  documentResult += '<\/script>';
-
-                  callLayerPopupShow(
-                    'depth1',
-                    function openShippingInfo(obj) {
-                      var $l = $(obj);
-                      $l.html(documentResult);
-                    },
-                    function closeShippingInfo(obj) {
-                      $(obj).empty();
-                    }
-                  );
-                } else if (result.companyName.indexOf('QUICK') > -1) {
-                  $.ajax({
-                    type: 'get',
-                    url: '/ko/mypage/order/deliveryHistory',
-                    data: { code: orderCode },
-                    dataType: 'json',
-                    async: false,
-                    error: function (request, status, error) {
-                      alert(error);
-                    },
-                    success: function (result) {
-                      var html = '';
-                      for (var i = 0; i < result.length; i++) {
-                        html += '<tr>';
-                        html +=
-                          '    <td class="date">' + result[i].date + '</td>';
-                        html +=
-                          '    <td class="status">' +
-                          result[i].status +
-                          '</td>';
-                        html += '</tr>';
-                      }
-                      html += '<tr>';
-                      html +=
-                        '    <td colspan="2" class="last" style="display: table-cell;text-align:center">※ 퀵배송 주문 후, 고객사유로 미수령 시 반품처리 됩니다.</td>';
-                      html += '</tr>';
-                      $('#quickDeliveryInfoBody').html(html);
-                      $('.pop_alert_confirm').addClass('pd');
-                      $('.btn_more_action_ul_close').click();
-                      var lc = new layerAlert($('.shippingcheck').html());
-                      $('#alertCloseDiv').css('z-index', '1000');
-                      $('.dvp_content').css({
-                        'margin-top': '0px',
-                        'padding-top': '0px',
-                      });
-                      $('.btn-alert-confirm').html('닫기');
-                    },
-                  });
-                } else if (result.companyName == 'CJ대한통운') {
-                  window.open(result.cjUrl, '배송조회'); //배송조회
-                } else if (result.companyName.indexOf('굿투럭') > -1) {
-                  window.open(result.goodsToLuckUrl, '배송조회'); //배송조회
-                } else if (result.companyName.indexOf('로젠택배') > -1) {
-                  //로젠택배 추가 hyunbae 20220603
-                  window.open(result.logenUrl, '배송조회'); //배송조회
-                } else {
-                  layerAlert(
-                    result.companyName + '<br />' + result.trackingNumber
-                  );
-                }
-              }
-              if (false) {
-                if (result.companyName == 'DHL') {
-                  //&LAN=KOR&TID=KR_KOR&LINKS=NO 20210330 hyunbaeKim 영문으로 교체
-                  window.open(
-                    'http://www.dhl.com/cgi-bin/tracking.pl?awb=' +
-                      result.trackingNumber +
-                      '&LAN=EN&TID=US_EN&LINKS=NO',
-                    '배송조회'
-                  ); //배송조회
-                } else if (result.companyName == 'FASTBOX') {
-                  window.open(
-                    'http://fastbox.co.kr/DHUB/tracking.php?fb_invoice_no=' +
-                      result.trackingNumber,
-                    'mypage.order.history.list.tracking03.mobile'
-                  ); //배송조회
-                } else {
-                  layerAlert(
-                    result.companyName + '<br />' + result.trackingNumber
-                  );
-                }
-              }
-            },
-          });
-        };
-
-        var myOrderAddressModify = function (_obj) {
-          var $btn = $(_obj);
-          callLayerPopupShow('depth1', function (obj) {
-            $.ajax({
-              url: '/ko/mypage/order/addressModifyPopup',
-              type: 'get',
-              cache: false,
-              dataType: 'html',
-            }).done(function (data) {
-              $l = $(obj);
-              $l.html(data);
-              if (true) {
-                $l.find('#code').val($btn.attr('code'));
-                $l.find('#zipCode').val($btn.attr('zip'));
-                $l.find('#address1').val($btn.attr('addr1'));
-                $l.find('#address2').val($btn.attr('addr2'));
-                $l.find('#addressInfomation').val(
-                  $btn.attr('addr1') + ' ' + $btn.attr('addr2')
-                );
-                $l.find('#name').val($btn.attr('rcname'));
-                $l.find('#hp1').val($btn.attr('hp1'));
-                $l.find('#hp2').val($btn.attr('hp2'));
-                $l.find('#hp3').val($btn.attr('hp3'));
-                $l.find('#ph1').val($btn.attr('ph1'));
-                $l.find('#ph2').val($btn.attr('ph2'));
-                $l.find('#ph3').val($btn.attr('ph3'));
-                $l.find('#emailId').val($btn.attr('emailId'));
-                $l.find('#emailDomain').val($btn.attr('emailDomain'));
-                $l.find('select.sodsb').selectOrDie();
-                if ($btn.attr('or')) {
-                  $l.find('#orderr').val($btn.attr('or'));
-                }
-                if ($btn.attr('frontDoorSelectMessage')) {
-                  $l.find('#selectListWrapItem')
-                    .parent()
-                    .find('.slct_list_con')
-                    .stop()
-                    .slideToggle(200);
-                  $l.find('#selectListWrapItem')
-                    .parent()
-                    .toggleClass('select_list_wrap_on');
-                  $l.find('#enter_door').val(
-                    $btn.attr('frontDoorSelectMessage')
-                  );
-                  if (
-                    $btn.attr('frontDoorSelectMessage') === '공동현관 출입번호'
-                  ) {
-                    $l.find('#enter_door_04').prop('checked', true);
-                    $l.find('#enter_door_04')
-                      .find('~input')
-                      .val($btn.attr('frontDoorMessage'));
-                  } else if (
-                    $btn.attr('frontDoorSelectMessage') === '자유 출입 가능'
-                  ) {
-                    $l.find('#enter_door_05').prop('checked', true);
-                  } else {
-                    $l.find('#enter_door_06').prop('checked', true);
-                    $l.find('#enter_door_06')
-                      .find('~input')
-                      .val($btn.attr('frontDoorMessage'));
-                  }
-                }
-                if ($btn.attr('frontDoorMessage')) {
-                  $l.find('#frontDoorMessage').val(
-                    $btn.attr('frontDoorMessage')
-                  );
-                }
-
-                $l.find('input[numberonly]').blur(function () {
-                  $(this).val(
-                    $(this)
-                      .val()
-                      .replace(/[^0-9]/gi, '')
-                  );
-                });
-                $l.find('input[numberonly]').keydown(function () {
-                  $(this).val(
-                    $(this)
-                      .val()
-                      .replace(/[^0-9]/gi, '')
-                  );
-                });
-
-                chkInputCount($l.find('#orderr'), $l.find('#textCnt'), 20);
-
-                if ($.trim($btn.attr('or')) != '') {
-                  var deliveryMessageCheck = false;
-                  $l.find('[name="gl_radio_dlvr_msg"]').each(function (
-                    idx,
-                    msgObj
-                  ) {
-                    if (
-                      $(this)
-                        .parent()
-                        .find('.slct_con')
-                        .attr('deliveryRequestMessage') == undefined ||
-                      $(this)
-                        .parent()
-                        .find('.slct_con')
-                        .attr('deliveryRequestMessage') == '' ||
-                      $(this)
-                        .parent()
-                        .find('.slct_con')
-                        .attr('deliveryRequestMessage') == null
-                    ) {
-                      var tempSlted = $(msgObj).val();
-                    } else {
-                      var tempSlted = $(msgObj)
-                        .parent()
-                        .find('.slct_con')
-                        .attr('deliveryRequestMessage');
-                    }
-                    if ($.trim($btn.attr('or')) == tempSlted) {
-                      $(msgObj).click();
-                      deliveryMessageCheck = true;
-                    }
-                  });
-                  if (!deliveryMessageCheck) {
-                    $l.find('[name="gl_radio_dlvr_msg"]').last().click();
-                  }
-                }
-
-                $('.select_list_dlvr_msg .slct_list_con .slct_list_item').click(
-                  function () {
-                    if ($(this).hasClass('slct_list_item_self')) {
-                      $('.slct_list_item_self_input [name="orderr"]').val('');
-                    }
-                  }
-                );
-
-                $l.find('#emailDomainSel').change(function () {
-                  $('#emailDomain').val($(this).val());
-                });
-                // validation 체크
-                $l.find('#applyBtn').click(function () {
-                  $l.find('.err_box').hide();
-
-                  if (
-                    $.trim($l.find('#zipCode').val()) == '' ||
-                    $.trim($l.find('#address1').val()) == '' ||
-                    $.trim($l.find('#address2').val()) == ''
-                  ) {
-                    $l.find('#zipCodeErr').show();
-                    return;
-                  }
-                  if ($.trim($l.find('#name').val()) == '') {
-                    $l.find('#nameErr').show();
-                    return;
-                  }
-                  if (
-                    $.trim($l.find('#hp1').val()) == '' ||
-                    $.trim($l.find('#hp2').val()) == '' ||
-                    $.trim($l.find('#hp3').val()) == ''
-                  ) {
-                    $l.find('#hp1Err').show();
-                    return;
-                  }
-                  if (
-                    $.trim(
-                      $l.find("[name='gl_radio_dlvr_msg']:checked").val()
-                    ) != ''
-                  ) {
-                    if (
-                      $l.find("[name='gl_radio_dlvr_msg']:checked").val() !=
-                      '직접입력'
-                    ) {
-                      $l.find('#orderr').val(
-                        $l.find("[name='gl_radio_dlvr_msg']:checked").val()
-                      );
-                    }
-                  }
-                  //공동현관출입 hyunbae
-                  //값 셋팅
-                  var selectedMessage = $(
-                    'input[name=frontDoorSelectMessage]:checked'
-                  );
-                  if ($.trim(selectedMessage) != '') {
-                    if (selectedMessage.val() === '자유 출입 가능') {
-                      $l.find('#frontDoorMessage').val('자유출입가능');
-                    } else {
-                      var message = selectedMessage.find('~ input').val();
-                      $l.find('#frontDoorMessage').val(message);
-                    }
-                  }
-                  //valid
-                  if (
-                    $.trim($l.find('#orderr').val()) ===
-                    '부재 시 문 앞에 놓아주세요'
-                  ) {
-                    if (typeof selectedMessage.val() === 'undefined') {
-                      $l.find('#frontDoorErr').show();
-                      return;
-                    } else if ($l.find('#frontDoorMessage').val() == '') {
-                      $l.find('#frontDoorErr').show();
-                      return;
-                    }
-                  }
-
-                  if (
-                    $.trim(
-                      $l.find("[name='gl_radio_dlvr_msg']:checked").val()
-                    ) === '직접입력'
-                  ) {
-                    $l.find('#frontDoorMessage').val('');
-                  }
-
-                  //# => 특수문자로 치환
-                  if ($l.find('#frontDoorMessage').val()) {
-                    $l.find('#frontDoorMessage').val(
-                      $l.find('#frontDoorMessage').val().replace(/#/gi, '＃')
-                    );
-                  }
-
-                  $l.find('#hp').val(
-                    $l.find('#hp1').val() +
-                      '-' +
-                      $l.find('#hp2').val() +
-                      '-' +
-                      $l.find('#hp3').val()
-                  );
-                  $l.find('#ph').val(
-                    $l.find('#ph1').val() +
-                      '-' +
-                      $l.find('#ph2').val() +
-                      '-' +
-                      $l.find('#ph3').val()
-                  );
-                  $l.find('#email').val(
-                    $l.find('#emailId').val() +
-                      '@' +
-                      $l.find('#emailDomain').val()
-                  );
-                  addressModifySubmit();
-                });
-              } else {
-                $l.find('#code').val($btn.attr('code'));
-                $l.find('#prk').val($btn.attr('prk'));
-                $l.find('#globalZip').val($btn.attr('zip'));
-                $l.find('#globalCity').val($btn.attr('town'));
-
-                if ($btn.attr('fname') != null && $btn.attr('fname') != '') {
-                  $l.find('#lastName').val(
-                    $btn.attr('fname') + ' ' + $btn.attr('rcname')
-                  );
-                } else {
-                  $l.find('#lastName').val($btn.attr('rcname'));
-                }
-
-                if (
-                  $btn.attr('localfname') != null &&
-                  $btn.attr('localfname') != ''
-                ) {
-                  $l.find('#localLastName').val(
-                    $btn.attr('localfname') + ' ' + $btn.attr('locallname')
-                  );
-                } else {
-                  $l.find('#localLastName').val($btn.attr('locallname'));
-                }
-                $l.find('#globalPhone').val($btn.attr('cellphone'));
-                $l.find('#globalStreet').val($btn.attr('addr1'));
-                $l.find('#globalStreet2').val($btn.attr('addr2'));
-                $l.find('#globalState').val($btn.attr('state'));
-
-                var countryCode = $btn.attr('countryCode');
-
-                $.ajax({
-                  type: 'GET',
-                  url: '/ko/common/getcountrylist',
-                  cache: false,
-                  contentType: 'application/json; charset=utf-8',
-                  dataType: 'json',
-                  success: function (response) {
-                    $l.find('#countryCode').html(
-                      '<option value="">Select Your Conutry</option>'
-                    );
-                    $.each(response, function () {
-                      $l.find('#countryCode').append(
-                        '<option value="' +
-                          this.countryCode +
-                          '">' +
-                          this.countryName +
-                          '</option>'
-                      );
-                    });
-                    $l.find('#countryCode').val(countryCode);
-                  },
-                  error: function (e) {
-                    alert(e);
-                  },
-                });
-
-                chkInputCount(
-                  $l.find('#globalStreet'),
-                  $l.find('#textCnt1'),
-                  40
-                );
-                chkInputCount(
-                  $l.find('#globalStreet2'),
-                  $l.find('#textCnt2'),
-                  40
-                );
-
-                $l.find('#globalConfrim').click(function () {
-                  $l.find('.err_box').hide();
-                  if ($l.find('#countryCode').val() == '') {
-                    $l.find('#countryErr')
-                      .html('Please select a country')
-                      .show();
-                    return;
-                  }
-                  if ($l.find('#globalStreet').val() == '') {
-                    $l.find('#countryErr')
-                      .html('Please enter address Line 1')
-                      .show();
-                    return;
-                  }
-                  if ($l.find('#globalCity').val() == '') {
-                    $l.find('#countryErr')
-                      .html('Please enter a Town/City')
-                      .show();
-                    return;
-                  }
-                  if ($l.find('#globalZip').val() == '') {
-                    $l.find('#countryErr')
-                      .html('Please enter post code')
-                      .show();
-                    return;
-                  }
-                  // 					if($l.find('#firstName').val() == ''){
-                  // 						$l.find('#nameErr').html("address.contactName.invalid").show();
-                  // 						return;
-                  // 					}
-                  if ($l.find('#lastName').val() == '') {
-                    $l.find('#nameErr')
-                      .html('address.contactName.invalid')
-                      .show();
-                    return;
-                  }
-                  // 					if($l.find('#localFirstName').val() == ''){
-                  // 						$l.find('#localNameErr').html("address.localContactName.invalid").show();
-                  // 						return;
-                  // 					}
-                  if ($l.find('#localLastName').val() == '') {
-                    $l.find('#localNameErr')
-                      .html('address.localContactName.invalid')
-                      .show();
-                    return;
-                  }
-                  if ($l.find('#globalPhone').val() == '') {
-                    $l.find('#phoneErr').html('휴대폰번호를 입력하세요').show();
-                    return;
-                  }
-                  var lc = new layerConfirm(
-                    '입력하신 내용으로 신규 배송지를 등록하시겠습니까?',
-                    '확인',
-                    '취소'
-                  ); // 입력하신 내용으로 신규 배송지를 등록하시겠습니까?, 확인, 취소
-                  lc.confirmAction = function () {
-                    addressModifySubmit();
-                  };
-                });
-              }
-            });
-          });
-        };
-
-        var fn_addressModifyZipcode = function (data) {
-          var $addrModForm = $('#addrModForm');
-          $addrModForm
-            .find('#addressInfomation')
-            .val(data.address1 + ' ' + data.address2);
-          $addrModForm.find('#zipCode').val(data.zipcode);
-          $addrModForm.find('#address1').val(data.address1);
-          $addrModForm.find('#address2').val(data.address2);
-        };
-
-        var RenewalPageList = function (
-          formId,
-          listArea,
-          pageArea,
-          pageSize,
-          searchBtnId,
-          pageCallback
-        ) {
-          var t = this;
-          this.PARAMS = {};
-          var paging = null;
-          t.PARAMS.formId = formId;
-          t.PARAMS.pageSize = pageSize != null ? pageSize : 10;
-          t.PARAMS.pageNum = 1;
-          t.PARAMS.totalNumberOfResults = 0;
-          t.PARAMS.defaultListHtml = $(listArea).html();
-          this.setRowHtml = function () {};
-          this.searchAction = function () {
-            t.PARAMS.pageNum = 1;
-            t.doWork();
-          };
-          this.setPage = function (currpage) {
-            t.PARAMS.pageNum = currpage;
-            t.doWork();
-          };
-          if ($.trim(searchBtnId) != '') {
-            $('#' + searchBtnId).click(function () {
-              t.searchAction();
-            });
-          }
-          this.doWork = function (currpage) {
-            t.PARAMS.pageNum = currpage || 1;
-            var paramDatas = $('form#' + formId).serialize();
-            if (paramDatas != '') paramDatas += '&';
-            paramDatas +=
-              'pageNum=' + t.PARAMS.pageNum + '&pageSize=' + t.PARAMS.pageSize;
-
-            $.ajax({
-              type: 'get',
-              url: $('form#' + formId).attr('action'),
-              data: paramDatas,
-              dataType: 'json',
-              cache: false,
-              error: function (request, status, error) {
-                console.log(
-                  'code:' +
-                    request.status +
-                    '\n' +
-                    'message:' +
-                    request.responseText +
-                    '\n' +
-                    'error:' +
-                    error
-                );
-              },
-              success: function (result) {
-                if (result == null) {
-                  return;
-                }
-                var rowHtml = t.setRowHtml(result.results);
-                if ($.trim(rowHtml) == '') rowHtml = t.PARAMS.defaultListHtml;
-                $(listArea).html(rowHtml);
-                $(pageArea).empty();
-
-                if (result.pagination != null) {
-                  var pagination = result.pagination;
-                  t.PARAMS.pageNum = pagination.currentPage + 1;
-                  t.PARAMS.totalNumberOfResults =
-                    pagination.totalNumberOfResults;
-
-                  if (pagination.totalNumberOfResults > 0) {
-                    var pageHtml = SettingPagination(
-                      'pagenation',
-                      t.PARAMS.pageNum,
-                      t.PARAMS.totalNumberOfResults,
-                      t.PARAMS.pageSize,
-                      5,
-                      pageCallback
-                    );
-                    $(pageArea).html(pageHtml);
-                    $('html, body').animate({ scrollTop: 0 }, 0);
-                  }
-                }
-              },
-            });
-          };
-        };
-      </script>
-
       <!-- Contents -->
       <div class="hand_footer_gnb_wrap mypage">
         <div class="header">
@@ -1103,73 +348,20 @@
             <div class="selected_text">
               <span> 마이페이지</span>
             </div>
-
-            <script type="text/javascript">
-              $(document).on('change', '#headerMypageSelect', function () {
-                if ($(this).val() == '') return;
-
-                if ($(this).val() == '/ko/mypage/mymantomaninquiry') {
-                  location.href =
-                    '/ko/mypage/mymantomaninquiry?refererUrl=mypage';
-                } else {
-                  location.href = $(this).val();
-                }
-              });
-              $('#headerMypageSelect > option').each(function (idx, obj) {
-                if ($(obj).attr('value') == '') return true;
-                if (location.pathname == $(obj).attr('value')) {
-                  $(obj).prop('selected', 'selected');
-                }
-
-                if (
-                  location.pathname.indexOf('mantomaninquiry') > -1 &&
-                  $(obj).attr('value').indexOf('mymantomaninquiry') > -1
-                ) {
-                  $(obj).prop('selected', 'selected');
-                }
-              });
-            </script>
           </h2>
           <ul class="red_border_tab">
             <li class="on">
-              <a
-                href="#"
-                class="order"
-                tab="order"
-                onclick="GA_Event('마이페이지', 'GNB', this.text);"
-                >주문</a
-              >
+              <a href="#" class="order" tab="order">주문</a>
             </li>
             <li class="">
-              <a
-                href="#"
-                class="benefit"
-                tab="benefit"
-                onclick="GA_Event('마이페이지', 'GNB', this.text);"
-                >혜택</a
-              >
+              <a href="#" class="benefit" tab="benefit">혜택</a>
             </li>
             <li class="">
-              <a
-                href="#"
-                class="infomation"
-                tab="info"
-                onclick="GA_Event('마이페이지', 'GNB', this.text);"
-                >정보</a
-              >
+              <a href="#" class="infomation" tab="info">정보</a>
             </li>
             <li class="">
-              <a
-                href="#"
-                class="activity"
-                tab="activity"
-                onclick="GA_Event('마이페이지', 'GNB', this.text);"
-                >활동</a
-              >
+              <a href="#" class="activity" tab="activity">활동</a>
             </li>
-            <li
-              class="fcs"
-              style="transform: translateX(87.625px); width: 34px"></li>
           </ul>
         </div>
 
@@ -1179,74 +371,14 @@
             <div
               class="swiper-wrapper"
               style="
-                transform: translate3d(-930px, 0px, 0px);
+                transform: translate3d(0px, 0px, 0px);
                 transition-duration: 0ms;
               ">
-              <script type="text/javascript">
-                $(document).ready(function () {
-                  $('.address_cont .address').each(function () {
-                    var arrAddress = $(this).html().split(' ');
-                    var replaceAddr = '';
-                    if (arrAddress.length > 3) {
-                      replaceAddr =
-                        arrAddress[0] +
-                        ' ' +
-                        arrAddress[1] +
-                        ' ' +
-                        arrAddress[2] +
-                        ' ' +
-                        arrAddress[3];
-                    }
-
-                    for (var i = 4; i < arrAddress.length; i++) {
-                      var temp = '';
-                      for (var j = 0; j < arrAddress[i].length; j++) {
-                        temp += '*';
-                      }
-                      replaceAddr += ' ' + temp;
-                    }
-                    $(this).html(replaceAddr);
-                  });
-
-                  $('.address_cont .info').each(function () {
-                    var temp = $(this).html().split('/');
-                    var hpTemp = $.trim(temp[1]);
-                    var arrHp = hpTemp.split('-');
-
-                    $(this).html(
-                      maskingName(temp[0]) +
-                        ' / ' +
-                        arrHp[0] +
-                        '-' +
-                        maskingStr(arrHp[1]) +
-                        '-' +
-                        arrHp[2]
-                    );
-                  });
-                });
-
-                /**
-                 * 2020.01.22 hmk
-                 * 결품 여부 확인
-                 */
-                function getOnlineStock(code) {
-                  $.ajax({
-                    type: 'get',
-                    url: '/ko/mypage/order/getOnlineStock?code=' + code,
-                    dataType: 'json',
-                    success: function (r) {
-                      if ($.parseJSON(r)[code]) {
-                        $('p[name=__p_' + code + ']').show();
-                      }
-                    },
-                  });
-                }
-              </script>
-              <!--  -->
+              <!-- 주문 -->
               <div
-                class="swiper-slide card-type order"
+                class="swiper-slide card-type order swiper-slide-active"
                 data-index="0"
-                style="width: 435px; margin-right: 30px">
+                style="width: 330px; margin-right: 30px">
                 <div class="stage order_stage">
                   <div class="card_type_inner1903">
                     <div class="s-tit">
@@ -1261,9 +393,9 @@
               </div>
               <!-- 혜택// -->
               <div
-                class="swiper-slide card-type benefit start swiper-slide-prev"
+                class="swiper-slide card-type benefit start swiper-slide-next"
                 data-index="0"
-                style="width: 435px; margin-right: 30px">
+                style="width: 330px; margin-right: 30px">
                 <div class="card_type_inner1903">
                   <div class="stage coupon_stage" id="myCouponList">
                     <div class="s-tit">
@@ -1294,133 +426,12 @@
               <!-- //혜택 -->
 
               <!-- 정보// -->
-              <!-- 
-V1 : THE FIRST1
-V2 : THE FIRST2
-V3 : THE FIRST3
-V4 : PLATINUM
-V5 : GOLD
-V6 : SILVER 
 
-STAR / MANIA / CREW / FRIEND
--->
-              <script type="text/javascript">
-                // 하단 메뉴 슬라이드
-                $(document).ready(function () {
-                  //barCodeClickEvent();
-                  var flagWrapSwiper2 = new Swiper(
-                    '.flag_wrap.case.swiper-container.e-gift1811',
-                    {
-                      slidesPerView: 'auto',
-                      freeMode: true,
-                      spaceBetween: 6,
-                    }
-                  );
-                  flagWrapSwiper2.update();
-
-                  $(document).on(
-                    'click',
-                    '.grade_stage .barCode1902 .card_img',
-                    function () {
-                      $(this).stop().hide();
-                      $(this).next('.s-guide').stop().hide();
-                      $(this)
-                        .closest('.barCode1902')
-                        .find('.bar1902')
-                        .stop()
-                        .show();
-                    }
-                  );
-                  $(document).on(
-                    'click',
-                    '.grade_stage .barCode1902 .cl_btn',
-                    function () {
-                      $(this)
-                        .closest('.barCode1902')
-                        .find('.bar1902')
-                        .stop()
-                        .hide();
-                      $(this)
-                        .closest('.barCode1902')
-                        .find('.card_img')
-                        .stop()
-                        .show();
-                      $(this)
-                        .closest('.barCode1902')
-                        .find('.card_img')
-                        .next('.s-guide')
-                        .stop()
-                        .show();
-                    }
-                  );
-                });
-
-                /* 
-var vipGraph; 
-var onGraph; 
-
-if('' == 'SILVER'){
-    vipGraph = 25;
-}else if('' == 'GOLD'){
-    vipGraph = 50;
-}else if('' == 'PLATINUM'){
-    vipGraph = 75;
-}else if('' == 'V1' || '' == 'V2' || '' == 'V3'){
-    vipGraph = 100;
-}
-
-if('' == 'FRIEND' || '' == '' || '' == null){
-    onGraph = 25;
-}else if('' == 'CREW'){
-    onGraph = 50;
-}else if('' == 'MANIA'){
-    onGraph = 75;
-}else if('' == 'STAR'){
-    onGraph = 100;
-} */
-
-                /*
-function barCodeClickEvent(){
-  var myPageCardBar = $('.grade_stage .barCode1902');
-  myPageCardBar.find('.card_img').on('click',function(){
-      $(this).stop().hide();
-      $(this).next('.s-guide').stop().hide();
-      $(this).closest('.barCode1902').find('.bar1902').stop().show();
-  });
-  myPageCardBar.find('.cl_btn').on('click',function(){
-      $(this).closest('.barCode1902').find('.bar1902').stop().hide();
-      $(this).closest('.barCode1902').find('.card_img').stop().show();
-      $(this).closest('.barCode1902').find('.card_img').next('.s-guide').stop().show();
-  });
-} */
-              </script>
-
-              <form id="userHiddenForm" method="post" target="transMember">
-                <input type="hidden" name="prtnrReqGb" value="03" />
-                <input type="hidden" name="prtnrId" value="D080" />
-                <input type="hidden" name="chnnlId" value="1705" />
-                <input type="hidden" name="custNm" value="왕종휘" />
-                <input type="hidden" name="birthDt" value="19970727" />
-                <input type="hidden" name="mophNo" value="" />
-                <input type="hidden" name="chId" value="asdvg154@naver.com" />
-                <input
-                  type="hidden"
-                  name="custUniqKey"
-                  value="asdvg154@naver.com" />
-                <input type="hidden" name="email" value="" />
-                <input type="hidden" name="sexGbCd" value="2" />
-                <input type="hidden" name="ci" value="" />
-                <input
-                  type="hidden"
-                  name="ptcoReqnMdaInf"
-                  id="ptcoReqnMdaInf"
-                  value="" />
-              </form>
               <div
-                class="swiper-slide card-type infomation swiper-slide-active"
+                class="swiper-slide card-type infomation"
                 id="myPagePopupDelivery"
                 data-index="1"
-                style="width: 435px; margin-right: 30px">
+                style="width: 330px; margin-right: 30px">
                 <div class="card_type_inner1903">
                   <div class="stage delivery_stage">
                     <div class="s-tit">
@@ -1457,9 +468,9 @@ function barCodeClickEvent(){
 
               <!-- 활동// -->
               <div
-                class="swiper-slide card-type activity start swiper-slide-next"
+                class="swiper-slide card-type activity start"
                 data-index="0"
-                style="width: 435px; margin-right: 30px">
+                style="width: 330px; margin-right: 30px">
                 <div class="card_type_inner1903">
                   <div class="stage wish_stage">
                     <div class="s-tit">
@@ -1493,60 +504,6 @@ function barCodeClickEvent(){
               </div>
               <!-- //활동 -->
             </div>
-          </div>
-          <div class="mpg_card_indicator1903 swiper-pagination-bullets">
-            <span
-              class="swiper-pagination-bullet swiper-pagination-bullet-active"></span>
-          </div>
-          <!--add indicator-->
-
-          <div
-            class="flag_wrap case swiper-container e-gift1811 swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal"
-            style="padding: 25px 0 10px 10px">
-            <ul
-              class="swiper-wrapper"
-              style="
-                transform: translate3d(0px, 0px, 0px);
-                transition-duration: 0ms;
-              ">
-              <li
-                class="swiper-slide flag on swiper-slide-active"
-                id="categoryNav01"
-                style="margin-right: 6px">
-                <a
-                  href="/ko/mypage/order/myorders"
-                  class="name"
-                  onclick="GA_Event('마이페이지', 'MY_푸터', this.text);"
-                  >주문/배송조회</a
-                >
-              </li>
-              <li
-                class="swiper-slide flag swiper-slide-next"
-                style="margin-right: 6px">
-                <a
-                  href="/ko/svcenter/mobilemain"
-                  class="name"
-                  onclick="GA_Event('마이페이지', 'MY_푸터', this.text);"
-                  >고객센터</a
-                >
-              </li>
-              <li class="swiper-slide flag" style="margin-right: 6px">
-                <a
-                  href="/ko/mypage/myqna"
-                  class="name"
-                  onclick="GA_Event('마이페이지', 'MY_푸터', this.text);"
-                  >상품 Q&amp;A</a
-                >
-              </li>
-              <li class="swiper-slide flag" style="margin-right: 6px">
-                <a
-                  href="/ko/mypage/event/myevents"
-                  class="name"
-                  onclick="GA_Event('마이페이지', 'MY_푸터', this.text);"
-                  >나의 이벤트</a
-                >
-              </li>
-            </ul>
           </div>
 
           <div class="mypage_card_footer">
@@ -1596,6 +553,61 @@ function barCodeClickEvent(){
       </div>
     </div>
     <!-- //################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+
+    <script>
+      $(document).ready(function () {
+        let tabs = $('.red_border_tab li');
+        $('a.order').click(function (e) {
+          e.preventDefault();
+          tabs.removeClass('on');
+          $(this).parent().addClass('on');
+          $('.swiper-wrapper').css('transform', 'translate3d(0px, 0px, 0px)');
+        });
+        $('a.benefit').click(function (e) {
+          e.preventDefault();
+          tabs.removeClass('on');
+          $(this).parent().addClass('on');
+          $('.swiper-wrapper').css(
+            'transform',
+            'translate3d(-360px, 0px, 0px)'
+          );
+        });
+        $('a.infomation').click(function (e) {
+          e.preventDefault();
+          tabs.removeClass('on');
+          $(this).parent().addClass('on');
+          $('.swiper-wrapper').css(
+            'transform',
+            'translate3d(-720px, 0px, 0px)'
+          );
+        });
+        $('a.activity').click(function (e) {
+          e.preventDefault();
+          tabs.removeClass('on');
+          $(this).parent().addClass('on');
+          $('.swiper-wrapper').css(
+            'transform',
+            'translate3d(-1080px, 0px, 0px)'
+          );
+        });
+
+        $('.swiper-wrapper').bind('touchmove', function (e) {
+          console.log($(this).css('transform'));
+          let x = $(this).css('transform').split('(')[1].split(',')[4];
+          console.log(x);
+          tabs.removeClass('on');
+          if (x > 0) {
+            $('a.order').parent().addClass('on');
+          } else if (x > -360) {
+            $('a.benefit').parent().addClass('on');
+          } else if (x > -720) {
+            $('a.infomation').parent().addClass('on');
+          } else {
+            $('a.activity').parent().addClass('on');
+          }
+        });
+      });
+    </script>
   </body>
   <!-- This script is for AceCounter START -->
 </html>

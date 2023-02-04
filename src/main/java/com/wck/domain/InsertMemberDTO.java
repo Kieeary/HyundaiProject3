@@ -38,14 +38,13 @@ public class InsertMemberDTO {
 	
 	private Integer gender = 1;
 	
-	@SuppressWarnings("deprecation")
 	public MemberVO toMemberVO() {
 		MemberVO member = new MemberVO();
 		member.setEmail(email);
 		member.setPassword(password);
 		member.setName(name);
 		member.setPhone(phoneFront+phoneMiddle+phoneBack);
-		member.setBirth(new Date(birthYear, birthMonth, birthDay));
+		member.setBirth(Date.valueOf(birthYear+"/"+birthMonth+"/"+birthDay));
 		member.setGender(gender);
 		
 		member.setId(UuidUtil.generateUUID(10));

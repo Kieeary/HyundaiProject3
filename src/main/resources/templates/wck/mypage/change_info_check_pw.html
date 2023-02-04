@@ -1,4 +1,4 @@
-<html lang="ko" class="">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -173,28 +173,7 @@
       }
     </style>
 
-    <script
-      type="text/javascript"
-      async=""
-      src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/943253288/?random=1675414437633&amp;cv=9&amp;fst=1675414437633&amp;num=1&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;eid=375603260%2C466465926&amp;u_h=709&amp;u_w=415&amp;u_ah=709&amp;u_aw=415&amp;u_cd=30&amp;u_his=26&amp;u_tz=540&amp;u_java=false&amp;u_nplug=0&amp;u_nmime=0&amp;sendb=1&amp;ig=1&amp;frm=0&amp;url=https%3A%2F%2Fwww.thehandsome.com%2Fko%2Fmypage%2FpersonInfomationChangePWCheck&amp;ref=https%3A%2F%2Fwww.thehandsome.com%2Fko%2Fmypage%2FmypageFloatingPopup&amp;tiba=%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%20%EB%B3%80%EA%B2%BD%20%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%20%EC%B2%B4%ED%81%AC%20%7C%20%EB%8D%94%ED%95%9C%EC%84%AC%EB%8B%B7%EC%BB%B4&amp;hn=www.googleadservices.com&amp;uaa=&amp;uab=64&amp;uam=Nexus%205&amp;uap=Android&amp;uapv=6.0&amp;uaw=0&amp;uafvl=Not_A%2520Brand%3B99.0.0.0%7CGoogle%2520Chrome%3B109.0.5414.119%7CChromium%3B109.0.5414.119&amp;rfmt=3&amp;fmt=4"></script>
-    <script
-      src="https://cdn.megadata.co.kr/js/socialLink/social_sns_config_min.js"
-      type="text/javascript"
-      defer=""
-      async=""></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="//static.groobee.io/dist/g2/css/grb-recommend-list_v2.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="//static.groobee.io/dist/g2/css/custom-swiper.css" />
-  </head>
+     </head>
 
   <body>
     <!-- ################## hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
@@ -239,93 +218,26 @@
 
             capsLockCheck('j_password');
 
-            //inputDataValidationCheck('j_password');
-
             $('#login_btn').click(function () {
-              if ($.trim($('#j_username').val()) == '') {
-                location.href = '/ko/member/login';
-              }
-
+              $('#msgErr2').remove();
               if ($.trim($('#j_password').val()) == '') {
+            	
                 $('#msgErr').show();
                 $('#msgErr').text('비밀번호를 입력하세요.');
-                //$('#msgErr').text("Please enter your password");
                 $('#j_password').focus();
                 return;
               }
-
-              var pw = $('#j_password').val();
-              pw = pw.replace(/#/g, '[({})]');
-              pw = pw.replace(/>/g, '{[()]}');
-              pw = pw.replace(/</g, '({[]})');
-
-              $.ajax({
-                type: 'post',
-                url: '/ko/common/passwordrecheck' + '?callPage=mypage',
-                data: {
-                  uid: $('#j_username').val(),
-                  pw: pw,
-                  CSRFToken: 'b00c27d7-a163-4832-9823-87f1b4cb40b8',
-                },
-                success: function (response) {
-                  if (response == true) {
-                    $('#personInfomationChangePage').attr(
-                      'action',
-                      '/ko/mypage/personInfomationChange'
-                    );
-                    $('#personInfomationChangePage').submit();
-                  } else {
-                    //					location.href="/ko/mypage/personInfomationChangePWCheck?error=true";
-                    $('#msgErr').show();
-                    //$('findPW').attr("style", "display:block");
-                    $('#findPW').show();
-                    $('#msgErr').text('입력하신 비밀번호가 일치하지 않습니다.');
-                  }
-                },
-                error: function (e) {
-                  console.log(e);
-                },
-              });
+              
+              $('#pwForm').submit();
             });
+            
 
             $('#cancle_btn').click(function () {
-              location.href = '/ko/';
-            });
-
-            $('#j_password').keypress(function (event) {
-              if (event.which == 13) {
-                event.preventDefault();
-                $('#login_btn').click();
-                $(this).blur();
-              }
-            });
-
-            $('#findPWBtn').click(function () {
-              location.href = '/ko/member/findIdPwPage';
+              location.href = '/wck/mypage';
             });
           });
-
           //]]>
         </script>
-        <form id="bioLoginForm" method="post" action="/ko/member/bioCheck">
-          <input type="hidden" id="bio_userId" name="j_username" />
-          <input type="hidden" id="bio_CSRFToken" name="CSRFToken" />
-          <input type="hidden" id="bio_authToken" name="authToken" />
-          <input type="hidden" id="successPageUrl" name="successPageUrl" />
-        </form>
-        <form
-          id="personInfomationChangePage"
-          name="manToManInquiryForm"
-          action="/ko/mypage/personInfomationChangePWCheck"
-          method="post">
-          <input type="hidden" name="directInto" value="NO" />
-          <div>
-            <input
-              type="hidden"
-              name="CSRFToken"
-              value="b00c27d7-a163-4832-9823-87f1b4cb40b8" />
-          </div>
-        </form>
         <!-- contents s -->
         <div id="contents" class="hsome_contents mp_confirm_pw_wrap">
           <div class="gray_tab">
@@ -333,37 +245,28 @@
           </div>
           <div class="mp_input_wrap">
             <div class="user_id_wrap">
-              <span class="user_id">asd***************</span>
-              <input
-                type="hidden"
-                id="j_username"
-                name="j_username"
-                value="asd***************"
-                disabled="disabled" />
+              <span class="user_id" th:text="${account.email}">asd***************</span>
             </div>
             <!-- input_box s -->
             <div class="input_box">
               <div class="ipt_con">
+              <form id="pwForm" method="post" action="/wck/mypage/change/checkpw">
                 <input
                   type="password"
                   id="j_password"
-                  name="j_password"
+                  name="password"
                   title="비밀번호를 입력하세요."
                   placeholder="비밀번호를 입력하세요." />
-                <p class="err_box" id="msgErr"></p>
+              </form>
+                <p class="err_box" id="msgErr">
+                </p>
+                <p class="err_box" id="msgErr2" th:if="${error != null}" th:text="${error}" style="display:block;">
+                </p>
+                	
+                
               </div>
             </div>
             <!-- input_box e -->
-
-            <div
-              class="btn_wrap btn_wrap_div1 mt25 pb0"
-              id="findPW"
-              style="display: none">
-              <a href="#none" class="btnstl3 border_btn_gray" id="findPWBtn"
-                ><span>비밀번호 찾기</span></a
-              >
-            </div>
-
             <div class="btn_wrap btn_wrap_div2 last_box">
               <a href="#none" class="btnstl3 border_btn_gray" id="cancle_btn"
                 ><span>취소</span></a

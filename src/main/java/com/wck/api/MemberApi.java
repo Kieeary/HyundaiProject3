@@ -1,7 +1,5 @@
 package com.wck.api;
 
-import java.util.Map;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
@@ -75,6 +73,7 @@ public class MemberApi {
 	}
 	
 	
+	// TODO : 멤버 수정 페이지 컬럼 추가 : 핸드폰 번호 , 성별, (주소?)
 	
 	@Data
 	static class TmpDTO{

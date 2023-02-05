@@ -98,4 +98,23 @@
 		set mpassword = #{pw}
 		where memail = #{email}
 	</update>
+	
+	<update id="updateInfoOne">
+		update member
+		set 
+			mname = #{name},
+			mphone = #{phone1} || #{phone2} || #{phone3},
+			mbirth = #{year} || '/' || #{month} || '/' || #{day},
+			mgender = #{gender},
+			mzipcode = #{zipcode},
+			maddress1 = #{address1},
+			maddress2 = #{address2}
+		where memail = #{email}
+	</update>
+	
+	<update id="disableOne">
+	update member
+	set menabled = 0 
+	where memail = #{email}
+	</update>
 </mapper> 

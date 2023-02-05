@@ -54,11 +54,16 @@ public class MemberApi {
 			@AuthenticationPrincipal Account account,
 			@Valid @RequestBody UpdateMemberDTO member,
 			BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) 
+		if(bindingResult.hasErrors()) { 
+			log.info(member);
+			log.info(bindingResult.getAllErrors());
 			return new ResponseEntity<String>("ERROR", HttpStatus.NOT_ACCEPTABLE);
+		}
+		memberSerivce.updateInfo(member);
 		log.info(member);
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
 	}
+	
 	@PostMapping("/update/pw")
 	public ResponseEntity<String> changePw(
 			@AuthenticationPrincipal Account account,
@@ -73,7 +78,6 @@ public class MemberApi {
 	}
 	
 	
-	// TODO : 멤버 수정 페이지 컬럼 추가 : 핸드폰 번호 , 성별, (주소?)
 	
 	@Data
 	static class TmpDTO{

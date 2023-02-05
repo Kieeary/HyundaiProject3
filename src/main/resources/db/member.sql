@@ -22,7 +22,7 @@ CREATE TABLE coupon_detail (
     eno          NUMBER NOT NULL,
     mid          VARCHAR2(30 BYTE) NOT NULL,
     cpissuedate  TIMESTAMP NOT NULL,
-    cpexpriedate TIMESTAMP NOT NULL,
+    cpexpiredate TIMESTAMP NOT NULL,
     cpusedate    TIMESTAMP,
     cpstatus     NUMBER(1)
 );
@@ -165,3 +165,10 @@ edetailimg, ecoupontitle) values
 insert into cart (MID, PSID, PQUANTITY)
 values ('123123', 'TM2D1TPC424W_IV_61', 1);
 
+insert into coupon_detail 
+(cpid, eno, mid, cpissuedate, cpexpiredate, 
+cpusedate, cpstatus) values
+('11111','123121','123123', '2023/1/1', '2023/3/30',
+null, 1);
+
+create sequence seq_coupon_detail;

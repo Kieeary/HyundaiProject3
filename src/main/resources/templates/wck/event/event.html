@@ -290,15 +290,47 @@
             <div class="hs_event_viewThumb newBrands_evt">
               <!-- 1 -->
               <p>
-                <script>
-                  // <![CDATA[
+                <script th:inline="javascript">
+              
                   $(document).ready(function () {
-                    $('.new_member_notice').click(function () {
-                      $(this).next('div').slideToggle();
-                      $(this).find('img').toggle();
-                    });
+                	  isJoined();
+                	  
+                	  /*<![CDATA[*/
+                	  function isJoined(){
+                		  let eno = /*[[${event.no}]]*/;
+                		  $.ajax({
+                			  url: "/api/event/"+eno+"/check",
+                			  method : 'get',
+                			  success : function(result){
+                				  if(result){
+                					  $('#coupon_btn').attr("disabled",true);
+                					  $('#coupon_btn').text("이미 발급받은 쿠폰 입니다.")
+                				  }
+                			  }
+                		  })
+                		  
+                	  }
+                	  /*]]>*/
+                	  
+                	  /*<![CDATA[*/
+                    $('#coupon_btn').click(function(e){
+                    	let eno = /*[[${event.no}]]*/;
+                    	console.log('click btn');
+                    	$.ajax({
+              			  url: "/api/event/"+eno+"/coupon",
+              			  method : 'post',
+              			  success : function(result){
+              				  if(result == "SUCCESS"){
+              					  console.log('coupon issue success')
+              					  isJoined();
+              				  }
+              			  }
+              		  })
+                    	
+                    })
+                    /*]]>*/
                   });
-                  // ]]>
+                  
                 </script>
               </p>
               <style>
@@ -327,14 +359,8 @@
                     src="http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_02.jpg"
                     alt="" />
                 </div>
-                <div class="link-wrap">
-                  <a
-                    href="https://www.h-point.co.kr/cu/join/start.nhd?prtnrld=D080&amp;CHNNLLD=1705"
-                    ><img
-                      style="display: block; width: 100%"
-                      src="http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_06.jpg"
-                      alt=""
-                  /></a>
+                <div style="text-align:center">
+                	<button id="coupon_btn" style="padding: 10px 10px; font-weight:bold; font: 20px;">쿠폰발급받기</button>
                 </div>
               </div>
               <!-- //1 -->

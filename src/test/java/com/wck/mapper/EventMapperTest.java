@@ -6,7 +6,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.wck.domain.EventCouponVO;
 import com.wck.domain.EventCriteria;
 import com.wck.domain.EventVO;
 
@@ -34,6 +36,31 @@ public class EventMapperTest {
 		EventVO event = eventMapper.getEvent(123121);
 		log.info(event);
 		Assertions.assertNotNull(event);
+	}
+	
+	@Test
+	void getUsableCoupon() {
+		String mid = "123123";
+		List<EventCouponVO> list = eventMapper.getCouponListByMid(mid, 1);
+		log.info(list);
+		Assertions.assertEquals(list.size(), 1);
+	}
+	
+	@Test
+	void isJoined() {
+		String mid = "123123";
+		int eno = 123121;
+		boolean result = eventMapper.isJoined(eno, mid);
+		Assertions.assertEquals(result, true);
+	}
+	
+	@Test
+	@Transactional
+	void insertCouponDetail() {
+		int eno = 123122;
+		String mid = "123123";
+		int row = eventMapper.insertCouponDetail(eno, mid);
+		Assertions.assertEquals(row, 1);
 	}
 
 }

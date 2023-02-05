@@ -243,9 +243,68 @@
             </li>
           </ul>
         </header>
+
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script type="text/javascript" th:inline="javascript">
           //<![CDATA[
           $(document).ready(function () {
+            $('#zip_btn').click(function (e) {
+              e.preventDefault();
+              daumPostcode();
+            });
+
+            function daumPostcode() {
+              new daum.Postcode({
+                oncomplete: function (data) {
+                  // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                  // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                  // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                  var addr = ''; // 주소 변수
+                  var extraAddr = ''; // 참고항목 변수
+
+                  //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                  if (data.userSelectedType === 'R') {
+                    // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                  } else {
+                    // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                  }
+
+                  // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                  if (data.userSelectedType === 'R') {
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                      extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                      extraAddr +=
+                        extraAddr !== ''
+                          ? ', ' + data.buildingName
+                          : data.buildingName;
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if (extraAddr !== '') {
+                      extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    // document.getElementById('sample6_extraAddress').value =
+                    //   extraAddr;
+                  } else {
+                    // document.getElementById('sample6_extraAddress').value = '';
+                  }
+
+                  $('#zipcode').val(data.zonecode);
+                  $('#address1').val(addr);
+
+                  $('#address2').attr('readonly', false);
+                },
+              }).open();
+            }
+
             $('.our_privacy_info_btn').click(function () {
               $('.m_popModalBg_ldg').show();
               $('.privacy_info_popwrap_01').show();
@@ -320,9 +379,9 @@
               );
             }
             /*<![CDATA[*/
-            $('#selDay').val('[[${#dates.day(member.birth)}]]');
-            $('#selMonth').val('[[${#dates.month(member.birth)}]]');
-            $('#selYear').val('[[${#dates.year(member.birth)}]]');
+            $('#selDay').val('[[${member.day}]]');
+            $('#selMonth').val('[[${member.month}]]');
+            $('#selYear').val('[[${member.year}]]');
             /*]]>*/
             $('#selYear').change(function () {
               var selYear1 = $('#selYear').val();
@@ -521,6 +580,37 @@
               $('#hpMsg').hide();
               $('#emailMsg').hide();
 
+              if ($.trim($('#name').val()) == '') {
+                $('#nameMsg').text('이름을 입력하세요.');
+                $('#nameMsg').show();
+                $('#name').focus();
+                return;
+              }
+
+              if (
+                $.trim($('#phone1').val()) == '' ||
+                $.trim($('#phone2').val()) == '' ||
+                $.trim($('#phone3').val()) == ''
+              ) {
+                $('#phoneMsg').text('휴대폰 번호를 입력하세요.');
+                $('#phoneMsg').show();
+                $('#phone1').focus();
+                return;
+              }
+
+              if (
+                $.trim($('#zipcode').val()) == '' ||
+                $.trim($('#address1').val()) == ''
+              ) {
+                $('#addrMsg').text('주소를 입력하세요.');
+                $('#addrMsg').show();
+                return;
+              }
+
+              $('#sBirthday').val(
+                $('#selYear').val() + $('#selMonth').val() + $('#selDay').val()
+              );
+
               if (
                 $.trim($('#selYear').val()) == '' ||
                 $.trim($('#selMonth').val()) == '' ||
@@ -531,17 +621,6 @@
                 $('#selYear').focus();
                 return;
               }
-
-              if ($.trim($('#name').val()) == '') {
-                $('#nameMsg').text('이름을 입력하세요.');
-                $('#nameMsg').show();
-                $('#name').focus();
-                return;
-              }
-
-              $('#sBirthday').val(
-                $('#selYear').val() + $('#selMonth').val() + $('#selDay').val()
-              );
 
               var hpCheckResult = phoneNumbericCheck();
               console.log('1');
@@ -557,11 +636,23 @@
               );
               la.confirmAction = function () {
                 //확인 호출 펑션
-
+				let email = $('#email').val();
                 let name = $('#name').val();
+                
+                let phone1 = $('#phone1').val();
+                let phone2 = $('#phone2').val();
+                let phone3 = $('#phone3').val();
+                
+                let zipcode = $('#zipcode').val();
+                let address1 = $('#address1').val();
+                let address2 = $('#address2').val();
+                
+                let gender = $('input:radio[name=gender]:checked').val();
+                
                 let year = $('#selYear').val();
                 let month = $('#selMonth').val();
                 let day = $('#selDay').val();
+                
 
                 $.ajax({
                   type: 'POST',
@@ -569,7 +660,18 @@
                   datatype: 'json',
                   contentType: 'application/json; charset-utf-8',
                   data: JSON.stringify({
+                	email : email,
                     name: name,
+                    phone1 : phone1,
+                    phone2 : phone2,
+                    phone3 : phone3,
+                    
+                    zipcode : zipcode,
+                    address1 : address1,
+                    address2 : address2,
+                    
+                    gender : gender,
+                    
                     year: year,
                     month: month,
                     day: day,
@@ -617,17 +719,7 @@
             //회원탈퇴
             $('#memberSecessionBtn').click(function () {
               var selectTypeYn = 'N';
-              if (selectTypeYn == 'Y') {
-                location.href = '/mypage/memberSecessionType';
-              } else {
-                location.href = '/mypage/memberSecessionStep1';
-              }
-            });
-
-            // 통합회원 회원가입 페이지
-            $('#hpJoinChangeBtn').click(function () {
-              transMember();
-              //window.open("https://www.h-point.co.kr/cu/join/start.nhd");
+              location.href = '/wck/mypage/change/secession';
             });
 
             //비밀번호변경
@@ -812,20 +904,12 @@
           //]]>
         </script>
         <form
+        th:object="${member}"
           id="updateProfileForm"
           action="/wck/mypage/change/form"
           method="post">
           <input type="hidden" name="prk" id="prk" value="8953806979076" />
-          <input
-            type="hidden"
-            name="emailDuplChk"
-            id="emailDuplChk"
-            value="Y"
-            title="이메일 중복" />
-          <input type="hidden" id="emailAddress" name="emailAddress" value="" />
-          <input type="hidden" id="sBirthday" name="sBirthday" value="" />
-          <input type="hidden" id="checkYN" name="checkYN" value="N" />
-
+         
           <!-- contents s -->
           <div
             id="contents"
@@ -850,7 +934,7 @@
                   <input
                     type="text"
                     value="asd***************"
-                    th:value="${member.email}"
+                    th:field="*{email}"
                     readonly="readonly" />
                 </div>
               </div>
@@ -861,6 +945,7 @@
                 </div>
                 <div class="ipt_con">
                   <input
+                  th:field="*{name}"
                     type="text"
                     id="name"
                     name="name"
@@ -872,12 +957,107 @@
 
               <div class="input_box">
                 <div class="ipt_tit">
+                  <span class="point_star_r">휴대폰</span>
+                </div>
+
+                <div class="ipt_con" style="display: flex; align-items: center">
+                  <input type="text" id="phone1" name="phone1" value="" th:field="*{phone1}"/>
+                  <div class="form_hyphen" style="padding: 5px">-</div>
+                  <input type="text" id="phone2" name="phone2" value="" th:field="*{phone2}"/>
+                  <div class="form_hyphen" style="padding: 5px">-</div>
+                  <input type="text" id="phone3" name="phone3" value="" th:field="*{phone3}"/>
+                </div>
+                <p class="err_box" id="phoneMsg"></p>
+              </div>
+
+              <div class="input_box">
+                <div class="ipt_tit">
+                  <span class="point_star_r">주소</span>
+                </div>
+                <div class="ipt_con">
+                  <div style="margin-bottom: 5px; display: flex">
+                    <input
+                      style="width: 40%"
+                      type="text"
+                      id="zipcode"
+                      name="zipcode"
+                      value=""
+                      readonly  th:field="*{zipcode}"/>
+                    <button
+                      id="zip_btn"
+                      style="
+                        border: 1px solid gray;
+                        padding: 0px 5px;
+                        margin-left: 5px;
+                      ">
+                      주소찾기
+                    </button>
+                  </div>
+
+                  <input
+                    style="margin-bottom: 5px"
+                    type="text"
+                    id="address1"
+                    name="address1"
+                    readonly
+                    value="" 
+                    th:field="*{address1}"/>
+                  <input
+                    type="text"
+                    id="address2"
+                    name="address2"
+                    value=""
+                    readonly 
+                    th:field="*{address2}"/>
+                </div>
+                <p class="err_box" id="addrMsg"></p>
+              </div>
+
+              <div class="input_box">
+                <div class="ipt_tit">
+                  <span class="point_star_r">성별</span>
+                </div>
+                <div class="ipt_con">
+                  <div>
+                    <input
+                      
+                      type="radio"
+                      name="gender"
+                      value="1"
+                      th:value="1"
+                      checked=""
+                      th:field="*{gender}"
+                      style="
+                        opacity: initial;
+                        position: relative;
+                        appearance: auto;
+                      " />
+                    남자
+                    <input
+                      
+                      type="radio"
+                      name="gender"
+                      th:value="2"
+                      value="2"
+                      th:field="*{gender}"
+                      style="
+                        opacity: initial;
+                        position: relative;
+                        appearance: auto;
+                      " />
+                    여자
+                  </div>
+                </div>
+              </div>
+
+              <div class="input_box">
+                <div class="ipt_tit">
                   <span class="point_star_r">생년월일</span>
                 </div>
                 <div class="ipt_con input_user_bday mb40">
                   <div class="bday_year">
                     <div class="select_box select_box_selected">
-                      <select name="bday_01" id="selYear">
+                      <select name="bday_01" id="selYear" th:field="*{year}">
                         <option value="">년</option>
                         <option value="2009">2009</option>
                         <option value="2008">2008</option>
@@ -994,7 +1174,7 @@
                   </div>
                   <div class="bday_month">
                     <div class="select_box select_box_selected">
-                      <select name="bday_02" id="selMonth">
+                      <select name="bday_02" id="selMonth" th:field="*{month}">
                         <option value="">월</option>
                         <option value="01">01</option>
                         <option value="02">02</option>
@@ -1013,7 +1193,7 @@
                   </div>
                   <div class="bday_day">
                     <div class="select_box">
-                      <select name="bday_03" id="selDay">
+                      <select name="bday_03" id="selDay" th:field="*{day}">
                         <option value="" selected="">**</option>
                         <option value="01">01</option>
                         <option value="02">02</option>

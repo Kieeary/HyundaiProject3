@@ -9,5 +9,6 @@
     <typeAliases>
         <typeAlias type="com.wck.domain.SampleVO" alias="sample"/>
         <typeAlias type="com.wck.domain.MemberVO" alias="member"/>
+        <typeAlias type="com.wck.domain.EventVO" alias="event"/>
     </typeAliases>  
 </configuration>

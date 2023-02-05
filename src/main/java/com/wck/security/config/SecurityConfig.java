@@ -1,15 +1,22 @@
 package com.wck.security.config;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+
+import com.wck.security.provider.FormAuthenticationProvider;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -19,17 +26,18 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
     
+	@Autowired
+	private AuthenticationFailureHandler authenticationFailureHandler;
 	
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+    	return new FormAuthenticationProvider();
+    }
     
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		// 정적파일에 대해선 security 적용 X
-		web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
-	}
 	
 	@Bean
 	public RoleHierarchyImpl roleHierarchyImpl() {
@@ -39,8 +47,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.setHierarchy("ROLE_ADMIN > ROLE_MANAGER > ROLE_USER");
 		return roleHierarchyImpl;
 	}
+    
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		// 정적파일에 대해선 security 적용 X
+		web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+	}
+	
 
-
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(authenticationProvider());
+	}
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
@@ -52,10 +71,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			// form login 방식
 			.formLogin()
 			.loginPage("/wck/login")
-			.permitAll()
+			.failureHandler(authenticationFailureHandler)
+			.defaultSuccessUrl("/wck/")
+			
 		.and()
 			.oauth2Login()
 			.loginPage("/wck/login")
+			.defaultSuccessUrl("/wck/")
+			
 		.and()
 			.csrf()
 			.disable()
@@ -64,6 +87,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.logoutSuccessUrl("/")
 		
 		;
+		
+		
+
+	
 		
 	}
 	
@@ -75,3 +102,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 
 }
+

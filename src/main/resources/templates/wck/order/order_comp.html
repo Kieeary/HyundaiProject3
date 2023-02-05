@@ -1,36 +1,36 @@
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="wck/includes/headTag :: head_tag(title='주문완료 | 더한섬닷컴')"></th:block>
+<th:block th:replace="wck/includes/head :: head_tag(title='주문완료 | 더한섬닷컴')"></th:block>
 
 <body class="back">
   <div class="hsome_allContents_wrapper">
     <div class="hsome_allContents">
 
-
+      <!-- ########## header start ########## -->
       <header class="hsome_header header_renew2206">
         <h1 class="h_ttl ellipsis" id="headerTitle">
           주문완료</h1>
         <a href="/ko/main" class="h_top_home"><span>홈</span></a>
 
         <ul class="h_gnbMenu">
-          <li class="search"><a href="/ko/mobilecommon/search"
-              onclick="GA_Event('공통', '헤더', '검색');"><span>search</span></a></li>
-          <li class="cart"><a href="/ko/shoppingbag"
-              onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i>2</i></a></li>
+          <li class="search"><a href="#" onclick=""><span>search</span></a></li>
+          <li class="cart"><a href="#" onclick=""><span>cart</span><i>$$</i></a></li>
         </ul>
       </header>
+      <!-- ########## header end ########## -->
+
 
       <div id="contents" class="hsome_contents order_complete_wrap">
         <div class="order_complete_img_box">
           <img src="https://www.thehandsome.com/_ui/handsomemobile/images/order/order_complete_img.gif"
             class="order_complete_img" alt="주문완료축하이미지">
         </div>
-        <div class="order_complete_msg_wrap">
 
+        <div class="order_complete_msg_wrap">
           <h3 class="ocm_tit">주문이 완료되었습니다.</h3> <!-- 주문이 완료 되었습니다. -->
           <p class="ocm_num">주문번호 : <b>230201P16622126</b></p>
           <p class="ocm_date">(주문일시 : 2023.02.01 16:32)</p>
-
         </div>
+
         <div class="df_box order_complete_delivery_info_wrap">
           <h3 class="df_box_tit">배송지 정보</h3>
           <div class="dlvr_adrs">

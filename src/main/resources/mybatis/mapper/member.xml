@@ -24,7 +24,8 @@
 			mmileage mileage
 		from member
 		where memail = #{email} and 
-			mlogintype = #{loginType}
+			mlogintype = #{loginType} and
+			menabled = 1
 	</select>
 	
 	<insert id="insertOne" parameterType="member">
@@ -43,4 +44,58 @@
 		)
 	</insert>
 	
+	<select id="findAllByNameAndBirth" resultType="member">
+		select 
+			mid id, 
+			mpassword password, 
+			mname name, 
+			memail email, 
+			mphone phone, 
+			mtel tel, 
+			mzipcode zipcode, 
+			maddress1 address1,
+			maddress2 address2,
+			mbirth birth,
+			mgender gender,
+			mrefid refId,
+			mlogintype loginType,
+			menabled enabled,
+			mrole role,
+			mgrade grade,
+			mmileage mileage
+		from member
+		where mname = #{name} and
+			TO_CHAR(mbirth,'YYYY-MM-DD') = TO_CHAR(#{birth},'YYYY-MM-DD') and
+			mlogintype = 'Email'
+	</select>
+	
+	<select id="findOneByNameAndEmail" resultType="member">
+		select 
+			mid id, 
+			mpassword password, 
+			mname name, 
+			memail email, 
+			mphone phone, 
+			mtel tel, 
+			mzipcode zipcode, 
+			maddress1 address1,
+			maddress2 address2,
+			mbirth birth,
+			mgender gender,
+			mrefid refId,
+			mlogintype loginType,
+			menabled enabled,
+			mrole role,
+			mgrade grade,
+			mmileage mileage
+		from member
+		where mname = #{name} and 
+			memail = #{email} and
+			mlogintype = 'Email'
+	</select>
+	<update id="updatePasswordOne">
+		update member
+		set mpassword = #{pw}
+		where memail = #{email}
+	</update>
 </mapper> 

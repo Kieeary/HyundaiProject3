@@ -1,7 +1,7 @@
 package com.wck.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,6 @@
 package com.wck.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,10 @@ import com.wck.domain.InsertMemberDTO;
 import com.wck.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+
+import com.wck.security.domain.Account;
+
 import lombok.extern.log4j.Log4j2;
 
 @Controller
@@ -66,7 +71,8 @@ public class WckController {
 	}
 	
 	@GetMapping("/shoppingbag")
-	public String cartForm() {
+	public String cartForm(@AuthenticationPrincipal Account user) {
+		log.info(user);
 		return "wck/shoppingbag/cart";
 	}
 	

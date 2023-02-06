@@ -10,7 +10,7 @@
     }
 
     .check_stl input[type="checkbox"]+label:before {
-      top: 0px;
+      top: -4px;
     }
 
   </style>
@@ -124,13 +124,13 @@
             <!-- 활성화 : gl_item에 품절상품 : gl_status_soldout, 4PM상품 : gl_status_4pm 클래스 추가/삭제 -->
             <!-- ########## forEach 로 상품 정보 나열 <li></li> ########## -->
             <li>
-              <div class="gl_item" id="entryProductInfo" data-pk="11136041156652" data-deliverykind=""
+              <div class="gl_item gl_status_soldout" id="entryProductInfo" data-pk="11136041156652" data-deliverykind=""
                 data-outofstock="false">
 
                 <!-- ########## Goods sub CheckBox start ########## -->
                 <div class="check_stl">
                   <input type="checkbox" id="gl_check_2" name="cartlist" data-pk="11136041156652" data-division=""
-                    data-deliverykind="" value="2" data-soldout="N" onclick="checkTotalPrice(this);" />
+                    data-deliverykind="" value="2" data-soldout="Y" onclick="checkTotalPrice(this);" />
                   <label for="gl_check_2"></label>
                 </div>
                 <!-- ########## Goods sub CheckBox end ########## -->
@@ -196,6 +196,17 @@
                       $(obj).addClass("icon_btn_on");
                       console.log("좋아요 등록 완료");
                     }
+                    }
+
+                    function checkTotalPrice(obj) {
+                      if($(obj).attr('data-soldout') == 'N'){
+                        console.log('품절 아님. 판매 중');
+                      } else {
+                        console.log('품절');
+                      }
+                      // console.log($(obj).attr('data-soldout'));
+                      // layerAlert('해당사이즈는 품절입니다.');
+
                     }
                 </script>
 

@@ -7,13 +7,12 @@ import lombok.Setter;
 @Setter
 @Getter
 @NoArgsConstructor
-public class CartVO {
-	private String mId;
-	private String pSId;
-	private int pQuantity;
-	
+public class ProductVO {
+	private String pId;
 	private String pName;
+	private String pNote;
 	private int pStatus;
+	private int bNo;
 	private String bName;
 	
 	private String pCColorCode; 
@@ -21,5 +20,5 @@ public class CartVO {
 	private int pSStock;
 	private String pSize;
 	private int like;
-	
+
 }

@@ -2,10 +2,12 @@ package com.wck.service;
 
 import java.util.List;
 
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
+import com.wck.domain.ProductVO;
 import com.wck.mapper.ProductMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -28,5 +30,11 @@ public class ProductService {
 	
 
 	
+	public List<ProductVO> productList(@Nullable String br, @Nullable String gd,
+										@Nullable String sC, @Nullable String tC) {
+		
+		List<ProductVO> productList = productMapper.productList(br, gd, sC, tC);
+		return productList;
+	}
 
 }

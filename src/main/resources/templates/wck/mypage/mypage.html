@@ -542,6 +542,7 @@
       $(document).ready(function () {
     	  
     	 getMyCoupon();
+    	 getMyLike();
     	 function getMyCoupon(){
     		 $.ajax({
     			 method : 'get',
@@ -572,6 +573,49 @@
     			$('#mypageCouponList').append(template);
     				 
     		 })
+    	 }
+    	 function getMyLike(){
+    		 $.ajax({
+    			 method : 'get',
+    			 url : '/api/member/like',
+    			 datatype:'json',
+    			 success : function(list){
+    				 console.log(list);
+    				 printLike(list);
+    			 }
+    		 })
+    	 }
+    	 function printLike(list){
+    		 if(list == null || list.length == 0){
+    			 return ;
+    		 }
+    		 $('#myWishlists').html('');
+			 $('#myWishlists').html('<ul></ul>');
+    		 
+    			 
+    		 $(list).each(function(idx,like){
+    			 if(idx > 3) return;
+    			 /*<![CDATA[*/
+    			 let template = `
+    				<li>
+    			      <a href="/ko/p/MM2D1WOT022HDE">
+    			        <img
+    			          src="${like.colors[0].pcImg1}"
+    			          style="width: 86px; height: 130px"
+    			          alt="" />
+    			      </a>
+    			    </li>
+    			 `;
+    			 /*]]>*/
+    			 $('#myWishlists > ul').append(template);
+    		 })
+    		 if(list.length > 3){
+    			 /*<![CDATA[*/
+    			 let countUl = `<a href="/ko/mypage/myWish" class="more">+${list.length-3}</a>`
+    			 /*]]>*/
+        		 $('#myWishlists').append(countUl);
+    		 }
+    		 
     	 }
     	  
     	 // tab ui 모방

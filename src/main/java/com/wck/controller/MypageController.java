@@ -85,8 +85,13 @@ public class MypageController {
 		return "redirect:/wck/logout";
 	}
 	
-
+	@GetMapping("/wish")
+	public String myWishList(
+			@AuthenticationPrincipal Account account) {
+		return "wck/mypage/wishlist";
+	}
 	
+
 	@GetMapping("/order/myorders")
 	public String orderListForm() {
 		return "wck/order/my_order";

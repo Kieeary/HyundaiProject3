@@ -12,5 +12,8 @@
         <typeAlias type="com.wck.domain.EventVO" alias="event"/>
         <typeAlias type="com.wck.domain.EventCouponVO" alias="eventCoupon"/>
         <typeAlias type="com.wck.domain.CartVO" alias="cart"/>
+        <typeAlias type="com.wck.domain.ProductCommonVO" alias="productCommon"/>
+        <typeAlias type="com.wck.domain.ProductColorVO" alias="productColor"/>
+        <typeAlias type="com.wck.domain.ProductStockVO" alias="productStock"/>
     </typeAliases>  
 </configuration>

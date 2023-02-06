@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wck.mapper.ProductMapper">
+	
+	<resultMap type="productCommon" id="productCommonMap">
+		<id property="pId" column="pId"/>
+		<result property="pName" column="pname"/>
+		<result property="pNote" column="pnote"/>
+		<result property="pStatus" column="pstatus"/>
+		<result property="bNo" column="bno"/>
+		<result property="bName" column="bname" />
+		<collection property="colors" resultMap="productColorMap"/>
+	</resultMap>
+	
+	<resultMap type="productColor" id="productColorMap">
+		<id property="pcId" column="pcid"/>
+		<result property="pcImg1" column="pcimg1"/>
+		<result property="pcImg2" column="pcimg2"/>
+		<result property="pcImg3" column="pcimg3"/>
+		<result property="pcChipImg" column="pcchipimg"/>
+		<result property="pcColorCode" column="pccolorcode"/>
+		<result property = "pcPrice" column="pcprice"/>
+		<collection property="stocks" resultMap="productStockMap"/>
+	</resultMap>
+	
+	<resultMap type="productStock" id="productStockMap">
+		<id property="psId" column="psId"/>
+		<result property="psStock" column="psStock"/>
+		<result property="pSize" column="pSize"/>
+	</resultMap>
+	
+	<select id="getLikeProductList" resultMap="productCommonMap">
+		select 
+		    p.pid, pname, pnote, b.bno, pstatus,
+		    pc.pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pcprice, pccolorcode, pcprice,
+		    b.bname
+		from likes l 
+		inner join product_common p on (l.pid = p.pid)
+		inner join brand b on (p.bno = b.bno)
+		inner join product_color pc on (pc.pid = p.pid)
+		where l.mid =#{mId}
+	</select>
+	
+	<select id="getProductColor" resultMap="productColorMap">
+		select 
+		    pc.pcId, pcImg1, pcImg2, pcImg3, pcChipImg, pcColorCode, 
+		    pcPrice,
+		    psId, psStock, pSize
+		from product_color pc
+		inner join product_stock ps on(pc.pcid = ps.pcid)
+		where pc.pid = #{pId} and pc.pcid = #{pcId}
+	</select>
+	
+	
+</mapper> 

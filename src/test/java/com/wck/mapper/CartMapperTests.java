@@ -1,8 +1,9 @@
 package com.wck.mapper;
 
+import static org.mockito.ArgumentMatchers.intThat;
+
 import java.util.List;
 
-import org.apache.catalina.connector.OutputBuffer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,5 +46,16 @@ public class CartMapperTests {
 			log.info(cartVO);
 		}
 	}
+	
+//	author : 김한울
+//	purpose : 장바구니 특정 상품 삭제
+	@Test
+	void deleteCartTest() {
+		String mId = "7c-41f8-8c6a-739159990a8d";
+		String pSId = "SH2CAKCD036M_BK_95";
+		int result = cartMapper.deleteCart(mId, pSId);
+		log.info(result==1 ? "장바구니 삭제 완료" : "장바구니 삭제 실패");
+	}
+	
 
 }

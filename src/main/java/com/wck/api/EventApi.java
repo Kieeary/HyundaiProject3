@@ -30,7 +30,7 @@ public class EventApi {
 	
 	@GetMapping("/list")
 	public ResponseEntity<List<EventVO>> getList(
-			@RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
+			@RequestParam(value = "pageSize", defaultValue = "4") int pageSize,
 			@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
 			@RequestParam(value = "past", defaultValue = "past") boolean past
 			){

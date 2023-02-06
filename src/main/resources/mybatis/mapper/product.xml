@@ -31,15 +31,33 @@
 	</resultMap>
 	
 	<select id="getLikeProductList" resultMap="productCommonMap">
-		select 
-		    p.pid, pname, pnote, b.bno, pstatus,
-		    pc.pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pcprice, pccolorcode, pcprice,
-		    b.bname
-		from likes l 
-		inner join product_common p on (l.pid = p.pid)
-		inner join brand b on (p.bno = b.bno)
-		inner join product_color pc on (pc.pid = p.pid)
-		where l.mid =#{mId}
+		select pid, pname, pnote, bno, pstatus,
+			pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice,
+			bname
+			from (
+				select rownum rn, 
+					pid, pname, pnote, bno, pstatus,
+					pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice,
+					bname
+					from (
+						select 
+						    p.pid, pname, pnote, b.bno, pstatus,
+						    pc.pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice,
+						    b.bname
+						from likes l 
+						inner join product_common p on (l.pid = p.pid)
+						inner join brand b on (p.bno = b.bno)
+						inner join product_color pc on (pc.pid = p.pid)
+						where l.mid =#{mId}
+						order by l.ltime desc
+					)
+					// 조인을 나중에 해야됨
+			<![CDATA[
+					 where rownum <= #{cri.currentPage} * #{cri.pageSize}
+			)
+			where rn > (#{cri.currentPage} - 1) * #{cri.pageSize}
+			]]>
+			
 	</select>
 	
 	<select id="getProductColor" resultMap="productColorMap">
@@ -48,7 +66,7 @@
 		    pcPrice,
 		    psId, psStock, pSize
 		from product_color pc
-		inner join product_stock ps on(pc.pcid = ps.pcid)
+		left join product_stock ps on(pc.pcid = ps.pcid)
 		where pc.pid = #{pId} and pc.pcid = #{pcId}
 	</select>
 	
@@ -91,5 +109,26 @@
 		GROUP BY pcom.pid, pcom.pname, pcom.bname, 
 		pcolor.pcimg1, pcolor.pcprice, pcolor.pcid, pcolor.pccolorcode, pcolor.pcchipimg;
 	</select>
+	
+	<select id="existLikeProduct" resultType="boolean">
+		select count(*) from likes
+		where mid = #{mId} and pid = #{pId}
+	</select>
+	
+	<delete id="deleteLikeProduct">
+		delete from likes
+		where mid = #{mId} and pid = #{pId}
+	</delete>
+	
+	<insert id="insertLikeProduct">
+		insert into likes (pid, mid, ltime)
+		values (#{pId}, #{mId}, TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3'))
+	</insert>
+	
+	<select id="getLikeProductCount" resultType="int">
+		select count(*) from likes
+		where mid = #{mId}
+	</select>
+	
 
 </mapper>

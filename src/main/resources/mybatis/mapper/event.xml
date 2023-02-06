@@ -31,7 +31,7 @@
 	]]>
 			</if>
 	<![CDATA[
-		        order by eissuedate
+		        order by eissuedate desc
 		    )
 		    where rownum <= #{currentPage} * #{pageSize}
 		)

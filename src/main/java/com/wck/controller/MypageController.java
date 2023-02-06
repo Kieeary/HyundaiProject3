@@ -1,22 +1,17 @@
 package com.wck.controller;
 
-import java.lang.reflect.Member;
 import java.net.URLEncoder;
-import java.util.Map;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.wck.domain.MemberVO;
+import com.wck.domain.UpdateMemberDTO;
 import com.wck.security.domain.Account;
 import com.wck.service.MemberService;
 
@@ -67,11 +62,30 @@ public class MypageController {
 	public String changeForm(
 			@AuthenticationPrincipal Account account,
 			Model model) {
-		MemberVO member = memberService.findMemberByEmail(account.getEmail());
+		UpdateMemberDTO member = new UpdateMemberDTO(
+				memberService.findMemberByEmail(account.getEmail()));
+		
 		model.addAttribute("member", member);
 		
 		return "wck/mypage/change_info";
 	}
+	
+	@GetMapping("/change/secession")
+	public String secession() {
+		return "wck/mypage/secession";
+	}
+	
+	/*
+	 * 회원탈퇴 진행
+	 */
+	@PostMapping("/change/secession")
+	public String secessionPost(@AuthenticationPrincipal Account account) {
+		memberService.disabledMember(account.getEmail());
+		
+		return "redirect:/wck/logout";
+	}
+	
+
 	
 	@GetMapping("/order/myorders")
 	public String orderListForm() {

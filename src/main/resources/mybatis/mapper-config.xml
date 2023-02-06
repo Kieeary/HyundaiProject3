@@ -10,6 +10,7 @@
         <typeAlias type="com.wck.domain.SampleVO" alias="sample"/>
         <typeAlias type="com.wck.domain.MemberVO" alias="member"/>
         <typeAlias type="com.wck.domain.EventVO" alias="event"/>
+        <typeAlias type="com.wck.domain.EventCouponVO" alias="eventCoupon"/>
         <typeAlias type="com.wck.domain.CartVO" alias="cart"/>
     </typeAliases>  
 </configuration>

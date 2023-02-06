@@ -403,21 +403,6 @@
                       <a href="/ko/mypage/voucher" class="more">전체조회</a>
                     </div>
                     <div id="mypageCouponList">
-                      <div class="s-coupon">
-                        <div class="s-coupon-inner">
-                          <strong>[1만원] FRIEND 등급 축하 바우처</strong
-                          ><b>10,000원 할인</b>
-                          <span>2023-02-01 ~ 2023-07-31</span>
-                          <i>소멸<br />D-180</i>
-                        </div>
-                      </div>
-                      <div class="s-coupon">
-                        <div class="s-coupon-inner">
-                          <strong>[10%] FRIEND 등급 축하 바우처</strong
-                          ><b>10% 할인</b> <span>2023-02-01 ~ 2023-07-31</span>
-                          <i>소멸<br />D-180</i>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -555,6 +540,41 @@
 
     <script>
       $(document).ready(function () {
+    	  
+    	 getMyCoupon();
+    	 function getMyCoupon(){
+    		 $.ajax({
+    			 method : 'get',
+    			 url : '/api/event/mycoupon',
+    			 datatype: 'json',
+    			 success : function(list){
+    				 console.log(list);
+    				 printCoupon(list);
+        		 },
+        		 error: function(request,status,error){
+        			 console.log("error : "+ error);
+        		 }
+    		 })
+    	 }
+    	 function printCoupon(list){
+    		 list.forEach(function(coupon){
+    			 /*<![CDATA[*/
+    			 let template = `
+    				<div class="s-coupon">
+                     <div class="s-coupon-inner">
+                       <strong>${coupon.ecouponTitle}</strong><b>${coupon.ediscount}% 할인</b>
+                       <span>${coupon.cpIssueDate} ~ ${coupon.cpExpireDate}</span>
+                       <i>소멸<br>D-180</i>
+                     </div>
+                   </div>
+    			 ` 
+    			/*]]>*/
+    			$('#mypageCouponList').append(template);
+    				 
+    		 })
+    	 }
+    	  
+    	 // tab ui 모방
         let tabs = $('.red_border_tab li');
         $('a.order').click(function (e) {
           e.preventDefault();

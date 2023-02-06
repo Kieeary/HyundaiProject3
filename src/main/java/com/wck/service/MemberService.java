@@ -14,6 +14,7 @@ import com.wck.domain.FindIdDTO;
 import com.wck.domain.FindPwDTO;
 import com.wck.domain.InsertMemberDTO;
 import com.wck.domain.MemberVO;
+import com.wck.domain.UpdateMemberDTO;
 import com.wck.mapper.MemberMapper;
 import com.wck.util.UuidUtil;
 
@@ -98,7 +99,17 @@ public class MemberService {
 	
 	public void updatePassword(String email, String password) {
 		int row = memberMapper.updatePasswordOne(email, password);
-		if(row == 0) throw new RuntimeException("DB 에러발생");
+		if(row == 0) throw new RuntimeException("updatePassword DB 에러발생");
+	}
+	
+	public void updateInfo(UpdateMemberDTO member) {
+		int row = memberMapper.updateInfoOne(member);
+		if(row == 0) throw new RuntimeException("updateInfo DB 에러발생");
+	}
+	
+	public void disabledMember(String email) {
+		int row = memberMapper.disableOne(email);
+		if(row == 0) throw new RuntimeException("disabledMember DB 에러발생");
 	}
 	
 	

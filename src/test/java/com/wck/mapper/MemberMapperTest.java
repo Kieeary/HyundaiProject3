@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.wck.domain.FindPwDTO;
 import com.wck.domain.MemberVO;
+import com.wck.domain.UpdateMemberDTO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -95,12 +96,25 @@ public class MemberMapperTest {
 	@Transactional
 	void updatePasswordOne() {
 		String email = "user1@gmail.com";
-		String pw = "1234";
+		String pw = "1111";
 		String encodedPw = passwordEncoder.encode(pw);
 		
 		memberMapper.updatePasswordOne(email, encodedPw);
 		MemberVO member = memberMapper.findOneByEmail(email, "Email");
 		Assertions.assertEquals(member.getPassword(), encodedPw);
+	}
+	
+	@Test
+	@Transactional
+	void updateInfoOne() {
+		String newName = "tester";
+		MemberVO findMember = memberMapper.findOneByEmail("user1@gmail.com", "Email");
+		UpdateMemberDTO member = new UpdateMemberDTO(findMember);
+		member.setName(newName);
+		memberMapper.updateInfoOne(member);
+		
+		MemberVO findMember2 = memberMapper.findOneByEmail("user1@gmail.com","Email");
+		Assertions.assertEquals(findMember2.getName(), newName);
 	}
 	
 

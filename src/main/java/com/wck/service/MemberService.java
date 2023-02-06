@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,7 @@ import com.wck.domain.FindIdDTO;
 import com.wck.domain.FindPwDTO;
 import com.wck.domain.InsertMemberDTO;
 import com.wck.domain.MemberVO;
+import com.wck.domain.UpdateMemberDTO;
 import com.wck.mapper.MemberMapper;
 import com.wck.util.UuidUtil;
 
@@ -28,6 +31,9 @@ public class MemberService {
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	AuthenticationProvider authenticationProvider;
 
 	public MemberVO findMemberByEmail(String email) {
 
@@ -72,7 +78,40 @@ public class MemberService {
 		if(row == 0) throw new RuntimeException("DB에러 발생");
 		
 		mailService.sendMail(email,pw);
-		
 	}
+	
+	/**
+	 * 이메일 유저 정보변경 플로우
+	 *  패스워드 확인
+	 */
+	public boolean checkPassword(String email,String password) {
+		log.info("email : "+email);
+		log.info("pw : "+password);
+		UsernamePasswordAuthenticationToken token = 
+				new UsernamePasswordAuthenticationToken(email, password);
+		try {
+			authenticationProvider.authenticate(token);
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+	}
+	
+	public void updatePassword(String email, String password) {
+		int row = memberMapper.updatePasswordOne(email, password);
+		if(row == 0) throw new RuntimeException("updatePassword DB 에러발생");
+	}
+	
+	public void updateInfo(UpdateMemberDTO member) {
+		int row = memberMapper.updateInfoOne(member);
+		if(row == 0) throw new RuntimeException("updateInfo DB 에러발생");
+	}
+	
+	public void disabledMember(String email) {
+		int row = memberMapper.disableOne(email);
+		if(row == 0) throw new RuntimeException("disabledMember DB 에러발생");
+	}
+	
+	
 
 }

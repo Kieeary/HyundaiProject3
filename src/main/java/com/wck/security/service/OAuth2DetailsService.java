@@ -2,11 +2,13 @@ package com.wck.security.service;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -76,7 +78,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 		String id = UUID.randomUUID().toString().substring(10);
 		String name = "user" + id;
 		String phone = "01000000000";
-		Date birth = new Date(new java.util.Date().getTime());
+		Date birth = Date.valueOf(LocalDate.now());
 		int gender = 1;
 		String loginType = "Google";
 		int tosNo = 1;

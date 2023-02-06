@@ -48,4 +48,30 @@
 		where eno = #{eventId}
 	</select>
 	
+	<select id="getCouponListByMid" resultType="eventCoupon">
+		select 
+		    cpid, c.eno, mid, cpissuedate, cpexpiredate,
+		    cpusedate, cpstatus,
+		    etitle, econtent, eissuedate, eexpiredate, elimitcount, 
+		    ecount, eimg, ediscount, estatus, edetailimg, 
+		    ecoupontitle
+		from coupon_detail c
+		inner join event e on (c.eno = e.eno)
+		where c.cpstatus = #{cpStatus}
+		    and cpexpiredate > sysdate
+		    and mid = #{mid}
+	</select>
+	
+	<select id="isJoined" resultType="boolean">
+		select count(*)
+		from coupon_detail
+		where eno = #{eventId} and mid = #{mId}
+	</select>
+	
+	<insert id="insertCouponDetail">
+		insert into coupon_detail 
+		(cpid, eno, mid, cpissuedate, cpexpiredate,cpstatus) 
+		values
+		(seq_coupon_detail.nextval, #{eno}, #{mId}, sysdate, sysdate + 180, 1)
+	</insert>
 </mapper> 

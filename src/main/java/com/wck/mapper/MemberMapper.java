@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.wck.domain.FindPwDTO;
 import com.wck.domain.MemberVO;
+import com.wck.domain.UpdateMemberDTO;
 
 @Mapper
 public interface MemberMapper {
@@ -17,5 +18,7 @@ public interface MemberMapper {
 	public List<MemberVO> findAllByNameAndBirth(String name, Date birth);
 	public MemberVO findOneByNameAndEmail(FindPwDTO findPw);
 	public int updatePasswordOne(String email, String pw);
+	public int updateInfoOne(UpdateMemberDTO member);
+	public int disableOne(String email);
 }
 

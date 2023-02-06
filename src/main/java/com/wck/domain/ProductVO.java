@@ -1,5 +1,7 @@
 package com.wck.domain;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,5 +22,7 @@ public class ProductVO {
 	private int pSStock;
 	private String pSize;
 	private int like;
+	
+	private List<DetailProductVO> detailProduct;
 
 }

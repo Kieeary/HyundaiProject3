@@ -1,5 +1,7 @@
 package com.wck.api;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
@@ -15,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wck.domain.MemberVO;
+import com.wck.domain.ProductCommonVO;
 import com.wck.domain.UpdateMemberDTO;
 import com.wck.security.domain.Account;
 import com.wck.service.MemberService;
+import com.wck.service.ProductService;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +34,7 @@ import lombok.extern.log4j.Log4j2;
 public class MemberApi {
 	
 	private final MemberService memberSerivce;
+	private final ProductService productService;
 	
 	/**
 	 * 이미 가입된 회원이 있는지 확인 = 가입된 회원이 있다면 : true / 없다면 : false 
@@ -75,6 +80,13 @@ public class MemberApi {
 		
 		memberSerivce.updatePassword(account.getEmail(), dto.getPassword());
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/like")
+	public ResponseEntity<List<ProductCommonVO>> getLikeProductList(
+			@AuthenticationPrincipal Account account){
+		List<ProductCommonVO> list = productService.getLikedProductList(account.getId());
+		return new ResponseEntity<List<ProductCommonVO>>(list, HttpStatus.OK);
 	}
 	
 	

@@ -43,6 +43,9 @@ public class EventApi {
 		return new ResponseEntity<List<EventVO>>(list,HttpStatus.OK);
 	}
 
+	/*
+	 * 내 쿠폰 확인
+	 */
 	@GetMapping("/mycoupon")
 	public ResponseEntity<List<EventCouponVO>> getMyCoupon(
 			@AuthenticationPrincipal Account account){
@@ -64,6 +67,9 @@ public class EventApi {
 		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
 	}
 	
+	/**
+	 * 쿠폰 발급
+	 */
 	@PostMapping("{id}/coupon")
 	public ResponseEntity<String> getCoupon(
 			@AuthenticationPrincipal Account account,

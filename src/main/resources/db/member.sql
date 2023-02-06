@@ -7,6 +7,8 @@ drop table likes cascade constraint purge;
 drop table member cascade constraint purge;
 drop table today cascade constraint purge;
 
+drop SEQUENCE seq_coupon_detail;
+
 
 CREATE TABLE cart (
     mid       VARCHAR2(30 BYTE) NOT NULL,
@@ -172,3 +174,7 @@ cpusedate, cpstatus) values
 null, 1);
 
 create sequence seq_coupon_detail;
+
+
+insert into likes(pid, mid, ltime)
+values ('SH2CAKCD036M', '123123', TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3'));

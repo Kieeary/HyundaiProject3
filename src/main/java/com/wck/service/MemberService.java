@@ -97,21 +97,28 @@ public class MemberService {
 		}
 	}
 	
+	/*
+	 * 패스워드 변경
+	 */
 	public void updatePassword(String email, String password) {
 		int row = memberMapper.updatePasswordOne(email, password);
 		if(row == 0) throw new RuntimeException("updatePassword DB 에러발생");
 	}
 	
+	/*
+	 * 회원 정보 변경
+	 */
 	public void updateInfo(UpdateMemberDTO member) {
 		int row = memberMapper.updateInfoOne(member);
 		if(row == 0) throw new RuntimeException("updateInfo DB 에러발생");
 	}
 	
+	/*
+	 * 회원 탈퇴
+	 */
 	public void disabledMember(String email) {
 		int row = memberMapper.disableOne(email);
 		if(row == 0) throw new RuntimeException("disabledMember DB 에러발생");
 	}
 	
-	
-
 }

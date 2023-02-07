@@ -1,8 +1,6 @@
 package com.wck.security.config;
 
 
-import javax.validation.constraints.AssertTrue;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.wck.security.provider.FormAuthenticationProvider;
 
@@ -31,6 +30,9 @@ import lombok.extern.log4j.Log4j2;
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
     
 	@Autowired
+	private AuthenticationSuccessHandler authenticationSuccessHandler;
+	
+	@Autowired
 	private AuthenticationFailureHandler authenticationFailureHandler;
 	
     @Bean
@@ -42,7 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     	return new FormAuthenticationProvider();
     }
     
-	
 	@Bean
 	public RoleHierarchyImpl roleHierarchyImpl() {
 		log.info("실행");
@@ -69,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 			// url 경로 접근 권한 체크
 			.authorizeHttpRequests()
-			.antMatchers("/user").hasRole("USER")
+			.antMatchers("/wck/mypage").hasRole("USER")
 			.anyRequest().permitAll()
 		.and()
 			// form login 방식
@@ -77,11 +78,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.loginPage("/wck/login")
 			.failureHandler(authenticationFailureHandler)
 			.defaultSuccessUrl("/wck/")
+			.permitAll()
 			
 		.and()
 			.oauth2Login()
 			.loginPage("/wck/login")
-			.defaultSuccessUrl("/wck/")
+			.successHandler(authenticationSuccessHandler)
+			.permitAll()
 			
 		.and()
 			.csrf()
@@ -92,11 +95,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.logoutSuccessUrl("/wck/")
 		.deleteCookies("JSESSIONID" , "remember-me")
 		;
-		
-		
-
-	
-		
 	}
 	
 

@@ -21,7 +21,9 @@ public class ProductApi {
 
 	private final ProductService productService;
 	
-	
+	/*
+	 * 해당 product_common 의 product_color 정보 가져오기
+	 */
 	@GetMapping("/{pId}/color/{pcId}")
 	public ResponseEntity<ProductColorVO> getProductColor(
 			@PathVariable("pId") String pId,

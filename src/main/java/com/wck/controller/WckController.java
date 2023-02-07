@@ -3,6 +3,7 @@ package com.wck.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.wck.domain.CartVO;
 import com.wck.domain.InsertMemberDTO;
 import com.wck.domain.MemberVO;
+import com.wck.domain.UpdateMemberDTO;
 import com.wck.service.CartService;
 import com.wck.service.MemberService;
 
@@ -40,19 +42,29 @@ public class WckController {
 	@Autowired
 	private final MemberService memberService;
 	
+	/*
+	 * 로그인 페이지
+	 */
 	@GetMapping("/login")
 	public String loginForm(@RequestParam(required = false, name = "error") String error,
 			Model model) {
+		log.info("===login page====");
 		model.addAttribute("error",error);
 		return "wck/login";
 	}
 	
+	/*
+	 * 회원가입 페이지
+	 */
 	@GetMapping("/join")
 	public String joinForm(Model model) {
 		model.addAttribute("insertMember", new InsertMemberDTO());
 		return "wck/join";
 	}
 	
+	/*
+	 * 회원가입 수행
+	 */
 	@PostMapping("/join")
 	public String doJoin(
 			@Valid @ModelAttribute("insertMember") InsertMemberDTO insertMember,
@@ -69,10 +81,40 @@ public class WckController {
 		return "redirect:/wck/joincomplete";
 	}
 	
+	/*
+	 * 회원완료 페이지
+	 */
 	@GetMapping("/joincomplete")
 	public String joinComp() {
 		return "wck/join_complete";
 	}
+	
+	/*
+	 * Oauth2 의 경우 필수 값을 받기 위한 페이지
+	 */
+	@GetMapping("/login/change")
+	public String changeForm(@AuthenticationPrincipal Account account ,Model model) {
+		log.info("changeForm");
+		UpdateMemberDTO update = new UpdateMemberDTO();
+		
+		update.setEmail(account.getEmail());
+		
+		model.addAttribute("member", update);
+		
+		SecurityContextHolder.clearContext();
+		return "wck/change_info_oauth2";
+	}
+	
+	/*
+	 * Oauth2 회원 정보 변경 수행
+	 */
+	@PostMapping("/login/change")
+	public String changeFormPost(@ModelAttribute("member") UpdateMemberDTO member) {
+		log.info(member);
+		memberService.updateInfo(member);
+		return "redirect:/wck/login";
+	}
+	
 
 	@GetMapping("/sampleProductDetail")
 	public String samplePD() {

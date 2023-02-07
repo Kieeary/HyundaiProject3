@@ -33,7 +33,7 @@ public class ProductService {
 	public List<ProductVO> productList(@Nullable String br, @Nullable String gd,
 										@Nullable String sC, @Nullable String tC) {
 		
-		List<ProductVO> productList = productMapper.productList(br, gd, sC, tC);
+		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
 		return productList;
 	}
 

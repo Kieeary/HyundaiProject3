@@ -6,4 +6,8 @@ import lombok.Data;
 public class DetailProductVO {
 
 	private String pcid;
+	private String pccolorcode;
+	private String pcimg1;
+	private String pcchipimg;
+	private int psstock;
 }

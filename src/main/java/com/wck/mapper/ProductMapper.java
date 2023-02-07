@@ -16,7 +16,8 @@ public interface ProductMapper {
 	public List<ProductCommonVO> getLikeProductList(String mId);
 
 	public ProductColorVO getProductColor(String pId, String pcId);
-	public List<ProductVO> productList(@Nullable String br, @Nullable String gd, 
+	
+	public List<ProductVO> getProducts(@Nullable String br, @Nullable String gd, 
 					@Nullable String sC, @Nullable String tC); 
 
 }

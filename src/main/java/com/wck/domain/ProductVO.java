@@ -10,18 +10,12 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class ProductVO {
-	private String pId;
-	private String pName;
-	private String pNote;
-	private int pStatus;
-	private int bNo;
-	private String bName;
-	
-	private String pCColorCode; 
-	private String pCPrice;
-	private int pSStock;
-	private String pSize;
-	private int like;
+	private String pid;
+	private String pname;
+	private int pstatus;
+	private int bno;
+	private String bname;
+	private int pcprice;
 	
 	private List<DetailProductVO> detailProduct;
 

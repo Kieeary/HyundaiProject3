@@ -1,6 +1,8 @@
 package com.wck.api;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Size;
@@ -9,13 +11,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.wck.domain.Criteria;
 import com.wck.domain.MemberVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.UpdateMemberDTO;
@@ -83,12 +88,31 @@ public class MemberApi {
 	}
 	
 	@GetMapping("/like")
-	public ResponseEntity<List<ProductCommonVO>> getLikeProductList(
-			@AuthenticationPrincipal Account account){
-		List<ProductCommonVO> list = productService.getLikedProductList(account.getId());
-		return new ResponseEntity<List<ProductCommonVO>>(list, HttpStatus.OK);
+	public ResponseEntity<Map<String, Object>> getLikeProductList(
+			@AuthenticationPrincipal Account account,
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+			@RequestParam(value = "currentPage", defaultValue = "0") int currentPage){
+		Criteria cri = new Criteria();
+		log.info("pageSize : "+pageSize);
+		cri.setPageSize(pageSize);
+		cri.setCurrentPage(currentPage);
+		Map<String, Object> map = new HashMap<>();
+		List<ProductCommonVO> list = productService.getLikeProductList(account.getId(),cri);
+		log.info(list.size());
+		int count = productService.getLikeProductCount(account.getId());
+		map.put("list", list);
+		map.put("count",count);
+		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
 	
+	@PostMapping("/like/{pId}")
+	public ResponseEntity<String> toggleLikeProduct(
+			@AuthenticationPrincipal Account account,
+			@PathVariable("pId") String pId){
+		int result = productService.toggleLikeProduct(account.getId(), pId);
+		String msg = result == 1? "insert success" : "delete success";
+		return new ResponseEntity<String>(msg, HttpStatus.OK);
+	}
 	
 	
 	@Data

@@ -115,6 +115,14 @@
             function continueUrl() {
               location.href = '/wck/home/';
             }
+
+            $(document).ready(function () {
+              // checkobox initialize
+              const checkboxes = document.getElementsByName('cartlist');
+              checkboxes.forEach(checkbox => { checkbox.checked = false; });
+
+            });
+
           </script>
 
           <!-- ########## Goods list start ########## -->
@@ -150,7 +158,20 @@
                 la.confirmAction = function () {
                   console.log(productCode + " 상품 장바구니 삭제");
                   // 확인 호출 펑션
-                  // aJax 처리 필요
+
+                  // console.log('사용자 : '+ '[[${mId}]]');
+                  // // console.log("상품삭제시 보낼 주소 : /wck/shoppingbag/deleteprod?psid=" + productCode);
+                  // var url = '/wck/shoppingbag/deleteProd?mid=[[${mId}]]&psid='+productCode;
+                  // console.log(url);
+
+                  $.ajax({
+                    type: 'GET',
+                    url: '/wck/shoppingbag/deleteProd?mid=[[${mId}]]&psid=' + productCode,
+                    success: function () {
+                      location.href = '/wck/shoppingbag';
+                    }
+                  });
+
                 };
               }
 
@@ -185,9 +206,57 @@
                       .parents('.gl_item')
                       .find('.gl_status .icon_soldout')
                       .attr('style', 'display:block !important');
+                      $(this).addClass('gl_status_soldout');
                   }
                 });
               });
+
+              function selectRemove() {
+                var la = new layerAlert('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?', '확인', '취소');
+                la.confirmAction = function () {
+                  psids = [];
+                  $("input:checkbox[name='cartlist']").each(function (idx) {
+                    if ($(this).is(":checked") == true) {
+                      psids.push($(this).data('pk'));
+                    };
+                  })
+
+                  $.ajax({
+                    type: 'GET',
+                    url: '/wck/shoppingbag/deleteProds?mid=[[${mId}]]&psids=' + psids,
+                    success: function () {
+                      location.href = '/wck/shoppingbag';
+                    }
+                  });
+                }
+              };
+
+              function outOfStockRemove(){
+                if ($('.gl_status_soldout').length < 1) {
+                  layerAlert('품절상품이 없습니다');
+                  return false;
+                }
+
+                var la = new layerAlert('품절상품이 모두 쇼핑백에서 삭제됩니다. 계속하시겠습니까?', '확인', '취소');
+                la.confirmAction = function() {
+                  psids = [];
+                  $("input:checkbox[name='cartlist']").each(function(idx) {
+                    if ($(this).data('soldout') == 'Y'){
+                      psids.push($(this).data('pk')); 
+                    };
+                  })
+
+                  $.ajax({
+                    type: 'GET',
+                    url: '/wck/shoppingbag/deleteProds?mid=[[${mId}]]&psids=' + psids,
+                    success: function () {
+                      location.href = '/wck/shoppingbag';
+                    }
+                  });
+
+                }
+              }
+
             </script>
 
             <th:block th:if="${#lists.size(prods)!=0}" th:each="prod, i : ${prods}">
@@ -197,8 +266,8 @@
 
                   <!-- ########## Goods sub CheckBox start ########## -->
                   <div class="check_stl">
-                    <input type="checkbox" th:id="'gl_check_'+${i.index}" name="cartlist" data-pk="11136041156652"
-                      data-division="" data-deliverykind="" th:value="${prods.size()}" th:data-soldout="${prod.PStatus}"
+                    <input type="checkbox" th:id="'gl_check_'+${i.index}" name="cartlist" th:data-pk="${prod.PSId}"
+                      data-division="" data-deliverykind="" th:value="${i.index}" th:data-soldout="${prod.PStatus}"
                       onclick="checkTotalPrice(this);" />
                     <label th:for="'gl_check_'+${i.index}"></label>
                   </div>
@@ -217,7 +286,7 @@
                     <!-- goods_list_item s -->
                     <!-- 활성화 : gl_item에 품절상품 : gl_status_soldout 클래스 추가/삭제 -->
                     <li>
-                      <a href="javascript:;" class="icon_btn btn_gl_like"
+                      <a href="javascript:;" th:class="'icon_btn btn_gl_like '+${prod.like}"
                         th:onclick="addWishList([[${prod.PSId}]], this);"><span>좋아요</span></a>
                     </li>
                     <li>
@@ -253,7 +322,7 @@
                       <li>
                         <div class="gl_tit">옵션수량</div>
                         <div class="gl_con">
-                          [[${prod.PCColorCode}]]&nbsp;<span class="and_line">/</span> [[${prod.PSize}]] /
+                          [[${prod.PColorName}]]&nbsp;<span class="and_line">/</span> [[${prod.PSize}]] /
                           [[${prod.PQuantity}]]개
                         </div>
                       </li>
@@ -1079,29 +1148,7 @@
                     </ul>
 
                     <div style="margin: 40px auto 0px">
-                      <!-- <img
-                      src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/Spinner_1s_105px.png"
-                      alt="loading" id="imgLoadingAddtocart200218"
-                      style="display:none;width:32px;height:32px;margin: 0px
-                      auto 0px auto;">
-                      <p style="color: #222; text-align: center" ="">
-                        <span
-                          style="
-                            display: block;
-                            margin-top: 15px;
-                            font-size: 16px;
-                            font-weight: bold;
-                            text-align: center;
-                          "
-                          >처리중입니다</span
-                        >
-                      </p>
-
-                      <p></p> -->
                     </div>
-
-
-
 
                   </div>
 

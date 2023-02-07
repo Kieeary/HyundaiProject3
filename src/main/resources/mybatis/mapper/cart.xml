@@ -7,11 +7,11 @@
 	<!-- property : java variable, column = db variable -->
  	<resultMap type="com.wck.domain.CartVO" id="cartMap">
  		<result property="PSId" column="PSID"/>
- 		<result property="PImg" column="CARTIMG"/>
+ 		<result property="PImg" column="PIMG"/>
  		<result property="BName" column="BNAME"/>
  		<result property="PName" column="PNAME"/>
  		<result property="PCPrice" column="PCPRICE"/>
- 		<result property="PCColorCode" column="PCCOLORCODE"/>
+ 		<result property="PColorName" column="COLORNAME"/>
  		<result property="PSize" column="PSIZE"/>
  		<result property="PQuantity" column="PQUANTITY"/>
  		<result property="PStatus" column="PSTATUS"/>
@@ -19,8 +19,8 @@
  	</resultMap>
 
 	<insert id="insertCart">
-		INSERT INTO CART (MID, PSID, PQUANTITY, CDATE)
-		VALUES (#{mId}, #{pSId}, #{pQuantity}, SYSDATE)
+		INSERT INTO CART (MID, PSID, PQUANTITY)
+		VALUES (#{mId}, #{pSId}, #{pQuantity})
 	</insert>
 	
 	<select id="countCart" resultType="int">
@@ -30,19 +30,24 @@
 	</select>
 	
 	<select id="readCart" resultMap="cartMap">
-		SELECT ps.PSID, pc2.BNAME, pc2.PNAME, pc1.PCPRICE, pc1.PCCOLORCODE, ps.PSIZE, c.PQUANTITY,
-				CASE WHEN ps.PSSTOCK = 0 THEN 'Y' ELSE 'N' END AS "PSTATUS",
-				CASE WHEN EXISTS (SELECT 1 FROM LIKES l WHERE l.MID = c.MID AND pc1.PID = l.PID) THEN 1 ELSE 0 END AS "LIKE"
-		FROM PRODUCT_STOCK ps, PRODUCT_COLOR pc1, PRODUCT_COMMON pc2, CART c  
-		WHERE ps.PCID = pc1.PCID AND pc1.PID = pc2.PID AND ps.PSID = c.PSID AND c.MID = #{mId}
-		ORDER BY c.CDATE DESC
+		SELECT ps.PSID, pc2.PNAME, pci.PIMG, pc1.PCPRICE, pci.COLORNAME, ps.PSIZE, c.PQUANTITY,
+			(SELECT BNAME  FROM BRAND WHERE BNO = pc2.BNO) AS BNAME,
+			CASE WHEN ps.PSSTOCK = 0 THEN 'Y' ELSE 'N' END AS "PSTATUS",
+			CASE WHEN EXISTS (SELECT 1 FROM LIKES l WHERE l.MID = c.MID AND pc1.PID = l.PID) THEN 'icon_btn_on' ELSE '' END AS "LIKE" 
+		FROM PRODUCT_STOCK ps, PRODUCT_COLOR_INFO pci, PRODUCT_COLOR pc1, PRODUCT_COMMON pc2, CART c
+		WHERE pc1.PID = pc2.PID AND ps.PCID = pc1.PCID AND pc1.PCID = pci.PCID AND ps.PSID = c.PSID AND c.MID = #{mId}
+		ORDER BY c.PSID DESC
 	</select>
 	
 	<update id="updateCart">
-		UPDATE CART SET PQUANTITY = #{pQuantity}, CDATE = SYSDATE WHERE PSID = #{pSId} AND MID = #{mId}
+		UPDATE CART SET PQUANTITY = #{pQuantity} WHERE PSID = #{pSId} AND MID = #{mId}
 	</update>
 	
 	<delete id="deleteCart">
 		DELETE FROM CART WHERE MID = #{mId} AND PSID = #{pSId}
+	</delete>
+	
+	<delete id="deleteCartAll">
+		DELETE FROM CART WHERE MID = #{mId}
 	</delete>
 </mapper>

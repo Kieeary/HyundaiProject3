@@ -41,7 +41,22 @@ public class CartService {
 		return cartMapper.readCart(mId);
 	}
 	
+//	author : 김한울
+//	purpose : 장바구니 상품 삭제하기
 	public int deleteCartProd(String mId, String pSId) {
 		return cartMapper.deleteCart(mId, pSId);
+	}
+	
+//	author : 김한울
+//	purpose : 장바구니 전체 상품 삭제
+	public int deleteCart(String mId) {
+		return cartMapper.deleteCartAll(mId);
+	}
+	
+	@Transactional
+	public void deleteSelectedProds(String mId, List<String> pSIds) {
+		for (String psid : pSIds) {
+			cartMapper.deleteCart(mId, psid);
+		}
 	}
 }

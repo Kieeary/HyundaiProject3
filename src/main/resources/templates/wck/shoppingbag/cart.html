@@ -125,6 +125,119 @@
 
           </script>
 
+          <script>
+            function deleteBtnEvent(productCode) {
+              var la = new layerConfirm(
+                '선택하신 상품을 쇼핑백에서 삭제하시겠습니까?',
+                '확인',
+                '취소'
+              );
+              la.confirmAction = function () {
+                console.log(productCode + " 상품 장바구니 삭제");
+                // 확인 호출 펑션
+
+                // console.log('사용자 : '+ '[[${mId}]]');
+                // // console.log("상품삭제시 보낼 주소 : /wck/shoppingbag/deleteprod?psid=" + productCode);
+                // var url = '/wck/shoppingbag/deleteProd?mid=[[${mId}]]&psid='+productCode;
+                // console.log(url);
+
+                $.ajax({
+                  type: 'GET',
+                  url: '/wck/shoppingbag/deleteProd?mid=[[${mId}]]&psid=' + productCode,
+                  success: function () {
+                    location.href = '/wck/shoppingbag';
+                  }
+                });
+
+              };
+            }
+
+            function addWishList(productCode, obj) {
+              console.log('상품 코드 : ' + productCode);
+              if ($(obj).hasClass("icon_btn_on") === true) {
+                var la = new layerAlert('위시리스트에서 삭제했습니다.');
+                $(obj).removeClass("icon_btn_on");
+                console.log("이미 좋아요");
+              } else {
+                var la = new layerAlert('위시리스트에 등록되었습니다.');
+                $(obj).addClass("icon_btn_on");
+                console.log("좋아요 등록 완료");
+              }
+            }
+
+            function checkTotalPrice(obj) {
+              if ($(obj).attr('data-soldout') == 'N') {
+                console.log('품절 아님. 판매 중');
+              } else {
+                console.log('품절');
+              }
+              // console.log($(obj).attr('data-soldout'));
+              // layerAlert('해당사이즈는 품절입니다.');
+            }
+
+            $(document).ready(function () {
+              $('.gl_item input[name=cartlist]').each(function () {
+                if ($(this).attr('data-soldout') == 'Y') {
+                  $(this).prop('disabled', true);
+                  $(this)
+                    .parents('.gl_item')
+                    .find('.gl_status .icon_soldout')
+                    .attr('style', 'display:block !important');
+                  $(this).addClass('gl_status_soldout');
+                }
+              });
+            });
+
+            function selectRemove() {
+              var la = new layerAlert('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?', '확인', '취소');
+              la.confirmAction = function () {
+                psids = [];
+                $("input:checkbox[name='cartlist']").each(function (idx) {
+                  if ($(this).is(":checked") == true) {
+                    psids.push($(this).data('pk'));
+                  };
+                })
+
+                $.ajax({
+                  type: 'GET',
+                  url: '/wck/shoppingbag/deleteProds?mid=[[${mId}]]&psids=' + psids,
+                  success: function () {
+                    location.href = '/wck/shoppingbag';
+                  }
+                });
+              }
+            };
+
+            function outOfStockRemove() {
+              if ($('.gl_status_soldout').length < 1) {
+                layerAlert('품절상품이 없습니다');
+                return false;
+              }
+
+              var la = new layerAlert('품절상품이 모두 쇼핑백에서 삭제됩니다. 계속하시겠습니까?', '확인', '취소');
+              la.confirmAction = function () {
+                psids = [];
+                $("input:checkbox[name='cartlist']").each(function (idx) {
+                  if ($(this).data('soldout') == 'Y') {
+                    psids.push($(this).data('pk'));
+                  };
+                })
+
+                $.ajax({
+                  type: 'GET',
+                  url: '/wck/shoppingbag/deleteProds?mid=[[${mId}]]&psids=' + psids,
+                  success: function () {
+                    location.href = '/wck/shoppingbag';
+                  }
+                });
+
+              }
+            }
+
+
+
+          </script>
+
           <!-- ########## Goods list start ########## -->
           <h3 class="section_tit mb0 gl_tit gl_4pm">
             <div class="check_stl gl_check_all_wrap">
@@ -148,116 +261,7 @@
               </li>
             </th:block>
 
-            <script>
-              function deleteBtnEvent(productCode) {
-                var la = new layerConfirm(
-                  '선택하신 상품을 쇼핑백에서 삭제하시겠습니까?',
-                  '확인',
-                  '취소'
-                );
-                la.confirmAction = function () {
-                  console.log(productCode + " 상품 장바구니 삭제");
-                  // 확인 호출 펑션
 
-                  // console.log('사용자 : '+ '[[${mId}]]');
-                  // // console.log("상품삭제시 보낼 주소 : /wck/shoppingbag/deleteprod?psid=" + productCode);
-                  // var url = '/wck/shoppingbag/deleteProd?mid=[[${mId}]]&psid='+productCode;
-                  // console.log(url);
-
-                  $.ajax({
-                    type: 'GET',
-                    url: '/wck/shoppingbag/deleteProd?mid=[[${mId}]]&psid=' + productCode,
-                    success: function () {
-                      location.href = '/wck/shoppingbag';
-                    }
-                  });
-
-                };
-              }
-
-              function addWishList(productCode, obj) {
-                console.log('상품 코드 : ' + productCode);
-                if ($(obj).hasClass("icon_btn_on") === true) {
-                  var la = new layerAlert('위시리스트에서 삭제했습니다.');
-                  $(obj).removeClass("icon_btn_on");
-                  console.log("이미 좋아요");
-                } else {
-                  var la = new layerAlert('위시리스트에 등록되었습니다.');
-                  $(obj).addClass("icon_btn_on");
-                  console.log("좋아요 등록 완료");
-                }
-              }
-
-              function checkTotalPrice(obj) {
-                if ($(obj).attr('data-soldout') == 'N') {
-                  console.log('품절 아님. 판매 중');
-                } else {
-                  console.log('품절');
-                }
-                // console.log($(obj).attr('data-soldout'));
-                // layerAlert('해당사이즈는 품절입니다.');
-              }
-
-              $(document).ready(function () {
-                $('.gl_item input[name=cartlist]').each(function () {
-                  if ($(this).attr('data-soldout') == 'Y') {
-                    $(this).prop('disabled', true);
-                    $(this)
-                      .parents('.gl_item')
-                      .find('.gl_status .icon_soldout')
-                      .attr('style', 'display:block !important');
-                      $(this).addClass('gl_status_soldout');
-                  }
-                });
-              });
-
-              function selectRemove() {
-                var la = new layerAlert('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?', '확인', '취소');
-                la.confirmAction = function () {
-                  psids = [];
-                  $("input:checkbox[name='cartlist']").each(function (idx) {
-                    if ($(this).is(":checked") == true) {
-                      psids.push($(this).data('pk'));
-                    };
-                  })
-
-                  $.ajax({
-                    type: 'GET',
-                    url: '/wck/shoppingbag/deleteProds?mid=[[${mId}]]&psids=' + psids,
-                    success: function () {
-                      location.href = '/wck/shoppingbag';
-                    }
-                  });
-                }
-              };
-
-              function outOfStockRemove(){
-                if ($('.gl_status_soldout').length < 1) {
-                  layerAlert('품절상품이 없습니다');
-                  return false;
-                }
-
-                var la = new layerAlert('품절상품이 모두 쇼핑백에서 삭제됩니다. 계속하시겠습니까?', '확인', '취소');
-                la.confirmAction = function() {
-                  psids = [];
-                  $("input:checkbox[name='cartlist']").each(function(idx) {
-                    if ($(this).data('soldout') == 'Y'){
-                      psids.push($(this).data('pk')); 
-                    };
-                  })
-
-                  $.ajax({
-                    type: 'GET',
-                    url: '/wck/shoppingbag/deleteProds?mid=[[${mId}]]&psids=' + psids,
-                    success: function () {
-                      location.href = '/wck/shoppingbag';
-                    }
-                  });
-
-                }
-              }
-
-            </script>
 
             <th:block th:if="${#lists.size(prods)!=0}" th:each="prod, i : ${prods}">
               <li>
@@ -334,15 +338,51 @@
                       </li>
                     </ul>
                     <a href="javascript:void(0);" class="border_btn btn_option_edit"
+                      th:onclick="getOpts([[${prod.PSId}]]);"
                       th:id="'optOpenLayer^'+${i.index}+'^'+CM2D1WOT105W_LE"><span>변경</span></a>
                   </div>
 
+                  <script>
+                    function getOpts(psid) {
+                      let csrfHeaderName = "${_csrf.headerName}";
+                      let csrfTokenValue = "${_csrf.token}";
+
+                      let tags = psid;
+                      let [pId, cTag, sTag] = psid.split('_');
+                      let pcid = pId + '_' + cTag;
+
+                      $.ajax({
+                        type: 'GET',
+                        url: '/wck/shoppingbag/getCurrentOpt?pcid=' + pcid,
+                        contentType: "application/json",
+                        success: function (result) {
+                          console.log(result['colorSet'].length);
+                          console.log(result['colorSet'][0]);
+                          console.log(result['colorSet'][0]['colorName']);
+                          console.log(result['sizeSet']);
+
+                        },
+                        error: function() {
+                          alert("에러 발생");
+                        }
+                      })
+
+                      // <div class="desc_box">[SJSJ]스퀘어 토 레더 앵클 부츠의 재고수량은 10개입니다. 다시 입력해 주시기 바랍니다.</div>
+                      // <div class="desc_box">[브랜드]상품이름의 재고수량은 10개입니다. 다시 입력해 주시기 바랍니다.</div>
+
+
+
+
+                    }
+                  </script>
+
                   <!-- ########## 제품 옵션 변경 가능 정보 ########## -->
-                  <div class="gl_tgl gl_tgl_option" id="pt_list_2" style="display: none;"><!-- color_size_price -->
+                  <div class="gl_tgl gl_tgl_option" th:id="'pt_list_'+${i.index}" style="display: none;">
                     <ul class="gl_edit">
                       <li>
                         <div class="gl_tit">색상</div>
                         <ul class="gl_con btn_color_wrap">
+                          <!-- ########## color option radio loop start ########## -->
                           <li>
                             <input type="radio" id="gl_rd_color_02_02" name="gl_rd_color_02"
                               onclick="setOptions(this, '2', 'OB2C7KCD762WP2_ZB', 'style');">
@@ -351,12 +391,13 @@
                               style="background:#000000 url('http://newmedia.thehandsome.com/OB/2C/FW/OB2C7KCD762WP2_ZB_C01.jpg/dims/resize/60x60') center /100% auto no-repeat">#000000</span>
                           </li>
                           <li>
-                            <input type="radio" checked="checked" id="gl_rd_color_02_01" name="gl_rd_color_02"
+                            <input type="radio" id="gl_rd_color_02_01" name="gl_rd_color_02"
                               onclick="setOptions(this, '2', 'OB2C7KCD762WP2_IV', 'style');">
                             <label for="gl_rd_color_02_01"></label>
                             <span class="gl_color_val"
                               style="background:#fbfaea url('http://newmedia.thehandsome.com/OB/2C/FW/OB2C7KCD762WP2_IV_C01.jpg/dims/resize/60x60') center /100% auto no-repeat">#fbfaea</span>
                           </li>
+                          <!-- ########## color option radio loop end ########## -->
                         </ul>
                         <div class="gl_con selected_color_txt">
                           <span class="sct_v">IVORY</span>
@@ -433,15 +474,12 @@
                   </li>
                 </ul>
               </div>
-              <!-- 수정(46107) : 20180709 e -->
 
               <div class="btn_wrap btn_wrap_div2">
                 <a href="#none" class="btnstl3 border_btn_gray gleb_soldout_del" onclick="outOfStockRemove()"><span>품절상품
                     삭제</span></a><!-- 품절상품삭제 -->
                 <a href="#none" class="btnstl3 border_btn_gray gleb_select_del" onclick="selectRemove();"><span>선택상품
                     삭제</span></a><!-- 선택상품삭제 -->
-                <!-- 쇼핑 계속하기 버튼 s -->
-                <!-- 쇼핑 계속하기 버튼 e -->
               </div>
               <div class="btn_wrap btn_wrap btn_wrap_div1" id="orderButtonGroup">
                 <a href="javascript:checkoutPage('checkout');" class="btnstl3 solid_btn_blk gleb_order"><span>선택상품

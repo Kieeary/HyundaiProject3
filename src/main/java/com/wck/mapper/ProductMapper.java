@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.wck.domain.Criteria;
+import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import org.springframework.lang.Nullable;
@@ -28,5 +29,9 @@ public interface ProductMapper {
 	public int insertLikeProduct(String mid,String pId);
 
 	public int getLikeProductCount(String mId);
+	
+	public List<String> getSizeSet(String pcId);
+	
+	public List<DetailProductVO> getColorSet(String pId);
 
 }

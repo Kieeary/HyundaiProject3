@@ -2,6 +2,8 @@ package com.wck.mapper;
 
 import java.util.List;
 
+import javax.xml.crypto.KeySelector.Purpose;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wck.domain.Criteria;
+import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 
@@ -56,5 +59,28 @@ public class ProductMapperTest {
 		boolean exist = productMapper.existLikeProduct(mId, pId);
 		log.info(exist);
 	}
+	
+//	author : 김한울
+//	purpose : 상품 color 옵션에 따른 사이즈 추출 (품절 제외)  
+	@Test
+	void getSizeSetTest() {
+		String pcId = "SJ2C9ASZ097W_OW";
+		List<String> sizeSet = productMapper.getSizeSet(pcId);
+		log.info("{}", sizeSet);
+	}
+	
+//	author : 김한울
+//	purpose : 상품 color 옵션 추출(PCID, color chip img, color code, color name)  
+	@Test
+	void getColorSetTest() {
+		String pId = "SJ2C9ASZ097W";
+		List<DetailProductVO> colorSet = productMapper.getColorSet(pId);
+		for (DetailProductVO color : colorSet) {
+			log.info("PCID > " + color.getPCId());
+			log.info("COLORCODE > " + color.getPCColorCode());
+			log.info("COLORNAME > " + color.getColorName());
+		}
+	}
+	
 
 }

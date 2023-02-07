@@ -26,8 +26,11 @@ public class ProductApi {
 	public ResponseEntity<ProductColorVO> getProductColor(
 			@PathVariable("pId") String pId,
 			@PathVariable("pcId") String pcId){
-		
-		return new ResponseEntity<ProductColorVO>(productService.getProductColor(pId, pcId),HttpStatus.OK);
+		log.info("pId : "+pId);
+		log.info("pcId : "+pcId);
+		ProductColorVO vo = productService.getProductColor(pId, pcId);
+		log.info(vo);
+		return new ResponseEntity<ProductColorVO>(vo,HttpStatus.OK);
 		
 	}
 	

@@ -102,7 +102,8 @@ public class MemberService {
 	 * 패스워드 변경
 	 */
 	public void updatePassword(String email, String password) {
-		int row = memberMapper.updatePasswordOne(email, password);
+		String encoded = passwordEncoder.encode(password);
+		int row = memberMapper.updatePasswordOne(email, encoded);
 		if(row == 0) throw new RuntimeException("updatePassword DB 에러발생");
 	}
 	

@@ -32,6 +32,4 @@ public class MemberVO implements Serializable{
 	private String role;
 	private int grade;
 	private int mileage;
-	
-	
 }

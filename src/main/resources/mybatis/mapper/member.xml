@@ -117,4 +117,8 @@
 	set menabled = 0 
 	where memail = #{email}
 	</update>
+	
+	<select id="getGradeById" resultType="int">
+		SELECT MGRADE FROM MEMBER WHERE MID = #{mId}
+	</select>
 </mapper> 

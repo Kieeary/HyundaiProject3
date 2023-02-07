@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wck.domain.FindIdDTO;
 import com.wck.domain.FindPwDTO;
 import com.wck.domain.InsertMemberDTO;
+import com.wck.domain.MemberGrade;
 import com.wck.domain.MemberVO;
 import com.wck.domain.UpdateMemberDTO;
 import com.wck.mapper.MemberMapper;
@@ -119,6 +120,11 @@ public class MemberService {
 	public void disabledMember(String email) {
 		int row = memberMapper.disableOne(email);
 		if(row == 0) throw new RuntimeException("disabledMember DB 에러발생");
+	}
+	
+	public double getMileageAddRate(String mId) {
+		MemberGrade grade = MemberGrade.of(memberMapper.getGradeById(mId));
+		return grade.getAccruRate();
 	}
 	
 }

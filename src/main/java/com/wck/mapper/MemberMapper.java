@@ -20,5 +20,6 @@ public interface MemberMapper {
 	public int updatePasswordOne(String email, String pw);
 	public int updateInfoOne(UpdateMemberDTO member);
 	public int disableOne(String email);
+	public int getGradeById(String mId);
 }
 

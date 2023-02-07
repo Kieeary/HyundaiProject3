@@ -6,12 +6,15 @@
 	<!-- cartMap declare and definition -->
 	<!-- property : java variable, column = db variable -->
  	<resultMap type="com.wck.domain.CartVO" id="cartMap">
- 		<result property="bName" column="BNAME"/>
- 		<result property="pName" column="PNAME"/>
- 		<result property="pCPrice" column="PCPRICE"/>
- 		<result property="pCColorCode" column="PCCOLORCODE"/>
- 		<result property="pSize" column="PSIZE"/>
- 		<result property="pQuantity" column="PQUANTITY"/>
+ 		<result property="PSId" column="PSID"/>
+ 		<result property="PImg" column="CARTIMG"/>
+ 		<result property="BName" column="BNAME"/>
+ 		<result property="PName" column="PNAME"/>
+ 		<result property="PCPrice" column="PCPRICE"/>
+ 		<result property="PCColorCode" column="PCCOLORCODE"/>
+ 		<result property="PSize" column="PSIZE"/>
+ 		<result property="PQuantity" column="PQUANTITY"/>
+ 		<result property="PStatus" column="PSTATUS"/>
  		<result property="like" column="LIKE"/>
  	</resultMap>
 
@@ -27,8 +30,9 @@
 	</select>
 	
 	<select id="readCart" resultMap="cartMap">
-		SELECT pc2.BNAME, pc2.PNAME, pc1.PCPRICE, pc1.PCCOLORCODE, ps.PSIZE, c.PQUANTITY,
-			CASE WHEN EXISTS (SELECT 1 FROM LIKES l WHERE l.MID = c.MID AND pc1.PID = l.PID) THEN 1 ELSE 0 END AS "LIKE"
+		SELECT ps.PSID, pc2.BNAME, pc2.PNAME, pc1.PCPRICE, pc1.PCCOLORCODE, ps.PSIZE, c.PQUANTITY,
+				CASE WHEN ps.PSSTOCK = 0 THEN 'Y' ELSE 'N' END AS "PSTATUS",
+				CASE WHEN EXISTS (SELECT 1 FROM LIKES l WHERE l.MID = c.MID AND pc1.PID = l.PID) THEN 1 ELSE 0 END AS "LIKE"
 		FROM PRODUCT_STOCK ps, PRODUCT_COLOR pc1, PRODUCT_COMMON pc2, CART c  
 		WHERE ps.PCID = pc1.PCID AND pc1.PID = pc2.PID AND ps.PSID = c.PSID AND c.MID = #{mId}
 		ORDER BY c.CDATE DESC
@@ -37,4 +41,8 @@
 	<update id="updateCart">
 		UPDATE CART SET PQUANTITY = #{pQuantity}, CDATE = SYSDATE WHERE PSID = #{pSId} AND MID = #{mId}
 	</update>
+	
+	<delete id="deleteCart">
+		DELETE FROM CART WHERE MID = #{mId} AND PSID = #{pSId}
+	</delete>
 </mapper>

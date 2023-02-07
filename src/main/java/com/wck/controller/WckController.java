@@ -1,6 +1,11 @@
 package com.wck.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
@@ -12,7 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.wck.domain.CartVO;
 import com.wck.domain.InsertMemberDTO;
+import com.wck.domain.MemberVO;
+import com.wck.service.CartService;
 import com.wck.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -20,15 +28,16 @@ import lombok.extern.log4j.Log4j2;
 
 import com.wck.security.domain.Account;
 
-import lombok.extern.log4j.Log4j2;
-
 @Controller
 @RequestMapping("/wck")
 @Log4j2
 @RequiredArgsConstructor
 public class WckController {
 	
+	@Autowired
+	private final CartService cartService;
 	
+	@Autowired
 	private final MemberService memberService;
 	
 	@GetMapping("/login")
@@ -70,9 +79,16 @@ public class WckController {
 		return "wck/sample/prod_detail";
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/shoppingbag")
-	public String cartForm(@AuthenticationPrincipal Account user) {
-		log.info(user);
+	public String cartForm(@AuthenticationPrincipal Account user, Model model) {
+		log.info("User info > "+user.getId());
+		List<CartVO> prods = cartService.readCartList(user.getId()); 
+		log.info("Carts Prods # > " + prods.size());
+		model.addAttribute("prods", prods);
+		double gradeRate = memberService.getMileageAddRate(user.getId());
+		log.info("Mileage accrual rate > " + gradeRate);
+		model.addAttribute("rate", gradeRate);
 		return "wck/shoppingbag/cart";
 	}
 	

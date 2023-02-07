@@ -25,12 +25,9 @@ public class ProductService {
 		return productMapper.getLikeProductList(mId, cri);
 	}
 	
-	public ProductColorVO getProductColor(String pId, String pcId){
-		return productMapper.getProductColor(pId, pcId);
-	}
 	
 	/*
-	 * 1 : isnert / 2 : delete
+	 * 1 : insert / 2 : delete
 	 */
 	public int toggleLikeProduct(String mId, String pId) {
 		boolean isExist = productMapper.existLikeProduct(mId, pId);
@@ -41,6 +38,12 @@ public class ProductService {
 			row = productMapper.insertLikeProduct(mId, pId);
 		if(row == 0) throw new RuntimeException("toggleLikeProduct Error 발생");
 		return isExist ? 0 : 1;
+	}
+	
+	public ProductCommonVO getProductDetail(String pId) {
+		ProductCommonVO vo = productMapper.getProductDetailByPid(pId);
+		if(vo == null) throw new RuntimeException("존재하지 않는 PID");
+		return vo;
 	}
 	
 	

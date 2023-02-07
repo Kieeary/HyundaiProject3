@@ -53,14 +53,17 @@
             ]]>
 	</select>
 	
-	<select id="getProductColor" resultMap="productColorMap">
+	<select id="getProductDetailByPid" resultMap="productCommonMap">
 		select 
-		    pc.pcId, pcImg1, pcImg2, pcImg3, pcChipImg, pcColorCode, 
-		    pcPrice,
-		    psId, psStock, pSize
-		from product_color pc
-		left join product_stock ps on(pc.pcid = ps.pcid)
-		where pc.pid = #{pId} and pc.pcid = #{pcId}
+		    p.pid, p.pname, p.pnote, p.pstatus,
+		    b.bno, b.bname,
+		    pc.pcid, pc.pcimg1, pc.pcimg2, pc.pcimg3, pc.pcchipimg, pc.pccolorcode, pc.pcprice,
+		    ps.psid, ps.psstock, ps.psize
+		from product_common p
+		inner join brand b on (b.bno = p.bno)
+		left join product_color pc on (p.pid = pc.pid)
+		left join product_stock ps on (ps.pcid = pc.pcid)
+		where p.pid = #{pId}
 	</select>
 	
 
@@ -102,6 +105,7 @@
 		GROUP BY pcom.pid, pcom.pname, pcom.bname, 
 		pcolor.pcimg1, pcolor.pcprice, pcolor.pcid, pcolor.pccolorcode, pcolor.pcchipimg;
 	</select>
+	
 	
 	<select id="existLikeProduct" resultType="boolean">
 		select count(*) from likes

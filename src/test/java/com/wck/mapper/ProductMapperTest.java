@@ -9,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wck.domain.Criteria;
-import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 
 import lombok.extern.log4j.Log4j2;
@@ -32,13 +31,6 @@ public class ProductMapperTest {
 		log.info(list.size());
 	}
 	
-	@Test
-	void getProductColor() {
-		String pId = "101110005";
-		String pcId = "101110005_MU";
-		ProductColorVO vo = productMapper.getProductColor(pId, pcId);
-		log.info(vo);
-	}
 	
 	@Test
 	@Transactional
@@ -55,6 +47,13 @@ public class ProductMapperTest {
 		String mId = "123123";
 		boolean exist = productMapper.existLikeProduct(mId, pId);
 		log.info(exist);
+	}
+	
+	@Test
+	void getProductDetailByPid() {
+		String pId = "O22C8WOP141W";
+		ProductCommonVO vo = productMapper.getProductDetailByPid(pId);
+		log.info(vo);
 	}
 
 }

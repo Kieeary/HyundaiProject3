@@ -1,12 +1,13 @@
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="wck/includes/head :: head_tag(title='위시리스트 | 더한섬닷컴')"></th:block>
 <script type="text/javascript" th:src="@{/js/layers.js}"></script>
-  <body class="back">
-    <style>
+   <style>
       .swiper-wrapper {
         height: auto;
       }
-    </style>
+   </style>
+  <body class="back">
+
     <!-- Loading -->
     <div style="display: none">
       <div id="loadingBarDiv" style="display: none"></div>
@@ -65,32 +66,6 @@
             <div class="selected_text">
               <span> 마이하트</span>
             </div>
-
-            <script type="text/javascript">
-              $(document).on('change', '#headerMypageSelect', function () {
-                if ($(this).val() == '') return;
-
-                if ($(this).val() == '/ko/mypage/mymantomaninquiry') {
-                  location.href =
-                    '/ko/mypage/mymantomaninquiry?refererUrl=mypage';
-                } else {
-                  location.href = $(this).val();
-                }
-              });
-              $('#headerMypageSelect > option').each(function (idx, obj) {
-                if ($(obj).attr('value') == '') return true;
-                if (location.pathname == $(obj).attr('value')) {
-                  $(obj).prop('selected', 'selected');
-                }
-
-                if (
-                  location.pathname.indexOf('mantomaninquiry') > -1 &&
-                  $(obj).attr('value').indexOf('mymantomaninquiry') > -1
-                ) {
-                  $(obj).prop('selected', 'selected');
-                }
-              });
-            </script>
           </h1>
           <a href="javascript:noLink();" onclick="goBack();" class="h_prev"
             >이전 페이지로 가기</a
@@ -278,7 +253,8 @@
             if (wishcodes !== '') {
               wishcodes = wishcodes.substring(1);
             }
-            //alert(deltarget.substring(1));
+            
+            console.log('wishcodes : ', wishcodes);
 
             if (chkedcnt === 0) {
               wishtoorderproc = false;
@@ -287,6 +263,10 @@
               return false;
             } else {
               wishtoorderproc = false;
+              
+              // TODO : 여기서 데이터 그려야 됨
+              $('.wish_order_box_wrap').html('');
+              getProductDetail(wishcodes);
 
               $('.hsome_layerpop_contents.lp_depth1').addClass(
                 'dir_h lp_stl_black visible active'
@@ -294,14 +274,120 @@
               $('.layerpop_wrap.lp_wish_to_order_wrap').removeClass(
                 'visible active activated'
               );
-
-             /*  layerPopupOpen(
-                '/ko/mypage/wishToOrderPopup?wishcodes=' + wishcodes,
-                '.hsome_layerpop_contents.lp_depth1',
-                '.layerpop_wrap.lp_wish_to_order_wrap'
-              ); */
             }
           }
+          
+          function getProductDetail(wishcodes){
+        	  $(wishcodes.split(',')).each(function(idx ,code){
+        		  $.ajax({
+        			  url : '/api/product/'+ code,
+        			  method : 'get',
+        			  dataType: 'json',
+        			  success: function(data){
+        				  console.log(data);
+        				  printWishToCart(idx,data)
+        			  },
+        			  error : function(e){
+        				  console.log(e);
+        			  }
+        		  })
+        		  
+        	  });
+          }
+          function printWishToCart(idx, data){
+			let colorStr = '';
+        	  $(data.colors).each(function(idx, color){
+        		  //chip마다 stock 정보와 size 정보를 저장함
+        		  let infos = '';
+        		  $(color.stocks).each(function(idx,s){
+        			  // size-stock 모양
+        			  infos+= s.psize+"-"+s.psStock;
+        			  if(idx != color.stocks.length -1) infos+=',';
+        		  })
+        		  
+        		let isOn = '';
+        		if(idx == 0) isOn = 'on';
+        		let chipTemplate = `
+					<button type="button" id="${color.pcId}" data-prodimg="${color.pcImg1}"
+						class="chip ${isOn}" data-value="${infos}"
+						style="background:#000000 url('${color.pcChipImg}') center /100% auto no-repeat;">
+					</button>
+        	  `
+        	  colorStr += chipTemplate;
+        	  })
+        	  
+        	  // 첫번째 color size 셋팅
+        	  let initSize = '';
+        	  $(data.colors[0].stocks).each(function(idx, s){
+        		  initSize += `<option value="${s.psize}#7#false">${s.psize}</option>`
+        	  })
+        	  
+        	  let template = `
+        		  <div class="wish_order_box wish_order_${idx}" id="wish_order_${idx}" style="display:block;">
+					<div class="wish_order_thumb"><img src="${data.colors[0].pcImg1}" alt=""></div>
+					<div class="wish_order_info">
+						<p class="brand">${data.bname}</p>
+						<p class="name">${data.pname}</p>
+						<p class="price">￦${data.colors[0].pcPrice}</p>
+						<!-- 색상 버튼 -->
+						<div class="color_wrap">
+							<div class="hs_btn_color_chip">
+								${colorStr}
+							</div>
+						<div class="txt_color_chip">${data.colors[0].pcId}</div><!-- 선택한 색상 정보 -->
+						<!--// 색상 버튼 -->
+						</div>	
+						
+						
+						<ul class="btn_wrap btn_wrap_div2">
+							<!-- 사이즈 버튼 -->
+							<li class="btnstl btnstl_size border_btn_gray hs_border_select">
+								<select name="sel_size_${idx}" id="sel_size_${idx}" class="sel_size_${idx}">
+									<option value="">사이즈</option>
+									${initSize}
+								</select>
+							</li>
+							<!--// 사이즈 버튼 -->
+	
+							<!-- 수량 버튼 -->
+							<li class="btnstl btnstl_stock border_btn_gray hs_border_select">
+								<select name="sel_qty_${idx}" id="sel_qty_${idx}" class="sel_qty">
+									<option value="0">수량</option>
+									<option value="1" selected="selected">1</option>
+									<option value="2">2</option>
+								</select>
+							</li>
+							<!--// 수량 버튼 -->
+						</ul>
+					</div>
+				</div>
+        	  `
+        	  $('.wish_order_box_wrap').append(template);
+        	  
+        	  // wishToCart 의 chip선택 시
+        	  $('.hs_btn_color_chip .chip').click(function(){
+        		  $(this).siblings().removeClass('on');
+        		  $(this).addClass('on');
+        		  console.log($(this).data('value'))
+        		  $(this).closest('.wish_order_box').find('img').attr('src', $(this).data('prodimg'));
+        		  
+        		  let select = $(this).closest('.wish_order_box').find('.btnstl_size select');
+        		  let str = '<option value="">사이즈</option>';
+        		  let val = $(this).data('value');
+        		  $(val.split(',')).each(function(idx, v){
+        			  
+        			  str += `<option value="${v.split('-')[0]}">${v.split('-')[0]}</option>`
+        		  })
+        		  select.html(str);
+        	  })
+        	  
+          }
+          
+          
+          
+   
+          
+          
         </script>
 
         <!-- ################## footer ################## -->
@@ -433,19 +519,6 @@
     <div class="hsome_quickMenu_contents"></div>
     <!-- //################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
 
-    <script type="text/javascript">
-      $(document).ready(function () {
-        if (false) {
-          $('#cateTab').click();
-        }
-      });
-
-      function closeAction() {
-        $('.twoDepthNavPopup').hide();
-        $('.one_lists.on').toggleClass('on');
-      }
-    </script>
-
     <div
       class="divpop_wrap_dev pop_mbr pop_alert_confirm"
       id="popAlertConfirmDiv"></div>
@@ -470,81 +543,6 @@
 			});
 			
 		
-			$(document).on("click", ".wish_order_box_wrap .wish_order_box .color_wrap button.chip", function() {
-				var prodcode = $(this).attr("id").replace("info_", "");
-				var datavals = $(this).attr("data-value").split("#");
-				var idx      = datavals[0];
-				var colorName= (datavals.length > 1)?datavals[1]:"";
-				var isQtyLimitProduct = $('#wish_order_'+idx).find('[name=qtyLimitProductYn]').val();
-				//console.log(idx + " >>> " + prodcode + " : " + colorName);
-		
-				//alert($(this).find('span').attr('class'));
-				if ( $(this).find("span").attr("class") === "soldout" ) {
-					var la = new layerAlert("품절 상품입니다.");
-					return false;
-				} else {
-					$(".wish_order_box_wrap .wish_order_box.wish_order_"+idx+" .color_wrap button.chip").removeClass("on");
-					$(this).addClass("on");
-					
-					$.ajax({
-						url		: "/ko/mypage/reloadProdSize",
-						type	: "POST",
-						datatype: "json",
-						data	: {
-							productCode : prodcode,
-							CSRFToken	: "1c70f754-643f-405f-b686-164b4fb656cd"
-						},
-						success	: function(data) {
-							//console.log(Object.entries(data));
-							
-							$(".wish_order_box.wish_order_"+idx+" .txt_color_chip").html(colorName);
-							var product = data.product;
-							
-							/* 가격변경 */
-				            var productPrice = data.getProductPrice;
-				            var priceHtml = '';
-				            
-				            
-				                    priceHtml += "￦"+ addComma(productPrice.productPrice);
-				                    if(productPrice.productNormalityPrice != undefined && productPrice.productNormalityPrice != ""){
-				                        priceHtml += "<strike>" + "￦" +addComma(productPrice.productNormalityPrice)+"</strike>";
-				                    }
-				                
-		                    if(priceHtml != ''){
-		                        $(".wish_order_box.wish_order_"+idx+" .wish_order_info .price").html(priceHtml);
-		                    }
-		                    
-							// 이미지
-							var txtImage = '';
-							if ( product.productImages != null ) {
-								for ( var i=0; i<product.productImages.length; i++ ) {
-									images = product.productImages[i];
-									if ( images.imageDivisionCode.code === 'S01' ) {
-										txtImage += '<img src="'+images.image.url+'" alt="">';
-										break;
-									}
-								}
-							}
-							$(".wish_order_box.wish_order_"+idx+" .wish_order_thumb").html(txtImage);
-							// 사이즈
-							$(".wish_order_box.wish_order_"+idx+" .sel_size_"+idx).empty();
-							$(".wish_order_box.wish_order_"+idx+" .sel_size_"+idx).append("<option value=''>사이즈</option>");
-							var size = product.variantOptions;
-							for ( var i=0; i < size.length; i++ ) {
-								if ( size[i].stock.stockLevel > 0 && size[i].stock.stockLevelStatus != 'outOfStock' ) {
-									var qualifier = size[i].variantOptionQualifiers;
-									stockLevel = wishlistProductStock(size[i].code);
-									for (var j=0; j < qualifier.length; j++ ) {
-										if ( qualifier[j].qualifier === 'displayErpSize') {
-											$(".wish_order_box.wish_order_"+idx+" .sel_size_"+idx).append("<option value='"+qualifier[j].value+"#"+stockLevel+"#"+(data.onlyStorePickup == null?'':data.onlyStorePickup)+"'>"+qualifier[j].value+"</option>");
-										}
-									}
-								}
-							}
-						}
-					});
-				}
-			});
 		
 			$(document).on("change", "[id^=sel_size_]", function(){
 		        var stock = $(this).val();
@@ -611,23 +609,12 @@
 		           qty += ","+tempQty;
 		       }
 		       
+		       console.log("productCode ",productCode);
+		       console.log("size ",size);
+		       console.log("qty ",qty);
+		       console.log("promotionYn ",promotionYn);
 		       
-		       //#2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 20220215 hyunbae
-		       tempQtyLimitProductYn = $("#qtyLimitProductYn"+idx+"").val();
-		       tempSizeCode = tempCode + '_' + tempSize.split('#')[0];
-		       tempCartQuantity = cartQuantity[tempCode + '_' + tempSize.split('#')[0]];
-		       tempBrandName = $(this).find('.wish_order_info .brand').text();
-		       tempProductName = $(this).find('.wish_order_info .name').text().trim();
 		       
-		       if( tempQtyLimitProductYn == 'true' && !isNaN(tempCartQuantity)){
-		    	   if(parseInt(tempCartQuantity) + parseInt(tempQty) > 2){
-		    		   var la = new layerAlert('['+tempBrandName+'] ['+tempProductName+']의<br/>구매 가능한 수량 '+tempCartQuantity+'개가<br/>이미 쇼핑백에 담겨있습니다.<br/><p style="color:gray; font-size:14px; margin-top:8px;">(동일 상품은 최대 2개까지 구매 가능)</p>');
-		    		   errorcnt++;
-		    	       return false;
-		    	   }
-		       }
-		       
-		       promotionYn += ","+ tempPromotion;
 		   });
 		   
 		   if ( errorcnt === 0 ) {
@@ -859,18 +846,6 @@
 		
 		<div id="submitForm">
 		</div>
-		
-		
-		<script>
-			$(document).ready(function() {
-		    	lpSizeCheck($('.lp_wish_to_order_wrap')); //레이어팝업 사이즈 체크 후 lypp_mid height 조정
-		//    	//추후삭제필요 : 디자인 컴펌용
-		//    	$('.layerpop_wrap').parent().addClass('lp_stl_black');
-			});
-			
-			$(document).ready(function() {
-			});
-		</script>
 
 </div>
     <!-- depth1 e -->
@@ -929,6 +904,7 @@
                             <button
                             class="chip ${isFirst}"
                             data-value="${chip.pcId}"
+                            data-prodImg="${chip.pcImg1}"
                             id="slide0101"
                             style="
                               background: #23416e
@@ -992,24 +968,11 @@
             $(this).siblings().removeClass('on');
             $(this).addClass('on');
             let pValue = pcValue.split('_')[0];
-
-            $.ajax({
-              url: '/api/product/' + pValue + '/color/' + pcValue,
-              method: 'get',
-              dataType: 'json',
-              success: function (data) {
-                console.log(pValue + ' ' + pcValue);
-                $('li#' + pValue + ' .swiper-slide img').attr(
-                  'src',
-                  data.pcImg1
-                );
-              },
-              error: function (request, status, error) {
-                console.log(request);
-                console.log(status);
-                console.log(error);
-              },
-            });
+            
+            $('li#' + pValue + ' .swiper-slide img').attr(
+                    'src',
+                    $(this).data('prodimg')
+                  );
           });
 
           $('.func_as .del').click(function (e) {

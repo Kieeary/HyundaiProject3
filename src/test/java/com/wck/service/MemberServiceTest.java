@@ -1,5 +1,8 @@
 package com.wck.service;
 
+import static org.mockito.ArgumentMatchers.doubleThat;
+import static org.mockito.ArgumentMatchers.intThat;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -67,6 +70,15 @@ public class MemberServiceTest {
 		boolean result = memberService.findMemberByNameAndEmail(findPw);
 		log.info(result);
 		Assertions.assertEquals(result, true);
+	}
+	
+//	author : 김한울
+//	purpose : 회원별 마일리지 적립률 조
+	@Test
+	void getMileageAddRateTest() {
+		String mId = "7c-41f8-8c6a-739159990a8d";
+		double result = memberService.getMileageAddRate(mId);
+		log.info("User Mileage accrual rate > " + result);
 	}
 	
 }

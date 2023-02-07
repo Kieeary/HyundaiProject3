@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wck.domain.FindPwDTO;
+import com.wck.domain.MemberGrade;
 import com.wck.domain.MemberVO;
 import com.wck.domain.UpdateMemberDTO;
 
@@ -116,6 +117,16 @@ public class MemberMapperTest {
 		MemberVO findMember2 = memberMapper.findOneByEmail("user1@gmail.com","Email");
 		Assertions.assertEquals(findMember2.getName(), newName);
 	}
-	
+
+//	author : 김한울
+//	purpose : ID로 회원의 등급명과 마일리지 적립률 조회
+	@Test
+	void getMemberGradeTest() {
+		String mId = "7c-41f8-8c6a-739159990a8d";
+		MemberGrade grade = MemberGrade.of(memberMapper.getGradeById(mId));
+		log.info("User Grade > " + grade.getGrade());
+		log.info("User Mileage accrual rate > " + grade.getAccruRate());
+	}
+
 
 }

@@ -8,20 +8,19 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class CartVO {
-	private String mId;
-	private String pImg;
-	private String pSId;
-	private int pQuantity;
+	private String PImg;
+	private String PSId;
+	private int PQuantity;
 	
-	private String pName;
-	private String pStatus;
-	private String bName;
+	private String PName;
+	private String PStatus;
+	private String BName;
 	
-	private String pCColorCode; 
-	private String pCPrice;
-	private String pSStock;
-	private String pSize;
+	private String PCColorCode; 
+	private int PCPrice;
+	private String PSStock;
+	private String PSize;
 	private int like;
-	private double accumRate;
+	// private double accumRate;
 	
 }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wck.domain.CartVO;
 import com.wck.domain.InsertMemberDTO;
+import com.wck.domain.MemberVO;
 import com.wck.service.CartService;
 import com.wck.service.MemberService;
 
@@ -85,6 +86,9 @@ public class WckController {
 		List<CartVO> prods = cartService.readCartList(user.getId()); 
 		log.info("Carts Prods # > " + prods.size());
 		model.addAttribute("prods", prods);
+		double gradeRate = memberService.getMileageAddRate(user.getId());
+		log.info("Mileage accrual rate > " + gradeRate);
+		model.addAttribute("rate", gradeRate);
 		return "wck/shoppingbag/cart";
 	}
 	

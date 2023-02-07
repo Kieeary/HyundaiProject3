@@ -6,15 +6,15 @@
 	<!-- cartMap declare and definition -->
 	<!-- property : java variable, column = db variable -->
  	<resultMap type="com.wck.domain.CartVO" id="cartMap">
- 		<result property="pSId" column="PSID"/>
- 		<result property="pImg" column="CARTIMG"/>
- 		<result property="bName" column="BNAME"/>
- 		<result property="pName" column="PNAME"/>
- 		<result property="pCPrice" column="PCPRICE"/>
- 		<result property="pCColorCode" column="PCCOLORCODE"/>
- 		<result property="pSize" column="PSIZE"/>
- 		<result property="pQuantity" column="PQUANTITY"/>
- 		<result property="pStatus" column="PSTATUS"/>
+ 		<result property="PSId" column="PSID"/>
+ 		<result property="PImg" column="CARTIMG"/>
+ 		<result property="BName" column="BNAME"/>
+ 		<result property="PName" column="PNAME"/>
+ 		<result property="PCPrice" column="PCPRICE"/>
+ 		<result property="PCColorCode" column="PCCOLORCODE"/>
+ 		<result property="PSize" column="PSIZE"/>
+ 		<result property="PQuantity" column="PQUANTITY"/>
+ 		<result property="PStatus" column="PSTATUS"/>
  		<result property="like" column="LIKE"/>
  	</resultMap>
 

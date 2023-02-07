@@ -356,10 +356,67 @@
                         url: '/wck/shoppingbag/getCurrentOpt?pcid=' + pcid,
                         contentType: "application/json",
                         success: function (result) {
-                          console.log(result['colorSet'].length);
-                          console.log(result['colorSet'][0]);
-                          console.log(result['colorSet'][0]['colorName']);
-                          console.log(result['sizeSet']);
+                          // color option setting
+
+                          var str = "";
+                          for (var i = 0; i < result['colorSet'].length; i++) {
+                            let colors = result['colorSet'][i];
+                            // console.log('컬러명 : '+colors.colorName);
+                            // console.log('컬러칩 : '+colors.pcchipImg);
+                            // console.log('컬러코드 : '+colors.pccolorCode);
+
+                            str += "<li><input type='radio'";
+                              
+                            if(i === 0) str += "checked='checked' ";
+
+                            str += "id='gl_rd_color_[[${i.index-1}]]_"+i+"' name='gl_rd_color_"+i+"' onclick='setOptions(this, '2', 'OB2C7KCD762WP2_ZB', 'style');'>"
+                              +"<label for='gl_rd_color_[[${i.index-1}]]_"+i+"'></label>"
+                              +"<span class='gl_color_val' style='background:"+colors.pccolorCode+" url("+colors.pcchipImg+"/dims/resize/60x60) center /100% auto no-repeat'>"
+                                +colors.pccolorCode+"</span></li>";
+
+                            // str += "id='gl_rd_color_[[${i.index-1}]]_"+i+"'";
+
+                            // if(i === 0) str += " class = 'on' ";
+
+                            // str += " name='gl_rd_color_"+i+"' onclick='setOptions(this, '2', 'OB2C7KCD762WP2_ZB', 'style');'>"
+                            //   +"<label for='gl_rd_color_[[${i.index-1}]]_"+i+"'></label>"
+                            //   +"<span class='gl_color_val' style='background:"+colors.pccolorCode+" url("+colors.pcchipImg+"/dims/resize/60x60) center /100% auto no-repeat'>"
+                            //     +colors.pccolorCode+"</span></li>";
+                          }
+
+                          $(".btn_color_wrap").html(str);
+
+                          $(".sct_v").html(result['colorSet'][0]['colorName']);
+
+                          console.log('사이즈 : '+sTag);
+
+                          // <span class="sod_option " title="90" data-value="OB2C7KCD762WP2_IV_90">90</span>
+                          // <option value="OB2C7KCD762WP2_IV_90" selected="">90</option>
+
+                          // size option setting
+                          var str1 = "<span class='sod_list'>";
+                          var str2 = "";
+                          for (var i = 0; i < result['sizeSet'].length; i++) {
+                            let size = result['sizeSet'][i];
+                            // console.log(size);
+                            str1 += "<span class='sod_option ";
+                            str2 += "<option value='"+pcid+"_"+size+"' ";
+
+                            if(size == sTag) {
+                              str1 += "selected active ";
+                              str2 += "selected='selected'";
+                            }
+
+                            str1 += "title='"+size+"' data-value='"+pcid+"_"+size+"'"+size+"</span>";
+                            str2 += ">"+size+"</option>";
+
+                          }
+
+                          str1 += "</span>";
+                          
+
+                          $(".sod_list_wrapper").html(str1);
+                          $(".sodsb").html(str2);
 
                         },
                         error: function() {
@@ -382,37 +439,24 @@
                       <li>
                         <div class="gl_tit">색상</div>
                         <ul class="gl_con btn_color_wrap">
-                          <!-- ########## color option radio loop start ########## -->
-                          <li>
-                            <input type="radio" id="gl_rd_color_02_02" name="gl_rd_color_02"
-                              onclick="setOptions(this, '2', 'OB2C7KCD762WP2_ZB', 'style');">
-                            <label for="gl_rd_color_02_02"></label>
-                            <span class="gl_color_val"
-                              style="background:#000000 url('http://newmedia.thehandsome.com/OB/2C/FW/OB2C7KCD762WP2_ZB_C01.jpg/dims/resize/60x60') center /100% auto no-repeat">#000000</span>
-                          </li>
-                          <li>
-                            <input type="radio" id="gl_rd_color_02_01" name="gl_rd_color_02"
-                              onclick="setOptions(this, '2', 'OB2C7KCD762WP2_IV', 'style');">
-                            <label for="gl_rd_color_02_01"></label>
-                            <span class="gl_color_val"
-                              style="background:#fbfaea url('http://newmedia.thehandsome.com/OB/2C/FW/OB2C7KCD762WP2_IV_C01.jpg/dims/resize/60x60') center /100% auto no-repeat">#fbfaea</span>
-                          </li>
-                          <!-- ########## color option radio loop end ########## -->
                         </ul>
                         <div class="gl_con selected_color_txt">
-                          <span class="sct_v">IVORY</span>
+                          <span class="sct_v"></span>
                         </div>
                       </li>
                       <li>
                         <div class="gl_tit">사이즈</div>
                         <div class="gl_con">
                           <span class="sod_select  touch" tabindex="0" data-cycle="false" data-links="false"
-                            data-links-external="false" data-placeholder-option="false" data-filter=""><span
-                              class="sod_label">90</span><span class="sod_list_wrapper"><span class="sod_list"><span
-                                  class="sod_option  selected active " title="90"
-                                  data-value="OB2C7KCD762WP2_IV_90">90</span><span class="sod_option  disabled "
-                                  title="95 (품절)" data-value="">95 (품절)</span></span></span><select id="gl_slr_size_2"
-                              name="gl_slr_size_2" class="sodsb" onchange="setOptions(this, '2', '', 'size');">
+                            data-links-external="false" data-placeholder-option="false" data-filter="">
+                            <span class="sod_label">[[${prod.PSize}]]</span>
+                            <span class="sod_list_wrapper">
+                              <span class="sod_list">
+                                <span class="sod_option  selected active " title="90" data-value="OB2C7KCD762WP2_IV_90">90</span>
+                                <span class="sod_option  disabled " title="95 (품절)" data-value="">95 (품절)</span>
+                              </span>
+                            </span>
+                            <select id="gl_slr_size_2" name="gl_slr_size_2" class="sodsb" onchange="setOptions(this, '2', '', 'size');">
                               <option value="OB2C7KCD762WP2_IV_90" selected="">90</option>
                               <option disabled="disabled" value="">95 (품절)</option>
                             </select></span>

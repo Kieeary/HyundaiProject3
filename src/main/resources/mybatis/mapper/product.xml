@@ -31,33 +31,26 @@
 	</resultMap>
 	
 	<select id="getLikeProductList" resultMap="productCommonMap">
-		select pid, pname, pnote, bno, pstatus,
-			pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice,
-			bname
-			from (
-				select rownum rn, 
-					pid, pname, pnote, bno, pstatus,
-					pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice,
-					bname
-					from (
-						select 
-						    p.pid, pname, pnote, b.bno, pstatus,
-						    pc.pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice,
-						    b.bname
-						from likes l 
-						inner join product_common p on (l.pid = p.pid)
-						inner join brand b on (p.bno = b.bno)
-						inner join product_color pc on (pc.pid = p.pid)
-						where l.mid =#{mId}
-						order by l.ltime desc
-					)
-					// 조인을 나중에 해야됨
-			<![CDATA[
-					 where rownum <= #{cri.currentPage} * #{cri.pageSize}
-			)
-			where rn > (#{cri.currentPage} - 1) * #{cri.pageSize}
-			]]>
-			
+            select rn,
+				l.pid, p.pname, p.pnote, b.bno, p.pstatus,
+				pc.pcid, pcimg1, pcimg2, pcimg3, pcchipimg, pccolorcode, pcprice,
+				b.bname
+			from(	
+				select rownum rn, pid
+				from(
+					select pid
+					from likes 
+					where mid =#{mId}
+					order by ltime desc
+				) a
+				<![CDATA[
+				where rownum <= #{cri.currentPage} * #{cri.pageSize}
+			) l
+			inner join product_common p on (l.pid = p.pid)
+			left join brand b on (p.bno = b.bno)
+			inner join product_color pc on (pc.pid = p.pid)
+            where rn > (#{cri.currentPage} - 1) * #{cri.pageSize}
+            ]]>
 	</select>
 	
 	<select id="getProductColor" resultMap="productColorMap">

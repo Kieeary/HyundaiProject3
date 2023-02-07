@@ -24,11 +24,12 @@ public class ProductMapperTest {
 	@Test
 	void getLikeProduct() {
 		Criteria cri = new Criteria();
-		cri.setPageSize(5);
+		cri.setPageSize(10);
 		cri.setCurrentPage(1);
 		String mid = "123123";
 		List<ProductCommonVO> list = productMapper.getLikeProductList(mid,cri);
 		log.info(list);
+		log.info(list.size());
 	}
 	
 	@Test

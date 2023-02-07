@@ -319,20 +319,10 @@
               <a
                 id="tab_wish1"
                 href="#tab_01"
-                onclick="GA_Event('마이하트', '탭', '위시리스트');"
-                >위시리스트</a
-              >
+                >위시리스트</a>
             </li>
-            <li>
-              <a
-                id="tab_wish2"
-                href="#tab_02"
-                onclick="GA_Event('마이하트', '탭', '컨텐츠');"
-                >♥ 컨텐츠</a
-              >
-            </li>
-            <li class="fcs" style="transform: translateX(0px)"></li>
-          </ul>
+
+           </ul>
           <div class="tab_cont">
             <!-- #tab_01 s -->
             <div id="tab_01" class="cont on">
@@ -350,13 +340,6 @@
               <div class="hs_product_list_wrap">
                 <div class="sort_chk">
                   <a href="javascript:void(0);" class="del">선택상품삭제</a>
-                  <div class="hs_tit_select">
-                    <select id="wish_sort" name="wish_sort">
-                      <option value="">전체</option>
-                      <option value="sale">세일</option>
-                      <option value="outlet">아울렛</option>
-                    </select>
-                  </div>
                 </div>
 
                 <div class="hs_product_list" id="prodWishlists">
@@ -2736,6 +2719,8 @@
     	//TODO : count 가져오기
         getWishList(1);
         function getWishList(currentPage) {
+        	pageNum = currentPage;
+        	
           $.ajax({
             url: '/api/member/like?currentPage=' + currentPage,
             method: 'get',
@@ -2884,11 +2869,6 @@
         	if(count == 0) {
         		return;
         	}
-          /* <a href="javascript:myWishListProd(1)" class="pre">이전</a
-             ><a href="javascript:myWishListProd(1)">1</a
-             ><a href="javascript:void(0);" class="cur">2</a
-             ><a href="javascript:myWishListProd(3)">3</a
-             ><a href="javascript:myWishListProd(3)" class="nxt">다음</a> */
           let endNum = Math.ceil(pageNum / 10.0) * 10;
           let startNum = endNum - 9;
 
@@ -2901,18 +2881,18 @@
           if (endNum * 10 < count) {
             next = true;
           }
+          console.log(endNum+" "+next);
           let str = '';
           let prevDisable = '';
           if (!prev) {
             prevDisable = 'disabled';
           }
-          str += `<a href="#" class="pre ${prevDisable}">이전</a
-                >`;
+          str += `<a href="#" class="pre ${prevDisable}">이전</a>`;
           for (let i = startNum; i <= endNum; i++) {
             let isCur = '';
 
             if (pageNum == i) isCur = 'cur';
-            let tmp = `<a href="#" class="${isCur}">${i}</a>`;
+            let tmp = `<a href="${i}" class="${isCur}">${i}</a>`;
 
             str += tmp;
           }
@@ -2920,7 +2900,13 @@
           if (!next) nextDisable = 'disabled';
           str += `<a href="#" class="nxt ${nextDisable}">다음</a>`;
 		  $('#pagination1').html(str);
-          console.log(str);
+          
+		  $('#pagination1 a').click(function(e){
+			  e.preventDefault();
+			  let num = $(this).attr('href');
+			  window.scrollTo(0,0);
+			  getWishList(num);
+		  })
         }
 
         

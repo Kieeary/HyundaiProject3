@@ -577,7 +577,7 @@
     	 function getMyLike(){
     		 $.ajax({
     			 method : 'get',
-    			 url : '/api/member/like',
+    			 url : '/api/member/like?currentPage=1&pageSize=3',
     			 datatype:'json',
     			 success : function(list){
     				 console.log(list);
@@ -585,7 +585,8 @@
     			 }
     		 })
     	 }
-    	 function printLike(list){
+    	 function printLike(data){
+    		 let list = data['list'];
     		 if(list == null || list.length == 0){
     			 return ;
     		 }
@@ -609,9 +610,10 @@
     			 /*]]>*/
     			 $('#myWishlists > ul').append(template);
     		 })
-    		 if(list.length > 3){
+    		 console.log(parseInt(data['count']) - 3)
+    		 if(parseInt(data['count']) > 3){
     			 /*<![CDATA[*/
-    			 let countUl = `<a href="/ko/mypage/myWish" class="more">+${list.length-3}</a>`
+    			 let countUl = `<a href="/wck/mypage/wish" class="more">+${parseInt(data['count']) - 3 }</a>`
     			 /*]]>*/
         		 $('#myWishlists').append(countUl);
     		 }

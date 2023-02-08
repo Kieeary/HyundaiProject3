@@ -1,4 +1,4 @@
-<html lang="ko" class="back">
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -194,7 +194,6 @@
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/unorm.js"></script>
   </head>
-
   <body class="back">
     <!-- ################## hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
     <div class="hsome_allContents_wrapper">
@@ -3539,7 +3538,10 @@
     <aside class="hsome_quickMenu hsome_quickMenu1909 active">
       <ul>
         <li class="shop">
-          <a href="/ko/mobilecommon/navShop"><i>메뉴</i></a>
+          <a
+            href="/wck/quickmenu"
+            ><i>메뉴</i></a
+          >
         </li>
         <li class="sns">
           <a
@@ -8106,7 +8108,8 @@ layer popup 형식의 confirm 창
         }
       }
     </script>
-    <script src="./test.js" defer></script>
+    
+    <script type="text/javascript" th:src="@{/js/quick_menu.js}" defer></script>
   </body>
   <!-- AceCounter Log Gathering Script V.7.5.2013010701 -->
 </html>

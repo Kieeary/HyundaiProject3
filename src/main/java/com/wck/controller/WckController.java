@@ -39,6 +39,16 @@ public class WckController {
 	@Autowired
 	private final MemberService memberService;
 	
+	@GetMapping
+	public String home() {
+		return "wck/home";
+	}
+	
+	@GetMapping("/quickmenu")
+	public String quickMenu(){
+		return "quick_menu";
+	}
+	
 	/*
 	 * 로그인 페이지
 	 */

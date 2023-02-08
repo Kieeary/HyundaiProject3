@@ -423,7 +423,7 @@
                           <div
                             class="swiper-slide WHITE BG_WHITE TXT_WHITE swiper-slide-active"
                             data-swiper-slide-index="2"
-                            style="width: 412px">
+                            style="width: 360px">
                             <a
                               href="/magazine/exhibitions/8813722752696"
                               onclick="GA_Event('메인','메인배너_2', 'Ready%20for%20spring%3F');"
@@ -679,7 +679,7 @@
                             <div
                               class="swiper-slide sbetween swiper-slide-active"
                               data-swiper-slide-index="1"
-                              style="width: 412px">
+                              style="width: 360px">
                               <div
                                 class="main202103-promo-list-box radius-box shadow">
                                 <div class="img">
@@ -762,7 +762,7 @@
                             <div
                               class="swiper-slide sbetween swiper-slide-next"
                               data-swiper-slide-index="2"
-                              style="width: 412px">
+                              style="width: 360px">
                               <div
                                 class="main202103-promo-list-box radius-box shadow">
                                 <div class="img">
@@ -1248,7 +1248,7 @@
                             <div
                               class="swiper-slide sbetween swiper-slide-next"
                               data-swiper-slide-index="2"
-                              style="width: 412px">
+                              style="width: 360px">
                               <div class="main202103-event-list-box">
                                 <div class="event-box">
                                   <a
@@ -3265,413 +3265,7 @@ layer popup 형식의 confirm 창
           return false;
         }
       );
-
-      $(document).ready(function () {
-        $('.write_form_area .reply-write-line #comment').keyup(function (e) {
-          var content = $(this).val();
-          $('.reply_write_box #counter').html(content.length);
-        });
-
-        $('.sns_comment_pop #sns_commont_close').on('click', function () {
-          $('.sns_comment_ipt_pop .reply-call-btn').removeClass('on');
-          //         $('.sns_comment_ipt_pop .sns-comment-ipt').removeClass('active');
-          $('.hsome_allContents_wrapper').css('display', 'block');
-          scrollHeightHistory(); //$(window).scrollTop(win_Scroll);
-          $('.sns_comment_pop').scrollTop(0);
-
-          $('body').removeClass('hidden');
-        });
-
-        $('.reply_write_box').on('focus', 'textarea', putBlur);
-
-        // 20200706 댓글 버튼 active 액션
-        $('.sns_comment_ipt_pop').on(
-          'click',
-          '.reply-call-btn > button',
-          function () {
-            $('.sns_comment_ipt_pop .sns-comment-ipt').addClass('active');
-            $('.reply-call-btn').removeClass('on');
-            $('.sns-comment-ipt .reply_write_box #counter').html(0);
-          }
-        );
-
-        $('.sns_comment_ipt_pop').on(
-          'click',
-          '.reply-close-btn  a',
-          function (e) {
-            var replu_None = $(
-              '.sns_comment_ipt_pop .sns-comment-ipt .ipt-re-uploaded'
-            ).hasClass('is-active');
-            e.preventDefault();
-
-            $('.sns_comment_ipt_pop .sns-comment-ipt').removeClass('active');
-            $('.sns_comment_ipt_pop .reply-call-btn').addClass('on');
-
-            if (replu_None == true) {
-              $(
-                '.sns_comment_ipt_pop .sns-comment-ipt .ipt-re-uploaded'
-              ).removeClass('is-active');
-            }
-          }
-        );
-
-        function putBlur() {
-          var $thisTextarea = $(this);
-          $('.hsome_layer_popup').on('touchstart', function (e) {
-            $thisTextarea.blur();
-          });
-        }
-      });
     </script>
-
-    <!-- 댓글// -->
-    <div class="hsome_layer_popup hs_img_upload_pop">
-      <div class="pop-comm-cnts">
-        <div class="swiper-container">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img
-                id="reply_view_img1"
-                src="http://www.thehandsome.com/_ui/handsomemobile/images/common/no_img.jpg"
-                alt="" />
-            </div>
-            <div class="swiper-slide">
-              <img
-                id="reply_view_img2"
-                src="http://www.thehandsome.com/_ui/handsomemobile/images/common/no_img.jpg"
-                alt="" />
-            </div>
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-      </div>
-      <a
-        href="javascript:void(0);"
-        class="pop-comm-cls"
-        onclick="closUploadPop()"
-        >닫기</a
-      >
-    </div>
-
-    <div class="hsome_layer_popup sns_comment_pop">
-      <h2 class="pop-comm-ttl">댓글(<i id="replytotalCount"></i>)</h2>
-      <div class="pop-comm-cnts">
-        <!-- sns-comment-cnts | 댓글 리스트// -->
-        <div class="sns-comment-cnts" id="sns_post_reply_contents"></div>
-        <!-- //sns-comment-cnts | 댓글 리스트 -->
-      </div>
-      <a href="#" class="pop-comm-cls" id="sns_commont_close">닫기</a>
-    </div>
-
-    <div class="sns_comment_ipt_pop">
-      <!-- reply btn -->
-      <div class="reply-call-btn">
-        <button type="button"><span class="blind">댓글 등록</span></button>
-      </div>
-      <!-- //reply btn -->
-
-      <!-- sns-comment-ipt | 댓글 입력 영역// -->
-      <!-- <div class="sns-comment-op" style="cursor: pointer;"></div> -->
-      <div class="sns-comment-ipt" style="display: none">
-        <form
-          id="postReplyCommentform"
-          name="postReplyCommentform"
-          method="POST"
-          enctype="multipart/form-data">
-          <div class="write_form_area simple">
-            <!--업로드 한 이미지가 있으면// -->
-            <div class="ipt-uploaded" style="display: none">
-              <span class="thumb" id="replyTempImg" style="display: none">
-                <img
-                  id="replyTempImgSrc"
-                  src="http://www.thehandsome.com/_ui/handsomemobile/images/common/no_img.jpg"
-                  alt="" />
-                <a href="javascript:hideReplyTempImg();" class="del">삭제</a>
-              </span>
-              <span class="thumb" id="replyProductImg" style="display: none">
-                <img
-                  id="replyProductImgSrc"
-                  src="http://www.thehandsome.com/_ui/handsomemobile/images/common/no_img.jpg"
-                  alt="" />
-                <a href="javascript:hideReplyProductImg();" class="del">삭제</a>
-              </span>
-            </div>
-            <!--//업로드 한 이미지가 있으면 -->
-
-            <div class="reply-close-btn">
-              <a href="javascript:void(0);" onclick="closeReplyPop();">취소</a>
-            </div>
-
-            <div class="ipt-re-uploaded">
-              <div class="re" style="display: none">
-                <i></i>님에게 댓글 남기는 중
-              </div>
-              <div class="update" style="display: none">댓글 수정중입니다.</div>
-              <!-- 	                <a href="javascript:;" class="re_close" onClick="closeReplyPop();">닫기</a> -->
-            </div>
-
-            <div class="reply-write-line" style="">
-              <!-- 작성영역 -->
-              <div class="reply_write_box">
-                <textarea
-                  name="comment"
-                  id="comment"
-                  cols="30"
-                  rows="1"
-                  placeholder="내용입력"
-                  onblur="snsHideBottom();"></textarea>
-                <p class="byte_check">(<span id="counter">0</span>/300)</p>
-              </div>
-              <!-- //작성영역 -->
-
-              <!-- btn -->
-              <div class="reply-btn-box">
-                <!--
-                      // 이미지 업로드 시 etc_btn 클래스에 on 클래스 추가
-                      -->
-                <div class="reply_etc_btn_box">
-                  <div class="etc_btn img on">
-                    <i class="img"></i>
-                    <span>이미지 등록</span>
-                    <input
-                      type="file"
-                      name="replyAttachFilePath"
-                      id="replyAttachFilePath"
-                      onchange="readURL(this)"
-                      onclick="GA_Event('스타일라이브_댓글', '이미지등록', '클릭');"
-                      accept="image/*" />
-                  </div>
-                  <div class="etc_btn prod">
-                    <button
-                      type="button"
-                      id="origin_btn"
-                      class="up"
-                      onclick="getProductSearchPageInReply();GA_Event('스타일라이브_댓글', '상품검색', '클릭');">
-                      <i class="prod"></i>
-                      <span>상품찾기</span>
-                    </button>
-                    <button
-                      id="new_btn"
-                      style="display: none"
-                      type="button"
-                      class="up"
-                      onclick="getProductSearchPageInReplyOnProductDetail();">
-                      <i class="prod"></i>
-                      <span>상품찾기</span>
-                    </button>
-                  </div>
-                </div>
-                <!-- //20200619 덧글 기타 버튼 영역 -->
-
-                <!-- 등록버튼 -->
-                <div class="reply_upload_btn_box">
-                  <button type="button" onclick="javascript:goLogin();">
-                    등록
-                  </button>
-                  <!-- button type="button" onClick ="postReplyCommentSubmit(event)" disabled="true">등록</button -->
-                  <input type="hidden" name="snsPostId" id="snsPostId" />
-                  <input type="hidden" name="replyLevel" id="replyLevel" />
-                  <input type="hidden" name="replyOrder" id="replyOrder" />
-                  <input type="hidden" name="productCode" id="productCode" />
-                  <input
-                    type="hidden"
-                    name="attachFilePath"
-                    id="attachFilePath" />
-                  <input type="hidden" name="deleteYn" id="deleteYn" />
-                  <input
-                    type="hidden"
-                    name="parentCommentId"
-                    id="parentCommentId" />
-                  <input type="hidden" name="commentId" id="commentId" />
-                  <!--                     <button type="submit" disabled="true">등록</button> -->
-                </div>
-                <!-- //등록버튼 -->
-              </div>
-              <!-- //btn -->
-            </div>
-            <!-- 20200619 덧글 기타 버튼 영역 -->
-          </div>
-        </form>
-      </div>
-      <!-- //sns-comment-ipt | 댓글 입력 영역 -->
-    </div>
-    <!-- //댓글 -->
-
-    <script
-      type="text/javascript"
-      src="http://www.thehandsome.com/_ui/handsomemobile/js/clipboard.min.js"></script>
-
-    <!-- //sns공유 -->
-    <!-- loading_layerpop s -->
-    <!-- layerpop_wrap | 처리중 s -->
-    <div class="layerpop_wrap loading_layer_wrap">
-      <!-- layerpop_middle s -->
-      <div class="lyrpp_mid">
-        <div class="loading_box"></div>
-      </div>
-      <!-- layerpop_middle e -->
-    </div>
-    <!-- layerpop_wrap | 처리중 e -->
-
-    <!-- 스타일라이브 팝업 20211001 S -->
-
-    <!-- 이미 참여하셨습니다. S -->
-    <div
-      class="stlv-mob-stlv-20211001--popup already-participated"
-      style="display: none">
-      <div class="stlv-mob-stlv-20211001--contents">
-        <img
-          src="http://cdn.thehandsome.com/mobile/promotion/handsome_202109/stlv_mob_modal_01.jpg"
-          alt="" />
-        <a
-          class="stlv-mob-stlv-20211001--button stlv-mob-stlv-20211001--link1"
-          href="/ko/mypage/voucher"
-          >나의 쿠폰함</a
-        >
-        <a
-          class="stlv-mob-stlv-20211001--button stlv-mob-stlv-20211001--closed1"
-          href="javascript:void(0);"
-          >닫기</a
-        >
-      </div>
-    </div>
-    <!-- 이미 참여하셨습니다. E -->
-
-    <!-- 대상이 아닙니다 S -->
-    <div
-      class="stlv-mob-stlv-20211001--popup not-a-valid-participant"
-      style="display: none">
-      <div class="stlv-mob-stlv-20211001--contents">
-        <img
-          src="http://cdn.thehandsome.com/mobile/promotion/handsome_202109/stlv_mob_modal_02_1.jpg"
-          alt="" />
-        <a
-          class="stlv-mob-stlv-20211001--button stlv-mob-stlv-20211001--closed1"
-          href="javascript:void(0);"
-          >닫기</a
-        >
-        <a
-          class="stlv-mob-stlv-20211001--button stlv-mob-stlv-20211001--link2"
-          href="https://www.h-point.co.kr/cu/join/start.nhd?prtnrId=D080&amp;chnnlId=1705"
-          >통합회원 가입</a
-        >
-        <a
-          class="stlv-mob-stlv-20211001--button stlv-mob-stlv-20211001--closed2"
-          href="javascript:void(0);"
-          >닫기</a
-        >
-      </div>
-    </div>
-    <!-- 대상이 아닙니다 E -->
-
-    <!-- 참여해주셔서 감사합니다 S -->
-    <div
-      class="stlv-mob-stlv-20211001--popup thanks-to-participate"
-      style="display: none">
-      <div class="stlv-mob-stlv-20211001--contents">
-        <img
-          src="http://cdn.thehandsome.com/mobile/promotion/handsome_202109/stlv_mob_modal_03.jpg"
-          alt="" />
-        <a
-          class="stlv-mob-stlv-20211001--button stlv-mob-stlv-20211001--link3"
-          href="/ko/mypage/voucher"
-          >나의 쿠폰함</a
-        >
-        <a
-          class="stlv-mob-stlv-20211001--button stlv-mob-stlv-20211001--closed3"
-          href="javascript:void(0);"
-          >닫기</a
-        >
-      </div>
-    </div>
-    <!-- 참여해주셔서 감사합니다 E -->
-
-    <script>
-      $(document).ready(function () {
-        // 모달 닫기
-        $(
-          '.stlv-mob-stlv-20211001--closed1, .stlv-mob-stlv-20211001--closed2, .stlv-mob-stlv-20211001--closed3'
-        ).on('click', function () {
-          $('.stlv-mob-stlv-20211001--popup').css('display', 'none');
-          setTimeout(function () {
-            $('.hsome_quickMenu').removeClass('active');
-            //작성 후 메인으로 이동한 뒤 포스트 팝업을 위한 쿠키값 셋팅
-            setCookie('isWriteAfter', 'Y', 1);
-            location.href = '/ko/sns/main?isWriteAfter=true';
-            hideLoadingLp();
-          }, 1000);
-        });
-      });
-    </script>
-
-    <!-- 스타일라이브 팝업 20211001 E -->
-
-    <!-- 결제시도시 처리중 layper 별도 표시 200217 nih -->
-    <div
-      class="pop_loading_oneclick200210_wrap"
-      style="
-        width: 100%;
-        height: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 9998;
-        display: none;
-      ">
-      <div
-        class="pop_loading_oneclick200210"
-        style="
-          background: #222;
-          width: 90%;
-          height: 120px;
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate3d(-50%, -50%, 0);
-          z-index: 9999;
-        ">
-        <img
-          src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/Spinner_1s_105px.png"
-          alt="loading"
-          style="
-            display: block;
-            width: 32px;
-            height: 32px;
-            margin: 30px auto 15px auto;
-          " />
-        <p style="color: #fff; text-align: center">
-          <span style="color: #fff; font-size: 15px">처리중입니다.</span>
-        </p>
-      </div>
-    </div>
-
-    <!-- layerpop_wrap | 이미지 업로드 처리중 sns별도사용 s -->
-    <div class="layerpop_wrap loading_layer_wrap2004" style="display: none">
-      <!-- layerpop_middle s -->
-      <div class="lyrpp_mid">
-        <div class="loading_box2004">
-          <img
-            src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/Spinner_1s_105px.png"
-            alt="loading_bar" />
-          <p class="loading_txt">이미지가 업로드 중입니다.</p>
-        </div>
-      </div>
-      <!-- layerpop_middle e -->
-    </div>
-    <!-- layerpop_wrap | 이미지 업로드 처리중 sns별도사용e -->
-    <!-- layerpop_wrap | 유사상품 처리중 별도사용 s -->
-    <div class="layerpop_wrap loading_rel_layer_wrap" style="display: none">
-      <!-- layerpop_middle s -->
-      <div class="lyrpp_mid">
-        <div class="loading_box"></div>
-      </div>
-      <!-- layerpop_middle e -->
-    </div>
-    <!-- layerpop_wrap | 유사상품 처리중 별도사용 e -->
-
-    <!-- loading_layerpop e -->
-    <!-- hsome_layer_menu_contents | 레이어팝업메뉴 컨텐츠 영역 e -->
-    <!-- layerpopupContent e -->
 
     <script type="text/javascript">
       var navViewTime = 1; //3초 후 top nav 사라짐
@@ -4082,7 +3676,7 @@ layer popup 형식의 confirm 창
                   if (chkSwiperIdx == 1) {
                     if (h_exhibition) {
                       h_exhibition = false;
-                      getExhibitionBannerList(); //기획전
+                      // getExhibitionBannerList(); //기획전
                     }
                   } else if (chkSwiperIdx == 2) {
                     if (h_event) {
@@ -4090,15 +3684,15 @@ layer popup 형식의 confirm 창
                       getEventList(); //이벤트
                     } else if (h_exhibition) {
                       h_exhibition = false;
-                      getExhibitionBannerList(); //기획전
+                      // getExhibitionBannerList(); //기획전
                     }
                   } else if (chkSwiperIdx == 3) {
                     if (h_homeTv) {
                       h_homeTv = false;
-                      getMobileHomeTabTv(); //홈탭 tv
+                      // getMobileHomeTabTv(); //홈탭 tv
                     } else if (h_event) {
                       h_event = false;
-                      getEventList(); //이벤트
+                      // getEventList(); //이벤트
                     }
                   }
                 }
@@ -4471,67 +4065,6 @@ layer popup 형식의 confirm 창
       }
 
       $(document).ready(function () {
-        var todayDate = new Date();
-
-        //설날 공지 팝업(2022)
-        if (getCookie('newYearPopup2022') != todayDate.getDate()) {
-          var startNewYear = new Date('2022/01/25 21:00:00'),
-            endNewYear = new Date('2022/02/01 23:59:59');
-          if (
-            todayDate.getTime() >= startNewYear.getTime() &&
-            todayDate.getTime() <= endNewYear.getTime()
-          ) {
-            layerPopup9('open');
-          }
-        }
-
-        if (getCookie('HSlayerPopup1') != todayDate.getDate()) {
-          var startDate1 = new Date('2020/09/26 12:00:00'),
-            endDate1 = new Date('2020/10/03 23:59:59');
-          if (
-            todayDate.getTime() >= startDate1.getTime() &&
-            todayDate.getTime() <= endDate1.getTime()
-          ) {
-            layerPopup1('open');
-          }
-        }
-
-        //설날 공지 팝업(2021)
-        if (getCookie('newYearPopup2021') != todayDate.getDate()) {
-          var startNewYear = new Date('2021/02/03 11:59:59'),
-            endNewYear = new Date('2021/02/14 23:59:59');
-          if (
-            todayDate.getTime() >= startNewYear.getTime() &&
-            todayDate.getTime() <= endNewYear.getTime()
-          ) {
-            layerPopup9('open');
-          }
-        }
-
-        //추석 공지 팝업(2021)
-        if (getCookie('chuseokPopup2021') != todayDate.getDate()) {
-          var startChuseok = new Date('2021/09/15 16:00:00'),
-            endChuseok = new Date('2021/09/21 23:59:59');
-          if (
-            todayDate.getTime() >= startChuseok.getTime() &&
-            todayDate.getTime() <= endChuseok.getTime()
-          ) {
-            layerPopup11('open');
-          }
-        }
-
-        //설 공지 팝업(2023)
-        if (getCookie('chuseokPopup2022') != todayDate.getDate()) {
-          var startChuseok = new Date('2023/01/13 14:00:00'),
-            endChuseok = new Date('2023/01/23 23:59:59');
-          if (
-            todayDate.getTime() >= startChuseok.getTime() &&
-            todayDate.getTime() <= endChuseok.getTime()
-          ) {
-            layerPopup11('open');
-          }
-        }
-
         /************************************************************************************************
          * footer 한섬 copyright 눌렀을때 height 값 다시 적용.
          ************************************************************************************************/
@@ -5421,188 +4954,6 @@ layer popup 형식의 confirm 창
           },
         });
       }
-
-      //홈탭 > 핸썸TV
-      function getMobileHomeTabTv() {
-        $.ajax({
-          type: 'GET',
-          url: '/ko/intro/getMobileHomeTabTv',
-          async: false,
-          success: function (data) {
-            var html = '';
-            for (var i = 0; i < data.length; i++) {
-              var menuName = data[i].menuName;
-              var mainImage = data[i].mainImage;
-              var linkUrl = data[i].linkUrl;
-
-              if (menuName != null && menuName != '') {
-                if (i == 0 && data[i].mainListPreviewImg != null) {
-                  var previewHtml = '';
-                  previewHtml +=
-                    '<img src="' +
-                    data[i].mainListPreviewImg +
-                    '" alt="미리보기 이미지">';
-                  if (data[i].mainListPreviewTxt != null) {
-                    previewHtml +=
-                      '<span class="tt">' +
-                      data[i].mainListPreviewTxt +
-                      '</span>';
-                  }
-                  if (data[i].mainTitle != null) {
-                    var befText = data[i].mainTitle;
-                    var aftText = '';
-                    aftText = escape(befText.replace(/(<([^>]+)>)/gi, ' '));
-                    $('#homeTabTvPreview').attr(
-                      'onclick',
-                      "GA_Event('메인','이벤트배너_하단배너', '" +
-                        aftText +
-                        "')"
-                    );
-                  }
-
-                  $('#homeTabTvPreview').html(previewHtml);
-                  $('#homeTabTvPreview').show();
-                }
-
-                html += '<div class="swiper-slide sbetween">';
-                html +=
-                  '    <div class="main202103-hstv-list-box radius-box shadow">';
-                html += '        <div class="img">';
-                if (linkUrl != '') {
-                  html += '            <a href="' + linkUrl + '"';
-                } else {
-                  html += '            <a href="/ko/live/liveTV"';
-                }
-
-                var kind = '';
-                if (menuName.indexOf('최신') > -1) {
-                  kind = '최신';
-                } else if (menuName.indexOf('인기') > -1) {
-                  kind = '인기';
-                } else if (menuName.indexOf('방송 전') > -1) {
-                  kind = 'NEXT';
-                } else if (menuName.indexOf('방송 중') > -1) {
-                  kind = 'LIVE';
-                }
-                if (data[i].mainTitle != null) {
-                  var befText = data[i].mainTitle;
-                  var aftText = '';
-                  aftText = escape(befText.replace(/(<([^>]+)>)/gi, ' '));
-                  html +=
-                    "onclick=\"GA_Event('메인','핸썸TV배너_" +
-                    kind +
-                    i +
-                    "', '" +
-                    aftText +
-                    '\');"';
-                }
-
-                html += '>';
-                if (i == 0 || i == 1) {
-                  html += '            <img src="' + mainImage + '" alt="">';
-                } else {
-                  html +=
-                    '            <img class="lazy_tv"  data-original="' +
-                    mainImage +
-                    '" alt="">';
-                }
-                html += '            </a>';
-                if (data[i].description != null && data[i].description != '') {
-                  html +=
-                    '            <p class="noti-txt">' +
-                    data[i].description +
-                    '</p>';
-                }
-                html += '        </div>';
-
-                if (data[i].mainTitle != null && data[i].mainTitle != '') {
-                  var befText = data[i].mainTitle;
-                  var aftText = '';
-                  aftText = escape(befText.replace(/(<([^>]+)>)/gi, ' '));
-
-                  html +=
-                    '    <div class="banner-con-type type-02">                            ';
-                  if (linkUrl != '') {
-                    html += '            <a href="' + linkUrl + '"';
-                  } else {
-                    html += '            <a href="/ko/live/liveTV"';
-                  }
-                  html +=
-                    "onclick=\"GA_Event('메인','핸썸TV배너_" +
-                    kind +
-                    i +
-                    "',  '" +
-                    aftText +
-                    '\');"';
-                  html += '>';
-                  if (data[i].mainTitle != null && data[i].mainTitle != '') {
-                    html +=
-                      '            <strong class="tt">' +
-                      data[i].mainTitle +
-                      '</strong>    ';
-                  }
-                  if (
-                    data[i].mainSubTitle != null &&
-                    data[i].mainSubTitle != ''
-                  ) {
-                    html +=
-                      '            <p class="sub-txt">' +
-                      data[i].mainSubTitle +
-                      '</p>      ';
-                  }
-                  html +=
-                    '        </a>                                                         ';
-                  html +=
-                    '    </div>                                                           ';
-                }
-                html += '    </div>';
-                html += '</div>';
-              }
-            }
-            $('#homeTabTvList').html(html);
-
-            var horiSlider = document.querySelector(
-              '.horiSlide4.swiper-container.standard-sp'
-            ).swiper;
-            if (typeof horiSlider != 'undefined') {
-              horiSlider.destroy();
-              $('.horiSlide4').css('height', 'calc(100% - 139px)');
-              $('.horiSlide4').css('margin', '0 -15px');
-            }
-
-            main_Home_Hori_Slide(4);
-
-            $('img.lazy_tv').lazyload({
-              placeholder: '/_ui/handsomemobile/images/common/no_img.gif', // 로딩이미지
-              event: 'imgLoad',
-              effect: 'fadeIn',
-              load: function () {
-                // 로딩시에 이벤트
-                $(this).attr('src', $(this).attr('data-original'));
-              },
-            });
-            $('img.lazy_tv').trigger('imgLoad');
-
-            $('#footer0').html($('#footer').html());
-
-            $('#footer0 a.f_info_viewer').on('click', function () {
-              $(this).toggleClass('active');
-              $(this)
-                .next()
-                .slideToggle('fast', function () {
-                  heightChange();
-                });
-              return false;
-            });
-            refreshYn = true;
-            refreshIdx = -1;
-          },
-          error: function (e) {
-            console.log(e);
-          },
-        });
-      }
-      <!-- //홈 탭 -->
 
       <!-- 신상품 / 베스트 -->
 
@@ -7005,96 +6356,6 @@ layer popup 형식의 confirm 창
               /* $(".next-button-ahead").on("click", function (){
               sendGaEvent = false;
           }); */
-
-              if (vIdx == 0 && sendGaEvent) {
-                //home일때,
-                var mainIdx = main1909HSwiper.activeIndex;
-                if (mainIdx != 5) {
-                  if (mainIdx == 0) {
-                    //메인배너
-                    try {
-                      ga('gp.send', 'pageview', {
-                        title: '메인>홈탭>메인배너', //가상페이지 화면명
-                        location:
-                          window.location.protocol +
-                          '//' +
-                          window.location.host +
-                          decodeURI(window.location.pathname) +
-                          '?main_tab=home', //가상페이지URL
-                        nonInteraction: true, //비 상호작용
-                      });
-                    } catch (e) {
-                      console.log(e);
-                    }
-                  } else if (mainIdx == 1) {
-                    //THE 매거진
-                    try {
-                      ga('gp.send', 'pageview', {
-                        title: '메인>홈탭>THE매거진', //가상페이지 화면명
-                        location:
-                          window.location.protocol +
-                          '//' +
-                          window.location.host +
-                          decodeURI(window.location.pathname) +
-                          '?main_tab=magazine', //가상페이지URL
-                        nonInteraction: true, //비 상호작용
-                      });
-                    } catch (e) {
-                      console.log(e);
-                    }
-                  } else if (mainIdx == 2) {
-                    //기획전
-                    try {
-                      ga('gp.send', 'pageview', {
-                        title: '메인>홈탭>기획전', //가상페이지 화면명
-                        location:
-                          window.location.protocol +
-                          '//' +
-                          window.location.host +
-                          decodeURI(window.location.pathname) +
-                          '?main_tab=edited', //가상페이지URL
-                        nonInteraction: true, //비 상호작용
-                      });
-                    } catch (e) {
-                      console.log(e);
-                    }
-                  } else if (mainIdx == 3) {
-                    //이벤트
-                    try {
-                      ga('gp.send', 'pageview', {
-                        title: '메인>홈탭>이벤트', //가상페이지 화면명
-                        location:
-                          window.location.protocol +
-                          '//' +
-                          window.location.host +
-                          decodeURI(window.location.pathname) +
-                          '?main_tab=event', //가상페이지URL
-                        nonInteraction: true, //비 상호작용
-                      });
-                    } catch (e) {
-                      console.log(e);
-                    }
-                  } else if (mainIdx == 4) {
-                    //핸썸TV
-                    try {
-                      ga('gp.send', 'pageview', {
-                        title: '메인>홈탭>핸썸TV', //가상페이지 화면명
-                        location:
-                          window.location.protocol +
-                          '//' +
-                          window.location.host +
-                          decodeURI(window.location.pathname) +
-                          '?main_tab=handsometv', //가상페이지URL
-                        nonInteraction: true, //비 상호작용
-                      });
-                    } catch (e) {
-                      console.log(e);
-                    }
-                  }
-                }
-
-                sendGaEvent = false;
-              }
             }
           },
           false
@@ -7137,55 +6398,6 @@ layer popup 형식의 confirm 창
             }
           }
         };
-
-        //자동로그인 팝업
-
-        var ssoUrl =
-          'https://sso.h-point.co.kr:29865' + '/co/setSsoReqJSONP.hd';
-        gfnSsoReqAjax(ssoUrl, hpAutoLogin);
-
-        //vip 채팅 서비스
-
-        if (getCookie('PW_ALARM') == '1') {
-          var lc = new layerConfirm(
-            '비밀번호를 변경한지 3개월이 지났습니다. 지금 비밀번호를 변경하시겠습니까? ',
-            '비밀번호 변경하러가기',
-            '닫기'
-          );
-          lc.confirmAction = function () {
-            //비밀번호 변경 알림 방어코딩
-            setCookie('PW_ALARM', '1', -1);
-            //비밀번호 변경 페이지로 이동
-            var callurl = '/ko/mypage/personInfomationChangePWCheck';
-
-            location.href = callurl;
-          };
-        }
-
-        // 안드로이드
-        try {
-          Android.callHideSplash();
-        } catch (e) {
-          console.log(e);
-        }
-
-        // ios
-        try {
-          webkit.messageHandlers.callHideSplash.postMessage('');
-        } catch (e) {
-          console.log(e);
-        }
-
-        $('.closeLayerPopup').on('click', function () {
-          if ($(this).hasClass('stoptoday')) {
-            //오늘은 그만보기
-            var todayDate = new Date();
-            var cookieId = $(this).parents('.popwrap_renewal1910').attr('id');
-            setCookie(cookieId, todayDate.getDate(), 1);
-          }
-          $(this).parents('.popwrap_renewal1910').css('display', 'none');
-          /* $("body").addClass("hold_body"); */
-        });
       });
       //상단바로가기 퀵버튼
       function goToTop() {
@@ -7225,7 +6437,7 @@ layer popup 형식의 confirm 창
           //홈탭 (메인배너, 더매거진, 기획전, tv, 이벤트)
           v_main = false;
           getMainBannerList(); //메인배너
-          getMagazineList(); //에디토리얼매거진
+          // getMagazineList(); //에디토리얼매거진
         } else if (idx == 1 && v_new) {
           //신상품
           v_new = false;
@@ -7236,11 +6448,6 @@ layer popup 형식의 confirm 창
           v_best = false;
           $('img.lazy_best').trigger('imgLoad');
           getCategoryList('false');
-        } else if (idx == 3 && v_multibrd) {
-          //편집샵
-          v_multibrd = false;
-          getMobileEdBrand();
-          getMobileEdPopularBrand();
         }
       }
 
@@ -7934,80 +7141,6 @@ layer popup 형식의 confirm 창
               }
             }
             fn_load(refreshIdx);
-          }
-        }
-      }
-
-      function setEcommerceData(idx, type, categoryCode) {
-        var listNm = '';
-        var position;
-        var prodList;
-
-        if (type == 'NEW') {
-          prodList = JSON.parse(
-            window.sessionStorage.getItem('main_new_ecommerceDataList')
-          );
-          if (categoryCode == 'WE') {
-            listNm += '메인_신상품_여성';
-
-            position = 4;
-          } else if (categoryCode == 'ME') {
-            listNm += '메인_신상품_남성';
-
-            position = 5;
-          }
-        } else if (type == 'BEST') {
-          prodList = JSON.parse(
-            window.sessionStorage.getItem('main_best_ecommerceDataList')
-          );
-          if (categoryCode == 'WE') {
-            listNm += '메인_베스트_여성';
-
-            position = 6;
-          } else if (categoryCode == 'ME') {
-            listNm += '메인_베스트_남성';
-
-            position = 7;
-          }
-        }
-
-        if (prodList != null && typeof prodList != undefined) {
-          if (prodList.length > 0) {
-            var prodInfo = prodList[idx];
-
-            if (listNm != '') {
-              dataLayer.push({
-                event: 'ga_event',
-                layerCategory: 'Ecommerce',
-                layerAction: 'Click',
-                layerLabel: undefined,
-                ecommerce: {
-                  currencyCode: 'KRW', //통화
-                  click: {
-                    actionField: { list: listNm }, //상품 리스트명
-                    products: [
-                      {
-                        id: prodInfo.baseProductCode, //상품코드
-                        name: prodInfo.productName, //상품명
-                        brand: prodInfo.brandName, //상품 브랜드
-                        category: '', //상품 카테고리
-                        position: position, //상품 위치
-                      },
-                    ],
-                  },
-                },
-              });
-
-              /* Ecommerce data 초기화
-          dataLayer에 남아 있는 경우에는 전자상거래 단계만을 위해 사용하는
-          필드들이 세팅되어 있으므로 undefined를 통해 초기화합니다. */
-              dataLayer.push({
-                layerCategory: undefined,
-                layerAction: undefined,
-                nonInteraction: false,
-                ecommerce: undefined,
-              });
-            }
           }
         }
       }

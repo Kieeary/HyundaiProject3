@@ -16,11 +16,9 @@ public class CartVO {
 	private String PStatus;
 	private String BName;
 	
-	private String PCColorCode; 
+	private String PColorName; 
 	private int PCPrice;
 	private String PSStock;
 	private String PSize;
-	private int like;
-	// private double accumRate;
-	
+	private String like;
 }

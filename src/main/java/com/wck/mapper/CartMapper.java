@@ -13,5 +13,6 @@ public interface CartMapper {
 	public List<CartVO> readCart(String mId);
 	public void updateCart(String mId, String pSId, int pQuantity);
 	public int deleteCart(String mId, String pSId);
+	public int deleteCartAll(String mId);
 	
 }

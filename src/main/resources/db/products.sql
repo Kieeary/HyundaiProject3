@@ -368,3 +368,15 @@ ALTER TABLE with_product
             ON DELETE CASCADE;
 
 
+CREATE TABLE PRODUCT_COLOR_INFO (
+    pcid       VARCHAR2(25 BYTE) NOT NULL ,
+    pImg       VARCHAR2(90 BYTE) NOT NULL,
+    colorName  VARCHAR2(30 BYTE) NOT NULL
+);
+
+ALTER TABLE PRODUCT_COLOR_INFO
+    ADD CONSTRAINT with_product_product_color_info_fk FOREIGN KEY ( pcid )
+        REFERENCES product_color ( pcid )
+            ON DELETE CASCADE;
+
+ALTER TABLE PRODUCT_COLOR_INFO ADD CONSTRAINT product_color_info_pk PRIMARY KEY ( pcid );

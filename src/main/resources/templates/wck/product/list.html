@@ -3745,18 +3745,18 @@
 						productlist += '<div class="info_cont">'
 						productlist += '<div class="color_chip">'
 
-						for (var n = 0; n < result[i].detailProduct.length; n++) {
-							console.log(result[i].detailProduct[n].pccolorcode)
-
-							productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid + `' , '` + result[i].pid + `' , '` + result[i].detailProduct[n].pcimg1 + `' , '` + i + `')">`
-							console.log(result[i]);
-							var tmp = result[i];
-
-
-							productlist += '<button class="chip on" ' +
-								'style="background:' + result[i].detailProduct[n].pccolorcode + ' url( "' + result[i].detailProduct[n].pcchipimg + ' "")' +
-								'></button></a>'
-						}
+							for(var n=0; n<result[i].detailProduct.length; n++){	
+								console.log(result[i].detailProduct[n].pccolorCode)
+								
+								productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `')">` 	
+								console.log(result[i]);
+								var tmp = result[i];
+							
+								
+								productlist += '<button class="chip on" ' +
+                						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url( "'  + result[i].detailProduct[n].pcchipImg + ' "")' +
+                						'></button></a>'
+                						}
 						productlist += '</div>'
 						productlist += '<p class="brand">' + result[i].bname + '</p>'
 						productlist += '<p class="name">' + result[i].pname + '</p>'

@@ -2,6 +2,8 @@ package com.wck.mapper;
 
 import java.util.List;
 
+import javax.xml.crypto.KeySelector.Purpose;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wck.domain.DetailProductVO;
 
 import com.wck.domain.Criteria;
+<<<<<<< HEAD
+import com.wck.domain.DetailProductVO;
+=======
 
+>>>>>>> 04320bf77c8512a0ed294be23855245148bc5233
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
@@ -52,10 +58,10 @@ public class ProductMapperTest {
 		List<ProductVO> vo = productMapper.getProducts(null, gd, null, null);
 		
 		for(ProductVO a : vo) {
-			if(a.getPid().equals("MM2C7KTO041H9E")) {
-			log.info("PID :" + a.getPid());
+			if(a.getPId().equals("MM2C7KTO041H9E")) {
+			log.info("PID :" + a.getPId());
 			for(DetailProductVO b : a.getDetailProduct()) {
-				log.info("PCID : " + b.getPcid());
+				log.info("PCID : " + b.getPCId());
 			}
 			}
 		}
@@ -86,5 +92,28 @@ public class ProductMapperTest {
 		boolean exist = productMapper.existLikeProduct(mId, pId);
 		log.info(exist);
 	}
+	
+//	author : 김한울
+//	purpose : 상품 color 옵션에 따른 사이즈 추출 (품절 제외)  
+	@Test
+	void getSizeSetTest() {
+		String pcId = "SJ2C9ASZ097W_OW";
+		List<String> sizeSet = productMapper.getSizeSet(pcId);
+		log.info("{}", sizeSet);
+	}
+	
+//	author : 김한울
+//	purpose : 상품 color 옵션 추출(PCID, color chip img, color code, color name)  
+	@Test
+	void getColorSetTest() {
+		String pId = "SJ2C9ASZ097W";
+		List<DetailProductVO> colorSet = productMapper.getColorSet(pId);
+		for (DetailProductVO color : colorSet) {
+			log.info("PCID > " + color.getPCId());
+			log.info("COLORCODE > " + color.getPCColorCode());
+			log.info("COLORNAME > " + color.getColorName());
+		}
+	}
+	
 
 }

@@ -365,7 +365,7 @@
                       let tags = psid;
                       let [pId, cTag, sTag] = psid.split('_');
                       let pcid = pId + '_' + cTag;
-                      console.log('pcid : '+pcid);
+                      // console.log('pcid : '+pcid);
 
                       $.ajax({
                         type: 'GET',
@@ -389,7 +389,7 @@
                               tag = i;
                             }
 
-                            str += `id="gl_rd_color_${idx}_${i}" name="gl_rd_color_${idx}" data-color="${colors.colorName}" onclick="setColor('${colors.pcid}',this);">
+                            str += `id="gl_rd_color_${idx}_${i}" name="gl_rd_color_${idx}" data-color="${colors.colorName}" onclick="setColor('${colors.pcid}', '${sTag}',this);">
                                     <label for="gl_rd_color_${idx}_${i}"></label>
                                     <span class="gl_color_val" style="background:${colors.pccolorCode} url(${colors.pcchipImg}/dims/resize/60x60) center /100% auto no-repeat">${colors.productCode}</span></li>`
                           }
@@ -401,9 +401,9 @@
                           // size option setting
                           printSize(pcid, sTag, result['sizeSet']);
                           
-                          let id = 'gl_rd_color_'+idx+'_'+tag;
-                          let name = 'gl_rd_color_'+idx;
-                          tmp = id;
+                          // let id = 'gl_rd_color_'+idx+'_'+tag;
+                          // let name = 'gl_rd_color_'+idx;
+                          // tmp = id;
                           // console.log('id : '+id);
                           // console.log('name : '+name);
 
@@ -431,6 +431,11 @@
                           // size option setting
                           var str1 = "";
                           var str2 = "";
+
+                          if(sizes.length === 0){
+                            $(".sod_label").html('품절');
+                          }
+
                           for (var i = 0; i < sizes.length; i++) {
                             let size = sizes[i];
                             // console.log(size);
@@ -445,15 +450,13 @@
 
                             str1 += "' title='"+size+"' data-value='"+pcid+"_"+size+"'>"+size+"</span>";
                             str2 += ">"+size+"</option>";
-
                           }
 
                           $(".sod_list").html(str1);
                           $(".sodsb").html(str2);
                     }
 
-                    function setColor(pcid, obj) {
-                      console.log('setColor 시작');
+                    function setColor(pcid, sTag, obj) {
 
                       let span = $(obj).siblings('span');
                       // span.css("background", "red");
@@ -463,11 +466,11 @@
 
                       let name = $(obj).attr('id');
 
-                      console.log('id : '+name);
+                      // console.log('id : '+name);
 
                       let colorName = $(obj).attr('data-color');
-                      console.log("컬러명 : "+colorName);
-                      console.log("PCID : "+pcid);
+                      // console.log("컬러명 : "+colorName);
+                      // console.log("PCID : "+pcid);
 
                       $(".sct_v").html(colorName);
 
@@ -478,7 +481,7 @@
                         url: '/wck/shoppingbag/getSizeOpt?pcid=' + pcid,
                         contentType: "application/json",
                         success: function (result) {
-                          printSize(pcid, '', result);
+                          printSize(pcid, sTag, result);
                         },
                         error: function() {
                           alert("에러 발생");

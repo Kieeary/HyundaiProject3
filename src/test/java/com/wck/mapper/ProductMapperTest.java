@@ -9,7 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wck.domain.Criteria;
+import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductCommonVO;
+import com.wck.domain.ProductVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -33,6 +35,20 @@ public class ProductMapperTest {
 	
 	
 	@Test
+	void getProductList() {
+		String gd = "we";
+		List<ProductVO> vo = productMapper.getProducts(null, gd, null, null);
+		
+		for(ProductVO a : vo) {
+			if(a.getPid().equals("MM2C7KTO041H9E")) {
+			log.info("PID :" + a.getPid());
+			for(DetailProductVO b : a.getDetailProduct()) {
+				log.info("PCID : " + b.getPCId());
+			}
+			}
+		}
+	}
+	
 	@Transactional
 	void deleteLikeProduct() {
 		String pId = "SH2CAKCD036M";
@@ -55,5 +71,28 @@ public class ProductMapperTest {
 		ProductCommonVO vo = productMapper.getProductDetailByPid(pId);
 		log.info(vo);
 	}
+
+//	author : 김한울
+//	purpose : 상품 color 옵션에 따른 사이즈 추출 (품절 제외)  
+	@Test
+	void getSizeSetTest() {
+		String pcId = "SJ2C9ASZ097W_OW";
+		List<String> sizeSet = productMapper.getSizeSet(pcId);
+		log.info("{}", sizeSet);
+	}
+	
+//	author : 김한울
+//	purpose : 상품 color 옵션 추출(PCID, color chip img, color code, color name)  
+	@Test
+	void getColorSetTest() {
+		String pId = "SJ2C9ASZ097W";
+		List<DetailProductVO> colorSet = productMapper.getColorSet(pId);
+		for (DetailProductVO color : colorSet) {
+			log.info("PCID > " + color.getPCId());
+			log.info("COLORCODE > " + color.getPCColorCode());
+			log.info("COLORNAME > " + color.getColorName());
+		}
+	}
+	
 
 }

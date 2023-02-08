@@ -68,29 +68,32 @@
 	
 
  	<resultMap type="product" id="productsMap">
- 		<id property="PID" column="PID" />
- 		<result property="PNAME" column="PNAME" />
-  		<result property="BNAME" column="BNAME" />
-   		<result property="PCPRICE" column="PNAME" />
-		<collection property="PCCOLORINFO" resultMap="pcColorInfo">
+ 		<id property="pid" column="PID" />
+ 		<result property="pname" column="PNAME" />
+  		<result property="bname" column="BNAME" />
+   		<result property="pcprice" column="PCPRICE" />
+   		<result property="pstatus" column="PSTATUS" />
+   		<result property="bno" column="BNO" />
+		<collection property="detailProduct" resultMap="pcColorInfo">
   		</collection> 	
  	</resultMap>
  	
  	<resultMap type="detailProduct" id= "pcColorInfo">
- 		<result property="PCID" column="PCID" />
- 		<result property="PCCOLORCODE" column="PCCOLORCODE" />
- 		<result property="PCIMG1" column="PCIMG1" />
- 		<result property="PCCHIPIMG" column="PCCHIPIMG" />
+ 		<result property="PCId" column="PCID" />
+ 		<result property="PCColorCode" column="PCCOLORCODE" />
+ 		<result property="PCImg1" column="PCIMG1" />
+ 		<result property="PCChipImg" column="PCCHIPIMG" />
+ 		<result property="ColorName" column="COLORNAME" />
  	</resultMap>
  	
 
 	<select id="getProducts" resultMap = "productsMap">
-		SELECT pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, 
-		pcolor.pcimg1, pcolor.pcprice,pcolor.pccolorcode, pcolor.pcchipimg
-		FROM product_common pcom
-		INNER JOIN product_category pcat
+        SELECT pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
+        pstock.psstock
+        from product_common pcom
+        INNER JOIN product_category pcat
 		ON pcom.pid = pcat.pid
-		INNER JOIN category c
+        INNER JOIN category c
 		<if test="gd != null">
 			ON c.depth1name = #{gd}
 			<if test=" sC!= null">
@@ -102,8 +105,11 @@
 		</if>
 		INNER JOIN product_color pcolor
 		ON pcolor.pid = pcom.pid
-		GROUP BY pcom.pid, pcom.pname, pcom.bname, 
-		pcolor.pcimg1, pcolor.pcprice, pcolor.pcid, pcolor.pccolorcode, pcolor.pcchipimg;
+        INNER JOIN product_stock pstock
+        ON pstock.pcid = pcolor.pcid
+        where psid like 'MM2C7KTO041H9E%'
+        group by pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
+        pstock.psstock
 	</select>
 	
 	
@@ -127,5 +133,15 @@
 		where mid = #{mId}
 	</select>
 	
+	<select id="getSizeSet" resultType="string">
+		SELECT PSIZE FROM PRODUCT_STOCK WHERE PSSTOCK != 0 AND PCID = #{pcId} ORDER BY PSIZE
+	</select>
+	
+	<select id="getColorSet" resultType="detailProduct">
+		SELECT pc.PCID, pc.PCCHIPIMG, pc.PCCOLORCODE, pci.COLORNAME 
+		FROM PRODUCT_COLOR pc, PRODUCT_COLOR_INFO pci 
+		WHERE pc.PCID = pci.PCID AND PID = #{pId}
+		ORDER BY pc.PCID DESC
+	</select>
 
 </mapper>

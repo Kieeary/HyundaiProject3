@@ -1,14 +1,13 @@
 package com.wck.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,15 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wck.domain.CartVO;
 import com.wck.domain.InsertMemberDTO;
-import com.wck.domain.MemberVO;
 import com.wck.domain.UpdateMemberDTO;
+import com.wck.security.domain.Account;
 import com.wck.service.CartService;
 import com.wck.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-
-import com.wck.security.domain.Account;
 
 @Controller
 @RequestMapping("/wck")
@@ -124,15 +121,16 @@ public class WckController {
 	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/shoppingbag")
 	public String cartForm(@AuthenticationPrincipal Account user, Model model) {
-		log.info("User info > "+user.getId());
+		model.addAttribute("mId", user.getId());
 		List<CartVO> prods = cartService.readCartList(user.getId()); 
-		log.info("Carts Prods # > " + prods.size());
 		model.addAttribute("prods", prods);
 		double gradeRate = memberService.getMileageAddRate(user.getId());
-		log.info("Mileage accrual rate > " + gradeRate);
 		model.addAttribute("rate", gradeRate);
+		
+		log.info("User info > "+user.getId());
+		log.info("Carts Prods # > " + prods.size());
+		log.info("Mileage accrual rate > " + gradeRate);
+		
 		return "wck/shoppingbag/cart";
 	}
-	
-
 }

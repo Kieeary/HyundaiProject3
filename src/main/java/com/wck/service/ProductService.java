@@ -1,11 +1,13 @@
 package com.wck.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
+import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductVO;
@@ -50,12 +52,20 @@ public class ProductService {
 	public List<ProductVO> productList(@Nullable String br, @Nullable String gd,
 										@Nullable String sC, @Nullable String tC) {
 		
-		List<ProductVO> productList = productMapper.productList(br, gd, sC, tC);
+		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
 		return productList;
 	}
 
 	public int getLikeProductCount(String id) {
 		return productMapper.getLikeProductCount(id);
+	}
+	
+	public List<String> getSizeSet(String pcId) {
+		return productMapper.getSizeSet(pcId);
+	}
+	
+	public List<DetailProductVO> getColorSet(String pId) {
+		return productMapper.getColorSet(pId);
 	}
 
 }

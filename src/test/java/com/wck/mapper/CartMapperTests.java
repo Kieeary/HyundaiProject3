@@ -43,7 +43,9 @@ public class CartMapperTests {
 		String mId = "7c-41f8-8c6a-739159990a8d";
 		List<CartVO> prods = cartMapper.readCart(mId);
 		for (CartVO cartVO : prods) {
-			log.info(cartVO);
+			log.info(cartVO.getBName());
+			log.info(cartVO.getPName());
+			log.info(cartVO.getPColorName());
 		}
 	}
 	

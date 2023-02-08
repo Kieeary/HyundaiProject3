@@ -115,6 +115,139 @@
             function continueUrl() {
               location.href = '/wck/home/';
             }
+
+            $(document).ready(function () {
+              // checkobox initialize
+              const checkboxes = document.getElementsByName('cartlist');
+              checkboxes.forEach(checkbox => { checkbox.checked = false; });
+
+            });
+
+          </script>
+
+          <script>
+            function deleteBtnEvent(productCode) {
+              var la = new layerConfirm(
+                '선택하신 상품을 쇼핑백에서 삭제하시겠습니까?',
+                '확인',
+                '취소'
+              );
+              la.confirmAction = function () {
+                console.log(productCode + " 상품 장바구니 삭제");
+                // 확인 호출 펑션
+
+                // console.log('사용자 : '+ '[[${mId}]]');
+                // // console.log("상품삭제시 보낼 주소 : /wck/shoppingbag/deleteprod?psid=" + productCode);
+                // var url = '/wck/shoppingbag/deleteProd?mid=[[${mId}]]&psid='+productCode;
+                // console.log(url);
+
+                $.ajax({
+                  type: 'GET',
+                  url: '/wck/shoppingbag/deleteProd?mid=[[${mId}]]&psid=' + productCode,
+                  success: function () {
+                    location.href = '/wck/shoppingbag';
+                  }
+                });
+
+              };
+            }
+
+            function addWishList(productCode, obj) {
+            	let pid = productCode.split("_")[0];
+            	console.log(pid);
+            	$.ajax({
+            		url : '/api/member/like/'+pid,
+            		method : 'post',
+            		success : function(data){
+            			console.log(data);
+                        console.log('상품 코드 : ' + productCode);
+                        if ($(obj).hasClass("icon_btn_on") === true) {
+                          var la = new layerAlert('위시리스트에서 삭제했습니다.');
+                          $(obj).removeClass("icon_btn_on");
+                          console.log("이미 좋아요");
+                        } else {
+                          var la = new layerAlert('위시리스트에 등록되었습니다.');
+                          $(obj).addClass("icon_btn_on");
+                          console.log("좋아요 등록 완료");
+                        }
+            		},
+            		error : function(e){
+            			var la = new layerAlert('에러 발생');
+            		}
+            	})
+            }
+
+            function checkTotalPrice(obj) {
+              if ($(obj).attr('data-soldout') == 'N') {
+                console.log('품절 아님. 판매 중');
+              } else {
+                console.log('품절');
+              }
+              // console.log($(obj).attr('data-soldout'));
+              // layerAlert('해당사이즈는 품절입니다.');
+            }
+
+            $(document).ready(function () {
+              $('.gl_item input[name=cartlist]').each(function () {
+                if ($(this).attr('data-soldout') == 'Y') {
+                  $(this).prop('disabled', true);
+                  $(this)
+                    .parents('.gl_item')
+                    .find('.gl_status .icon_soldout')
+                    .attr('style', 'display:block !important');
+                  $(this).addClass('gl_status_soldout');
+                }
+              });
+            });
+
+            function selectRemove() {
+              var la = new layerAlert('선택하신 상품을 쇼핑백에서 삭제하시겠습니까?', '확인', '취소');
+              la.confirmAction = function () {
+                psids = [];
+                $("input:checkbox[name='cartlist']").each(function (idx) {
+                  if ($(this).is(":checked") == true) {
+                    psids.push($(this).data('pk'));
+                  };
+                })
+
+                $.ajax({
+                  type: 'GET',
+                  url: '/wck/shoppingbag/deleteProds?mid=[[${mId}]]&psids=' + psids,
+                  success: function () {
+                    location.href = '/wck/shoppingbag';
+                  }
+                });
+              }
+            };
+
+            function outOfStockRemove() {
+              if ($('.gl_status_soldout').length < 1) {
+                layerAlert('품절상품이 없습니다');
+                return false;
+              }
+
+              var la = new layerAlert('품절상품이 모두 쇼핑백에서 삭제됩니다. 계속하시겠습니까?', '확인', '취소');
+              la.confirmAction = function () {
+                psids = [];
+                $("input:checkbox[name='cartlist']").each(function (idx) {
+                  if ($(this).data('soldout') == 'Y') {
+                    psids.push($(this).data('pk'));
+                  };
+                })
+
+                $.ajax({
+                  type: 'GET',
+                  url: '/wck/shoppingbag/deleteProds?mid=[[${mId}]]&psids=' + psids,
+                  success: function () {
+                    location.href = '/wck/shoppingbag';
+                  }
+                });
+
+              }
+            }
+
+
+
           </script>
 
           <!-- ########## Goods list start ########## -->
@@ -140,55 +273,7 @@
               </li>
             </th:block>
 
-            <script>
-              function deleteBtnEvent(productCode) {
-                var la = new layerConfirm(
-                  '선택하신 상품을 쇼핑백에서 삭제하시겠습니까?',
-                  '확인',
-                  '취소'
-                );
-                la.confirmAction = function () {
-                  console.log(productCode + " 상품 장바구니 삭제");
-                  // 확인 호출 펑션
-                  // aJax 처리 필요
-                };
-              }
 
-              function addWishList(productCode, obj) {
-                console.log('상품 코드 : ' + productCode);
-                if ($(obj).hasClass("icon_btn_on") === true) {
-                  var la = new layerAlert('위시리스트에서 삭제했습니다.');
-                  $(obj).removeClass("icon_btn_on");
-                  console.log("이미 좋아요");
-                } else {
-                  var la = new layerAlert('위시리스트에 등록되었습니다.');
-                  $(obj).addClass("icon_btn_on");
-                  console.log("좋아요 등록 완료");
-                }
-              }
-
-              function checkTotalPrice(obj) {
-                if ($(obj).attr('data-soldout') == 'N') {
-                  console.log('품절 아님. 판매 중');
-                } else {
-                  console.log('품절');
-                }
-                // console.log($(obj).attr('data-soldout'));
-                // layerAlert('해당사이즈는 품절입니다.');
-              }
-
-              $(document).ready(function () {
-                $('.gl_item input[name=cartlist]').each(function () {
-                  if ($(this).attr('data-soldout') == 'Y') {
-                    $(this).prop('disabled', true);
-                    $(this)
-                      .parents('.gl_item')
-                      .find('.gl_status .icon_soldout')
-                      .attr('style', 'display:block !important');
-                  }
-                });
-              });
-            </script>
 
             <th:block th:if="${#lists.size(prods)!=0}" th:each="prod, i : ${prods}">
               <li>
@@ -197,8 +282,8 @@
 
                   <!-- ########## Goods sub CheckBox start ########## -->
                   <div class="check_stl">
-                    <input type="checkbox" th:id="'gl_check_'+${i.index}" name="cartlist" data-pk="11136041156652"
-                      data-division="" data-deliverykind="" th:value="${prods.size()}" th:data-soldout="${prod.PStatus}"
+                    <input type="checkbox" th:id="'gl_check_'+${i.index}" name="cartlist" th:data-pk="${prod.PSId}"
+                      data-division="" data-deliverykind="" th:value="${i.index}" th:data-soldout="${prod.PStatus}"
                       onclick="checkTotalPrice(this);" />
                     <label th:for="'gl_check_'+${i.index}"></label>
                   </div>
@@ -217,7 +302,7 @@
                     <!-- goods_list_item s -->
                     <!-- 활성화 : gl_item에 품절상품 : gl_status_soldout 클래스 추가/삭제 -->
                     <li>
-                      <a href="javascript:;" class="icon_btn btn_gl_like"
+                      <a href="javascript:;" th:class="'icon_btn btn_gl_like '+${prod.like}"
                         th:onclick="addWishList([[${prod.PSId}]], this);"><span>좋아요</span></a>
                     </li>
                     <li>
@@ -253,7 +338,7 @@
                       <li>
                         <div class="gl_tit">옵션수량</div>
                         <div class="gl_con">
-                          [[${prod.PCColorCode}]]&nbsp;<span class="and_line">/</span> [[${prod.PSize}]] /
+                          [[${prod.PColorName}]]&nbsp;<span class="and_line">/</span> [[${prod.PSize}]] /
                           [[${prod.PQuantity}]]개
                         </div>
                       </li>
@@ -265,44 +350,125 @@
                       </li>
                     </ul>
                     <a href="javascript:void(0);" class="border_btn btn_option_edit"
+                      th:onclick="getOpts([[${prod.PSId}]]);"
                       th:id="'optOpenLayer^'+${i.index}+'^'+CM2D1WOT105W_LE"><span>변경</span></a>
                   </div>
 
+                  <script>
+                    function getOpts(psid) {
+                      let csrfHeaderName = "${_csrf.headerName}";
+                      let csrfTokenValue = "${_csrf.token}";
+
+                      let tags = psid;
+                      let [pId, cTag, sTag] = psid.split('_');
+                      let pcid = pId + '_' + cTag;
+
+                      $.ajax({
+                        type: 'GET',
+                        url: '/wck/shoppingbag/getCurrentOpt?pcid=' + pcid,
+                        contentType: "application/json",
+                        success: function (result) {
+                          // color option setting
+
+                          var str = "";
+                          for (var i = 0; i < result['colorSet'].length; i++) {
+                            let colors = result['colorSet'][i];
+                            // console.log('컬러명 : '+colors.colorName);
+                            // console.log('컬러칩 : '+colors.pcchipImg);
+                            // console.log('컬러코드 : '+colors.pccolorCode);
+
+                            str += "<li><input type='radio'";
+                              
+                            if(i === 0) str += "checked='checked' ";
+
+                            str += "id='gl_rd_color_[[${i.index-1}]]_"+i+"' name='gl_rd_color_"+i+"' onclick='setOptions(this, '2', 'OB2C7KCD762WP2_ZB', 'style');'>"
+                              +"<label for='gl_rd_color_[[${i.index-1}]]_"+i+"'></label>"
+                              +"<span class='gl_color_val' style='background:"+colors.pccolorCode+" url("+colors.pcchipImg+"/dims/resize/60x60) center /100% auto no-repeat'>"
+                                +colors.pccolorCode+"</span></li>";
+
+                            // str += "id='gl_rd_color_[[${i.index-1}]]_"+i+"'";
+
+                            // if(i === 0) str += " class = 'on' ";
+
+                            // str += " name='gl_rd_color_"+i+"' onclick='setOptions(this, '2', 'OB2C7KCD762WP2_ZB', 'style');'>"
+                            //   +"<label for='gl_rd_color_[[${i.index-1}]]_"+i+"'></label>"
+                            //   +"<span class='gl_color_val' style='background:"+colors.pccolorCode+" url("+colors.pcchipImg+"/dims/resize/60x60) center /100% auto no-repeat'>"
+                            //     +colors.pccolorCode+"</span></li>";
+                          }
+
+                          $(".btn_color_wrap").html(str);
+
+                          $(".sct_v").html(result['colorSet'][0]['colorName']);
+
+                          console.log('사이즈 : '+sTag);
+
+                          // <span class="sod_option " title="90" data-value="OB2C7KCD762WP2_IV_90">90</span>
+                          // <option value="OB2C7KCD762WP2_IV_90" selected="">90</option>
+
+                          // size option setting
+                          var str1 = "<span class='sod_list'>";
+                          var str2 = "";
+                          for (var i = 0; i < result['sizeSet'].length; i++) {
+                            let size = result['sizeSet'][i];
+                            // console.log(size);
+                            str1 += "<span class='sod_option ";
+                            str2 += "<option value='"+pcid+"_"+size+"' ";
+
+                            if(size == sTag) {
+                              str1 += "selected active ";
+                              str2 += "selected='selected'";
+                            }
+
+                            str1 += "title='"+size+"' data-value='"+pcid+"_"+size+"'"+size+"</span>";
+                            str2 += ">"+size+"</option>";
+
+                          }
+
+                          str1 += "</span>";
+                          
+
+                          $(".sod_list_wrapper").html(str1);
+                          $(".sodsb").html(str2);
+
+                        },
+                        error: function() {
+                          alert("에러 발생");
+                        }
+                      })
+
+                      // <div class="desc_box">[SJSJ]스퀘어 토 레더 앵클 부츠의 재고수량은 10개입니다. 다시 입력해 주시기 바랍니다.</div>
+                      // <div class="desc_box">[브랜드]상품이름의 재고수량은 10개입니다. 다시 입력해 주시기 바랍니다.</div>
+
+
+
+
+                    }
+                  </script>
+
                   <!-- ########## 제품 옵션 변경 가능 정보 ########## -->
-                  <div class="gl_tgl gl_tgl_option" id="pt_list_2" style="display: none;"><!-- color_size_price -->
+                  <div class="gl_tgl gl_tgl_option" th:id="'pt_list_'+${i.index}" style="display: none;">
                     <ul class="gl_edit">
                       <li>
                         <div class="gl_tit">색상</div>
                         <ul class="gl_con btn_color_wrap">
-                          <li>
-                            <input type="radio" id="gl_rd_color_02_02" name="gl_rd_color_02"
-                              onclick="setOptions(this, '2', 'OB2C7KCD762WP2_ZB', 'style');">
-                            <label for="gl_rd_color_02_02"></label>
-                            <span class="gl_color_val"
-                              style="background:#000000 url('http://newmedia.thehandsome.com/OB/2C/FW/OB2C7KCD762WP2_ZB_C01.jpg/dims/resize/60x60') center /100% auto no-repeat">#000000</span>
-                          </li>
-                          <li>
-                            <input type="radio" checked="checked" id="gl_rd_color_02_01" name="gl_rd_color_02"
-                              onclick="setOptions(this, '2', 'OB2C7KCD762WP2_IV', 'style');">
-                            <label for="gl_rd_color_02_01"></label>
-                            <span class="gl_color_val"
-                              style="background:#fbfaea url('http://newmedia.thehandsome.com/OB/2C/FW/OB2C7KCD762WP2_IV_C01.jpg/dims/resize/60x60') center /100% auto no-repeat">#fbfaea</span>
-                          </li>
                         </ul>
                         <div class="gl_con selected_color_txt">
-                          <span class="sct_v">IVORY</span>
+                          <span class="sct_v"></span>
                         </div>
                       </li>
                       <li>
                         <div class="gl_tit">사이즈</div>
                         <div class="gl_con">
                           <span class="sod_select  touch" tabindex="0" data-cycle="false" data-links="false"
-                            data-links-external="false" data-placeholder-option="false" data-filter=""><span
-                              class="sod_label">90</span><span class="sod_list_wrapper"><span class="sod_list"><span
-                                  class="sod_option  selected active " title="90"
-                                  data-value="OB2C7KCD762WP2_IV_90">90</span><span class="sod_option  disabled "
-                                  title="95 (품절)" data-value="">95 (품절)</span></span></span><select id="gl_slr_size_2"
-                              name="gl_slr_size_2" class="sodsb" onchange="setOptions(this, '2', '', 'size');">
+                            data-links-external="false" data-placeholder-option="false" data-filter="">
+                            <span class="sod_label">[[${prod.PSize}]]</span>
+                            <span class="sod_list_wrapper">
+                              <span class="sod_list">
+                                <span class="sod_option  selected active " title="90" data-value="OB2C7KCD762WP2_IV_90">90</span>
+                                <span class="sod_option  disabled " title="95 (품절)" data-value="">95 (품절)</span>
+                              </span>
+                            </span>
+                            <select id="gl_slr_size_2" name="gl_slr_size_2" class="sodsb" onchange="setOptions(this, '2', '', 'size');">
                               <option value="OB2C7KCD762WP2_IV_90" selected="">90</option>
                               <option disabled="disabled" value="">95 (품절)</option>
                             </select></span>
@@ -364,15 +530,12 @@
                   </li>
                 </ul>
               </div>
-              <!-- 수정(46107) : 20180709 e -->
 
               <div class="btn_wrap btn_wrap_div2">
                 <a href="#none" class="btnstl3 border_btn_gray gleb_soldout_del" onclick="outOfStockRemove()"><span>품절상품
                     삭제</span></a><!-- 품절상품삭제 -->
                 <a href="#none" class="btnstl3 border_btn_gray gleb_select_del" onclick="selectRemove();"><span>선택상품
                     삭제</span></a><!-- 선택상품삭제 -->
-                <!-- 쇼핑 계속하기 버튼 s -->
-                <!-- 쇼핑 계속하기 버튼 e -->
               </div>
               <div class="btn_wrap btn_wrap btn_wrap_div1" id="orderButtonGroup">
                 <a href="javascript:checkoutPage('checkout');" class="btnstl3 solid_btn_blk gleb_order"><span>선택상품
@@ -1079,29 +1242,7 @@
                     </ul>
 
                     <div style="margin: 40px auto 0px">
-                      <!-- <img
-                      src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/Spinner_1s_105px.png"
-                      alt="loading" id="imgLoadingAddtocart200218"
-                      style="display:none;width:32px;height:32px;margin: 0px
-                      auto 0px auto;">
-                      <p style="color: #222; text-align: center" ="">
-                        <span
-                          style="
-                            display: block;
-                            margin-top: 15px;
-                            font-size: 16px;
-                            font-weight: bold;
-                            text-align: center;
-                          "
-                          >처리중입니다</span
-                        >
-                      </p>
-
-                      <p></p> -->
                     </div>
-
-
-
 
                   </div>
 

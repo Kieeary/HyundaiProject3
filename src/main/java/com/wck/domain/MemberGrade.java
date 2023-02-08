@@ -30,7 +30,7 @@ public enum MemberGrade {
 	}
 	
 	public static MemberGrade of(int gradeFlag) {
-		if(gradeFlag < 1 || gradeFlag > 3)
+		if(gradeFlag < 1 || gradeFlag > GradeArr.length)
 			throw new IllegalArgumentException("Invalid gradeFlag : " + gradeFlag);
 		return GradeArr[gradeFlag - 1];
 	}

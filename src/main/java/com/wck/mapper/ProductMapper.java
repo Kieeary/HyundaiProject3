@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import com.wck.domain.Criteria;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
+import com.wck.domain.ProductInfoVO;
+
 import org.springframework.lang.Nullable;
 
 import com.wck.domain.ProductVO;
@@ -23,6 +25,7 @@ public interface ProductMapper {
 	public List<ProductVO> getProducts(@Nullable String br, @Nullable String gd, 
 					@Nullable String sC, @Nullable String tC); 
 
+	public ProductInfoVO getProductInfo(String pcid, String pid);
 
 	public int deleteLikeProduct(String mId, String pId); 
 	

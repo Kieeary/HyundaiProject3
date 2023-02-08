@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.wck.domain.Criteria;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
+import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
 import com.wck.mapper.ProductMapper;
 
@@ -53,6 +54,11 @@ public class ProductService {
 
 	public int getLikeProductCount(String id) {
 		return productMapper.getLikeProductCount(id);
+	}
+	
+	public ProductInfoVO getProductInfo(String pcid, String pid) {
+		
+		return productMapper.getProductInfo(pcid, pid);
 	}
 
 }

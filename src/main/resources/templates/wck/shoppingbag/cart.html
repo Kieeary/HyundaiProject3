@@ -360,7 +360,7 @@
                       let csrfHeaderName = "${_csrf.headerName}";
                       let csrfTokenValue = "${_csrf.token}";
 
-                      console.log('장바구니 순서 : '+idx);
+                      // console.log('장바구니 순서 : '+idx);
 
                       let tags = psid;
                       let [pId, cTag, sTag] = psid.split('_');
@@ -378,23 +378,20 @@
                           let tag = 0;
                           for (var i = 0; i < result['colorSet'].length; i++) {
                             let colors = result['colorSet'][i];
-                            console.log('color 요소 : '+colors.pcid);
+                            // console.log('color 요소 : '+colors.pcid);
                             // console.log('컬러명 : '+colors.colorName);
                             // console.log('컬러칩 : '+colors.pcchipImg);
                             // console.log('컬러코드 : '+colors.pccolorCode);
 
-                            str += "<li><input type='radio'";
+                            str += `<li><input type='radio'`;
                               
                             if(pcid === colors.pcid) {
                               tag = i;
-                              // console.log(pcid === colors.pcid);
-                              // str += " checked='checked' ";
                             }
 
-                            str += "id='gl_rd_color_"+idx+"_"+i+"' name='gl_rd_color_"+idx+"' data-color='"+colors.colorName+"' onclick='setColor(this);'>"
-                              +"<label for='gl_rd_color_"+idx+"_"+i+"' id='"+i+"c'></label>"
-                              +"<span class='gl_color_val' style='background:"+colors.pccolorCode+" url("+colors.pcchipImg+"/dims/resize/60x60) center /100% auto no-repeat'>"
-                                +colors.pccolorCode+"</span></li>";
+                            str += `id="gl_rd_color_${idx}_${i}" name="gl_rd_color_${idx}" data-color="${colors.colorName}" onclick="setColor('${colors.pcid}',this);">
+                                    <label for="gl_rd_color_${idx}_${i}"></label>
+                                    <span class="gl_color_val" style="background:${colors.pccolorCode} url(${colors.pcchipImg}/dims/resize/60x60) center /100% auto no-repeat">${colors.productCode}</span></li>`
                           }
 
                           $(".btn_color_wrap").html(str);
@@ -455,7 +452,7 @@
                           $(".sodsb").html(str2);
                     }
 
-                    function setColor(obj) {
+                    function setColor(pcid, obj) {
                       console.log('setColor 시작');
 
                       let span = $(obj).siblings('span');
@@ -470,25 +467,24 @@
 
                       let colorName = $(obj).attr('data-color');
                       console.log("컬러명 : "+colorName);
+                      console.log("PCID : "+pcid);
 
                       $(".sct_v").html(colorName);
 
+                      // 특정 컬러 size 리스트 받기
 
-                      // $("#"+ii+"c").css("border", "double");
-                      // $("#"+ii+"c").attr("style", "border: double !important");
-                      // document.getElementById(ii+"c").style.border="double";
-                      
+                      $.ajax({
+                        type: 'GET',
+                        url: '/wck/shoppingbag/getSizeOpt?pcid=' + pcid,
+                        contentType: "application/json",
+                        success: function (result) {
+                          printSize(pcid, '', result);
+                        },
+                        error: function() {
+                          alert("에러 발생");
+                        }
+                      })
 
-
-                      // $("#"+ name).attr("checked", true);
-
-
-
-                      // $(obj).attr("checked", true);
-
-
-                      // $(obj).addClass('on');
-                      // $(obj).siblings('a').removeClass('on');
 
                     }
 

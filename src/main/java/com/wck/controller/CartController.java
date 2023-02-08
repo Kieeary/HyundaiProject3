@@ -70,5 +70,14 @@ public class CartController {
 		datas.put("sizeSet", sizeSet);			
 		return new ResponseEntity<>(datas, HttpStatus.OK);
 	}
+	
+	@GetMapping(value = "/getSizeOpt", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<String>> getSizeOpt(@RequestParam("pcid") String pcId) {
+		log.info("PCID > " + pcId);
+		List<String> sizeSet = productService.getSizeSet(pcId);
+		log.info("결과 데이터 : "+sizeSet.size());
+		return new ResponseEntity<>(sizeSet, HttpStatus.OK);
+	}
 }
 	

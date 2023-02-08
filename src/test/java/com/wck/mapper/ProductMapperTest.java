@@ -12,11 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wck.domain.DetailProductVO;
 
 import com.wck.domain.Criteria;
-<<<<<<< HEAD
-import com.wck.domain.DetailProductVO;
-=======
-
->>>>>>> 04320bf77c8512a0ed294be23855245148bc5233
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductVO;

@@ -70,7 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 			// url 경로 접근 권한 체크
 			.authorizeHttpRequests()
-			.antMatchers("/wck/mypage").hasRole("USER")
 			.anyRequest().permitAll()
 		.and()
 			// form login 방식

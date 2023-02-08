@@ -254,7 +254,6 @@
               wishcodes = wishcodes.substring(1);
             }
             
-            console.log('wishcodes : ', wishcodes);
 
             if (chkedcnt === 0) {
               wishtoorderproc = false;
@@ -317,6 +316,7 @@
         	  })
         	  
         	  // 첫번째 color size 셋팅
+        	  // #7 -> 최대 수량을 의미함
         	  let initSize = '';
         	  $(data.colors[0].stocks).each(function(idx, s){
         		  initSize += `<option value="${s.psize}#7#false">${s.psize}</option>`
@@ -368,7 +368,6 @@
         	  $('.hs_btn_color_chip .chip').click(function(){
         		  $(this).siblings().removeClass('on');
         		  $(this).addClass('on');
-        		  console.log($(this).data('value'))
         		  $(this).closest('.wish_order_box').find('img').attr('src', $(this).data('prodimg'));
         		  
         		  let select = $(this).closest('.wish_order_box').find('.btnstl_size select');
@@ -609,10 +608,6 @@
 		           qty += ","+tempQty;
 		       }
 		       
-		       console.log("productCode ",productCode);
-		       console.log("size ",size);
-		       console.log("qty ",qty);
-		       console.log("promotionYn ",promotionYn);
 		       
 		       
 		   });
@@ -659,14 +654,6 @@
 					var la = new layerAlert("해당 상품의 재고 수량이 충분하지 않습니다. ");
 					break;
 				}
-		
-		/*		
-				$("form#addToCartForm input[name='productCodePost']").val(prodCode);
-				$("form#addToCartForm input[name='stockCnt']").val(details[1]);
-				$("form#addToCartForm input[name='qty']").val(qtys[i]);
-				$("form#addToCartForm input[name='onlyStorePickup']").val(details[2]);
-				$("form#addToCartForm input[name='CSRFToken']").val("1c70f754-643f-405f-b686-164b4fb656cd");
-		*/		
 		
 		        var chkPromtion = false;
 				if(promotionProducts[i] == true || promotionProducts[i] == "true"){
@@ -722,6 +709,10 @@
 		}
 		async function addToCart(cnt, productCode, stockCnt, qty, onlyStockPiciup, lastYn) {
 		
+			console.log("productCode : "+ productCode);
+			console.log("stockCnt : "+ stockCnt);
+			console.log("qty : "+ qty);
+
 			$("form#addToCartForm input[name='productCodePost']").val(productCode);
 			$("form#addToCartForm input[name='stockCnt']").val(stockCnt);
 			$("form#addToCartForm input[name='qty']").val(qty);
@@ -730,20 +721,24 @@
 		
 		//setTimeout(function() {
 			$.ajax({
-				url		: "/ko/shoppingbag/add",
+				url		: "/api/cart/add",
 				type	: "POST",
 				async	: false,
-				data	: $("form#addToCartForm").serialize(),
+				data : JSON.stringify({
+					qty : qty,
+					psId : productCode
+				}),
+				 contentType: 'application/json; charset=utf-8',
+				//data	: $("form#addToCartForm").serialize(),
 				success	: function(data) {
+					console.log(data);
 					var errorMsg = data;
 					if (errorMsg === null || errorMsg === "") {
 						if ( lastYn === "Y" ) {
-						    GA_Event('마이하트', '하단 고정 버튼', '쇼핑백담기');
-						    setEcommerceData2();
 							var lc = new layerConfirm("쇼핑백에 담겼습니다.<br />확인하시겠습니까?", "쇼핑백 바로가기", "취소");
 							lc.cancleAction  = function(){
 								$(".lyrpp_top .lyrpp_close.btn_lyrpp_close").trigger("click");
-								myWishListProd(1);
+								//myWishListProd(1);
 								window.location.reload();
 							}						
 							lc.confirmAction = function(){

@@ -19,8 +19,8 @@
  	</resultMap>
 
 	<insert id="insertCart">
-		INSERT INTO CART (MID, PSID, PQUANTITY, CDATE)
-		VALUES (#{mId}, #{pSId}, #{pQuantity}, SYSDATE)
+		INSERT INTO CART (MID, PSID, PQUANTITY)
+		VALUES (#{mId}, #{pSId}, #{pQuantity})
 	</insert>
 	
 	<select id="countCart" resultType="int">
@@ -39,7 +39,8 @@
 	</select>
 	
 	<update id="updateCart">
-		UPDATE CART SET PQUANTITY = #{pQuantity}, CDATE = SYSDATE WHERE PSID = #{pSId} AND MID = #{mId}
+		UPDATE CART SET PQUANTITY = #{pQuantity} 
+		WHERE PSID = #{pSId} AND MID = #{mId}
 	</update>
 	
 	<delete id="deleteCart">

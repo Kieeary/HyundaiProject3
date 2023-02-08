@@ -19,6 +19,19 @@
     .check_stl input[type="checkbox"]+label:before {
       top: -4px;
     }
+
+    .btn_color_wrap li input[type="radio"]:checked + label + span:after {
+    content: "";
+    display: block;
+    width: calc(100% + 2px);
+    height: 2px;
+    position: absolute;
+    bottom: -6px;
+    left: -1px;
+    background-color: #f1f1f1;
+  }
+
+    
   </style>
 
   <div id="mapleMainPopwrap" style="
@@ -219,7 +232,7 @@
                 psids = [];
                 $("input:checkbox[name='cartlist']").each(function (idx) {
                   if ($(this).data('soldout') == 'Y') {
-                    psids.push($(this).data('pk'));
+                    psids.push($(this).data('pks'));
                   };
                 })
 
@@ -270,7 +283,7 @@
 
                   <!-- ########## Goods sub CheckBox start ########## -->
                   <div class="check_stl">
-                    <input type="checkbox" th:id="'gl_check_'+${i.index}" name="cartlist" th:data-pk="${prod.PSId}"
+                    <input type="checkbox" th:id="'gl_check_'+${i.index}" name="cartlist" th:data-pks="${prod.PSId}"
                       data-division="" data-deliverykind="" th:value="${i.index}" th:data-soldout="${prod.PStatus}"
                       onclick="checkTotalPrice(this);" />
                     <label th:for="'gl_check_'+${i.index}"></label>
@@ -338,85 +351,71 @@
                       </li>
                     </ul>
                     <a href="javascript:void(0);" class="border_btn btn_option_edit"
-                      th:onclick="getOpts([[${prod.PSId}]]);"
-                      th:id="'optOpenLayer^'+${i.index}+'^'+CM2D1WOT105W_LE"><span>변경</span></a>
+                      th:onclick="getOpts(this, [[${prod.PSId}]], [[${i.index}]]);"
+                      th:id="'optOpenLayer^'+${i.index}+'^[[${prod.PSId}]]'"><span>변경</span></a>
                   </div>
 
                   <script>
-                    function getOpts(psid) {
+                    function getOpts(obj, psid, idx) {
                       let csrfHeaderName = "${_csrf.headerName}";
                       let csrfTokenValue = "${_csrf.token}";
+
+                      console.log('장바구니 순서 : '+idx);
 
                       let tags = psid;
                       let [pId, cTag, sTag] = psid.split('_');
                       let pcid = pId + '_' + cTag;
+                      console.log('pcid : '+pcid);
 
                       $.ajax({
                         type: 'GET',
                         url: '/wck/shoppingbag/getCurrentOpt?pcid=' + pcid,
                         contentType: "application/json",
                         success: function (result) {
-                          // color option setting
 
+                          // color option setting
                           var str = "";
+                          let tag = 0;
                           for (var i = 0; i < result['colorSet'].length; i++) {
                             let colors = result['colorSet'][i];
+                            console.log('color 요소 : '+colors.pcid);
                             // console.log('컬러명 : '+colors.colorName);
                             // console.log('컬러칩 : '+colors.pcchipImg);
                             // console.log('컬러코드 : '+colors.pccolorCode);
 
                             str += "<li><input type='radio'";
                               
-                            if(i === 0) str += "checked='checked' ";
+                            if(pcid === colors.pcid) {
+                              tag = i;
+                              // console.log(pcid === colors.pcid);
+                              // str += " checked='checked' ";
+                            }
 
-                            str += "id='gl_rd_color_[[${i.index-1}]]_"+i+"' name='gl_rd_color_"+i+"' onclick='setOptions(this, '2', 'OB2C7KCD762WP2_ZB', 'style');'>"
-                              +"<label for='gl_rd_color_[[${i.index-1}]]_"+i+"'></label>"
+                            str += "id='gl_rd_color_"+idx+"_"+i+"' name='gl_rd_color_"+idx+"' data-color='"+colors.colorName+"' onclick='setColor(this);'>"
+                              +"<label for='gl_rd_color_"+idx+"_"+i+"' id='"+i+"c'></label>"
                               +"<span class='gl_color_val' style='background:"+colors.pccolorCode+" url("+colors.pcchipImg+"/dims/resize/60x60) center /100% auto no-repeat'>"
                                 +colors.pccolorCode+"</span></li>";
-
-                            // str += "id='gl_rd_color_[[${i.index-1}]]_"+i+"'";
-
-                            // if(i === 0) str += " class = 'on' ";
-
-                            // str += " name='gl_rd_color_"+i+"' onclick='setOptions(this, '2', 'OB2C7KCD762WP2_ZB', 'style');'>"
-                            //   +"<label for='gl_rd_color_[[${i.index-1}]]_"+i+"'></label>"
-                            //   +"<span class='gl_color_val' style='background:"+colors.pccolorCode+" url("+colors.pcchipImg+"/dims/resize/60x60) center /100% auto no-repeat'>"
-                            //     +colors.pccolorCode+"</span></li>";
                           }
 
                           $(".btn_color_wrap").html(str);
+                          $(".sct_v").html(result['colorSet'][tag]['colorName']);
 
-                          $(".sct_v").html(result['colorSet'][0]['colorName']);
-
-                          console.log('사이즈 : '+sTag);
-
-                          // <span class="sod_option " title="90" data-value="OB2C7KCD762WP2_IV_90">90</span>
-                          // <option value="OB2C7KCD762WP2_IV_90" selected="">90</option>
-
-                          // size option setting
-                          var str1 = "<span class='sod_list'>";
-                          var str2 = "";
-                          for (var i = 0; i < result['sizeSet'].length; i++) {
-                            let size = result['sizeSet'][i];
-                            // console.log(size);
-                            str1 += "<span class='sod_option ";
-                            str2 += "<option value='"+pcid+"_"+size+"' ";
-
-                            if(size == sTag) {
-                              str1 += "selected active ";
-                              str2 += "selected='selected'";
-                            }
-
-                            str1 += "title='"+size+"' data-value='"+pcid+"_"+size+"'"+size+"</span>";
-                            str2 += ">"+size+"</option>";
-
-                          }
-
-                          str1 += "</span>";
                           
+                          // size option setting
+                          printSize(pcid, sTag, result['sizeSet']);
+                          
+                          let id = 'gl_rd_color_'+idx+'_'+tag;
+                          let name = 'gl_rd_color_'+idx;
+                          tmp = id;
+                          // console.log('id : '+id);
+                          // console.log('name : '+name);
 
-                          $(".sod_list_wrapper").html(str1);
-                          $(".sodsb").html(str2);
+                          // $("input:radio[name='+name+']:input[id='+id+']").attr("checked", true);
+
+                          // $("input[type=radio][id='"+idName+"']").attr("checked", true);
+                          // $(":radio[name='gl_rd_color_"+idx+"']").attr("checked", true);
+
+                          // $("#"+ idName).prop("checked", "checked");
 
                         },
                         error: function() {
@@ -424,15 +423,90 @@
                         }
                       })
 
+
                       // <div class="desc_box">[SJSJ]스퀘어 토 레더 앵클 부츠의 재고수량은 10개입니다. 다시 입력해 주시기 바랍니다.</div>
                       // <div class="desc_box">[브랜드]상품이름의 재고수량은 10개입니다. 다시 입력해 주시기 바랍니다.</div>
 
+                    }
+
+                    function printSize(pcid, sTag, sizes){
+
+                          // size option setting
+                          var str1 = "";
+                          var str2 = "";
+                          for (var i = 0; i < sizes.length; i++) {
+                            let size = sizes[i];
+                            // console.log(size);
+                            str1 += "<span class='sod_option ";
+                            str2 += "<option value='"+pcid+"_"+size+"' ";
+
+                            if(size == sTag) {
+                              str1 += "selected active ";
+                              str2 += "selected='selected'";
+                              $(".sod_label").html(size);
+                            }
+
+                            str1 += "' title='"+size+"' data-value='"+pcid+"_"+size+"'>"+size+"</span>";
+                            str2 += ">"+size+"</option>";
+
+                          }
+
+                          $(".sod_list").html(str1);
+                          $(".sodsb").html(str2);
+                    }
+
+                    function setColor(obj) {
+                      console.log('setColor 시작');
+
+                      let span = $(obj).siblings('span');
+                      // span.css("background", "red");
+                      // span.css("border","double");
+                      // span.prop("style", "border: double;");
+                      // console.log(span);
+
+                      let name = $(obj).attr('id');
+
+                      console.log('id : '+name);
+
+                      let colorName = $(obj).attr('data-color');
+                      console.log("컬러명 : "+colorName);
+
+                      $(".sct_v").html(colorName);
+
+
+                      // $("#"+ii+"c").css("border", "double");
+                      // $("#"+ii+"c").attr("style", "border: double !important");
+                      // document.getElementById(ii+"c").style.border="double";
+                      
+
+
+                      // $("#"+ name).attr("checked", true);
 
 
 
+                      // $(obj).attr("checked", true);
+
+
+                      // $(obj).addClass('on');
+                      // $(obj).siblings('a').removeClass('on');
+
+                    }
+
+                    function setOptions(obj) {
+                      $(obj).addClass('on');
+                      $(obj).siblings('a').removeClass('on');
+
+                      var name = obj.name;
+                      var opt  = document.getElementById(name);
+		                  var psid = (opt.options[opt.selectedIndex].value);
+		                  var size = (opt.options[opt.selectedIndex].text);
+                      
+                      // console.log('사이즈 선택 : '+size);
+                      $(".sod_label").html(size);
                     }
                   </script>
 
+                  <form th:id="'updateCartForm'+${i.index}">
                   <!-- ########## 제품 옵션 변경 가능 정보 ########## -->
                   <div class="gl_tgl gl_tgl_option" th:id="'pt_list_'+${i.index}" style="display: none;">
                     <ul class="gl_edit">
@@ -441,7 +515,7 @@
                         <ul class="gl_con btn_color_wrap">
                         </ul>
                         <div class="gl_con selected_color_txt">
-                          <span class="sct_v"></span>
+                          <span class="sct_v">[[${prod.PColorName}]]</span>
                         </div>
                       </li>
                       <li>
@@ -452,14 +526,11 @@
                             <span class="sod_label">[[${prod.PSize}]]</span>
                             <span class="sod_list_wrapper">
                               <span class="sod_list">
-                                <span class="sod_option  selected active " title="90" data-value="OB2C7KCD762WP2_IV_90">90</span>
-                                <span class="sod_option  disabled " title="95 (품절)" data-value="">95 (품절)</span>
                               </span>
                             </span>
-                            <select id="gl_slr_size_2" name="gl_slr_size_2" class="sodsb" onchange="setOptions(this, '2', '', 'size');">
-                              <option value="OB2C7KCD762WP2_IV_90" selected="">90</option>
-                              <option disabled="disabled" value="">95 (품절)</option>
-                            </select></span>
+                            <select th:id="'gl_slr_size_'+${i.index}" th:name="'gl_slr_size_'+${i.index}" class="sodsb" onchange="setOptions(this);">
+                            </select>
+                          </span>
                         </div>
                       </li>
                       <li>
@@ -481,6 +552,7 @@
                     </div>
                   </div>
                   <!-- ########## Goods option info end ########## -->
+                  </form>
                 </div>
               </li>
             </th:block>
@@ -1368,5 +1440,7 @@
 
 
 </body>
+
+
 
 </html>

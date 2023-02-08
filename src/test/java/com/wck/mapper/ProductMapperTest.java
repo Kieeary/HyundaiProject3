@@ -2,8 +2,6 @@ package com.wck.mapper;
 
 import java.util.List;
 
-import javax.xml.crypto.KeySelector.Purpose;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -10,10 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.wck.domain.Criteria;
+
 import com.wck.domain.DetailProductVO;
+
+import com.wck.domain.Criteria;
+<<<<<<< HEAD
+import com.wck.domain.DetailProductVO;
+=======
+
+>>>>>>> 04320bf77c8512a0ed294be23855245148bc5233
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
+import com.wck.domain.ProductVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -44,6 +52,20 @@ public class ProductMapperTest {
 	}
 	
 	@Test
+	void getProductList() {
+		String gd = "we";
+		List<ProductVO> vo = productMapper.getProducts(null, gd, null, null);
+		
+		for(ProductVO a : vo) {
+			if(a.getPId().equals("MM2C7KTO041H9E")) {
+			log.info("PID :" + a.getPId());
+			for(DetailProductVO b : a.getDetailProduct()) {
+				log.info("PCID : " + b.getPCId());
+			}
+			}
+		}
+	}
+	
 	@Transactional
 	void deleteLikeProduct() {
 		String pId = "SH2CAKCD036M";

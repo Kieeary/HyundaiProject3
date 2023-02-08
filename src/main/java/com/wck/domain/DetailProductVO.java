@@ -10,4 +10,10 @@ public class DetailProductVO {
 	private String PCImg1;
 	private String PCChipImg;
 	private String ColorName;
+	
+	// private String pcid;
+	// private String pccolorcode;
+	// private String pcimg1;
+	// private String pcchipimg;
+	// private int psstock;
 }

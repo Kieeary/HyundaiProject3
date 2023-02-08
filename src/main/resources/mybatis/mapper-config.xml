@@ -17,6 +17,6 @@
         <typeAlias type="com.wck.domain.ProductStockVO" alias="productStock"/>
         
         <typeAlias type="com.wck.domain.DetailProductVO" alias="detailProduct"/>
-        <typeAlias type="com.wck.domain.ProductVO" alias="product"/>
+        <typeAlias type="com.wck.domain.ProductVO" alias="product"/>        
     </typeAliases>  
 </configuration>

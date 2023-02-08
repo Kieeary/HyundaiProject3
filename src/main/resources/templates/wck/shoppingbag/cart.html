@@ -153,16 +153,28 @@
             }
 
             function addWishList(productCode, obj) {
-              console.log('상품 코드 : ' + productCode);
-              if ($(obj).hasClass("icon_btn_on") === true) {
-                var la = new layerAlert('위시리스트에서 삭제했습니다.');
-                $(obj).removeClass("icon_btn_on");
-                console.log("이미 좋아요");
-              } else {
-                var la = new layerAlert('위시리스트에 등록되었습니다.');
-                $(obj).addClass("icon_btn_on");
-                console.log("좋아요 등록 완료");
-              }
+            	let pid = productCode.split("_")[0];
+            	console.log(pid);
+            	$.ajax({
+            		url : '/api/member/like/'+pid,
+            		method : 'post',
+            		success : function(data){
+            			console.log(data);
+                        console.log('상품 코드 : ' + productCode);
+                        if ($(obj).hasClass("icon_btn_on") === true) {
+                          var la = new layerAlert('위시리스트에서 삭제했습니다.');
+                          $(obj).removeClass("icon_btn_on");
+                          console.log("이미 좋아요");
+                        } else {
+                          var la = new layerAlert('위시리스트에 등록되었습니다.');
+                          $(obj).addClass("icon_btn_on");
+                          console.log("좋아요 등록 완료");
+                        }
+            		},
+            		error : function(e){
+            			var la = new layerAlert('에러 발생');
+            		}
+            	})
             }
 
             function checkTotalPrice(obj) {

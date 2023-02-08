@@ -28,6 +28,9 @@ public class EventApi {
 
 	private final EventService eventService;
 	
+	/*
+	 * 진행 중인 이벤트 / 종료한 이벤트
+	 */
 	@GetMapping("/list")
 	public ResponseEntity<List<EventVO>> getList(
 			@RequestParam(value = "pageSize", defaultValue = "4") int pageSize,
@@ -54,11 +57,11 @@ public class EventApi {
 	}
 	
 	/**
-	 * 참여 헀는지 확인
+	 * 해당 이벤트에 참여 헀는지 확인
 	 */
-	@GetMapping("{id}/check")
+	@GetMapping("{eventId}/check")
 	public ResponseEntity<Boolean> checkAlreayJoin(
-			@PathVariable("id") int eventId,
+			@PathVariable("eventId") int eventId,
 			@AuthenticationPrincipal Account account){
 		// 로그인 하지 않은 유저의 경우 참여하지 않음
 		if(account == null) return new ResponseEntity<Boolean>(false, HttpStatus.OK);
@@ -70,14 +73,14 @@ public class EventApi {
 	/**
 	 * 쿠폰 발급
 	 */
-	@PostMapping("{id}/coupon")
+	@PostMapping("{eventId}/coupon")
 	public ResponseEntity<String> getCoupon(
 			@AuthenticationPrincipal Account account,
-			@PathVariable("id") int eventId
+			@PathVariable("eventId") int eventId
 			){
 		boolean result = eventService.issueCoupon(eventId,account.getId());
 		if(!result)
-			return new ResponseEntity<String>("SUCCESS", HttpStatus.NOT_ACCEPTABLE);
+			return new ResponseEntity<String>("ERROR", HttpStatus.NOT_ACCEPTABLE);
 		
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 	}

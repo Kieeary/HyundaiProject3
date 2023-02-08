@@ -79,13 +79,17 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 		String name = "user" + id;
 		String phone = "01000000000";
 		Date birth = Date.valueOf(LocalDate.now());
-		int gender = 1;
+		int gender = -1;
 		String loginType = "Google";
 		int tosNo = 1;
 		boolean enabled = true;
 		String role = "ROLE_USER";
 		int grade = 1;
 		int mileage = 0;
+		
+		String zipCode = "123";
+		String address1 = "address1";
+		String address2 = "address2";
 		log.info("saveOAuth2Member 시작");
 		
 		MemberVO emailMember = memberMapper.findOneByEmail(email, "Email");

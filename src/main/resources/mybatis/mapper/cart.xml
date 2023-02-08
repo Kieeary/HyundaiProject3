@@ -40,7 +40,8 @@
 	</select>
 	
 	<update id="updateCart">
-		UPDATE CART SET PQUANTITY = #{pQuantity} WHERE PSID = #{pSId} AND MID = #{mId}
+		UPDATE CART SET PQUANTITY = #{pQuantity} 
+		WHERE PSID = #{pSId} AND MID = #{mId}
 	</update>
 	
 	<delete id="deleteCart">

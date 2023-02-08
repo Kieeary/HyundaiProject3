@@ -4890,7 +4890,7 @@ layer popup 형식의 confirm 창
 								productlist += '<div class="color_chip">'
 									
 									for(var n=0; n<result[i].detailProduct.length; n++){	
-										console.log(result[i].detailProduct[n].pccolorcode)
+										console.log(result[i].detailProduct[n].pccolorCode)
 										
 										productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `')">` 	
 										console.log(result[i]);
@@ -4898,7 +4898,7 @@ layer popup 형식의 confirm 창
 									
 										
 										productlist += '<button class="chip on" ' +
-                        						'style="background:' + result[i].detailProduct[n].pccolorcode + ' url( "'  + result[i].detailProduct[n].pcchipimg + ' "")' +
+                        						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url( "'  + result[i].detailProduct[n].pcchipImg + ' "")' +
                         						'></button></a>'
                         						}
                         		productlist += '</div>'

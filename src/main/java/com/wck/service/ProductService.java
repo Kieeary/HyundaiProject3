@@ -57,13 +57,25 @@ public class ProductService {
 		return vo;
 	}
 
-	public List<ProductVO> productList(@Nullable String br, @Nullable String gd, @Nullable String sC,
+	public List<ProductVO> getProductList(@Nullable String br, @Nullable String gd, @Nullable String sC,
 			@Nullable String tC) {
 
+		log.info("service 임");
+		
+		log.info("====="+br+"=====");
+		log.info("====="+gd+"=====");
+		log.info("====="+sC+"=====");
+		log.info("====="+tC+"=====");
 		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
+		
+		for(ProductVO a : productList) {
+			log.info(a.getPid());
+		}
+		
 		return productList;
 	}
 
+	
 	public int getLikeProductCount(String id) {
 		return productMapper.getLikeProductCount(id);
 	}

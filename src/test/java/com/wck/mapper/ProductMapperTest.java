@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-<<<<<<< HEAD
+
 
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductColorChipVO;
@@ -17,10 +17,10 @@ import com.wck.domain.DetailProductVO;
 
 
 import com.wck.domain.ProductColorVO;
-=======
+
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
->>>>>>> dev
+
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductStockVO;
@@ -48,7 +48,7 @@ public class ProductMapperTest {
 	
 	
 	/*
-	 * 정기
+	 * 정기범
 	 */
 	@Test
 	void getProductList() {
@@ -57,17 +57,13 @@ public class ProductMapperTest {
 		List<ProductVO> vo = productMapper.getProducts(null, gd, null, tC);
 		
 		for(ProductVO a : vo) {
-<<<<<<< HEAD
-	
-=======
-			if(a.getPid().equals("MM2C7KTO041H9E")) {
->>>>>>> dev
+
 			log.info("PID :" + a.getPid());
 			for(DetailProductVO b : a.getDetailProduct()) {
 				log.info("PCID : " + b.getPCId());
 			}
-			
 		}
+		
 	}
 	
 	/*

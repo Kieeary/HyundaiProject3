@@ -1,26 +1,17 @@
 package com.wck.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductInfoVO;
-import com.wck.domain.ProductStockVO;
 import com.wck.domain.ProductVO;
-import com.wck.service.MemberService;
 import com.wck.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -49,7 +40,6 @@ public class ProductController {
 					   @RequestParam(value="secCat", required=false) String secCat,
 					   @RequestParam(value="thrCat", required=false) String thrCat) {
 		
-		log.info(gender);	
 		String br = brand;
 		String gd = gender;
 		String sC = secCat;
@@ -60,7 +50,7 @@ public class ProductController {
 		log.info(sC);
 		log.info(tC);
 		
-		List<ProductVO> list = productService.productList(br, gd, sC, tC);
+		List<ProductVO> list = productService.getProductList(br, gd, sC, tC);
 		
 		for(ProductVO a : list) {
 			log.info(a.getPid());

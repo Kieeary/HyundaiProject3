@@ -582,41 +582,7 @@
 					</div>
 				</div>
 				<!--// sort_tit -->
-				<!-- filter_wrap -->
-				<div class="filter_wrap fix hsDelivery1902">
-					<div>
-						<div
-							class="shipping swiper-container fil swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal">
-							<div class="hs_float_check swiper-wrapper">
-								<span class="hs_check01 swiper-slide swiper-slide-active">
-									<input type="checkbox" name="checkSale" id="checkSale"
-										onclick="setCheckSaleCode();GA_Event('카테고리_리스트', '필터', 'SALE');"
-										style="cursor: pointer" />
-									<label for="checkSale" style="cursor: pointer">SALE</label>
-								</span>
-								<span class="hs_check01" id="hsDelivery" style="display: none">
-									<input type="checkbox" name="checkDelivery" id="checkDelivery"
-										onclick="setCheckDeliveryCode();GA_Event('카테고리_리스트', '필터', '한섬딜리버리');"
-										style="cursor: pointer" />
-									<label for="checkDelivery" style="cursor: pointer">한섬딜리버리</label>
-									<div class="fitguide_tooltip">
-										<div class="hs_tooltip_wrap">
-											<a href="#" class="ico_btn">한섬딜리버리란?</a>
-										</div>
-									</div>
-								</span>
-							</div>
-						</div>
-						<div class="filter">
-							<a href=".product_filter_pop" onclick="popupBtnClick();GA_Event('카테고리_리스트', '필터', '필터링');"
-								class="filter_btn btn_popup_trigger">필터링</a>
-						</div>
-					</div>
-					<div class="tooltip_cont">
-						<p class="txt">4PM, 퀵배송이 가능합니다.</p>
-						<a href="#" class="close">닫기</a>
-					</div>
-				</div>
+
 
 				<!--// filter_wrap -->
 				<!-- product_list -->
@@ -994,51 +960,11 @@
 					getFooterNotices('/ko/svcenter');
 				});
 
-				function moveDesktop() {
-					location.href =
-						location.href.replace('?uiel=Mobile', '') + '?uiel=Desktop';
-				}
 
-				$(function () {
-					var pcVersionButtons = null;
-					if (getCookie('app') != 'android' && getCookie('app') != 'ios') {
-						pcVersionButtons =
-							'<a href="javascript:moveDesktop();">PC버전</a>';
-						$('#pcVersion').html(pcVersionButtons);
-					} else {
-						$('#footerMenu').prop('class', 'menu m3');
-					}
 
-					// 	if(getCookie("app") == "ios"){
-					// 	    $(".f_policy .language").hide(); //ios 메인 처음 진입시 language 노출되는 오류 수정
-					// 	}
-				});
 
-				function hpAutoLogin(data) {
-					if (data.succYn == 'Y') {
-						$.ajax({
-							type: 'GET',
-							url: '/ko/hpoint/simpleJoinMember',
-							data: {mcustNo: data.mcustNo},
-							success: function (data) {
-								if (data.resultCode == 'L') {
-									$('#hcid').val(data.uid);
-									$('#autologinForm').submit();
-								}
-							},
-							error: function (e) { },
-						});
-					}
-				}
 
-				function familySiteSelect() {
-					$('.fixed_dim_layer').stop().show();
-					$('.family_site_popup_191108').stop().slideDown();
-				}
-				function familySiteSelectClosed() {
-					$('.family_site_popup_191108').stop().slideUp();
-					$('.fixed_dim_layer').stop().fadeOut(500);
-				}
+
 
 				//app 언어설정창 추가
 				function selectLangChg(obj) { }
@@ -3722,19 +3648,36 @@
 
 	<script>
 		$(document).ready(function () {
-
+			
+			
 			var gd = 'me'
 			var br = null;
 			var sc = null;
-			var tc = 'me031';
+			var tc = 'me031'
+						
+			var query = '';
+			if(gd != null) query += "gender="+gd; 
+			if(br != null) {
+			if(gd == null)	query += "brand="+br;
+				else query += "&brand="+br;
+			}
+			if(sc != null) query += "&secCat"+sc;
+			if(tc != null) query += "&thrCat="+tc;
+						
+			console.log(query);
+			
+		//	url: '/wck/products/list/p?gender='+gd+'&brand='+br+'&secCat='+sc+'&thrCat='+tc,
+
 
 			$.ajax({
 				type: 'get',
-				url: '/wck/products/list/p?gender=' + gd + '&brand=' + br + '&secCat=' + sc + '&thrCat=' + tc ,
+				url: '/wck/products/list/p?'+query,
 				success: function (result) {
 					console.log("통신");
 					console.log(result);
 					let productlist = '';
+					
+					
 
 					for (var i = 0; i < result.length; i++) {
 
@@ -3805,58 +3748,17 @@
 		<script>
 	
 		function chgColorChip(pcid, pid, pcimg1, index) {
-						
-//			console.log(pcimg1);
-//			console.log(`img_${index}`)
-//			console.log(`<img id="img_${index}" src="${pcimg1}"/>`)
-
-//		console.log(document.getElementById(`img_${index}`));
-//			document.getElementById(`img_${index}`).src = pcimg1;
 			
 			console.log($('#listBody_li_'+index).val());
-			
 			var tmp = `<a onclick="goProductDetail('` + pid + `' , '` + pcid + `')"><div class="img"><img src="${pcimg1}"></div></a>`
-	//			tmp += '<div class="info_cont">'
-//				tmp += '<div class="color_chip">'
-
-//				for(var n=0; n<len; n++){	
-						
-//				tmp += `<a onclick="chgColorChip('` + pcid  +`' , '`+ pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' , '` + len + `')"            >`
-//				console.log(result[i]);
-					
-						
-//				tmp += '<button class="chip on" ' +
-  //      						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url( "'  + result[i].detailProduct[n].pcchipImg + ' "")' +
-   //     						'></button></a>'
-     //   						}
-				
-		//		tmp += '</div>'
-	//			tmp += '<p class="brand">' + result[i].bname + '</p>'
-	//			tmp += '<p class="name">' + result[i].pname + '</p>'
-	//			tmp += '<p class="price" id="listPrice0">'
-	//			tmp += '<span id="price_CM2D1KTO513W_TG">' + result[i].pcprice + '</span></p>'
-	//			tmp += '</div>'
-	//			tmp += '</li>'
-
 			
 			$('#tmp_'+index).html(tmp); 
 			
-	//		console.log(`pcid_${index}`)
-	//		document.getElementById(`pcid_${index}`).onclick = function() {
-	//			console.log("testsets");
-	//		}
-		
-				
-		//		$('#pcid_'+index).on('click', function(){
-		//			console.log("testsetestes");
-		//		});
-			
-			
-			
+
 		}
 
 	</script>
-						```````````````````````````````````````````````````````````````
+						
 
 </body>
 <!-- AceCounter Log Gathering Script V.7.5.2013010701 -->

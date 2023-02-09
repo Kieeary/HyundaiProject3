@@ -21,8 +21,8 @@ public interface ProductMapper {
 	
 	public List<ProductCommonVO> getLikeProductList(@Param("mId") String mId, @Param("cri") Criteria cri);
 
-	public List<ProductVO> getProducts(@Nullable String br, @Nullable String gd, 
-					@Nullable String sC, @Nullable String tC); 
+	public List<ProductVO> getProducts(@Param("br") String br, @Param("gd") String gd, 
+					@Param("sC") String sC, @Param("tC") String tC); 
 	
 	public List<ProductColorChipVO> getColorChip(String pid);
 

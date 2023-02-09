@@ -1,8 +1,5 @@
 package com.wck.service;
 
-import static org.mockito.ArgumentMatchers.intThat;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -26,7 +23,7 @@ public class ProductServiceTest {
 		String sC = null;
 		String tC = "me031";
 		
-		List<ProductVO> a = productService.getProductList(br, gd, sC, tC);
+		List<ProductVO> a = productService.productList(br, gd, sC, tC);
 		
 		for(ProductVO b : a) {
 			log.info(b.getPid());

@@ -1,21 +1,13 @@
 package com.wck.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
-<<<<<<< HEAD
-
 import com.wck.domain.ProductColorChipVO;
-import com.wck.domain.ProductColorVO;
-
-=======
-import com.wck.domain.ProductColorVO;
->>>>>>> origin/home
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
@@ -55,24 +47,11 @@ public class ProductService {
 		if(vo == null) throw new RuntimeException("존재하지 않는 PID");
 		return vo;
 	}
-<<<<<<< HEAD
-
-	public List<ProductVO> getProductList(@Nullable String br, @Nullable String gd, @Nullable String sC,
-			@Nullable String tC) {
-
-		log.info("service 임");
-		
-		log.info("====="+br+"=====");
-		log.info("====="+gd+"=====");
-		log.info("====="+sC+"=====");
-		log.info("====="+tC+"=====");
-=======
 	
 	
 	public List<ProductVO> productList(@Nullable String br, @Nullable String gd,
 										@Nullable String sC, @Nullable String tC) {
 		
->>>>>>> origin/home
 		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
 		
 		for(ProductVO a : productList) {

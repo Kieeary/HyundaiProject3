@@ -63,7 +63,7 @@ public class ProductController {
 		log.info(sC);
 		log.info(tC);
 		
-		List<ProductVO> list = productService.getProductList(br, gd, sC, tC);
+		List<ProductVO> list = productService.productList(br, gd, sC, tC);
 		
 		for(ProductVO a : list) {
 			log.info(a.getPid());

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" 	  
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+    
+    <th:block layout:fragment="content"> 
+<table class="table" style="width : 90%; margin:30px auto;">
+  <thead>
+    <tr>
+      <th scope="col">NO</th>
+      <th scope="col">TITLE</th>
+      <th scope="col">ISSUEDATE</th>
+      <th scope="col">EXPIREDATE</th>
+      <th scope="col">LIMITCOUNT</th>
+      <th scope="col">COUNT</th>
+      <th scope="col">IMG</th>
+      <th scope="col">CONTENT</th>
+      <th scope="col">DETAILIMG</th>
+      <th scope="col">DISCOUNT</th>
+      <th scope="col">COUPONTITLE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row"><a href='#' data-toggle="modal" data-target=".event_modal">123123</a></th>
+      <td>신규회원님을 위한 특별 혜택1</td>
+      <td>23/02/03</td>
+      <td>23/02/04</td>
+      <td>100</td>
+      <td><a href='#' data-toggle="modal" data-target=".issue_modal">30</a></td>
+      <td><div style="width:100px;">
+      <img src="http://cdn.thehandsome.com/mobile/event/list/banner/20221213_57502766621122035_ko.jpg"
+      	style="width:100%; height:100%"
+      /></div> </td>
+      <td><div style="width:70px;">
+      <img src="http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_01.jpg"
+      	style="width:100%; height:100%"
+      /></div> </td>
+      <td><div style="width:70px;">
+      <img src="http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_02.jpg"
+      	style="width:100%; height:100%"
+      /></div> </td>
+      <td>30</td>
+      <td>가입축하쿠폰</td>
+    </tr>
+  </tbody>
+</table>
+
+
+<div style="width:100%; display:flex; justify-content:center">
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+        <span class="sr-only">Previous</span>
+      </a>
+    </li>
+    <li class="page-item"><a class="page-link" href="#">1</a></li>
+    <li class="page-item"><a class="page-link" href="#">2</a></li>
+    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item">
+      <a class="page-link" href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+        <span class="sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+</div>
+
+<!-- https://getbootstrap.com/docs/4.1/components/modal/ -->
+<!-- issue_modal -->
+<div class="modal fade issue_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h4" id="myLargeModalLabel">EVENT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">COUPONID</th>
+      <th scope="col">MEMBERID</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">ISSUEDATE</th>
+      <th scope="col">EXPIREDATE</th>
+      <th scope="col">STATUS</th>
+      <th scope="col">SAVE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>41</td>
+      <td>123123</td>
+      <td>wangjh789@gmail.com</td>
+      <td>23/02/03</td>
+      <td>23/02/04</td>
+      <td>  
+      <div class="form-group">
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>AVAILABLE</option>
+      <option>USED</option>
+      <option>UNAVAILABLE</option>
+    </select>
+  </div></td>
+  <td><button type="button" class="btn btn-primary">SAVE</button>
+</td>
+    </tr>
+        <tr>
+      <td>41</td>
+      <td>123123</td>
+      <td>wangjh789@gmail.com</td>
+      <td>23/02/03</td>
+      <td>23/02/04</td>
+      <td>  
+      <div class="form-group">
+    <select class="form-control" id="exampleFormControlSelect1">
+      <option>AVAILABLE</option>
+      <option>USED</option>
+      <option>UNAVAILABLE</option>
+    </select>
+  </div></td>
+  <td><button type="button" class="btn btn-primary">SAVE</button>
+</td>
+    </tr>
+  </tbody>
+</table>
+
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- issue modal -->
+<div class="modal fade event_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h4" id="myLargeModalLabel">EVENT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">NO</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="123123">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">TITLE</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="staticEmail" value="신규회원님을 위한 특별혜택1">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">ISSUEDATE</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="staticEmail" value="23/02/03">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">EXPIREDATE</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="staticEmail" value="23/02/04">
+    </div>
+  </div>
+   <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">IMG</label>
+    <div class="col-sm-10">
+      <input type="file" class="form-control" id="staticEmail">
+    </div>
+  </div>
+   <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">CONTENT</label>
+    <div class="col-sm-10">
+      <input type="file" class="form-control" id="staticEmail">
+    </div>
+  </div>
+   <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">DETAILIMG</label>
+    <div class="col-sm-10">
+      <input type="file" class="form-control" id="staticEmail">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">COUNT</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="staticEmail" value="30">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">COUPONTITLE</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="staticEmail" value="가입축하쿠폰">
+    </div>
+  </div>
+  
+  <div class="form-group" style="display:flex; justify-content: flex-end;">
+  <button type="button" class="btn btn-danger" style='margin-right : 10px'>CANCEL</button>
+  <button type="button" class="btn btn-primary">SAVE</button>
+  
+  </div>
+</form>
+
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	/* $(document).ready(function(){
+		console.log('tt');
+	}) */
+</script>
+</th:block>
+</html>

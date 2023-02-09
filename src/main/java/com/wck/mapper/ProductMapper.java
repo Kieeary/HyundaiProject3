@@ -21,9 +21,6 @@ public interface ProductMapper {
 	
 	public List<ProductCommonVO> getLikeProductList(@Param("mId") String mId, @Param("cri") Criteria cri);
 
-	public ProductColorVO getProductColor(String pId, String pcId);
-
-	
 	public List<ProductVO> getProducts(@Nullable String br, @Nullable String gd, 
 					@Nullable String sC, @Nullable String tC); 
 	
@@ -35,10 +32,12 @@ public interface ProductMapper {
 	
 	public boolean existLikeProduct(String mId, String pId);
 	
-	public int insertLikeProduct(String mid,String pId);
+	public int insertLikeProduct(String mId,String pId);
 
 	public int getLikeProductCount(String mId);
 	
+	public ProductCommonVO getProductDetailByPid(String pId);
+
 	public List<String> getSizeSet(String pcId);
 	
 	public List<DetailProductVO> getColorSet(String pId);

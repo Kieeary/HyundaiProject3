@@ -1,5 +1,6 @@
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
-<th:block th:replace="wck/includes/head :: head_tag(title='개인정보 변경 | 더한섬닷컴')"></th:block>
+  <th:block
+    th:replace="wck/includes/head :: head_tag(title='개인정보 변경 | 더한섬닷컴')"></th:block>
 
   <body class="back">
     <!-- ################## hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
@@ -484,83 +485,25 @@
               );
               la.confirmAction = function () {
                 //확인 호출 펑션
-				let email = $('#email').val();
+                let email = $('#email').val();
                 let name = $('#name').val();
-                
+
                 let phone1 = $('#phone1').val();
                 let phone2 = $('#phone2').val();
                 let phone3 = $('#phone3').val();
-                
+
                 let zipcode = $('#zipcode').val();
                 let address1 = $('#address1').val();
                 let address2 = $('#address2').val();
-                
+
                 let gender = $('input:radio[name=gender]:checked').val();
-                
+
                 let year = $('#selYear').val();
                 let month = $('#selMonth').val();
                 let day = $('#selDay').val();
-                
 
-                $.ajax({
-                  type: 'POST',
-                  url: '/api/member/update',
-                  datatype: 'json',
-                  contentType: 'application/json; charset-utf-8',
-                  data: JSON.stringify({
-                	email : email,
-                    name: name,
-                    phone1 : phone1,
-                    phone2 : phone2,
-                    phone3 : phone3,
-                    
-                    zipcode : zipcode,
-                    address1 : address1,
-                    address2 : address2,
-                    
-                    gender : gender,
-                    
-                    year: year,
-                    month: month,
-                    day: day,
-                  }),
-                  error: function (request, status, error) {
-                    layerAlert(
-                      '예상치 못한 오류가 발생하였습니다.</br>' +
-                        '다시 시도해 주시기 바랍니다.'
-                    );
-                    console.log(
-                      'code:' +
-                        request.status +
-                        '\n\n\n\n' +
-                        'message:' +
-                        request.responseText +
-                        '\n\n\n\n' +
-                        'error:' +
-                        error
-                    );
-                  },
-                  success: function (result) {
-                    if (result == 'SUCCESS') {
-                      var lc = new layerAlert(
-                        '입력하신 정보가 변경완료 되었습니다.'
-                      );
-
-                      lc.confirmAction = function () {
-                        $('#addrMsg').hide();
-                        $('hpMsg').hide();
-                        $('emailMsg').hide();
-
-                        location.href = '/wck/mypage';
-                      };
-                    } else {
-                      layerAlert(
-                        '예상치 못한 오류가 발생하였습니다.</br>' +
-                          '다시 시도해 주시기 바랍니다.'
-                      );
-                    }
-                  },
-                });
+                // TODO : submit;
+                $('#updateProfileForm').submit();
               };
             });
 
@@ -592,6 +535,76 @@
               });
             }
 
+            $('#email,#emailDomain').bind(
+              'change keyup input',
+              function (event) {
+                $(this).val($(this).val().replace(' ', ''));
+                $('#emailDuplChk').val('');
+              }
+            );
+
+            $('#emailDubChkBtn').click(function () {
+              var vc = new ValidationCheck();
+              vc.checkIdList = ['email', 'emailDomain'];
+              vc.msgFn = function (msg) {
+                $('#emailMsg').show();
+                $('#emailMsg').text(msg);
+                $('#emailDuplChk').val('');
+                return;
+              };
+
+              if (vc.isValid()) {
+                var email = $('#email').val() + '@' + $('#emailDomain').val();
+
+                if (email == 'asd***************') {
+                  $('#emailMsg').show();
+                  $('#emailMsg').text('사용 가능한 이메일입니다.');
+                  $('#emailDuplChk').val('Y');
+                  return;
+                }
+
+                if (email == '' + '@' + '') {
+                  $('#emailMsg').show();
+                  $('#emailMsg').text('사용 가능한 이메일입니다.');
+                  $('#emailDuplChk').val('Y');
+                  return;
+                }
+
+                $.ajax({
+                  type: 'GET',
+                  url: '/ko/member/isduplemail?email=' + email,
+                  success: function (response) {
+                    if (response == true) {
+                      $('#emailMsg').show();
+                      $('#emailMsg').text('이미 사용중인 이메일입니다.');
+                      $('#emailDuplChk').val('N');
+                      return;
+                    } else {
+                      $('#emailMsg').show();
+                      $('#emailMsg').text('사용 가능한 이메일입니다.');
+                      $('#emailDuplChk').val('Y');
+                      return;
+                    }
+                  },
+                  error: function (e) {
+                    alert(e);
+                    console.log(e);
+                    return;
+                  },
+                });
+              }
+            });
+
+            $('#emailDomainSel').change(function () {
+              var $current = $('#emailDomainSel option:selected').val();
+              if ($current == '') {
+                $('#emailDomain').val('');
+                $('#emailDomain').attr('readOnly', false);
+              } else {
+                $('#emailDomain').val($current);
+                $('#emailDomain').attr('readOnly', true);
+              }
+            });
 
             //핸드폰번호, 집전화번호 첫번째 자리 셋팅
             $('#hp1').val('');
@@ -611,6 +624,9 @@
               );
             }
 
+            /*  	if ("true" === "true") {
+		$('input[name="pushMktYN"]:checkbox').attr('checked', 'checked');	
+	} */
           });
 
           //회원변경시에만 사용되는 블라인드 영역을 클릭해도 팝업이 안닫히도록 수정
@@ -679,27 +695,14 @@
           //]]>
         </script>
         <form
-        th:object="${member}"
+          th:object="${member}"
           id="updateProfileForm"
-          action="/wck/mypage/change/form"
+          action="/wck/login/change"
           method="post">
-          <input type="hidden" name="prk" id="prk" value="8953806979076" />
-         
           <!-- contents s -->
           <div
             id="contents"
             class="hsome_contents mp_profile_wrap mp_profile_simple_wrap">
-            <div class="gray_tab">
-              <h4 class="title">비밀번호를 변경하고 싶으세요?</h4>
-              <div class="btn_wrap btn_wrap_div1">
-                <a
-                  href="#none"
-                  class="btnstl3 solid_btn_blk btn_layerpopup_call"
-                  id="pwChangeBtn"
-                  >비밀번호 변경</a
-                >
-              </div>
-            </div>
             <div class="mp_input_wrap">
               <span class="point_star_l">표시는 필수항목입니다.</span>
 
@@ -720,7 +723,7 @@
                 </div>
                 <div class="ipt_con">
                   <input
-                  th:field="*{name}"
+                    th:field="*{name}"
                     type="text"
                     id="name"
                     name="name"
@@ -736,11 +739,26 @@
                 </div>
 
                 <div class="ipt_con" style="display: flex; align-items: center">
-                  <input type="text" id="phone1" name="phone1" value="" th:field="*{phone1}"/>
+                  <input
+                    type="text"
+                    id="phone1"
+                    name="phone1"
+                    value=""
+                    th:field="*{phone1}" />
                   <div class="form_hyphen" style="padding: 5px">-</div>
-                  <input type="text" id="phone2" name="phone2" value="" th:field="*{phone2}"/>
+                  <input
+                    type="text"
+                    id="phone2"
+                    name="phone2"
+                    value=""
+                    th:field="*{phone2}" />
                   <div class="form_hyphen" style="padding: 5px">-</div>
-                  <input type="text" id="phone3" name="phone3" value="" th:field="*{phone3}"/>
+                  <input
+                    type="text"
+                    id="phone3"
+                    name="phone3"
+                    value=""
+                    th:field="*{phone3}" />
                 </div>
                 <p class="err_box" id="phoneMsg"></p>
               </div>
@@ -757,7 +775,8 @@
                       id="zipcode"
                       name="zipcode"
                       value=""
-                      readonly  th:field="*{zipcode}"/>
+                      readonly
+                      th:field="*{zipcode}" />
                     <button
                       id="zip_btn"
                       style="
@@ -775,15 +794,15 @@
                     id="address1"
                     name="address1"
                     readonly
-                    value="" 
-                    th:field="*{address1}"/>
+                    value=""
+                    th:field="*{address1}" />
                   <input
                     type="text"
                     id="address2"
                     name="address2"
                     value=""
-                    readonly 
-                    th:field="*{address2}"/>
+                    readonly
+                    th:field="*{address2}" />
                 </div>
                 <p class="err_box" id="addrMsg"></p>
               </div>
@@ -795,7 +814,6 @@
                 <div class="ipt_con">
                   <div>
                     <input
-                      
                       type="radio"
                       name="gender"
                       value="1"
@@ -809,7 +827,6 @@
                       " />
                     남자
                     <input
-                      
                       type="radio"
                       name="gender"
                       th:value="2"

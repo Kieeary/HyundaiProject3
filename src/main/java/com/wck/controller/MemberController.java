@@ -27,6 +27,9 @@ public class MemberController {
 	
 	private final MemberService memberService;
 
+	/*
+	 * 유저 아이디 / 비밀번호 찾기
+	 */
 	@GetMapping("/findIdPw")
 	public String findIdPw(Model model, @RequestParam(name = "tab", defaultValue = "1") Integer tab) {
 		model.addAttribute("tab", tab);
@@ -36,6 +39,9 @@ public class MemberController {
 		return "wck/member/find_id_pw";
 	}
 
+	/*
+	 * 유저 아이디 찾기 수행 (post)
+	 */
 	@PostMapping("/findId")
 	public String findIdPost(
 			@ModelAttribute("findId") FindIdDTO findIdDto, RedirectAttributes redirect) {
@@ -44,6 +50,9 @@ public class MemberController {
 		return "redirect:/wck/member/findIdComplete";
 	}
 
+	/*
+	 * 유저 비밀번호 찾기 수행 (post)
+	 */
 	@PostMapping("/findPw")
 	public String findPwPost(
 			@ModelAttribute("findPw") FindPwDTO findPwDTO,
@@ -58,11 +67,17 @@ public class MemberController {
 		return "redirect:/wck/member/findPwComplete";
 	}
 
+	/*
+	 * 아이디 찾기완료 페이지
+	 */
 	@GetMapping("/findIdComplete")
 	public String findIdComplete() {
 		return "wck/member/find_id_comp";
 	}
 
+	/*
+	 * 비밀번호 찾기 완료 페이지
+	 */
 	@GetMapping("/findPwComplete")
 	public String findPwComplete(@ModelAttribute("isExist") boolean isExist) {
 		return "wck/member/find_pw_comp";

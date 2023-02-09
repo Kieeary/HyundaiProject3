@@ -1,7 +1,5 @@
 package com.wck.service;
 
-import static org.mockito.ArgumentMatchers.intThat;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +17,7 @@ public class CartServiceTests {
 	@Test
 	public void addCartTest() {
 		String mId = "7c-41f8-8c6a-739159990a8d";
-		String psIds[] = {"SJ2C9ASZ097W_OW_235", "CM2C9ASZ756WS_WT_36", "TG2D3ASZ066MS3_WT_9"};
+		String psIds[] = {"SJ2C9ASZ097W_OW_235", "CM2C9ASZ756WS_WT_36", "TG2D3ASZ066MS3_WT_9", "MU2C9TPC035N3K_BK_10"};
 		
 		for (String psId : psIds) {
 			cartService.addCart(mId, psId, 1);

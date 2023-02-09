@@ -51,6 +51,9 @@ public class MemberApi {
 		return new ResponseEntity<Boolean>(member!=null, HttpStatus.OK);
 	}
 	
+	/*
+	 * 유저의 비밀번호 변경을 위한 기존 비밀번호 재확인
+	 */
 	@PostMapping("/check/pw")
 	public ResponseEntity<Boolean> isValidPw(
 			@RequestBody TmpDTO dto,
@@ -59,6 +62,9 @@ public class MemberApi {
 		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
 	}
 	
+	/*
+	 * 회원정보 변경 
+	 */
 	@PostMapping("/update")
 	public ResponseEntity<String> changeApi(
 			@AuthenticationPrincipal Account account,
@@ -74,6 +80,9 @@ public class MemberApi {
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
 	}
 	
+	/*
+	 * 회원 비밀번호 변경
+	 */
 	@PostMapping("/update/pw")
 	public ResponseEntity<String> changePw(
 			@AuthenticationPrincipal Account account,
@@ -87,6 +96,9 @@ public class MemberApi {
 		return new ResponseEntity<String>("SUCCESS", HttpStatus.CREATED);
 	}
 	
+	/*
+	 * 유저가 찜한 상품 리스트 반환
+	 */
 	@GetMapping("/like")
 	public ResponseEntity<Map<String, Object>> getLikeProductList(
 			@AuthenticationPrincipal Account account,
@@ -105,6 +117,9 @@ public class MemberApi {
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
 	
+	/*
+	 * 유저 좋아요 생성 / 삭제
+	 */
 	@PostMapping("/like/{pId}")
 	public ResponseEntity<String> toggleLikeProduct(
 			@AuthenticationPrincipal Account account,

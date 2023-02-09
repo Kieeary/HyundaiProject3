@@ -15,7 +15,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.log4j.Log4j2;
+
 @Component
+@Log4j2
 public class FormAuthenticationFailureHandler 
 	extends SimpleUrlAuthenticationFailureHandler{
 
@@ -23,7 +26,7 @@ public class FormAuthenticationFailureHandler
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		System.out.println("실패 핸들러 실행");
+		log.info("실패 핸들러 실행");
 		
         String errorMessage;
         if (exception instanceof BadCredentialsException) {

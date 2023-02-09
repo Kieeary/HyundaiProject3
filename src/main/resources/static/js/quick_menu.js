@@ -11588,15 +11588,32 @@ function moveBrandLookBook(brandCode) {
   >
 </div>
 </div>
-
 `;
 
 $('.hsome_quickMenu .shop a').click(function (e) {
   e.preventDefault();
-  console.log('click');
+  console.log('shop click');
   $('.hsome_quickMenu_contents').addClass('active absolute');
   $('.hsome_quickMenu_contents').html(template);
 });
+
+$('.hsome_quickMenu  .sns a').click(function(e){
+	e.preventDefault();
+	console.log('sns click');
+})
+$('.hsome_quickMenu .home a').click(function(e){
+	e.preventDefault();
+	console.log('home click');
+})
+$('.hsome_quickMenu .myheart a').click(function(e){
+	e.preventDefault();
+	console.log('my heart click');
+})
+$('.hsome_quickMenu .mypage a').click(function(e){
+	e.prevnetDefault();
+	console.log('mypage click')
+})
+
 
 function closeMenu() {
   console.log('tt');

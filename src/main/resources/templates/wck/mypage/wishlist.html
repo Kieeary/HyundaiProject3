@@ -868,6 +868,10 @@
     <!-- depth8 e -->
     <script>
       $(document).ready(function () {
+    	  let token = $("meta[name='_csrf']").attr("content");
+          let header = $("meta[name='_csrf_header']").attr("content");
+          
+          
     	let pageNum = 1;
     	let count = 0;
     	//TODO : count 가져오기
@@ -975,6 +979,9 @@
             let pVal = $(this).closest('li').attr('id');
             console.log(pVal);
             $.ajax({
+            	beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+              },
               url: '/api/member/like/' + pVal,
               method: 'post',
               success: function (data) {
@@ -992,6 +999,9 @@
               let pId = $(t).data('value');
               console.log('delete : ' + pId);
               $.ajax({
+            	 beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
                 url: '/api/member/like/' + pId,
                 method: 'post',
                 success: function (data) {

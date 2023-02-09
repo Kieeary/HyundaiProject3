@@ -90,6 +90,10 @@
               <input type="hidden" name="inputId" id="inputId" value="" />
               <!-- 아이디 입력 -->
               <div class="input_login_id">
+              <input 
+				  type="hidden" 
+				  th:name="${_csrf.parameterName}" 
+				  th:value="${_csrf.token}" />
                 <input
                   id="username"
                   name="username"

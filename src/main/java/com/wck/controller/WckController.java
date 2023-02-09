@@ -117,11 +117,27 @@ public class WckController {
 		return "redirect:/wck/login";
 	}
 	
+	/*
+	 * 키워드 검색 폼
+	 */
+	@GetMapping("/search")
+	public String searchForm() {
+		return "wck/search";
+	}
+	
+
+	@GetMapping("/search/result")
+	public String searchResult(
+			@RequestParam("query") String query) {
+		log.info("query : " +query);
+		return "wck/home";
+	}
 
 	@GetMapping("/sampleProductDetail")
 	public String samplePD() {
 		return "wck/sample/prod_detail";
 	}
+	
 	
 	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/shoppingbag")
@@ -138,4 +154,6 @@ public class WckController {
 		
 		return "wck/shoppingbag/cart";
 	}
+	
+	
 }

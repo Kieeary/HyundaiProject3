@@ -143,5 +143,15 @@
 		WHERE pc.PCID = pci.PCID AND PID = #{pId}
 		ORDER BY pc.PCID DESC
 	</select>
+	
+	<select id="getProductStock" resultType="int">
+		SELECT PSSTOCK FROM PRODUCT_STOCK WHERE PSID = #{psId}
+	</select>
+	
+	<select id="getProductSympleInfo" resultType="productCommon">
+		SELECT b.BNAME, pc.PNAME
+		FROM PRODUCT_COMMON pc, BRAND b  
+		WHERE pc.BNO = b.BNO AND PID = #{pId}
+	</select>
 
 </mapper>

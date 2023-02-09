@@ -36,5 +36,7 @@ public interface ProductMapper {
 	
 	public List<DetailProductVO> getColorSet(String pId);
 
-
+	public int getProductStock(String psId);
+	
+	public ProductCommonVO getProductSympleInfo(String pId);
 }

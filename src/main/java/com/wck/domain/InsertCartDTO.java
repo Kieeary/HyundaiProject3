@@ -1,8 +1,8 @@
 package com.wck.domain;
 
-import org.hibernate.validator.constraints.Range;
+import javax.validation.constraints.NotNull;
 
-import com.sun.istack.internal.NotNull;
+import org.hibernate.validator.constraints.Range;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

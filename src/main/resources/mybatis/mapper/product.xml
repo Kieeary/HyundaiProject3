@@ -113,6 +113,36 @@
 	</select>
 	
 	
+
+	<resultMap type="productInfo" id="productInfo">
+		<id property="pcid" column="PCID" />
+		<result property="bname" column="BNAME" />
+		<result property="pname" column="PNAME" />
+		<result property="pcimg1" column="PCIMG1" />
+		<result property="pcimg2" column="PCIMG2" />
+		<result property="pcimg3" column="PCIMG3" />
+		<result property="pnote" column="PNOTE" />
+		<result property="pcprice" column="PCPRICE" />
+		<result property="pcimg1" column="PCIMG1" />
+		<collection property="sizeNstock" resultMap="sizeNstock">
+  		</collection> 		
+	</resultMap>
+	
+	<resultMap type="perProductInfo" id="sizeNstock">
+		<result property="pssize" column="PSSIZE" />
+		<result property="psstock" column="PSSTOCK" />
+	</resultMap>
+	
+	<select id="getProductInfo" resultMap = "productInfo">
+		select pcolor.pcid, pcom.bname, pcom.pname , pcolor.pcimg1, pcolor.pcimg2, pcolor.pcimg3, pcom.pnote, pcolor.pcprice, pstock.psize, pstock.psstock from product_color pcolor
+		inner join product_common pcom 
+		on pcolor.pid = pcom.pid
+		inner join product_stock pstock
+		on pstock.pcid = pcolor.pcid
+		where pcolor.pid = #{pid} and pcolor.pcid =#{pcid}
+	</select>
+	
+
 	<select id="existLikeProduct" resultType="boolean">
 		select count(*) from likes
 		where mid = #{mId} and pid = #{pId}

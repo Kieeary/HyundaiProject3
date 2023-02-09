@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductCommonVO;
+import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
 
 import lombok.extern.log4j.Log4j2;
@@ -47,6 +48,16 @@ public class ProductMapperTest {
 			}
 			}
 		}
+	}
+	
+	@Test
+	void getProductInfo() {
+		String pcid = "MM2C7KTO041H9E_BK";
+		String pid = "MM2C7KTO041H9E";
+		
+		ProductInfoVO productInfo = productMapper.getProductInfo(pcid, pid);
+		
+		log.info(productInfo.getPcid());
 	}
 	
 	@Transactional

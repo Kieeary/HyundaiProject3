@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductCommonVO;
+import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
 import com.wck.mapper.ProductMapper;
 import com.wck.util.SizeSortUtil;
@@ -63,6 +64,14 @@ public class ProductService {
 		return productMapper.getLikeProductCount(id);
 	}
 
+	
+
+	public ProductInfoVO getProductInfo(String pcid, String pid) {
+		
+		return productMapper.getProductInfo(pcid, pid);
+	}
+
+
 	public List<String> getSizeSet(String pcId) {
 		List<String> sizeSet = productMapper.getSizeSet(pcId);
 		sizeSet.sort(SizeSortUtil.sizeSortComp);
@@ -71,6 +80,7 @@ public class ProductService {
 
 	public List<DetailProductVO> getColorSet(String pId) {
 		return productMapper.getColorSet(pId);
+
 	}
 
 }

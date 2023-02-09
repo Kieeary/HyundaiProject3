@@ -1,15 +1,19 @@
 package com.wck.controller;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.javassist.bytecode.stackmap.MapMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -66,6 +70,7 @@ public class CartController {
 		List<String> sizeSet = productService.getSizeSet(pcId);
 		Map<String, Object>	datas = new HashMap<String, Object>();
 		datas.put("colorSet", colorSet);
+		log.info("color # : " + colorSet.size());
 		datas.put("sizeSet", sizeSet);			
 		return new ResponseEntity<>(datas, HttpStatus.OK);
 	}
@@ -77,6 +82,30 @@ public class CartController {
 		List<String> sizeSet = productService.getSizeSet(pcId);
 		log.info("{} ",sizeSet);
 		return new ResponseEntity<>(sizeSet, HttpStatus.OK);
+	}
+	
+	@PostMapping(value = "/changeProd", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<Map<String, String>> changeCartProd(@RequestBody Map<String, Object> data){
+		String mid = (String) data.get("mid");
+		String oldPsid = (String) data.get("old_psid"); 
+		String newPsid = (String) data.get("new_psid");
+		int qty = Integer.parseInt((String) data.get("qty"));
+		
+		String msg = productService.getProductStock(newPsid, qty);
+		
+		log.info(msg);
+		
+		if(msg.equals("")) {
+			cartService.deleteCartProd(mid, oldPsid);
+			cartService.addCart(mid, newPsid, qty);
+			return new ResponseEntity<> (HttpStatus.OK);
+		} else {
+			Map<String, String> result = new HashMap<>();
+			result.put("msg", msg);
+			log.info(msg);
+			return new ResponseEntity<> (result, HttpStatus.OK);
+		}
 	}
 }
 	

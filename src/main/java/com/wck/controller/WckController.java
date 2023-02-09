@@ -1,7 +1,14 @@
 package com.wck.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +17,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -117,11 +126,28 @@ public class WckController {
 		return "redirect:/wck/login";
 	}
 	
+	/*
+	 * 키워드 검색 폼
+	 */
+	@GetMapping("/search")
+	public String searchForm() {
+		return "wck/search";
+	}
+	/*
+	 * 키워드 검색 처리 로직 : 쿠키에 검색어 저장
+	 */
+	@GetMapping("/search/result")
+	public String searchResult(
+			@RequestParam("query") String query) {
+		log.info("query : " +query);
+		return "wck/home";
+	}
 
 	@GetMapping("/sampleProductDetail")
 	public String samplePD() {
 		return "wck/sample/prod_detail";
 	}
+	
 	
 	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/shoppingbag")
@@ -138,4 +164,6 @@ public class WckController {
 		
 		return "wck/shoppingbag/cart";
 	}
+	
+	
 }

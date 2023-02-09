@@ -27,6 +27,8 @@ public class Account extends User implements OAuth2User{
 	private String loginType;
 	private int grade;
 	
+	private int cartCount;
+	
 	// oauth2 일때 만
 	private Map<String, Object> OA2_attr;
 	

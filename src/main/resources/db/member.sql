@@ -175,6 +175,3 @@ null, 1);
 
 create sequence seq_coupon_detail;
 
-
-insert into likes(pid, mid, ltime)
-values ('SH2CAKCD036M', '123123', TO_CHAR(SYSTIMESTAMP, 'YYYYMMDDHH24MISSFF3'));

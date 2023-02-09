@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.wck.domain.MemberVO;
 import com.wck.mapper.MemberMapper;
 import com.wck.security.domain.Account;
+import com.wck.service.MemberService;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -49,8 +50,11 @@ public class FormUserDetailsService implements UserDetailsService {
 		Account account = new Account(member.getId(), member.getEmail(), member.getPassword(), member.getName(),
 				member.getGender(), member.getLoginType(), authorities);
 
+		int cartCount = memberMapper.getCartCount(member.getId());
+		account.setCartCount(cartCount);
+		
 		log.info(account);
-
+		
 		return account;
 	}
 

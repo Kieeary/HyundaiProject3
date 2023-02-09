@@ -21,5 +21,7 @@ public interface MemberMapper {
 	public int updateInfoOne(UpdateMemberDTO member);
 	public int disableOne(String email);
 	public int getGradeById(String mId);
+	
+	public int getCartCount(String mId);
 }
 

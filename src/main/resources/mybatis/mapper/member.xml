@@ -118,6 +118,11 @@
 	where memail = #{email}
 	</update>
 	
+	<select id="getCartCount" resultType="int">
+		select count(*) from cart
+		where mid = #{mId}
+	</select>
+	
 	<select id="getGradeById" resultType="int">
 		SELECT MGRADE FROM MEMBER WHERE MID = #{mId}
 	</select>

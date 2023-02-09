@@ -1,4 +1,5 @@
 <html lang="ko" class="">
+<!-- thymeleaf fragment 쓰면 스와이프가 안됨 -->
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -75,22 +76,6 @@
       href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/popup.css"
       rel="stylesheet"
       type="text/css" />
-
-    <script type="text/javascript">
-      var handsomePageId = 'mypageFloatingPopup';
-      var main_bul = false;
-    </script>
-
-    <script type="text/javascript">
-      var handsomeUserLoginYn = 'Y';
-    </script>
-    <script type="text/javascript">
-      var isoKoYn = 'Y';
-    </script>
-    <script type="text/javascript">
-      var handsomeIsoCode = 'ko';
-      var handsomeContextPath = '/ko';
-    </script>
 
     <script
       type="text/javascript"
@@ -181,13 +166,27 @@
       type="text/css"
       href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
   </head>
-
-  <body>
     <style>
       .swiper-wrapper {
         height: auto;
       }
     </style>
+      <script type="text/javascript">
+      var handsomePageId = 'mypageFloatingPopup';
+      var main_bul = false;
+    </script>
+
+    <script type="text/javascript">
+      var handsomeUserLoginYn = 'Y';
+    </script>
+    <script type="text/javascript">
+      var isoKoYn = 'Y';
+    </script>
+    <script type="text/javascript">
+      var handsomeIsoCode = 'ko';
+      var handsomeContextPath = '/ko';
+    </script>
+  <body>
     <div class="hsome_allContents_wrapper"></div>
 
     <a href="noLink();" class="hsome_topBtn upper" id="handsomeTopBtn"
@@ -530,7 +529,7 @@
           <a
             href="javascript:noLink();"
             class="close"
-            onclick="mypagePopupClose(this);"
+            onclick="goBack();"
             >닫기</a
           >
         </div>

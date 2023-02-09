@@ -1,5 +1,7 @@
 package com.wck.service;
 
+import static org.mockito.ArgumentMatchers.intThat;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,5 +16,16 @@ import lombok.extern.log4j.Log4j2;
 public class ProductServiceTest {
 	@Autowired
 	private ProductService productService;
+	
+	// author : 김한울
+	// purpose : 장바구니 상품 변경시 가능 여부 확인
+	@Test
+	void getProdStockService() {
+		String psid = "IL2CANPC782W_BK_70";
+		int qty = 1000;
+		
+		String result = productService.getProductStock(psid, qty);
+		log.info(result.equals("") ? "상품 변경 가능" : result);
+	}
 
 }

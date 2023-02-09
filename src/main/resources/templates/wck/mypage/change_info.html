@@ -683,7 +683,10 @@
           id="updateProfileForm"
           action="/wck/mypage/change/form"
           method="post">
-          <input type="hidden" name="prk" id="prk" value="8953806979076" />
+          <input 
+				  type="hidden" 
+				  th:name="${_csrf.parameterName}" 
+				  th:value="${_csrf.token}" />
          
           <!-- contents s -->
           <div
@@ -1753,11 +1756,16 @@
         type="text/javascript"
         src="http://www.thehandsome.com/_ui/handsomemobile/js/SsoAjax.js"></script>
       <script type="text/javascript">
+      let token = $("meta[name='_csrf']").attr("content");
+      let header = $("meta[name='_csrf_header']").attr("content");
         //<![CDATA[
         $(document).ready(function () {
           $('#oldPassword').blur(function () {
             if ($(this).val() != '') {
               $.ajax({
+            	  beforeSend : function(xhr) {
+                      xhr.setRequestHeader(header, token);
+                },
                 method: 'post',
                 url: '/api/member/check/pw',
                 data: JSON.stringify({
@@ -1871,6 +1879,9 @@
             );
             la.confirmAction = function () {
               $.ajax({
+            	  beforeSend : function(xhr) {
+                      xhr.setRequestHeader(header, token);
+                },
                 method: 'post',
                 url: '/api/member/update/pw',
                 data: JSON.stringify({

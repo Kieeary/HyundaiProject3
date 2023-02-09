@@ -130,6 +130,8 @@
           </script>
 
           <script>
+    	  let token = $("meta[name='_csrf']").attr("content");
+          let header = $("meta[name='_csrf_header']").attr("content");
             function deleteBtnEvent(productCode) {
               var la = new layerConfirm(
                 '선택하신 상품을 쇼핑백에서 삭제하시겠습니까?',
@@ -155,6 +157,9 @@
               console.log(pid);
               $.ajax({
                 url: '/api/member/like/' + pid,
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+              },
                 method: 'post',
                 success: function (data) {
                   console.log(data);

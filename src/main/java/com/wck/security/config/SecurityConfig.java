@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http
 			// url 경로 접근 권한 체크
 			.authorizeHttpRequests()
-			.anyRequest().permitAll()
+//			.anyRequest().permitAll()
 		.and()
 			// form login 방식
 			.formLogin()
@@ -86,8 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.permitAll()
 			
 		.and()
-			.csrf()
-			.disable()
+//			.csrf()
+//			.disable()
 			
 		.logout()
 		.logoutUrl("/wck/logout")

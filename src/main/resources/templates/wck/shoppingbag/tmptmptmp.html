@@ -1,69 +1,41 @@
-
-<ul class="gl_edit">
-  
-  <li>
-  
-  
-    <div class="gl_tit">색상</div>
-    <ul class="gl_con btn_color_wrap"> <!-- function setColorRadio 참조 -->
-      <li th:each="color, i : ${cartColorList}">
-         <th:block th:if="${cart.pid == color.pid}">
-         <th:block th:if="${cart.pcolor == color.ccolorcode}">
-
-          <input type="radio" checked="checked" th:id="${color.ccolorcode}+${cart.pid}" class="d" th:value="${color.ccolorcode}" th:name="'name'+${cart.pid}" 
-          >
-        <label for="gl_rd_color_01_01" th:onclick="setOption(this, [[${cart.pid}]],[[${color.ccolorcode}]])"></label>
-                <span class="gl_color_val"   th:style="'background: url('+${color.colorimage}+') center /100% auto no-repeat'"></span>
-         </th:block>
-           <th:block th:unless="${cart.pcolor == color.ccolorcode}">
-              <input type="radio"  class="d" th:id="${color.ccolorcode}+${cart.pid}" th:value="${color.ccolorcode}" th:name="'name'+${cart.pid}">
-                <label for="gl_rd_color_01_01" th:onclick="setOption(this, [[${cart.pid}]],[[${color.ccolorcode}]])"></label>
-                <span class="gl_color_val"  th:style="'background: url('+${color.colorimage}+') center /100% auto no-repeat'"></span>
-           
-           </th:block>
-                </th:block>
-              </li>
-      </ul>
-    <div class="gl_con selected_color_txt">
-      <span th:class="${cart.pid}+'sct_v'" th:text="${cart.pcolor}"></span>
-    </div>
-  </li>
-  <li>
-    <div class="gl_tit">사이즈</div>
-    <div class="gl_con">
- 
-                
-                <select th:id="${cart.pid}+'sizelist'" class="sod_select" >
-                 <th:block th:each="size : ${cartSizeList}">
-                 <th:block th:if="${cart.pid == size.pid and cart.pcolor == size.ccolorcode}">
- 
- <th:block th:if="${size.ssize == cart.psize}">
-                 <option    th:text="${size.ssize}" selected></option>
-              </th:block>
-              <th:block th:unless="${size.ssize == cart.psize}">
-                 <option    th:text="${size.ssize}" ></option>
-           
-              </th:block>
-  </th:block>
-  </th:block>
-</select>
-       <script>
-       $("select[name=lo]").change(function(){
-          
-           console.log($("select[name=lo] option:selected").text()); //text값 가져오기
-         });
-       
-       </script>
-    </div>
-  </li>
-  <li>
-    <div class="gl_tit">수량</div>
-    <div class="gl_con">
-    <div class="gl_count_edit">
-      <a th:onclick="'quantityMinus(this,'+${i.index}+');'" class="btn_minus"><span>감소</span></a>
-      <div class="gl_count_num"><input type="text" title="수량" readonly="" th:value="${cart.pamount}" class="mr0" th:id="'quantity_'+${i.index}" th:name="'quantity_'+${i.index}" path="quantity"></div>
-        <a th:onclick="'quantityPlus(this,'+${i.index}+');'" class="btn_plus"><span>증가</span></a>
-    </div>
-    </div>
-  </li>
-</ul>
+<div class="gl_tgl gl_tgl_option" id="pt_list_0" style="display: block;"><!-- color_size_price -->
+  <ul class="gl_edit">
+    <li>
+      <div class="gl_tit">색상</div>
+      <ul class="gl_con btn_color_wrap"> <!-- function setColorRadio 참조 -->
+        <th:each="color : ${result['colorSet']}">
+          <li>
+            <input type="radio" th:if="${}" checked="checked" id="gl_rd_color_00_07" name="gl_rd_color_00" onclick="setOptions(this, '0', 'FL2C7HBG002LFE_PK', 'style');">
+                    <label for="gl_rd_color_00_07"></label>
+                    <span class="gl_color_val" style="background:#ee84a2 url('http://newmedia.thehandsome.com/FL/2C/FW/FL2C7HBG002LFE_PK_C01.jpg/dims/resize/60x60') center /100% auto no-repeat">#ee84a2</span>
+                  </li>
+        </th:each>
+        </ul>
+      <div class="gl_con selected_color_txt">
+        <span class="sct_v">PINK</span>
+      </div>
+    </li>
+    <li>
+      <div class="gl_tit">사이즈</div>
+      <div class="gl_con">
+      <span class="sod_select  touch" tabindex="0" data-cycle="false" data-links="false" data-links-external="false" data-placeholder-option="false" data-filter=""><span class="sod_label">FR</span><span class="sod_list_wrapper"><span class="sod_list"><span class="sod_option  selected active " title="FR" data-value="FL2C7HBG002LFE_PK_FR">FR</span></span></span><select id="gl_slr_size_0" name="gl_slr_size_0" class="sodsb" onchange="setOptions(this, '0', '', 'size');">
+        <option value="FL2C7HBG002LFE_PK_FR" selected="">FR</option>
+                  </select></span>
+      </div>
+    </li>
+    <li>
+      <div class="gl_tit">수량</div>
+      <div class="gl_con">
+      <div class="gl_count_edit">
+        <a onclick="quantityMinus(this, '0');" class="btn_minus"><span>감소</span></a>
+        <div class="gl_count_num"><input type="text" title="수량" readonly="" value="1" class="mr0" id="quantity_0" name="quantity_0" path="quantity"></div>
+          <a onclick="quantityPlus(this, '0');" class="btn_plus"><span>증가</span></a>
+      </div>
+      </div>
+    </li>
+  </ul>
+  <div class="gl_tgl_btns btn_wrap btn_wrap_div2">
+    <a href="#none" class="btnstl3 solid_btn_gray btn_cancel"><span>취소</span></a>
+    <a href="#none" class="btnstl3 solid_btn_blk btn_save" id="UpdateCart_0" onclick="productModifyEvent(this);"><span>저장</span></a>
+  </div>
+  </div>

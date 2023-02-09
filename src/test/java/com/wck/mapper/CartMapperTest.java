@@ -14,7 +14,7 @@ import lombok.extern.log4j.Log4j2;
 
 @SpringBootTest
 @Log4j2
-public class CartMapperTests {
+public class CartMapperTest {
 	@Autowired
 	private CartMapper cartMapper;
 	

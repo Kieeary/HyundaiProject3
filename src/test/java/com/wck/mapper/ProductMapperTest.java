@@ -8,11 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import com.wck.domain.DetailProductVO;
-
 import com.wck.domain.Criteria;
-import com.wck.domain.ProductColorVO;
+import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductVO;
 
@@ -36,13 +33,6 @@ public class ProductMapperTest {
 		log.info(list.size());
 	}
 	
-	@Test
-	void getProductColor() {
-		String pId = "101110005";
-		String pcId = "101110005_MU";
-		ProductColorVO vo = productMapper.getProductColor(pId, pcId);
-		log.info(vo);
-	}
 	
 	@Test
 	void getProductList() {
@@ -50,8 +40,8 @@ public class ProductMapperTest {
 		List<ProductVO> vo = productMapper.getProducts(null, gd, null, null);
 		
 		for(ProductVO a : vo) {
-			if(a.getPId().equals("MM2C7KTO041H9E")) {
-			log.info("PID :" + a.getPId());
+			if(a.getPid().equals("MM2C7KTO041H9E")) {
+			log.info("PID :" + a.getPid());
 			for(DetailProductVO b : a.getDetailProduct()) {
 				log.info("PCID : " + b.getPCId());
 			}
@@ -75,6 +65,13 @@ public class ProductMapperTest {
 		log.info(exist);
 	}
 	
+	@Test
+	void getProductDetailByPid() {
+		String pId = "O22C8WOP141W";
+		ProductCommonVO vo = productMapper.getProductDetailByPid(pId);
+		log.info(vo);
+	}
+
 //	author : 김한울
 //	purpose : 상품 color 옵션에 따른 사이즈 추출 (품절 제외)  
 	@Test

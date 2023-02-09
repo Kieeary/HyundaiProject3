@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class UpdateMemberDTO {
-
+	
 	@Size(min = 2,message = "이름을 입력해주세요")
 	private String name;
 	
@@ -44,6 +44,7 @@ public class UpdateMemberDTO {
 	
 	@SuppressWarnings("deprecation")
 	public UpdateMemberDTO(MemberVO member) {
+		
 		this.name = member.getName();
 		this.email = member.getEmail();
 		

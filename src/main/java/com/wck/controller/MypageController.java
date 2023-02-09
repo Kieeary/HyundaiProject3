@@ -26,11 +26,17 @@ public class MypageController {
 	
 	private final MemberService memberService;
 	
+	/*
+	 * 마이 페이지
+	 */
 	@GetMapping
 	public String myPage() {
 		return "wck/mypage/mypage";
 	}
 	
+	/*
+	 * 유저 정보 변경을 위한 비밀번호 확인 페이지
+	 */
 	@GetMapping("/change/checkpw")
 	public String checkPw(
 			@RequestParam(required = false, name = "error") String error,
@@ -42,6 +48,9 @@ public class MypageController {
 		return "wck/mypage/change_info_check_pw";
 	}
 	
+	/*
+	 * 유저 정보 변경을 위한 비밀번호 확인 페이지
+	 */
 	@SuppressWarnings("deprecation")
 	@PostMapping("/change/checkpw")
 	public String checkPwPost(
@@ -58,6 +67,9 @@ public class MypageController {
 		return "redirect:/wck/mypage/change/form";
 	}
 	
+	/*
+	 * 유저 정보 변경 페이지
+	 */
 	@GetMapping("/change/form")
 	public String changeForm(
 			@AuthenticationPrincipal Account account,
@@ -70,6 +82,9 @@ public class MypageController {
 		return "wck/mypage/change_info";
 	}
 	
+	/*
+	 * 회원 탈퇴 페이지
+	 */
 	@GetMapping("/change/secession")
 	public String secession() {
 		return "wck/mypage/secession";
@@ -85,6 +100,9 @@ public class MypageController {
 		return "redirect:/wck/logout";
 	}
 	
+	/*
+	 * 찜한 상품 목록 페이지
+	 */
 	@GetMapping("/wish")
 	public String myWishList(
 			@AuthenticationPrincipal Account account) {

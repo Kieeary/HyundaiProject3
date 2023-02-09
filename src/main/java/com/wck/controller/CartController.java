@@ -10,7 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -76,7 +75,7 @@ public class CartController {
 	public ResponseEntity<List<String>> getSizeOpt(@RequestParam("pcid") String pcId) {
 		log.info("PCID > " + pcId);
 		List<String> sizeSet = productService.getSizeSet(pcId);
-		log.info("결과 데이터 : "+sizeSet.size());
+		log.info("{} ",sizeSet);
 		return new ResponseEntity<>(sizeSet, HttpStatus.OK);
 	}
 }

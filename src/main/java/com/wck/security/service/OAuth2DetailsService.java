@@ -49,6 +49,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 			log.info(k + " : " + v);
 		});// end foreach
 
+		
 		String email = null;
 		if (clientName.equals("Google")) {// 구글 인증 확인
 			email = oAuth2User.getAttribute("email");
@@ -66,6 +67,11 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 
 			Account account = new Account(member.getId(), member.getEmail(), member.getPassword(), member.getName(),
 					member.getGender(), member.getLoginType(), authorities, oAuth2User.getAttributes());
+			
+			int cartCount = memberMapper.getCartCount(member.getId());
+			
+			account.setCartCount(cartCount);
+			
 			return account;
 		} catch (Exception e) {
 			log.info(e.getMessage());

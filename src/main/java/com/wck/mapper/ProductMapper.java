@@ -8,12 +8,8 @@ import org.apache.ibatis.annotations.Param;
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.ProductColorChipVO;
-import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
-
-import org.springframework.lang.Nullable;
-
 import com.wck.domain.ProductVO;
 
 @Mapper
@@ -23,6 +19,8 @@ public interface ProductMapper {
 
 	public List<ProductVO> getProducts(@Param("br") String br, @Param("gd") String gd, 
 					@Param("sC") String sC, @Param("tC") String tC); 
+	
+	public List<ProductVO> searchProducts(String keyword);
 	
 	public List<ProductColorChipVO> getColorChip(String pid);
 

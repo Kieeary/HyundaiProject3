@@ -74,6 +74,11 @@ public class ProductService {
 		
 		return productList;
 	}
+	
+	public List<ProductVO> searchProductsList(String keyword) {
+		
+		return productMapper.searchProducts(keyword);
+	}
 
 	
 	public int getLikeProductCount(String id) {

@@ -82,6 +82,23 @@ public class ProductMapperTest {
 	}
 	
 	/*
+	 * 정기범
+	 */
+	@Test
+	void searchProducts() {
+		String keyword = "캐시미어";
+		List<ProductVO> vo = productMapper.searchProducts(keyword);
+	
+		for(ProductVO a : vo) {
+
+			log.info("PID :" + a.getPid());
+			for(DetailProductVO b : a.getDetailProduct()) {
+				log.info("PCID : " + b.getPCId());
+			}
+		}
+	}
+	
+	/*
 	 * 정기
 	 */
 	@Test

@@ -1,4 +1,4 @@
-<html lang="ko" class="back">
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -174,7 +174,11 @@
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
 				<h1 class="h_ttl ellipsis" id="headerTitle">
-					<a href="javascript:noLink();" onclick="openGnbPopup();" class="select_">the CASHMERE</a>
+					<a href="javascript:noLink();" onclick="openGnbPopup();" 
+					class="select_"
+					th:if="${category.gender} == 'me'"
+					th:text='남성'>
+					</a>
 				</h1>
 				<script type="text/javascript">
 					$(document).ready(function () { });
@@ -216,60 +220,21 @@
 			</form>
 			<!-- ################## contents ################## -->
 			<div class="hs_product_list_wrap">
-				<div class="brand_cont">
 					<!-- flag_wrap -->
-					<div class="cate_wrap191028">
-						<!--//previous_category191028 -->
 
-						<!-- flag_wrap -->
-						<div
-							class="flag_wrap case swiper-container swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal">
-							<!-- //전체보기 아닌 case(이전카테고리 노출될경우) class 추가-->
-							<ul class="swiper-wrapper" style="
-                    transform: translate3d(0px, 0px, 0px);
-                    transition-duration: 0ms;
-                  ">
-								<!-- //아울렛 전체보기 임시주석처리 -->
-								<li class="swiper-slide flag on swiper-slide-active" id="categoryNav01"
-									style="margin-right: 6px">
-									<a href="/ko/c/br08/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', 'the CASHMERE&nbsp;전체');">the
-										CASHMERE&nbsp;전체</a>
-								</li>
-								<!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag swiper-slide-next" style="margin-right: 6px">
-									<a href="/c/br08_we/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '여성');">여성</a>
-								</li>
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="/c/br08_me/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '남성');">남성</a>
-								</li>
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="/c/br08_as/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '잡화');">잡화</a>
-								</li>
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="/c/br08_be/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '뷰티');">뷰티</a>
-								</li>
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="/c/br08_ls/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '라이프스타일');">라이프스타일</a>
-								</li>
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="javascript:void(0);" class="name"
-										onclick="moveBrandLookBook('br08');">룩북*</a>
-								</li>
-							</ul>
-						</div>
-						<!--// flag_wrap -->
-					</div>
+			<div class="flag_wrap case swiper-container depth2 swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal"> <!-- //전체보기 아닌 case(이전카테고리 노출될경우) class 추가-->
+	                    <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);"><!-- //아울렛 전체보기 임시주석처리 -->
+                            <li class="swiper-slide flag" id="categoryNav01" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&seCCat=me03" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">아우터&nbsp;전체</a></li>
+                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
+	                        <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&Cat=me031" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');">재킷</a></li>
+		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me032" class="name"	>점퍼</a></li>
+			                <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me033" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '트렌치코트');">트렌치코트</a></li>
+		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me034" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '코트');">코트</a></li>
+		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me035" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '다운/패딩');">다운/패딩</a></li>
+		                 </ul>
+                    </div>
+
+
 					<script type="text/javascript">
 						$(document).ready(function () {
 							if ('true' == 'true') {
@@ -567,7 +532,7 @@
 						}
 					</script>
 
-				</div>
+				
 				<!-- sort_tit -->
 				<div class="sort_tit">
 					<p class="num_txt" id="totalSpan">1,824 개</p>
@@ -3646,14 +3611,16 @@
 
 
 
-	<script>
+	<script th:inline="javascript">
 		$(document).ready(function () {
 			
-			
-			var gd = 'me'
-			var br = null;
-			var sc = null;
-			var tc = 'me031'
+		    /*<![CDATA[*/
+		      let gd = [[${category.gender}]];
+		      let br = [[${category.brand}]];
+			  let sc = [[${category.secCat}]];
+			  let tc = [[${category.thrCat}]];
+		      /*]]>*/
+
 						
 			var query = '';
 			if(gd != null) query += "gender="+gd; 
@@ -3661,7 +3628,7 @@
 			if(gd == null)	query += "brand="+br;
 				else query += "&brand="+br;
 			}
-			if(sc != null) query += "&secCat"+sc;
+			if(sc != null) query += "&secCat="+sc;
 			if(tc != null) query += "&thrCat="+tc;
 						
 			console.log(query);
@@ -3758,8 +3725,9 @@
 		}
 
 	</script>
-						
-
+	
+    <script type="text/javascript" th:src="@{/js/search.js}" defer></script>
+    <script type="text/javascript" th:src="@{/js/quick_menu.js}" defer></script>
 </body>
 <!-- AceCounter Log Gathering Script V.7.5.2013010701 -->
 

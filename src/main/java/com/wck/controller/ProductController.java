@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wck.domain.CategoryVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
@@ -27,8 +28,20 @@ public class ProductController {
 	
 	// 상품 조회
 	@GetMapping("/list")
-	public String getBrandProducts() {
+	public String getBrandProducts(Model model,
+									@RequestParam(value="brand", required=false) String brand,
+									@RequestParam(value="gender", required=false) String gender,
+									@RequestParam(value="secCat", required=false) String secCat,
+									@RequestParam(value="thrCat", required=false) String thrCat) {	
 		
+		CategoryVO category = new CategoryVO();
+
+		if(brand != null)	category.setBrand(brand);
+		if(gender != null)	category.setGender(gender);
+		if(secCat != null)	category.setSecCat(secCat);
+		if(thrCat != null)	category.setThrCat(thrCat);
+		
+		model.addAttribute("category", category);
 		
 		return "wck/product/list";
 	}

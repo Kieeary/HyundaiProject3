@@ -111,6 +111,52 @@
         pstock.psstock
 	</select>
 	
+	<!-- 추후 getProducts 와 합칠수 있으면 합치자  -->
+	
+	<resultMap type="product" id="searchProductsMap">
+ 		<id property="pid" column="PID" />
+ 		<result property="pname" column="PNAME" />
+  		<result property="bname" column="BNAME" />
+   		<result property="pcprice" column="PCPRICE" />
+   		<result property="pstatus" column="PSTATUS" />
+   		<result property="bno" column="BNO" />
+		<collection property="detailProduct" resultMap="pcColorInfo">
+  		</collection> 	
+ 	</resultMap>
+ 	
+ 	<resultMap type="detailProduct" id= "searchPcColorInfo">
+ 		<result property="PCId" column="PCID" />
+ 		<result property="PCColorCode" column="PCCOLORCODE" />
+ 		<result property="PCImg1" column="PCIMG1" />
+ 		<result property="PCChipImg" column="PCCHIPIMG" />
+ 		<result property="ColorName" column="COLORNAME" />
+ 	</resultMap>
+ 	
+
+	<select id="searchProducts" resultMap = "searchProductsMap">
+        SELECT pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
+        pstock.psstock
+        from product_common pcom
+        INNER JOIN product_category pcat
+		ON pcom.pid = pcat.pid
+        INNER JOIN category c
+        ON c.cateno = pcat.cateno
+		INNER JOIN product_color pcolor
+		ON pcolor.pid = pcom.pid
+        INNER JOIN product_stock pstock
+        ON pstock.pcid = pcolor.pcid
+        WHERE pcom.pname LIKE '%'||#{keyword}||'%' 
+        OR pcom.bname LIKE '%'||#{keyword}||'%' OR pcom.pid LIKE '%'||#{keyword}||'%' 
+        OR pcolor.pcid LIKE '%'||#{keyword}||'%' OR pstock.psid LIKE '%'||#{keyword}||'%'
+        group by pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
+        pstock.psstock
+	</select>
+	
+	
+	
+	
+	
+	
 	
 
 	<resultMap type="productInfo" id="productInfo">

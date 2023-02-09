@@ -3723,12 +3723,14 @@
 	<script>
 		$(document).ready(function () {
 
-			var param = 'we'
-
+			var gd = 'me'
+			var br = null;
+			var sc = null;
+			var tc = 'me031';
 
 			$.ajax({
 				type: 'get',
-				url: '/wck/products/list/p?gender=' + param,
+				url: '/wck/products/list/p?gender=' + gd + '&brand=' + br + '&secCat=' + sc + '&thrCat=' + tc ,
 				success: function (result) {
 					console.log("통신");
 					console.log(result);
@@ -3737,31 +3739,36 @@
 					for (var i = 0; i < result.length; i++) {
 
 						productlist += `<li class="float active" id="listBody_li_${i}" value="hihi">`
-						productlist += `<a onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
-						productlist += '<div class="img">'
+						productlist += `<div id="tmp_${i}">`
+						productlist += `<a id="pcid_${i}" onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
+						productlist += `<div class="img index_img_${i}">`
 						productlist += '<img id="img_' + i + '" src="' + result[i].detailProduct[0].pcimg1 + '"/>'
 						productlist += '</div>'
 						productlist += '</a>'
+						productlist += '</div>'
+						productlist += '<div class=tmp2>'
 						productlist += '<div class="info_cont">'
 						productlist += '<div class="color_chip">'
 
 							for(var n=0; n<result[i].detailProduct.length; n++){	
 								console.log(result[i].detailProduct[n].pccolorCode)
 								
-								productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `')">` 	
+								productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '`  +result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' )">`
+						//		productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' , '` + result[i].detailProduct.length + `', '` + result[i].detailProduct[n].pccolorCode + `'  ,  +                      )"            >`
 								console.log(result[i]);
 								var tmp = result[i];
 							
+								console.log(result[i].detailProduct[n].pcchipImg);
 								
 								productlist += '<button class="chip on" ' +
-                						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url( "'  + result[i].detailProduct[n].pcchipImg + ' "")' +
-                						'></button></a>'
+                						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url('+result[i].detailProduct[n].pcchipImg+')"></button></a>'
                 						}
 						productlist += '</div>'
 						productlist += '<p class="brand">' + result[i].bname + '</p>'
 						productlist += '<p class="name">' + result[i].pname + '</p>'
 						productlist += '<p class="price" id="listPrice0">'
 						productlist += '<span id="price_CM2D1KTO513W_TG">' + result[i].pcprice + '</span></p>'
+						productlist += '</div>'
 						productlist += '</div>'
 						productlist += '</li>'
 					}
@@ -3783,19 +3790,6 @@
 		<input type="hidden" name="pcid" class="pcid">
 	</form>
 
-	<script>
-		function chgColorChip(pcid, pid, pcimg1, index) {
-
-			console.log(pcimg1);
-			console.log(`img_${index}`)
-			console.log(`<img id="img_${index}" src="${pcimg1}"/>`)
-
-			console.log(document.getElementById(`img_${index}`));
-			document.getElementById(`img_${index}`).src = pcimg1;
-			;
-		}
-
-	</script>
 
 	<script>
 		function goProductDetail(myPid, myPcid) {
@@ -3807,6 +3801,62 @@
 		}
 
 	</script>
+	
+		<script>
+	
+		function chgColorChip(pcid, pid, pcimg1, index) {
+						
+//			console.log(pcimg1);
+//			console.log(`img_${index}`)
+//			console.log(`<img id="img_${index}" src="${pcimg1}"/>`)
+
+//		console.log(document.getElementById(`img_${index}`));
+//			document.getElementById(`img_${index}`).src = pcimg1;
+			
+			console.log($('#listBody_li_'+index).val());
+			
+			var tmp = `<a onclick="goProductDetail('` + pid + `' , '` + pcid + `')"><div class="img"><img src="${pcimg1}"></div></a>`
+	//			tmp += '<div class="info_cont">'
+//				tmp += '<div class="color_chip">'
+
+//				for(var n=0; n<len; n++){	
+						
+//				tmp += `<a onclick="chgColorChip('` + pcid  +`' , '`+ pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' , '` + len + `')"            >`
+//				console.log(result[i]);
+					
+						
+//				tmp += '<button class="chip on" ' +
+  //      						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url( "'  + result[i].detailProduct[n].pcchipImg + ' "")' +
+   //     						'></button></a>'
+     //   						}
+				
+		//		tmp += '</div>'
+	//			tmp += '<p class="brand">' + result[i].bname + '</p>'
+	//			tmp += '<p class="name">' + result[i].pname + '</p>'
+	//			tmp += '<p class="price" id="listPrice0">'
+	//			tmp += '<span id="price_CM2D1KTO513W_TG">' + result[i].pcprice + '</span></p>'
+	//			tmp += '</div>'
+	//			tmp += '</li>'
+
+			
+			$('#tmp_'+index).html(tmp); 
+			
+	//		console.log(`pcid_${index}`)
+	//		document.getElementById(`pcid_${index}`).onclick = function() {
+	//			console.log("testsets");
+	//		}
+		
+				
+		//		$('#pcid_'+index).on('click', function(){
+		//			console.log("testsetestes");
+		//		});
+			
+			
+			
+		}
+
+	</script>
+						```````````````````````````````````````````````````````````````
 
 </body>
 <!-- AceCounter Log Gathering Script V.7.5.2013010701 -->

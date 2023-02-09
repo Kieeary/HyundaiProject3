@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
+import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
@@ -62,6 +63,10 @@ public class ProductService {
 	public ProductInfoVO getProductInfo(String pcid, String pid) {
 		
 		return productMapper.getProductInfo(pcid, pid);
+	}
+	
+	public List<ProductColorChipVO> getColorChip(String pid){
+		return productMapper.getColorChip(pid);
 	}
 
 	public List<String> getSizeSet(String pcId) {

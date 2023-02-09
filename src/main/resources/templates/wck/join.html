@@ -360,6 +360,7 @@
             $('#emailAddress').change(function () {
               $('#emailDuplChk').val('F');
               $('#check_dup_btn').attr('disabled',false);
+              $('emailMsg').text('');
             });
 
             $('#cancleBtn').click(function () {
@@ -389,7 +390,7 @@
 					if(data == false){
 						$("#check_dup_btn").attr('disabled',true);
 						$('#emailDuplChk').val('Y');
-			            $('#emailMsg').text('');
+			            $('#emailMsg').text('사용 가능한 이메일 입니다.');
 					}else{
 						$('#emailMsg').text('이미 사용 중인 이메일입니다.');
 					}
@@ -512,6 +513,10 @@
               th:object="${insertMember}"
               action="/wck/join"
               method="POST">
+                  <input 
+				  type="hidden" 
+				  th:name="${_csrf.parameterName}" 
+				  th:value="${_csrf.token}" />
               <input
                 type="hidden"
                 name="emailDuplChk"

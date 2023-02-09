@@ -1,14 +1,13 @@
 package com.wck.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
-import com.wck.domain.ProductColorVO;
+import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
@@ -54,9 +53,20 @@ public class ProductService {
 										@Nullable String sC, @Nullable String tC) {
 		
 		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
+		
+		for(ProductVO a : productList) {
+			log.info(a.getPid());
+		}
+		
 		return productList;
 	}
+	
+	public List<ProductVO> searchProductsList(String keyword) {
+		
+		return productMapper.searchProducts(keyword);
+	}
 
+	
 	public int getLikeProductCount(String id) {
 		return productMapper.getLikeProductCount(id);
 	}
@@ -64,6 +74,10 @@ public class ProductService {
 	public ProductInfoVO getProductInfo(String pcid, String pid) {
 		
 		return productMapper.getProductInfo(pcid, pid);
+	}
+	
+	public List<ProductColorChipVO> getColorChip(String pid){
+		return productMapper.getColorChip(pid);
 	}
 
 	public List<String> getSizeSet(String pcId) {

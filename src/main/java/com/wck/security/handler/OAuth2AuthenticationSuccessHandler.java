@@ -32,7 +32,7 @@ public class OAuth2AuthenticationSuccessHandler
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		log.info("=========Form Login Success Handler==========");
+		log.info("=========Oauth2 Login Success Handler==========");
 		Account account =  (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		log.info(account.getEmail()+" login");
 		if(account.getGender() == -1) {

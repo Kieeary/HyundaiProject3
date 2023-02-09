@@ -221,10 +221,10 @@
             <li class="cart">
             </a>
               <a
-                href="/ko/shoppingbag"
+                href="/wck/shoppingbag"
                 onclick="GA_Event('공통', '헤더', '쇼핑백');">
                 <span>cart</span>
-                <i sec:authorize="isAuthenticated()" sec:authentication="account" >1></i>
+                <i sec:authorize="isAuthenticated()" sec:authentication="principal.cartCount" >1</i>
                 <i sec:authorize="isAnonymous()">0</i>
                 </a>
             </li>

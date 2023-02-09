@@ -15,5 +15,5 @@ public class ProductInfoVO {
 	private String pcimg3;
 	private String pnote;
 	private int pcprice;
-	private List<PerProductVO> sizeNstock;
+	private List<ProductStockVO> sizeNstock;
 }

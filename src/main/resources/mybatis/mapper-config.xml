@@ -19,7 +19,7 @@
         <typeAlias type="com.wck.domain.DetailProductVO" alias="detailProduct"/>
         <typeAlias type="com.wck.domain.ProductVO" alias="product"/>    
         <typeAlias type="com.wck.domain.ProductInfoVO" alias="productInfo"/>    
-        <typeAlias type="com.wck.domain.PerProductVO" alias="perProductInfo"/>    
+        <typeAlias type="com.wck.domain.ProductColorChipVO" alias="productColorChip"/>    
         
     </typeAliases>  
 </configuration>

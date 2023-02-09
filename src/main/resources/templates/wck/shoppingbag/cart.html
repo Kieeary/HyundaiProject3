@@ -350,16 +350,13 @@
               qty.val(Number(qty.val()) + 1);
             }
 
-            function checkTotalPrice(id) {
-              console.log('시작');
-
+            function checkTotalPrice(obj) {
               let count = 0;
               let subTotalPrice = 0;
               $("input:checkbox[name='cartlist']:checked").each(function() {
+                let id = $(this).val();
                 let price = $("#checkZeroPrice"+id).val();
-                console.log("가격 : "+price);
                 let qty = $("#quantity"+id).val();
-                console.log('수량 : '+qty);
                 subTotalPrice += (price*qty);
                 count++;
 			        });
@@ -370,9 +367,6 @@
               } else{
                 $("#cartDataDeliveryCost").html(`₩0`);
               }
-
-              console.log('총합 : '+subTotalPrice);
-              console.log('배송비 취합 : '+totalPrice);
 
               subTotalPrice = subTotalPrice.toLocaleString('ko-KR');
               totalPrice = totalPrice.toLocaleString('ko-KR');
@@ -385,55 +379,28 @@
             };
 
             function checkSelectAll(obj) {
+
+              let count = $('input:checkbox[name="cartlist"]:checked').length;
               var onlyFourPm = $('#onlyFourPm').is(':checked');
               var checkboxes = document.getElementsByName('cartlist');
-                        
               checkboxes.forEach((ch) => { ch.checked = true; })
+              checkTotalPrice(this);
 
-              console.log('checkbox 개수 : '+checkboxes.length);
-
-              checkTotalPrice(checkboxes.length);
-
-
+              if (count == '[[${prods.size()}]]'){
+                $("#cartDataDeliveryCost").html('₩0');
+                $("#selectProductCount").html('0');
+                $("#cartDataSubtotal").html('₩0');
+                $("#cartDataTotalPrice").html('₩0');
+                $("#cartDataTotalPrice").val(0);
+              }
             }
 
-            // $('.gl_check_all').click(function () {
-            //   var cartDivision = $('#ordersheetCartDivision').val();
-            //   var onlyFourPm = $('#onlyFourPm').is(':checked');
-
-            //   let subTotalPrice = 0;
-            //   $("input:checkbox[name='cartlist']:checked").each((ch) => {
-            //     let id = ch.val();
-            //     let price = $("#checkZeroPrice"+id).val();
-            //     console.log("가격 : "+price);
-            //     let qty = $("#quantity"+id).val();
-            //     console.log('수량 : '+qty);
-            //     subTotalPrice += (price*qty);
-			      //   });
-
-            //   let totalPrice = subTotalPrice;
-            //   if(subTotalPrice < 30000){
-            //     $("#cartDataDeliveryCost").html(`₩2,500`);
-            //     totalPrice += 2500;
-            //   } else{
-            //     $("#cartDataDeliveryCost").html(`₩0`);
-            //   }
-
-            //   console.log('총합 : '+subTotalPrice);
-            //   console.log('배송비 취합 : '+totalPrice);
-
-            //   subTotalPrice = subTotalPrice.toLocaleString('ko-KR');
-            //   totalPrice = totalPrice.toLocaleString('ko-KR');
-
-            //   $("#selectProductCount").html(count);
-            //   $("#cartDataSubtotal").html(`₩${subTotalPrice}`);
-            //   $("#cartDataTotalPrice").html(`₩${totalPrice}`);
-            //   $("#cartDataTotalPrice").val(`₩${totalPrice}`);
-            //   $(".btn_t_1").html(`<b>${totalPrice}</b> 원`);
-
-            // });
-
             function sendOrderForm(){
+              let count = $('input:checkbox[name="cartlist"]:checked').length;
+              if(count <= 0){
+                layerAlert('상품을 선택하세요.');
+                return;
+              }
 
             }
           </script>
@@ -472,7 +439,7 @@
                   <div class="check_stl">
                     <input type="checkbox" th:id="'gl_check_'+${i.index}" name="cartlist" th:data-pks="${prod.PSId}"
                       data-division="" data-deliverykind="" th:value="${i.index}" th:data-soldout="${prod.PStatus}"
-                      th:onclick="checkTotalPrice([[${i.index}]]);" />
+                      th:onclick="checkTotalPrice(this);" />
                     <label th:for="'gl_check_'+${i.index}"></label>
                   </div>
                   <!-- ########## Goods sub CheckBox end ########## -->

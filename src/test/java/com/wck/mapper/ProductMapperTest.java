@@ -86,7 +86,7 @@ public class ProductMapperTest {
 	 */
 	@Test
 	void searchProducts() {
-		String keyword = "캐시미어";
+		String keyword = "바지";
 		List<ProductVO> vo = productMapper.searchProducts(keyword);
 	
 		for(ProductVO a : vo) {

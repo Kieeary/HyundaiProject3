@@ -39,6 +39,11 @@ public class WckController {
 	@Autowired
 	private final MemberService memberService;
 	
+	@GetMapping
+	public String home() {
+		return "wck/home";
+	}
+	
 	/*
 	 * 로그인 페이지
 	 */

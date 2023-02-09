@@ -29,6 +29,18 @@ public class ProductServiceTest {
 			log.info(b.getPid());
 		}
 	}
+	
+	@Test
+	void searchProductList() {
+		String keyword = "캐시미어";
+		List<ProductVO> a = productService.searchProductsList(keyword);
+		
+		for(ProductVO b : a) {
+			log.info(b.getPname());
+		}
+		
+	}
+	
 	// author : 김한울
 	// purpose : 장바구니 상품 변경시 가능 여부 확인
 	@Test

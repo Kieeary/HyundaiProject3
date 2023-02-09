@@ -95,6 +95,7 @@ public class MypageController {
 	 */
 	@PostMapping("/change/secession")
 	public String secessionPost(@AuthenticationPrincipal Account account) {
+		log.info("회원탈퇴 ...");
 		memberService.disabledMember(account.getEmail());
 		
 		return "redirect:/wck/logout";

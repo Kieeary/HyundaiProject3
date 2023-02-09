@@ -1,4 +1,4 @@
-<html lang="ko" class="back">
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -174,7 +174,11 @@
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
 				<h1 class="h_ttl ellipsis" id="headerTitle">
-					<a href="javascript:noLink();" onclick="openGnbPopup();" class="select_">the CASHMERE</a>
+					<a href="javascript:noLink();" onclick="openGnbPopup();" 
+					class="select_"
+					th:if="${category.gender} == 'me'"
+					th:text='남성'>
+					</a>
 				</h1>
 				<script type="text/javascript">
 					$(document).ready(function () { });
@@ -216,60 +220,21 @@
 			</form>
 			<!-- ################## contents ################## -->
 			<div class="hs_product_list_wrap">
-				<div class="brand_cont">
 					<!-- flag_wrap -->
-					<div class="cate_wrap191028">
-						<!--//previous_category191028 -->
 
-						<!-- flag_wrap -->
-						<div
-							class="flag_wrap case swiper-container swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal">
-							<!-- //전체보기 아닌 case(이전카테고리 노출될경우) class 추가-->
-							<ul class="swiper-wrapper" style="
-                    transform: translate3d(0px, 0px, 0px);
-                    transition-duration: 0ms;
-                  ">
-								<!-- //아울렛 전체보기 임시주석처리 -->
-								<li class="swiper-slide flag on swiper-slide-active" id="categoryNav01"
-									style="margin-right: 6px">
-									<a href="/ko/c/br08/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', 'the CASHMERE&nbsp;전체');">the
-										CASHMERE&nbsp;전체</a>
-								</li>
-								<!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag swiper-slide-next" style="margin-right: 6px">
-									<a href="/c/br08_we/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '여성');">여성</a>
-								</li>
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="/c/br08_me/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '남성');">남성</a>
-								</li>
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="/c/br08_as/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '잡화');">잡화</a>
-								</li>
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="/c/br08_be/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '뷰티');">뷰티</a>
-								</li>
-								<!-- 정상 브랜드 rootCategory가 1개 이상일때 -->
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="/c/br08_ls/br08" class="name"
-										onclick="GA_Event('카테고리_리스트', '카테고리', '라이프스타일');">라이프스타일</a>
-								</li>
-								<li class="swiper-slide flag" style="margin-right: 6px">
-									<a href="javascript:void(0);" class="name"
-										onclick="moveBrandLookBook('br08');">룩북*</a>
-								</li>
-							</ul>
-						</div>
-						<!--// flag_wrap -->
-					</div>
+			<div class="flag_wrap case swiper-container depth2 swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal"> <!-- //전체보기 아닌 case(이전카테고리 노출될경우) class 추가-->
+	                    <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);"><!-- //아울렛 전체보기 임시주석처리 -->
+                            <li class="swiper-slide flag" id="categoryNav01" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&seCCat=me03" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">아우터&nbsp;전체</a></li>
+                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
+	                        <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&Cat=me031" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');">재킷</a></li>
+		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me032" class="name"	>점퍼</a></li>
+			                <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me033" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '트렌치코트');">트렌치코트</a></li>
+		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me034" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '코트');">코트</a></li>
+		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me035" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '다운/패딩');">다운/패딩</a></li>
+		                 </ul>
+                    </div>
+
+
 					<script type="text/javascript">
 						$(document).ready(function () {
 							if ('true' == 'true') {
@@ -567,7 +532,7 @@
 						}
 					</script>
 
-				</div>
+				
 				<!-- sort_tit -->
 				<div class="sort_tit">
 					<p class="num_txt" id="totalSpan">1,824 개</p>
@@ -582,41 +547,7 @@
 					</div>
 				</div>
 				<!--// sort_tit -->
-				<!-- filter_wrap -->
-				<div class="filter_wrap fix hsDelivery1902">
-					<div>
-						<div
-							class="shipping swiper-container fil swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal">
-							<div class="hs_float_check swiper-wrapper">
-								<span class="hs_check01 swiper-slide swiper-slide-active">
-									<input type="checkbox" name="checkSale" id="checkSale"
-										onclick="setCheckSaleCode();GA_Event('카테고리_리스트', '필터', 'SALE');"
-										style="cursor: pointer" />
-									<label for="checkSale" style="cursor: pointer">SALE</label>
-								</span>
-								<span class="hs_check01" id="hsDelivery" style="display: none">
-									<input type="checkbox" name="checkDelivery" id="checkDelivery"
-										onclick="setCheckDeliveryCode();GA_Event('카테고리_리스트', '필터', '한섬딜리버리');"
-										style="cursor: pointer" />
-									<label for="checkDelivery" style="cursor: pointer">한섬딜리버리</label>
-									<div class="fitguide_tooltip">
-										<div class="hs_tooltip_wrap">
-											<a href="#" class="ico_btn">한섬딜리버리란?</a>
-										</div>
-									</div>
-								</span>
-							</div>
-						</div>
-						<div class="filter">
-							<a href=".product_filter_pop" onclick="popupBtnClick();GA_Event('카테고리_리스트', '필터', '필터링');"
-								class="filter_btn btn_popup_trigger">필터링</a>
-						</div>
-					</div>
-					<div class="tooltip_cont">
-						<p class="txt">4PM, 퀵배송이 가능합니다.</p>
-						<a href="#" class="close">닫기</a>
-					</div>
-				</div>
+
 
 				<!--// filter_wrap -->
 				<!-- product_list -->
@@ -994,51 +925,11 @@
 					getFooterNotices('/ko/svcenter');
 				});
 
-				function moveDesktop() {
-					location.href =
-						location.href.replace('?uiel=Mobile', '') + '?uiel=Desktop';
-				}
 
-				$(function () {
-					var pcVersionButtons = null;
-					if (getCookie('app') != 'android' && getCookie('app') != 'ios') {
-						pcVersionButtons =
-							'<a href="javascript:moveDesktop();">PC버전</a>';
-						$('#pcVersion').html(pcVersionButtons);
-					} else {
-						$('#footerMenu').prop('class', 'menu m3');
-					}
 
-					// 	if(getCookie("app") == "ios"){
-					// 	    $(".f_policy .language").hide(); //ios 메인 처음 진입시 language 노출되는 오류 수정
-					// 	}
-				});
 
-				function hpAutoLogin(data) {
-					if (data.succYn == 'Y') {
-						$.ajax({
-							type: 'GET',
-							url: '/ko/hpoint/simpleJoinMember',
-							data: {mcustNo: data.mcustNo},
-							success: function (data) {
-								if (data.resultCode == 'L') {
-									$('#hcid').val(data.uid);
-									$('#autologinForm').submit();
-								}
-							},
-							error: function (e) { },
-						});
-					}
-				}
 
-				function familySiteSelect() {
-					$('.fixed_dim_layer').stop().show();
-					$('.family_site_popup_191108').stop().slideDown();
-				}
-				function familySiteSelectClosed() {
-					$('.family_site_popup_191108').stop().slideUp();
-					$('.fixed_dim_layer').stop().fadeOut(500);
-				}
+
 
 				//app 언어설정창 추가
 				function selectLangChg(obj) { }
@@ -3720,48 +3611,74 @@
 
 
 
-	<script>
+	<script th:inline="javascript">
 		$(document).ready(function () {
+			
+		    /*<![CDATA[*/
+		      let gd = [[${category.gender}]];
+		      let br = [[${category.brand}]];
+			  let sc = [[${category.secCat}]];
+			  let tc = [[${category.thrCat}]];
+		      /*]]>*/
 
-			var param = 'we'
+						
+			var query = '';
+			if(gd != null) query += "gender="+gd; 
+			if(br != null) {
+			if(gd == null)	query += "brand="+br;
+				else query += "&brand="+br;
+			}
+			if(sc != null) query += "&secCat="+sc;
+			if(tc != null) query += "&thrCat="+tc;
+						
+			console.log(query);
+			
+		//	url: '/wck/products/list/p?gender='+gd+'&brand='+br+'&secCat='+sc+'&thrCat='+tc,
 
 
 			$.ajax({
 				type: 'get',
-				url: '/wck/products/list/p?gender=' + param,
+				url: '/wck/products/list/p?'+query,
 				success: function (result) {
 					console.log("통신");
 					console.log(result);
 					let productlist = '';
+					
+					
 
 					for (var i = 0; i < result.length; i++) {
 
 						productlist += `<li class="float active" id="listBody_li_${i}" value="hihi">`
-						productlist += `<a onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
-						productlist += '<div class="img">'
+						productlist += `<div id="tmp_${i}">`
+						productlist += `<a id="pcid_${i}" onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
+						productlist += `<div class="img index_img_${i}">`
 						productlist += '<img id="img_' + i + '" src="' + result[i].detailProduct[0].pcimg1 + '"/>'
 						productlist += '</div>'
 						productlist += '</a>'
+						productlist += '</div>'
+						productlist += '<div class=tmp2>'
 						productlist += '<div class="info_cont">'
 						productlist += '<div class="color_chip">'
 
 							for(var n=0; n<result[i].detailProduct.length; n++){	
 								console.log(result[i].detailProduct[n].pccolorCode)
 								
-								productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `')">` 	
+								productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '`  +result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' )">`
+						//		productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' , '` + result[i].detailProduct.length + `', '` + result[i].detailProduct[n].pccolorCode + `'  ,  +                      )"            >`
 								console.log(result[i]);
 								var tmp = result[i];
 							
+								console.log(result[i].detailProduct[n].pcchipImg);
 								
 								productlist += '<button class="chip on" ' +
-                						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url( "'  + result[i].detailProduct[n].pcchipImg + ' "")' +
-                						'></button></a>'
+                						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url('+result[i].detailProduct[n].pcchipImg+')"></button></a>'
                 						}
 						productlist += '</div>'
 						productlist += '<p class="brand">' + result[i].bname + '</p>'
 						productlist += '<p class="name">' + result[i].pname + '</p>'
 						productlist += '<p class="price" id="listPrice0">'
 						productlist += '<span id="price_CM2D1KTO513W_TG">' + result[i].pcprice + '</span></p>'
+						productlist += '</div>'
 						productlist += '</div>'
 						productlist += '</li>'
 					}
@@ -3783,19 +3700,6 @@
 		<input type="hidden" name="pcid" class="pcid">
 	</form>
 
-	<script>
-		function chgColorChip(pcid, pid, pcimg1, index) {
-
-			console.log(pcimg1);
-			console.log(`img_${index}`)
-			console.log(`<img id="img_${index}" src="${pcimg1}"/>`)
-
-			console.log(document.getElementById(`img_${index}`));
-			document.getElementById(`img_${index}`).src = pcimg1;
-			;
-		}
-
-	</script>
 
 	<script>
 		function goProductDetail(myPid, myPcid) {
@@ -3807,7 +3711,23 @@
 		}
 
 	</script>
+	
+		<script>
+	
+		function chgColorChip(pcid, pid, pcimg1, index) {
+			
+			console.log($('#listBody_li_'+index).val());
+			var tmp = `<a onclick="goProductDetail('` + pid + `' , '` + pcid + `')"><div class="img"><img src="${pcimg1}"></div></a>`
+			
+			$('#tmp_'+index).html(tmp); 
+			
 
+		}
+
+	</script>
+	
+    <script type="text/javascript" th:src="@{/js/search.js}" defer></script>
+    <script type="text/javascript" th:src="@{/js/quick_menu.js}" defer></script>
 </body>
 <!-- AceCounter Log Gathering Script V.7.5.2013010701 -->
 

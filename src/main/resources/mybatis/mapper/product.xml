@@ -95,22 +95,67 @@
 		ON pcom.pid = pcat.pid
         INNER JOIN category c
 		<if test="gd != null">
-			ON c.depth1name = #{gd}
-			<if test=" sC!= null">
-				AND ON c.depth2name = #{sC}
+			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
+			<if test="sC!= null">
+				AND c.depth2name = #{sC}
 			</if>
-			<if test=" tC!= null">
-				AND ON c.depth3name = #{tC}
+			<if test="tC!= null">
+				AND c.depth3name = #{tC}
 			</if>
 		</if>
 		INNER JOIN product_color pcolor
 		ON pcolor.pid = pcom.pid
         INNER JOIN product_stock pstock
         ON pstock.pcid = pcolor.pcid
-        where psid like 'MM2C7KTO041H9E%'
         group by pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
         pstock.psstock
 	</select>
+	
+	<!-- 추후 getProducts 와 합칠수 있으면 합치자  -->
+	
+	<resultMap type="product" id="searchProductsMap">
+ 		<id property="pid" column="PID" />
+ 		<result property="pname" column="PNAME" />
+  		<result property="bname" column="BNAME" />
+   		<result property="pcprice" column="PCPRICE" />
+   		<result property="pstatus" column="PSTATUS" />
+   		<result property="bno" column="BNO" />
+		<collection property="detailProduct" resultMap="pcColorInfo">
+  		</collection> 	
+ 	</resultMap>
+ 	
+ 	<resultMap type="detailProduct" id= "searchPcColorInfo">
+ 		<result property="PCId" column="PCID" />
+ 		<result property="PCColorCode" column="PCCOLORCODE" />
+ 		<result property="PCImg1" column="PCIMG1" />
+ 		<result property="PCChipImg" column="PCCHIPIMG" />
+ 		<result property="ColorName" column="COLORNAME" />
+ 	</resultMap>
+ 	
+
+	<select id="searchProducts" resultMap = "searchProductsMap">
+        SELECT pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
+        pstock.psstock
+        from product_common pcom
+        INNER JOIN product_category pcat
+		ON pcom.pid = pcat.pid
+        INNER JOIN category c
+        ON c.cateno = pcat.cateno
+		INNER JOIN product_color pcolor
+		ON pcolor.pid = pcom.pid
+        INNER JOIN product_stock pstock
+        ON pstock.pcid = pcolor.pcid
+        WHERE pcom.pname LIKE '%'||#{keyword}||'%' 
+        OR pcom.bname LIKE '%'||#{keyword}||'%' OR pcom.pid LIKE '%'||#{keyword}||'%' 
+        OR pcolor.pcid LIKE '%'||#{keyword}||'%' OR pstock.psid LIKE '%'||#{keyword}||'%'
+        group by pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
+        pstock.psstock
+	</select>
+	
+	
+	
+	
+	
 	
 	
 
@@ -128,9 +173,11 @@
   		</collection> 		
 	</resultMap>
 	
-	<resultMap type="perProductInfo" id="sizeNstock">
-		<result property="pssize" column="PSSIZE" />
-		<result property="psstock" column="PSSTOCK" />
+	
+	
+	<resultMap type="productStock" id="sizeNstock">
+		<result property="pSize" column="PSIZE" />
+		<result property="psStock" column="PSSTOCK" />
 	</resultMap>
 	
 	<select id="getProductInfo" resultMap = "productInfo">
@@ -140,6 +187,12 @@
 		inner join product_stock pstock
 		on pstock.pcid = pcolor.pcid
 		where pcolor.pid = #{pid} and pcolor.pcid =#{pcid}
+	</select>
+	
+	<select id="getColorChip" resultType="productColorChip">
+		select pcolor.pcchipimg, pcolor.pccolorcode, pcolor.pcid, pcolor.pid
+		from product_color pcolor
+		where pcolor.pid = #{pid}
 	</select>
 	
 

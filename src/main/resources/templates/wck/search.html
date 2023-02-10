@@ -187,6 +187,9 @@
   </head>
   
   <script>
+  
+ 	
+  
   	$(document).ready(function(){
   		$('.sch-recent-delete').click(function(e){
   			console.log('delete all');
@@ -213,6 +216,12 @@
 
   			$('#search').submit();
   		})
+  		// 엔터 동작 또한 마찬가지로
+  		$("#query").on("keydown",function(key){
+        if(key.keyCode==13) {
+            $('.sch').click();
+        }
+    });
   		
   		// 쿠키에 있는 검색 기록 렌더링
   		let keywords = $.cookie('keyword_log');

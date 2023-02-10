@@ -181,8 +181,8 @@
 	</resultMap>
 	
 	<select id="getProductInfo" resultMap = "productInfo">
-		select pcolor.pcid, pcom.bname, pcom.pname , pcolor.pcimg1, pcolor.pcimg2, pcolor.pcimg3, pcom.bno
-		te, pcolor.pcprice, pstock.psize, pstock.psstock from product_color pcolor
+		select pcolor.pcid, pcom.bname, pcom.pname , pcolor.pcimg1, pcolor.pcimg2, pcolor.pcimg3, pcom.bnote, 
+		pcolor.pcprice, pstock.psize, pstock.psstock from product_color pcolor
 		inner join product_common pcom 
 		on pcolor.pid = pcom.pid
 		inner join product_stock pstock

@@ -2520,11 +2520,15 @@
                   <p class="tit">사이즈</p>
                   <div class="size_area" id="size_btn_area" >	
                     <span class="size" th:each="siz : ${productInfo.sizeNstock}">
+                    
+                    console.log(siz.psId);
                       <button
                         type="button"
                         class="btn"
-                        onclick="sizeBtnClick(this)"
-                        th:text = "${siz.pSize}">
+                        th:pSize = "${siz.pSize}"
+                        th:psid = "${siz.psId}"
+                        th:text = "${siz.pSize}"
+                        onclick="getSizeBtn(this.getAttribute('pSize'), this.getAttribute('psid'))">
                         <span class="ko_size1901" >&nbsp;</span>
                       </button>
                     </span>
@@ -7657,7 +7661,13 @@
     <!-- 네이버 애널리틱스 전환페이지 설정 : s -->
     <!-- 네이버 애널리틱스 전환페이지 설정 : e -->
 
-
+	<script>
+		function getSizeBtn(pSize, psid){
+			
+			console.log(pSize);
+			console.log(psid);
+		}
+	</script>
 
 	<script>
 		function chngColorChip(Pcid, Pcimg1, index) {

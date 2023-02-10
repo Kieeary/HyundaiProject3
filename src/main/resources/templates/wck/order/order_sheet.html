@@ -1,5 +1,7 @@
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="wck/includes/head :: head_tag(title='배송 | 더한섬닷컴')"></th:block>
+<script type="text/javascript" th:src="@{/js/layers.js}"></script>
+
 
 <body class="back">
   <style>
@@ -8,7 +10,8 @@
     }
   </style>
 
-  <script>
+  <script type="text/javascript">
+    
     function goProdDetail(psid) {
       console.log('psid : ' + psid);
       let [pId, cTag, sTag] = psid.split('_');
@@ -17,42 +20,108 @@
       location.href = `/wck/products/p?pid=${pId}&pcid=${pcid}`;
     }
 
+    function submitOrder() {
+      let payPrice = parseInt($("#afterprice").val());
+      console.log(payPrice);
+      if(payPrice < parseInt('0')){
+        layerAlert('구매하실 수 없는 조건입니다.');
+        return;
+      }
+
+      if(!$('#agree').is(":checked")){
+          layerAlert("구매자 동의 항목을 체크하여 주세요.");
+          $('#agree').focus();
+          return;
+      }
+
+    }
+
+    function calculateDueAmount(){
+      // 쿠폰 할인액 계산
+      let couponDue = parseInt($("#selectVoucher option:selected").data('code'));
+      if(couponDue < 100) {
+        couponDue = parseInt($("#beforeprice").val())*couponDue/100.0;
+      }
+      console.log('C :'+couponDue);
+
+      // 마일리지 할인액 계산
+      let mileageDue = parseInt($("#useMileage").val());
+      console.log('M : '+mileageDue);
+
+      console.log('총 할인액 : '+(couponDue+mileageDue));
+      
+      let totalDueAmount = couponDue+mileageDue;
+      let sumProdPrice = parseInt($("#beforeprice").val());
+      let afterPrice = sumProdPrice-totalDueAmount;
+      if(sumProdPrice < 30000){
+        afterPrice += parseInt('2500');
+      }
+      $("#afterprice").val(afterPrice);
+      
+      $("#ttpd_con2").html(`- ₩${totalDueAmount.toLocaleString('ko-KR')}`);
+      $(".pay_price").html(`₩${afterPrice.toLocaleString('ko-KR')}`);
+      $("#doOrderBtn").html(`<span><b>${afterPrice.toLocaleString('ko-KR')}</b>원&nbsp;주문하기</span>`);
+    }
+
     function selectVoucher() {
+      let btn = $('.coupon_insert').children('.btnstl2');
+
+      if(btn.html() != '취소'){
+        // 쿠폰 사용함        
+        btn.html('취소');
+      } else {
+        // 쿠폰 사용하지 않음
+        btn.html('적용');
+        $("#voucherCode").val("");
+        $("#selectVoucher option:selected").attr("checked", false);
+      }
+    }
+
+    function checkVoucher() {
       let selected = $("#selectVoucher option:selected").val();
       let cpCode = $("#voucherCode");
       cpCode.val(selected);
 
-      var btn = $('.coupon_insert').children('.btnstl2');
+      let dueAmount = $("#selectVoucher option:selected").data('code');
+      dueAmount = parseInt(dueAmount);
+      console.log('data-code : '+dueAmount);
+
+      let btn = $('.coupon_insert').children('.btnstl2');
       if (selected == '') {
         // 쿠폰 사용 안힘
         btn.html('적용');
         cpCode.val("");
-        console.log('쿠폰 미사용');
+        // console.log('쿠폰 미사용');
       } else {
         // 쿠폰 사용
         btn.html('취소');
-        console.log('쿠폰 사용');
+        // console.log('쿠폰 사용');
 
         // 프로모션/쿠폰 사용 가격 계산
-        console.log
+        let originPrice = parseInt($("#beforeprice").val());
+        if(dueAmount < 100){
+          // 정률 할인
+          dueAmount = originPrice*dueAmount/100.0;
+        }
+        // console.log('쿠폰 할인가 : '+dueAmount);
       }
+
+      calculateDueAmount();
     }
 
     function selectMileage() {
       let mileage = $("#useMileage").val();
-
-      var btn = $('.mpg_input').children('.btnstl2');
-      if(mileage != 0){
+      let btn = $('.mpg_input').children('.btnstl2');
+      if(btn.html() != '취소'){
         // 마일리지 사용함
         btn.html('취소');
-        console.log('마일리지 사용');
       } else {
         // 마일리지 사용
         btn.html('적용');
-        $("#useMileage").val("");
-        console.log('마일리지 미사용');
+        $("#useMileage").val("0");
+        $('#mpg_all_use_2').attr('checked', false);
       }
-
+      calculateDueAmount();
     }
 
     function checkMileage() {
@@ -62,7 +131,8 @@
         $("#useMileage").val('[[${mem.mileage}]]');
       } else {
         // un-checked
-        $("#useMileage").val('0');
+        $("#useMileage").val("0");
+        $('.mpg_input').children('.btnstl2').html('적용');
       }
     }
 
@@ -79,24 +149,29 @@
       [/]
 
       console.log('금액 합계 : ' + beforePrice);
+      let afterPrice = beforePrice;
 
       if (beforePrice > 30000) {
         $("#ttpd_con3").html('₩ 0');
       } else {
         $("#ttpd_con3").html('₩ 2,500');
+        afterPrice += parseInt('2500');
       }
       $("input[name='beforeprice']").val(beforePrice);
+      let addMileage = beforePrice * parseFloat('[[${rate}]]');
       beforePrice = beforePrice.toLocaleString('ko-KR');
+      afterPrice = afterPrice.toLocaleString('ko-KR');
+      addMileage = addMileage.toLocaleString('ko-KR');
       $("#ttpd_con1").html(`₩ ${beforePrice}`);
+      $(".pay_price").html(`₩ ${afterPrice}`);
+      $("#doOrderBtn").html(`<span><b>${afterPrice}</b>원&nbsp;주문하기</span>`);
+      $("#txtAccumulationPoint").html(`${addMileage}`);
 
       $("input:checkbox").on('click', function () {
         let mileage = $("#useMileage").val();
         console.log("M : " + mileage);
 
       })
-
-
-
     })
 
   </script>
@@ -144,6 +219,7 @@
       <!-- ########## contents start ########## -->
       <div id="contents" class="hsome_contents delivery_payment_wrap">
 
+        <form id="orderForm" action="/wck/checkout/orderConfirmation" method="POST"><!-- 상품 리스트 -->
         <!-- ########## product list start ########## -->
         <div id="checkoutCartView">
 
@@ -231,6 +307,8 @@
           <!-- ########## df_box div start ########## -->
         </div>
         <!-- ########## product list end ########## -->
+        </form>
+
 
         <!-- ########## buyer info start ########## -->
         <div class="df_box orderer_info_input_wrap">
@@ -540,17 +618,17 @@
           <div id="voucherArea" class="couponselectArea">
             <div class="text_coupon_slct_wrap online_coupon_box">
               <div class="select_box">
-                <select id="selectVoucher" onchange="selectVoucher();">
-                  <option value="">쿠폰을 선택해 주세요.</option>
+                <select id="selectVoucher" onchange="checkVoucher();">
+                  <option value="" data-code="0">쿠폰을 선택해 주세요.</option>
                   <th:block th:if="${#lists.size(coupons)!=0}" th:each="cp, i : ${coupons}">
                     <th:block th:if="${cp.eDiscount < 100}">
-                      <option th:value="${cp.cpid}" >
+                      <option th:value="${cp.cpid}" th:data-code="${cp.eDiscount}">
                         [[${cp.eCouponTitle}]] / [[${cp.eDiscount}]]%
                       </option>
                     </th:block>
 
                     <th:block th:if="${cp.eDiscount >= 100}">
-                      <option th:value="${cp.cpid}">
+                      <option th:value="${cp.cpid}" th:data-code="${cp.eDiscount}">
                         [[${cp.eCouponTitle}]] / ₩[[${#numbers.formatInteger(cp.eDiscount, 3, 'COMMA')}]]
                       </option>
                     </th:block>
@@ -562,7 +640,7 @@
 
           <div class="coupon_insert">
             <input type="text" name="voucherCode" id="voucherCode" placeholder="쿠폰 코드를 입력해 주세요." disabled>
-            <a href="#none" class="btnstl2 border_btn_blk btn_input_apply">적용</a>
+            <a href="#none" class="btnstl2 border_btn_blk btn_input_apply" onclick="selectVoucher();">적용</a>
             <a href="#none" class="btn_input_reset"><span>초기화</span></a>
           </div>
 
@@ -668,7 +746,7 @@
               <div class="general_pay_wrap " style="overflow:hidden;">
                 <ul class="general_pay_list gpd_tab_w1">
                   <li class="on"><a href="#none" class="gpd_a_credit" data-g-pay-kind="credit"
-                      data-g-pay-mode="KO001">신용카드</a></li>
+                      data-g-pay-mode="KO001" >신용카드</a></li>
                 </ul>
 
                 <ul class="general_pay_list gpd_tab_w3">
@@ -676,9 +754,9 @@
 
                   <!-- #2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 (가상계좌 선택 삭제) 50268 -->
                   <li><a href="#none" class="gpd_a_kakakopay" data-g-pay-kind="kakakopay"
-                      data-g-pay-mode="INIKakao">카카오페이</a></li>
+                      data-g-pay-mode="INIKakao" >카카오페이</a></li>
 
-                  <li><a href="#none" class="gpd_a_tosspay" data-g-pay-kind="tosspay" data-g-pay-mode="KO007">토스</a>
+                  <li><a href="#none" class="gpd_a_tosspay" data-g-pay-kind="tosspay" data-g-pay-mode="KO007" >토스</a>
                   </li>
 
 
@@ -799,7 +877,7 @@
           <input type="hidden" name="afterprice" id="afterprice" value="" />
           <input type="hidden" id="customDueAmount" value="0" />
 
-          <input type="hidden" name="total" id="total" value="1490000.0" />
+          <input type="hidden" name="total" id="total" value="0" />
           <input type="hidden" name="cartDeliveryCost" id="cartDeliveryCost" value="0.0" />
           <input type="hidden" name="voucherRateCheck" id="voucherRateCheck" value="" />
         </div>
@@ -856,7 +934,7 @@
         <!-- ########## Buyer Agreement start ########## -->
         <div class="df_box df_box_slide agree_buyer_wrap">
           <div class="check_stl df_box_tit">
-            <input type="checkbox" id="agree" value="">
+            <input type="checkbox" id="agree" value="false">
             <label for="agree">
               <h3 class="df_box_tit">[필수] 구매자 동의</h3>
             </label>
@@ -875,7 +953,7 @@
           </div>
           <ul class="btn_wrap btn_wrap_div1">
             <li class="pymt_call_pg">
-              <a href="#none" class="btnstl6 solid_btn_point" id="doOrderBtn"><span><b>980,000</b>
+              <a href="#none" class="btnstl6 solid_btn_point" id="doOrderBtn" onclick="submitOrder()"><span><b>0</b>
                   원&nbsp;주문하기</span></a>
             </li>
           </ul>
@@ -890,6 +968,19 @@
 
     </div>
   </div>
+
+  <div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv"
+    style="left: 0px; position: fixed; top: 101px; z-index: 9999; opacity: 1; display: none;">
+    <div class="dvp_container">
+      <div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>닫기</span></div>
+      <div class="dvp_content">
+        <div class="desc_box"></div>
+      </div>
+      <div class="btn_wrap btns"> <button class="btn btn_bd_g btn-alert-close"></button> <button
+          class="btn btn_bg_b btn-alert-confirm"></button> </div>
+    </div>
+  </div>
+
 
 
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wck.domain.EventCouponVO;
+import com.wck.domain.MemberGrade;
 import com.wck.domain.MemberVO;
 import com.wck.domain.OrderProductVO;
 import com.wck.security.domain.Account;
@@ -64,6 +65,10 @@ public class OrderController {
 		MemberVO member = memberService.findMemberByEmail(user.getEmail());
 		model.addAttribute("mem", member);
 		log.info("member > {}", member);
+		
+		double accrualRate = memberService.getMileageAddRate(user.getId());
+		model.addAttribute("rate", accrualRate);
+		
 		
 		List<EventCouponVO> coupon = memberService.getCoupon(user.getEmail());
 		model.addAttribute("coupons", coupon);	

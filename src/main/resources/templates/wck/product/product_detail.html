@@ -1160,22 +1160,15 @@
               <div
                 class="swiper-container vw_swiper swiper-container-horizontal swiper-container-android swiper-container-wp8-horizontal">
                 <ul
-                  class="swiper-wrapper"
+                  class="swiper-wrapper productSlideImg"
                   id="prodImages"
                   style="
                     transform: translate3d(0px, 0px, 0px);
                     transition-duration: 0ms;
                   ">
                   <!-- 2021.08.18 상품에 imageDivisionCode가 VOD가 있는 경우 동영상 url 세팅-->
-                  <script>
-                    function fnProductNoImage(obj, divisionCode) {
-                      $('#slider-' + divisionCode).css(
-                        'background-image',
-                        "url('/_ui/handsomemobile/images/common/no_img.jpg')"
-                      );
-                    }
-                  </script>
 
+				
                   <li
                     class="swiper-slide swiper-slide-active"
                     style="width: 412px; transition: all 0ms ease 0s">
@@ -1184,11 +1177,6 @@
                       th:style="
                         'background-image: url('+ ${productInfo.pcimg1} + ');'"
                       id="slider-W01"></div>
-                    <div style="display: none">
-                      <img
-                        src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_W01.jpg"
-                        onerror="fnProductNoImage(this, 'W01')" />
-                    </div>
                     <a href="#">
                       <img
                         src="http://newmedia.thehandsome.com/MM/2C/FW/MM2C7KTO041H9E_BK_W01.jpg/dims/resize/684x1032/"
@@ -1237,7 +1225,6 @@
                     </a>
                   </li>
                
-
                 
                 </ul>
                 <!-- <div class="swiper-pagination"></div> -->
@@ -1497,82 +1484,23 @@
               <script type="text/javascript">
                 var currecy = ''; // USD, CNY
                 var rate = ''; // 환율
-                var simbol = ''; // 심볼
+                var simbol = ''; // 심볼	
 
-                $(document).ready(function () {
-                  /* 색상 버튼 클릭 시 이벤트 hs_btn_color_chip infoColor */
-                  // 		$(document).on('click', '.hs_prd_info_wrap .hs_btn_color_chip.infoColor button.chip', function() {
-                  $(
-                    '.hs_prd_info_wrap .hs_btn_color_chip.infoColor button.chip'
-                  ).on('click', function () {
-                    if (
-                      $(
-                        '.hs_prd_info_wrap .hs_btn_color_chip button.chip'
-                      ).hasClass('on') == true
-                    ) {
-                      $(
-                        '.hs_prd_info_wrap .hs_btn_color_chip button.chip'
-                      ).removeClass('on');
-                      $(this).addClass('on');
-                      var prodcode = $(this).attr('id').replace('info_', '');
-                      GA_Event('상품_상세', '컬러칩', prodcode.split('_')[1]);
-                      reloadDetailPage(prodcode);
-                      $('.hs_prd_info_wrap .parentTxt').hide();
-                      $('.add_mileage_info_wrap').hide();
-                      changeOfflineQtyColor();
-
-                      $('#popularProudct').hide();
-                    }
-                  });
-
-
-                  //추가(redmine:914)품번복사 20180910
-                  var clpbrd = new ClipboardJS('.btn_clipboard');
-                  clpbrd.on('success', function (e) {
-                    var la = new layerAlert('품번이 복사되었습니다.');
-                    e.clearSelection();
-                  });
-                  clpbrd.on('error', function (e) {
-                    console.log(e);
-                    var la = new layerAlert('품번이 복사되지 않았습니다.');
-                  });
-                  /* 상품품번을 클립보드로 복사 */
-
-                  //핏가이드 추가 18.10.15
-                  $('.pos_btn .fitguide').on('click', function () {
-                    //핏가이드 버튼 클릭
-                    fitGuidePopList();
-                  });
-                  fitGuideQu();
-
-                  //iPhone css(코리아사이즈 안내) 수정
-                  if (navigator.userAgent.indexOf('iPhone') > -1) {
-                    $('#koreaSizeGuide').addClass('ios');
-                  } else {
-                    $('#koreaSizeGuide').removeClass('ios');
-                  }
-
-                });
-
-                function promotionProduct() {
-                  var la = new layerAlert(
-                    '동일 옵션(컬러/사이즈)으로 최대 1개 구매 가능합니다.'
-                  );
-                }
 
                 //function changeColorChlip
                 function sizeBtnClick(elem) {
-                  $('.pre_order_txt191007').hide();
 
                   $('.hs_btn_size_wrap .size_area .size').removeClass('on');
                   $(elem).parent().addClass('on');
-
+                  
                   var colorcode = $(
                     '.hs_prd_info_wrap .hs_btn_color_chip button.chip.on'
                   )
                     .attr('id')
                     .replace('info_', '');
-                  var sizecode = $(elem).attr('data-value');
+                  var sizecode = $(elem).attr('th:text');
+                  
+                  console.log(sizecode);
 
                   $('.hs_prd_info_wrap.pv-element .copy').text(
                     colorcode + '_' + sizecode
@@ -1589,7 +1517,6 @@
                     '',
                     ''
                   );
-                  changeOfflineQtySize();
                 }
 
                 // Ajax 처리가 필요한지 점검 필요 => 현업 요청
@@ -2528,24 +2455,14 @@
                 <div
                   class="hs_btn_color_chip infoColor"
                   id="hs_btn_color_chip_area">
-                  <button
+                  <button th:each="color : ${productColor}"
                     type="button"
-                    id="info_CM2D1WOT105W_CR"
-                    data-value="CREAM"
+                    th:pid="${color.pid}"
+                    th:pcid="${color.pcid}"
+                    onclick="chgProductColor(this.getAttribute('pid'), this.getAttribute('pcid'));"
+                    th:id="${color.pcid}"
                     class="chip"
-                    style="
-                      background: #eadec8
-                        url('http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_CR_C01.jpg/dims/resize/48x48');
-                    "></button>
-                  <button
-                    type="button"
-                    id="info_CM2D1WOT105W_LE"
-                    data-value="LIGHT BEIGE"
-                    class="chip on"
-                    style="
-                      background: #e6d4c4
-                        url('http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_C01.jpg/dims/resize/48x48');
-                    "></button>
+                 	th:style="'background:'+${color.pccolorcode}+' url('+${color.pcchipimg}+');'"></button>
                 </div>
                 <!--// 색상 버튼 -->
 
@@ -2567,7 +2484,7 @@
                     <span th:text="${productInfo.pcprice}"></span>
                   </div>
 
-                  <div class="number">
+                  <div class="number" id="copy_pcid">
                     품번<!-- 수정(redmine:914) : 20180910 s -->
                     <!-- before -->
                     <!-- <button type="button" class="copy">CM2D1WOT105W_LE</button> -->
@@ -2576,9 +2493,9 @@
                       type="button"
                       class="copy btn_clipboard"
                       data-clipboard-action="copy"
-                      data-clipboard-text="CM2D1WOT105W_LE"
+        			  th:text = "${productInfo.pcid}"
                       onclick="GA_Event('상품_상세', '품번', 'CM2D1WOT105W_LE');">
-                      CM2D1WOT105W_LE
+                      
                     </button>
                     <!-- 수정(redmine:914) : 20180910 e -->
                     <!-- input text만 복사 가능하여 품번 복사를 위한 영역을 지정 -->
@@ -2599,28 +2516,23 @@
 
                 <!-- 사이즈 -->
                 <!-- 	<div class="hs_btn_size_wrap"> -->
-                <div class="hs_btn_size_wrap">
+                <div class="hs_btn_size_wrap" id="colorSize">
                   <p class="tit">사이즈</p>
-                  <div th:each="siz : ${productInfo.sizeNstock}" class="size_area" id="size_btn_area" >	
-                    <span class="size">
+                  <div class="size_area" id="size_btn_area" >	
+                    <span class="size" th:each="siz : ${productInfo.sizeNstock}">
+                    
+                    console.log(siz.psId);
                       <button
                         type="button"
                         class="btn"
-                        onclick="sizeBtnClick(this)"
-                        data-value="82">
-                        82<span class="ko_size1901">&nbsp;(55)</span>
+                        th:pSize = "${siz.pSize}"
+                        th:psid = "${siz.psId}"
+                        th:text = "${siz.pSize}"
+                        onclick="getSizeBtn(this.getAttribute('pSize'), this.getAttribute('psid'))">
+                        <span class="ko_size1901" >&nbsp;</span>
                       </button>
                     </span>
-                
-                
-
-                
-                
                   </div>
-
-                  <!-- 재입고알림 툴팁 -->
-                  <div id="rewareToolTip"></div>
-                  <!-- //재입고알림 툴팁 -->
                 </div>
                 <!--// 사이즈 -->
 
@@ -4821,13 +4733,14 @@
         </div>
         <!-- //상품 zoom -->
 
+		
         <!-- 코디 상품 -->
         <div class="hsome_layer_popup product_codi_pop product-style-pop">
           <h2 class="pop-comm-ttl">
             <!-- 코디 상품 -->
             함께 코디한 상품
           </h2>
-          <ul
+          <ul	
             class="ui_tab hs_red_border_tab style_codi size02"
             style="display: none">
             <li class="on">
@@ -4849,9 +4762,11 @@
           <div class="pop-comm-cnts mt35 ml0 mr0">
             <div class="tab_cont">
               <div class="cont on" id="style_tab01">
+              
+              
                 <div
                   class="codi_wrap detail-pg-allcodi-aside-box style_wrap"
-                  id="prod_CM2D1WSH150WM1_LE">
+                  id="prod_CM2D1WSH150WM1_LE" th:each="wProduct, i : ${withProduct}">
                   <div
                     class="swiper-container codi_slide swiper-container-horizontal swiper-container-android swiper-container-wp8-horizontal">
                     <ul
@@ -4865,8 +4780,8 @@
                           class="img_link"
                           onclick="GA_Event('스타일', '상품이미지', 'the CASHMERE_히든 버튼 셔츠');">
                           <img
-                            src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WSH150WM1_LE_T01.jpg"
-                            onerror="this.src='/_ui/handsomemobile/images/common/no_img.jpg'"
+                            th:id="'withProduct_' + ${i.index}"
+                            th:src="${wProduct.pcimg1}"
                             alt="" />
                         </a>
                         <button
@@ -4886,201 +4801,42 @@
                       <button
                         type="button"
                         id="chipbtn_CM2D1WSH150WM1_LE"
-                        onclick="chngColorChip(this, 'CM2D1WSH150WM1_LE','CM2D1WSH150WM1_LE');GA_Event('스타일', '컬러칩', '클릭');"
+                        th:each="colorchip : ${wProduct.withcolorchip}"
+                        th:otherpcid="${colorchip.otherpcid}"
+                        th:otherpcimg1="${colorchip.otherpcimg1}"
+                        th:idx="${i.index}"
+                        onclick="chngColorChip(this.getAttribute('otherpcid'), this.getAttribute('otherpcimg1'), this.getAttribute('idx'));"
                         class="chip on"
-                        style="
-                          background: #e6d4c4
-                            url('http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WSH150WM1_LE_C01.jpg/dims/resize/24x24');
-                        "></button>
+                        th:style="'background:'+${colorchip.pccolorcode}+' url('+${colorchip.pcchipimg}+');'"                        
+                        ></button>
                     </div>
                     <!--// 색상 버튼 -->
 
                     <!-- 상품 정보 -->
                     <div class="info_wrap">
                       <a href="/ko/p/CM2D1WSH150WM1_LE">
-                        <div class="logo"></div>
-                        <div class="name">히든 버튼 셔츠</div>
-                        <!-- <p class="price">₩2,745,000<strike>₩8,888,000</strike><span class="sale">35%</span></p> -->
-                        <p class="price">₩395,000</p>
+                        <div class="logo" th:text="${wProduct.bname}"></div>
+                        <div class="name" th:text="${wProduct.pname}"></div>
+                        <p class="price" th:text="${wProduct.pcprice}"></p>
                       </a>
 
-                      <div class="number">
+                      <div class="number" th:id="'withProductPcid_' + ${i.index}">
                         품번<button
                           type="button"
                           class="copy btn_clipboard"
                           data-clipboard-action="copy"
-                          data-clipboard-text="CM2D1WSH150WM1_LE"
-                          onclick="GA_Event('스타일', '품번 복사', $(this).text());">
-                          CM2D1WSH150WM1_LE
+                          th:text="${wProduct.withpcid}"
+                          onclick="GA_Event();">
                         </button>
                       </div>
                     </div>
                     <!--// 상품 정보 -->
                   </div>
                 </div>
-                <div
-                  class="codi_wrap detail-pg-allcodi-aside-box style_wrap"
-                  id="prod_CM2D1WPC807W_BS">
-                  <div
-                    class="swiper-container codi_slide swiper-container-horizontal swiper-container-android swiper-container-wp8-horizontal">
-                    <ul
-                      class="swiper-wrapper"
-                      style="transform: translate3d(0px, 0px, 0px)">
-                      <li
-                        class="swiper-slide swiper-slide-active"
-                        style="width: 225px">
-                        <a
-                          href="javascript:noLink();"
-                          class="img_link"
-                          onclick="GA_Event('스타일', '상품이미지', 'the CASHMERE_와이드 밴딩 팬츠');">
-                          <img
-                            src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WPC807W_BS_T01.jpg"
-                            onerror="this.src='/_ui/handsomemobile/images/common/no_img.jpg'"
-                            alt="" />
-                        </a>
-                        <button
-                          type="button"
-                          class="CM2D1WPC807W_BSLIKE like"
-                          onclick="addWishListProdClick('CM2D1WPC807W_BS');GA_Event('스타일', '코디상품 좋아요', 'the CASHMERE_와이드 밴딩 팬츠');">
-                          찜하기
-                        </button>
-                      </li>
-                    </ul>
-                    <!-- <div class="swiper-pagination"></div> -->
-                  </div>
-
-                  <div class="hs_prd_info_wrap">
-                    <!-- 색상 버튼 -->
-                    <div class="hs_btn_color_chip">
-                      <button
-                        type="button"
-                        id="chipbtn_CM2D1WPC807W_BS"
-                        onclick="chngColorChip(this, 'CM2D1WPC807W_BS','CM2D1WPC807W_BS');GA_Event('스타일', '컬러칩', '클릭');"
-                        class="chip on"
-                        style="
-                          background: #623b28
-                            url('http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WPC807W_BS_C01.jpg/dims/resize/24x24');
-                        "></button>
-                      <button
-                        type="button"
-                        id="chipbtn_CM2D1WPC807W_KG"
-                        onclick="chngColorChip(this, 'CM2D1WPC807W_BS','CM2D1WPC807W_KG');GA_Event('스타일', '컬러칩', '클릭');"
-                        class="chip"
-                        style="
-                          background: #474a4f
-                            url('http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WPC807W_KG_C01.jpg/dims/resize/24x24');
-                        "></button>
-                    </div>
-                    <!--// 색상 버튼 -->
-
-                    <!-- 상품 정보 -->
-                    <div class="info_wrap">
-                      <a href="/ko/p/CM2D1WPC807W_BS">
-                        <div class="logo">the CASHMERE</div>
-                        <div class="name">와이드 밴딩 팬츠</div>
-                        <!-- <p class="price">₩2,745,000<strike>₩8,888,000</strike><span class="sale">35%</span></p> -->
-                        <p class="price">₩445,000</p>
-                      </a>
-
-                      <div class="number">
-                        품번<button
-                          type="button"
-                          class="copy btn_clipboard"
-                          data-clipboard-action="copy"
-                          data-clipboard-text="CM2D1WPC807W_BS"
-                          onclick="GA_Event('스타일', '품번 복사', $(this).text());">
-                          CM2D1WPC807W_BS
-                        </button>
-                      </div>
-                    </div>
-                    <!--// 상품 정보 -->
-                  </div>
-                </div>
-                <div
-                  class="codi_wrap detail-pg-allcodi-aside-box style_wrap"
-                  id="prod_CM2D3ABG733WS_NA">
-                  <div
-                    class="swiper-container codi_slide swiper-container-horizontal swiper-container-android swiper-container-wp8-horizontal">
-                    <ul
-                      class="swiper-wrapper"
-                      style="transform: translate3d(0px, 0px, 0px)">
-                      <li
-                        class="swiper-slide swiper-slide-active"
-                        style="width: 225px">
-                        <a
-                          href="javascript:noLink();"
-                          class="img_link"
-                          onclick="GA_Event('스타일', '상품이미지', 'the CASHMERE_[DRAGON DIFFUSION] 그레이스 바스켓 스몰 토트백');">
-                          <img
-                            src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D3ABG733WS_NA_T01.jpg"
-                            onerror="this.src='/_ui/handsomemobile/images/common/no_img.jpg'"
-                            alt="" />
-                        </a>
-                        <button
-                          type="button"
-                          class="CM2D3ABG733WS_NALIKE like"
-                          onclick="addWishListProdClick('CM2D3ABG733WS_NA');GA_Event('스타일', '코디상품 좋아요', 'the CASHMERE_[DRAGON DIFFUSION] 그레이스 바스켓 스몰 토트백');">
-                          찜하기
-                        </button>
-                      </li>
-                    </ul>
-                    <!-- <div class="swiper-pagination"></div> -->
-                  </div>
-
-                  <div class="hs_prd_info_wrap">
-                    <!-- 색상 버튼 -->
-                    <div class="hs_btn_color_chip">
-                      <button
-                        type="button"
-                        id="chipbtn_CM2D3ABG733WS_NA"
-                        onclick="chngColorChip(this, 'CM2D3ABG733WS_NA','CM2D3ABG733WS_NA');GA_Event('스타일', '컬러칩', '클릭');"
-                        class="chip on"
-                        style="
-                          background: #534741
-                            url('http://newmedia.thehandsome.com/CM/2D/SS/CM2D3ABG733WS_NA_C01.jpg/dims/resize/24x24');
-                        "></button>
-                      <button
-                        type="button"
-                        id="chipbtn_CM2D3ABG733WS_OT"
-                        onclick="chngColorChip(this, 'CM2D3ABG733WS_NA','CM2D3ABG733WS_OT');GA_Event('스타일', '컬러칩', '클릭');"
-                        class="chip"
-                        style="
-                          background: #e5dcd5
-                            url('http://newmedia.thehandsome.com/CM/2D/SS/CM2D3ABG733WS_OT_C01.jpg/dims/resize/24x24');
-                        "></button>
-                    </div>
-                    <!--// 색상 버튼 -->
-
-                    <!-- 상품 정보 -->
-                    <div class="info_wrap">
-                      <a href="/ko/p/CM2D3ABG733WS_NA">
-                        <div class="logo">the CASHMERE</div>
-                        <div class="name">
-                          [DRAGON DIFFUSION] 그레이스 바스켓 스몰 토트백
-                        </div>
-                        <!-- <p class="price">₩2,745,000<strike>₩8,888,000</strike><span class="sale">35%</span></p> -->
-                        <p class="price">₩595,000</p>
-                      </a>
-
-                      <div class="number">
-                        품번<button
-                          type="button"
-                          class="copy btn_clipboard"
-                          data-clipboard-action="copy"
-                          data-clipboard-text="CM2D3ABG733WS_NA"
-                          onclick="GA_Event('스타일', '품번 복사', $(this).text());">
-                          CM2D3ABG733WS_NA
-                        </button>
-                      </div>
-                    </div>
-                    <!--// 상품 정보 -->
-                  </div>
-                </div>
+                
+                
               </div>
               <!-- 룩북 -->
-              <div class="cont" id="style_tab02">
-                <div class="no">룩북 컨텐츠가 없습니다.</div>
-              </div>
             </div>
           </div>
 
@@ -5204,77 +4960,6 @@
                 }
               },
               error: function (xhr, Status, error) {},
-            });
-          }
-
-          function chngColorChip(ele, sourceProd, targetProd) {
-            //$('.product_codi_pop .codi_wrap .chip').removeClass('on');
-            var $this = $('#chipbtn_' + targetProd);
-            var $thisChips = $(ele).closest('.hs_btn_color_chip');
-            $thisChips.find('.chip').removeClass('on');
-
-            $(ele).addClass('on');
-
-            $('#prod_' + sourceProd + ' .copy').text(targetProd);
-            $('#prod_' + sourceProd + ' .copy').attr(
-              'data-clipboard-text',
-              targetProd
-            );
-            //$('#prod_'+sourceProd+' .number #clipboard_' + sourceProd.substring(0, sourceProd.indexOf('_'))).val(targetProd);
-
-            $.ajax({
-              url: '/ko/product/reloadCoordiSize',
-              type: 'GET',
-              datatype: 'json',
-              data: {
-                productcode: targetProd,
-              },
-              success: function (data) {
-                var product = data.product;
-                var images;
-
-                var txtHtml = '';
-                var lookbookTxtHtml = '';
-                /* 가격변경 */
-                var priceHtml = '';
-
-                priceHtml = product.price.formattedValue;
-
-                if (priceHtml != '') {
-                  $(
-                    '#' + sourceProd + ' .hs_prd_info_wrap .info_wrap .price'
-                  ).html(priceHtml);
-                }
-
-                if (product.productImages != null) {
-                  for (var i = 0; i < product.productImages.length; i++) {
-                    images = product.productImages[i];
-
-                    if (images.imageDivisionCode.code === 'T01') {
-                      //txtHtml += '  <ul class="swiper-wrapper">';
-                      //txtHtml += '   <li class="swiper-slide">';
-                      //txtHtml += '   <img src="'+images.image.url+'" alt="">';
-                      //txtHtml += '   </li>';
-                      //txtHtml += '  </ul>';
-                      //txtHtml += '  <div class="swiper-pagination"></div>';
-                      txtHtml = images.image.url;
-                      break;
-                    } /* else if (images.imageDivisionCode.code === 'S01') {
-          lookbookTxtHtml = images.image.url;	
-          break;
-        } */
-                  }
-                }
-                //$('#'+sourceProd+' .codi_slide .swiper-wrapper').html(txtHtml);
-                $(ele)
-                  .closest('#prod_' + sourceProd)
-                  .find('.codi_slide .swiper-wrapper img')
-                  .attr('src', txtHtml);
-                $(ele)
-                  .closest('#prod_' + sourceProd)
-                  .find('.prd-img img')
-                  .attr('src', txtHtml);
-              },
             });
           }
 
@@ -7942,27 +7627,6 @@
             );
             /* //180627_추가 */
 
-            $(document).on(
-              'click',
-              '.hs_number_box.global .price .tooltip_btn',
-              function () {
-                // 				exchangeRateHtml(1);
-                $(this)
-                  .parents('.hs_number_box')
-                  .children('.tooltip_cont')
-                  .toggleClass('on');
-                return false;
-              }
-            );
-
-            $(document).on(
-              'click',
-              '.hs_number_box.global .tooltip_cont .close',
-              function () {
-                $(this).parent('.tooltip_cont').removeClass('on');
-                return false;
-              }
-            );
 
             // 상품평 작성하기 팝업 닫기 버튼 클릭 Event
             $(document).on('click', '#alertReviewCloseDiv', function () {
@@ -7976,14 +7640,7 @@
               location.href = '/mypage/myreview';
             });
 
-            $('body').on('click', function () {
-              if ($('.add_mileage_info1905>.tooltip_cont').hasClass('on')) {
-                $('.add_mileage_info1905>.tooltip_cont').removeClass('on');
-              }
-            });
-
-            // 20220729 그루비 스크립트 추가
-            sendGroobee();
+       
           });
 
           //s: 뒤로가기로 진입 후 뒤로가기 눌렀을 때 액션
@@ -8003,6 +7660,126 @@
     <div id="iframepopuparea"></div>
     <!-- 네이버 애널리틱스 전환페이지 설정 : s -->
     <!-- 네이버 애널리틱스 전환페이지 설정 : e -->
+
+	<script>
+		function getSizeBtn(pSize, psid){
+			
+			console.log(pSize);
+			console.log(psid);
+		}
+	</script>
+
+	<script>
+		function chngColorChip(Pcid, Pcimg1, index) {
+			
+			let chgpcid = '';
+			
+			chgpcid += '품번<button type="button" class="copy btn_clipboard"'
+            chgpcid += 'data-clipboard-action="copy"'
+            chgpcid += `onclick="GA_Event();">${Pcid}</button>`
+			
+            
+            console.log(chgpcid);
+			$("#withProduct_" + index).attr('src', Pcimg1);
+			$("#withProductPcid_"+index).html(chgpcid);
+
+		}
+		
+	</script>
+
+	<script>
+		function chgProductColor(Pid, Pcid, index) {
+			console.log("클릭");
+			console.log(Pid);
+			console.log(Pcid);
+			console.log(index);
+			
+			var pid = Pid;
+			var pcid = Pcid;
+			
+            $.ajax({
+                url: '/wck/products/p/chgColor?pid=' + pid + '&pcid=' + pcid, 
+                type: 'GET',
+                success: function (result) {
+     
+                  	//품번 변경
+                	showPcid = '';
+                	showPcid += '품번 <button type="button" class="copy btn_clipboard" data-clipboard-action="copy"'
+                	showPcid += 'onclick="GA_Event();"'
+                	showPcid += `th:text="${result['productInfo'].pcid}"> ${result['productInfo'].pcid}</button>`
+                	
+                	//색상별 사이즈 재구성
+                	showSize = '';
+                	showSize += '<p class="tit">사이즈</p>'
+                	showSize += '<div class="size_area" id="size_btn_area">'
+                	
+                	for(var n=0; n<result['productInfo']['sizeNstock'].length; n++) {
+	                	showSize += `<span class="size">`
+	                    showSize += '<button type="button" class="btn" onclick="sizeBtnClick(this)"'         
+	                    showSize += `${result['productInfo']['sizeNstock'][n].psize}>${result['productInfo']['sizeNstock'][n].psize}`
+	                    showSize += '<span class="ko_size1901" >&nbsp;</span>'
+	                    showSize += ' </button> </span>'
+	                }
+                	showSize += '</div>'
+                	
+             
+                    // 스타일 정보 재구성
+                    withProduct = '';
+                   	for(var n=0; n<result['withProductInfo'].length; n++){
+                    		
+	              		withProduct += '<div class="codi_wrap detail-pg-allcodi-aside-box style_wrap"'
+	               		withProduct += 'id="prod_CM2D1WSH150WM1_LE" >'
+	               		withProduct += '<div class="swiper-container codi_slide swiper-container-horizontal swiper-container-android swiper-container-wp8-horizontal">'
+	              		withProduct += '<ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px)">'
+	              		withProduct += '<li class="swiper-slide swiper-slide-active" style="width: 225px">'
+	              		withProduct += '<a href="javascript:noLink();" class="img_link" onclick="GA_Event();"> <img '
+	              		withProduct += `id="withProduct_${n}" src="${result['withProductInfo'][n].pcimg1}"`
+	                 	withProduct += 'alt="" /> </a>'
+	               		withProduct += '<button type="button" class="CM2D1WSH150WM1_LELIKE like"'
+	               		withProduct += 'onclick="addWishListProdClick();GA_Event();">'
+	               		withProduct += '찜하기  </button> </li> </ul>  </div>'
+	               		withProduct += '<div class="hs_prd_info_wrap">'
+						withProduct += '<div class="hs_btn_color_chip">'
+           
+	                    for(var s=0; s< result['withProductInfo'][n]['withcolorchip'].length; s++) {
+	                       	
+	                    	console.log(result['withProductInfo'][n]['withcolorchip'][s].otherpcid);
+	                    	
+	                    	withProduct += `<button type="button" id="" onclick="chngColorChip('` + result['withProductInfo'][n]['withcolorchip'][s].otherpcid + `','` + result['withProductInfo'][n]['withcolorchip'][s].otherpcimg1 + `','` + n + `' );" class="chip on"`
+	                        withProduct += `style="background:${result['withProductInfo'][n]['withcolorchip'][s].pccolorcode} url(${result['withProductInfo'][n]['withcolorchip'][s].pcchipimg});"`
+	                        withProduct += '></button>'
+	                    }
+								
+					withProduct += '</div>'
+					withProduct += '<div class="info_wrap"> <a href="/ko/p/CM2D1WSH150WM1_LE">'
+					withProduct += `<div class="logo">${result['withProductInfo'][n].bname}</div>`
+					withProduct += `<div class="name">${result['withProductInfo'][n].pname}</div>`
+					withProduct += `<p class="price">${result['withProductInfo'][n].pcprice}</p> </a>`
+                    withProduct += `<div class="number" id="withProductPcid_${n}">품번<button type="button" class="copy btn_clipboard"`
+                    withProduct += 'data-clipboard-action="copy"'
+                    withProduct += `onclick="GA_Event();">${result['withProductInfo'][n].withpcid}</button>`
+                    withProduct += '</div> </div>'
+              		}     
+
+                    	
+                	console.log(showSize); 
+                	console.log(withProduct);
+					                	
+                	$("#slider-W01").attr('style', "background-image: url("+result['productInfo'].pcimg1+"); transform: translate3d(0px, 0px, 0px);");
+                  	$("#slider-W02").attr('style', "background-image: url("+result['productInfo'].pcimg2+"); transform: translate3d(0px, 0px, 0px);");
+                  	$("#slider-W03").attr('style', "background-image: url("+result['productInfo'].pcimg3+"); transform: translate3d(0px, 0px, 0px);");
+                  	
+                  	$("#copy_pcid").html(showPcid);
+                  	$("#colorSize").html(showSize);
+                  	$("#style_tab01").html(withProduct);
+                  	                 	
+                },
+                error: function (xhr, Status, error) {
+                  alert(error);
+                },
+              });
+		}
+	</script>
 
 
     <iframe id="groobeeBox" name="groobeeBox" style="display: none"></iframe>

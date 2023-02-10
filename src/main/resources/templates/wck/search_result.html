@@ -174,11 +174,7 @@
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
 				<h1 class="h_ttl ellipsis" id="headerTitle">
-					<a href="javascript:noLink();" onclick="openGnbPopup();" 
-					class="select_"
-					th:if="${category.gender} == 'me'"
-					th:text='남성'>
-					</a>
+					검색 결과
 				</h1>
 				<script type="text/javascript">
 					$(document).ready(function () { });
@@ -186,7 +182,6 @@
 
 				<a href="javascript:noLink();" onclick="goBack();GA_Event('카테고리_리스트', '헤더', '이전');" class="h_prev">이전
 					페이지로 가기</a>
-				<a href="/ko/store-finder/storeInformation?brandCode=BR08" class="h_map">브랜드 매장안내</a>
 				<ul class="h_gnbMenu">
 					<li class="search">
 						<a href="/wck/search"
@@ -222,17 +217,6 @@
 			<div class="hs_product_list_wrap">
 					<!-- flag_wrap -->
 
-			<div class="flag_wrap case swiper-container depth2 swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal"> <!-- //전체보기 아닌 case(이전카테고리 노출될경우) class 추가-->
-	                    <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);"><!-- //아울렛 전체보기 임시주석처리 -->
-                            <li class="swiper-slide flag" id="categoryNav01" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&secCat=me03" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">아우터&nbsp;전체</a></li>
-                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
-	                        <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me031" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');">재킷</a></li>
-		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me032" class="name"	>점퍼</a></li>
-			                <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me033" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '트렌치코트');">트렌치코트</a></li>
-		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me034" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '코트');">코트</a></li>
-		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me035" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '다운/패딩');">다운/패딩</a></li>
-		                 </ul>
-                    </div>
 
 
 					<script type="text/javascript">
@@ -3342,198 +3326,10 @@
 			});
 		};
 
-		/*
-		 * 챗봇 관련 스크립트
-		 */
-		// 앱이 백그라운도 들어 갈 때에
-		//function  appWillEnterBackground() {
-		//    alert("enter background");
-		//
-		//}
-		// 앱이 포어그라운드로 들어갈 때에
-		//function appDidEnterForground() {
-		//    alert("enter foreground");
-		//
-		//}
-		// 챗봇의 푸시링크를 클릭했을 때
-		function openChatView(token, talkId) {
-			callChatbot(token, talkId);
-		}
 
-		function updateLocation() {
-			$.ajax({
-				type: 'POST',
-				url: '/ko/mobilecommon/updateLocation',
-				datatype: 'json',
-				data: {
-					CSRFToken: '13c48883-1706-4f5a-810b-2f670f464334',
-					provideLocationYN: $('#isChcked').val(),
-				},
-				error: function (request, status, error) {
-					// 			console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
-				},
-				success: function (result) {
-					if (result == 'SUCCESS') {
-					}
-				},
-			});
-		}
 
-		function updatePush() {
-			$.ajax({
-				type: 'POST',
-				url: '/ko/mobilecommon/updatePush',
-				datatype: 'json',
-				data: {
-					CSRFToken: '13c48883-1706-4f5a-810b-2f670f464334',
-					pushCd: $('#pushCd').val(),
-					pushVal: $('#pushVal').val(),
-				},
-				error: function (request, status, error) {
-					// 			console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
-				},
-				success: function (result) {
-					if (result == 'SUCCESS') {
-					}
-				},
-			});
-		}
 
-		function AppCallLocation(result) {
-			$('#isChcked').val(result);
-			updateLocation();
-		}
-
-		function AppCallPushAll(result) {
-			$('#pushCd').val('all');
-			$('#pushVal').val(result);
-			updatePush();
-		}
-
-		function AppCallPushOrder(result) {
-			$('#pushCd').val('order');
-			$('#pushVal').val(result);
-			updatePush();
-		}
-
-		function AppCallPushEvent(result) {
-			$('#pushCd').val('event');
-			$('#pushVal').val(result);
-			updatePush();
-		}
-
-		function AppCallPushBenefit(result) {
-			$('#pushCd').val('benefit');
-			$('#pushVal').val(result);
-			updatePush();
-		}
-
-		function AppCallPushSilent(result) {
-			$('#pushCd').val('silent');
-			$('#pushVal').val(result);
-			updatePush();
-		}
-
-		function gpsAllowAndroid() {
-			// 가까운 매장순 탭 이동 및 리스트 호출
-			if ('productList' == 'hsProductDetailPage') {
-				if (appYn == 'Y') {
-					Android.getLocation();
-
-					$('.sort_tab li').removeClass('on');
-					$('.sort_tab li').eq(0).addClass('on');
-					setTimeout(function () {
-						searchStore(1);
-					}, 500);
-				}
-			} else if ('productList' == 'content1Page') {
-				if (appYn == 'Y') {
-					Android.getLocation();
-
-					$('.sort_tab li').removeClass('on');
-					$('.sort_tab li').eq(0).addClass('on');
-					setTimeout(function () {
-						searchStore(1);
-					}, 500);
-				}
-			}
-		}
-
-		function gpsAlertExitAndroid() {
-			// 재고 많은순 탭 선택
-			if ('productList' == 'hsProductDetailPage') {
-				if (appYn == 'Y') {
-					$('.sort_tab li').removeClass('on');
-					$('.sort_tab li').eq(1).addClass('on');
-				}
-			} else if ('productList' == 'content1Page') {
-				if (appYn == 'Y') {
-					$('.sort_tab li').removeClass('on');
-					$('.sort_tab li').eq(1).addClass('on');
-				}
-			}
-		}
-
-		function gpsAlertOkAndroid() {
-			// 재고 많은순 탭 선택
-			if ('productList' == 'hsProductDetailPage') {
-				if (appYn == 'Y') {
-					$('.sort_tab li').removeClass('on');
-					$('.sort_tab li').eq(1).addClass('on');
-				}
-			} else if ('productList' == 'content1Page') {
-				if (appYn == 'Y') {
-					$('.sort_tab li').removeClass('on');
-					$('.sort_tab li').eq(1).addClass('on');
-				}
-			}
-		}
-
-		function gpsAlertExitIOS() {
-			// 재고 많은순 탭 선택
-			if ('productList' == 'hsProductDetailPage') {
-				if (appYn == 'Y') {
-					$('.sort_tab li').removeClass('on');
-					$('.sort_tab li').eq(1).addClass('on');
-				}
-			} else if ('productList' == 'content1Page') {
-				if (appYn == 'Y') {
-					$('.sort_tab li').removeClass('on');
-					$('.sort_tab li').eq(1).addClass('on');
-				}
-			}
-		}
-
-		function gpsSetOkIOS() {
-			// 위치동의 여부 확인 후 (Y : 가까운 매장순 탭 이동 및 리스트 호출, N : 재고 많은순 탭 선택)
-			if ('productList' == 'hsProductDetailPage') {
-				if (appYn == 'Y') {
-					webkit.messageHandlers.getLocation.postMessage('');
-
-					setTimeout(function () {
-						if (lat != 0 && lng != 0) {
-							$('.sort_tab li').removeClass('on');
-							$('.sort_tab li').eq(0).addClass('on');
-
-							searchStore(1);
-						}
-					}, 500);
-				}
-			} else if ('productList' == 'content1Page') {
-				if (appYn == 'Y') {
-					webkit.messageHandlers.getLocation.postMessage('');
-
-					setTimeout(function () {
-						if (lat != 0 && lng != 0) {
-							$('.sort_tab li').removeClass('on');
-							$('.sort_tab li').eq(0).addClass('on');
-
-							searchStore(1);
-						}
-					}, 500);
-				}
-			}
-		}
+		
 	</script>
 
 	<div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv"></div>
@@ -3615,41 +3411,29 @@
 		$(document).ready(function () {
 			
 		    /*<![CDATA[*/
-		      let gd = [[${category.gender}]];
-		      let br = [[${category.brand}]];
-			  let sc = [[${category.secCat}]];
-			  let tc = [[${category.thrCat}]];
+		      let keyword = [[${query}]];
 		      /*]]>*/
-
 						
-			var query = '';
-			if(gd != null) query += "gender="+gd; 
-			if(br != null) {
-			if(gd == null)	query += "brand="+br;
-				else query += "&brand="+br;
-			}
-			if(sc != null) query += "&secCat="+sc;
-			if(tc != null) query += "&thrCat="+tc;
-						
-			console.log(query);
+			console.log(keyword);
 			
 		//	url: '/wck/products/list/p?gender='+gd+'&brand='+br+'&secCat='+sc+'&thrCat='+tc,
 
 
 			$.ajax({
 				type: 'get',
-				url: '/wck/products/list/p?'+query,
+				url: '/wck/search/result/p?keyword='+keyword,
 				success: function (result) {
 					console.log("통신");
 					console.log(result);
 					let productlist = '';
+				
 					
+					if(result.length > 0){
 					
-
 					for (var i = 0; i < result.length; i++) {
 
 						productlist += `<li class="float active" id="listBody_li_${i}" value="hihi">`
-						productlist += `<div id="tmp_${i}">`
+						productlist += `<div id="tmp_${i}" style="margin-top:10%">`
 						productlist += `<a id="pcid_${i}" onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
 						productlist += `<div class="img index_img_${i}">`
 						productlist += '<img id="img_' + i + '" src="' + result[i].detailProduct[0].pcimg1 + '"/>'
@@ -3664,7 +3448,6 @@
 								console.log(result[i].detailProduct[n].pccolorCode)
 								
 								productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '`  +result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' )">`
-						//		productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' , '` + result[i].detailProduct.length + `', '` + result[i].detailProduct[n].pccolorCode + `'  ,  +                      )"            >`
 								console.log(result[i]);
 								var tmp = result[i];
 							
@@ -3685,6 +3468,28 @@
 					console.log(productlist);
 					$('#listBody').append(productlist);
 					console.log($("#listBody_li_0").val() + '======');
+					} else {
+						
+						var noData ='';
+						noData += '<div class="hs_product_list_wrap search">'
+						noData += '<h2 class="sch_searchTit">'
+						noData += `<i>${keyword}</i><strong class="schr_result"> </strong><p>에 대한 검색결과가 없습니다.</p><br></h2>`	
+						noData += '<ul class="scg_searchWarning">'
+						noData += '<li>검색어를 정확히 입력하셨는지 확인해 보세요.</li>'
+						noData += '<li>두 단어 이상이 검색어인 경우 띄어쓰기를 확인해보세요. </li>'
+						noData += '<li>한글을 영어로 입력했거나 영어를 한글로 입력했는지 확인해 보세요. </li>'
+						noData += '<li>한글을 영어로 입력했거나 영어를 한글로 입력했는지 확인해 보세요. </li>'
+						noData += '<li>브랜드명이나 상품명으로 다시 검색해 보세요. </li></ul>'
+							
+							
+					$('#listBody').append(noData);
+							
+						
+						
+						
+						
+						
+					}
 
 				},
 				error: function (result) {

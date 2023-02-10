@@ -15,13 +15,15 @@
         <typeAlias type="com.wck.domain.ProductCommonVO" alias="productCommon"/>
         <typeAlias type="com.wck.domain.ProductColorVO" alias="productColor"/>
         <typeAlias type="com.wck.domain.ProductStockVO" alias="productStock"/>
+        <typeAlias type="com.wck.domain.WithProductVO" alias="withProduct"/>
+        <typeAlias type="com.wck.domain.WithColorChipInfoVO" alias="withColorChipInfo"/>
+        
         
         <typeAlias type="com.wck.domain.DetailProductVO" alias="detailProduct"/>
         <typeAlias type="com.wck.domain.ProductVO" alias="product"/>    
         <typeAlias type="com.wck.domain.ProductInfoVO" alias="productInfo"/>    
-        <typeAlias type="com.wck.domain.PerProductVO" alias="perProductInfo"/>  
         <typeAlias type="com.wck.domain.OrderProductVO" alias="productSimpleInfo"/>  
-          
+        <typeAlias type="com.wck.domain.ProductColorChipVO" alias="productColorChip"/>    
         
     </typeAliases>  
 </configuration>

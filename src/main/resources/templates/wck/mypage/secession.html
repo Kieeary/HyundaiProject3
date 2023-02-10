@@ -1,7 +1,9 @@
 <html lang="ko" class="" xmlns:th="http://www.thymeleaf.org">
 <th:block th:replace="wck/includes/head :: head_tag(title='회원탈퇴 | 더한섬닷컴')"></th:block>
+<script type="text/javascript" th:src="@{/js/layers.js}"></script>
 
   <body>
+  
     <div class="hsome_allContents_wrapper">
       <div class="hsome_allContents">
         <!-- ################## header ################## -->
@@ -31,19 +33,28 @@
         <script type="text/javascript">
           //<![CDATA[
           $(document).ready(function () {
-            $('#hpSecessionBtn').click(function () {
-              location.href =
-                'https://www.h-point.co.kr/cu/mem/showCustInfo.shd';
-            });
 
             $('#secessionStep2Btn').click(function () {
-              $('#secessionBtn').submit();
+            	var la = new layerConfirm(
+                        '정말로 탈퇴하시겠습니까?',
+                        '확인',
+                        '취소'
+                );
+                la.confirmAction = function () {
+                    console.log('회원탈퇴');
+                    $('#secessionBtn').submit();
+                };
             });
           });
 
           //]]>
         </script>
-        <form id="secessionBtn" action method="post"></form>
+        <form id="secessionBtn" action method="post">
+                  <input 
+				  type="hidden" 
+				  th:name="${_csrf.parameterName}" 
+				  th:value="${_csrf.token}" />
+        </form>
 
         <!-- contents s -->
         <div id="contents" class="hsome_contents mp_withdraw_wrap">
@@ -94,6 +105,17 @@
       </div>
     </div>
     <!-- ################## //hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
+      <div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv"
+    style="left: 0px; position: fixed; top: 101px; z-index: 9999; opacity: 1; display: none;">
+    <div class="dvp_container">
+      <div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>닫기</span></div>
+      <div class="dvp_content">
+        <div class="desc_box"></div>
+      </div>
+      <div class="btn_wrap btns"> <button class="btn btn_bd_g btn-alert-close"></button> <button
+          class="btn btn_bg_b btn-alert-confirm"></button> </div>
+    </div>
+  </div>
   </body>
   <!-- This script is for AceCounter START -->
 </html>

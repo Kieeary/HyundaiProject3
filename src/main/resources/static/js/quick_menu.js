@@ -8687,7 +8687,7 @@ function moveBrandLookBook(brandCode) {
                 <ul class="two_depth" style="display: block">
                   <li class="two_lists">
                     <a
-                      href="/ko/c/me"
+                      href="/wck/products/list?gender=me&secCat=me03"
                       class="two_link js-cate-link"
                       onclick="GA_Event('공통_카테고리', '2DEPTH', '남성_전체보기');"
                       >전체보기</a

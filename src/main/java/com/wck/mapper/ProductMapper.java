@@ -9,20 +9,25 @@ import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.OrderProductVO;
 import com.wck.domain.ProductColorVO;
+import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
-
-import org.springframework.lang.Nullable;
-
 import com.wck.domain.ProductVO;
+import com.wck.domain.WithProductVO;
 
 @Mapper
 public interface ProductMapper {
 	
 	public List<ProductCommonVO> getLikeProductList(@Param("mId") String mId, @Param("cri") Criteria cri);
 
-	public List<ProductVO> getProducts(@Nullable String br, @Nullable String gd, 
-					@Nullable String sC, @Nullable String tC); 
+	public List<ProductVO> getProducts(@Param("br") String br, @Param("gd") String gd, 
+					@Param("sC") String sC, @Param("tC") String tC); 
+	
+	public List<ProductVO> searchProducts(String keyword);
+	
+	public List<WithProductVO> getWithProducts(String pcid);
+	
+	public List<ProductColorChipVO> getColorChip(String pid);
 
 	public ProductInfoVO getProductInfo(String pcid, String pid);
 

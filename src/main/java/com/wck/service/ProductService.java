@@ -1,20 +1,19 @@
 package com.wck.service;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.jdbc.core.metadata.TableMetaDataProvider;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.OrderProductVO;
-import com.wck.domain.ProductColorVO;
+import com.wck.domain.ProductColorChipVO;
+
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.WithProductVO;
 import com.wck.mapper.ProductMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -51,15 +50,53 @@ public class ProductService {
 		if(vo == null) throw new RuntimeException("존재하지 않는 PID");
 		return vo;
 	}
+
+	public List<ProductVO> getProductList(@Nullable String br, @Nullable String gd, @Nullable String sC,
+			@Nullable String tC) {
+
+		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
+
+		log.info("service 임");
+		
+		log.info("====="+br+"=====");
+		log.info("====="+gd+"=====");
+		log.info("====="+sC+"=====");
+		log.info("====="+tC+"=====");
+		
+		return productList;
+
+		
+	}
 	
 	
 	public List<ProductVO> productList(@Nullable String br, @Nullable String gd,
 										@Nullable String sC, @Nullable String tC) {
 		
 		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
+		
+		for(ProductVO a : productList) {
+			log.info(a.getPid());
+		}
+		
 		return productList;
 	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<ProductVO> searchProductsList(String keyword) {
+		
+		return productMapper.searchProducts(keyword);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<WithProductVO> getWithProducts(String pcid) {
+		return productMapper.getWithProducts(pcid);
+	}
 
+	
 	public int getLikeProductCount(String id) {
 		return productMapper.getLikeProductCount(id);
 	}
@@ -67,6 +104,10 @@ public class ProductService {
 	public ProductInfoVO getProductInfo(String pcid, String pid) {
 		
 		return productMapper.getProductInfo(pcid, pid);
+	}
+	
+	public List<ProductColorChipVO> getColorChip(String pid){
+		return productMapper.getColorChip(pid);
 	}
 
 	public List<String> getSizeSet(String pcId) {

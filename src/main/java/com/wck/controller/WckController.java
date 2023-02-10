@@ -16,13 +16,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wck.domain.CartVO;
 import com.wck.domain.InsertMemberDTO;
+import com.wck.domain.ProductVO;
 import com.wck.domain.UpdateMemberDTO;
 import com.wck.security.domain.Account;
 import com.wck.service.CartService;
 import com.wck.service.MemberService;
+import com.wck.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -38,6 +41,9 @@ public class WckController {
 	
 	@Autowired
 	private final MemberService memberService;
+	
+	@Autowired
+	private final ProductService productService;
 	
 	@GetMapping
 	public String home() {
@@ -117,11 +123,51 @@ public class WckController {
 		return "redirect:/wck/login";
 	}
 	
+	/*
+	 * 키워드 검색 폼
+	 */
+	@GetMapping("/search")
+	public String searchForm() {
+		return "wck/search";
+	}
+	
+
+	@GetMapping("/search/result")
+	public String goResultForm(Model model, @RequestParam("query") String query) {
+				
+		model.addAttribute("query", query);
+		
+		return "wck/search_result";
+	}
+	
+	@ResponseBody
+	@GetMapping("/search/result/p")
+	public Object searchResult(
+			@RequestParam("keyword") String keyword) {
+		
+		log.info("query : " +keyword);
+		List<ProductVO> searchResult = productService.searchProductsList(keyword);
+		
+		return searchResult;
+	}
+	
+	/*
+	@GetMapping("/search/result")
+	public String searchResult(
+			@RequestParam("query") String query) {
+		log.info("query : " +query);
+		
+		productService.searchProductsList(query);
+		
+		return "wck/search_result";
+	}
+	*/
 
 	@GetMapping("/sampleProductDetail")
 	public String samplePD() {
 		return "wck/sample/prod_detail";
 	}
+	
 	
 	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/shoppingbag")
@@ -138,4 +184,6 @@ public class WckController {
 		
 		return "wck/shoppingbag/cart";
 	}
+	
+	
 }

@@ -8,11 +8,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+
+
+import com.wck.domain.DetailProductVO;
+import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
+
+
+import com.wck.domain.ProductColorVO;
+
+import com.wck.domain.Criteria;
+import com.wck.domain.DetailProductVO;
+
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
+import com.wck.domain.ProductStockVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.WithColorChipInfoVO;
+import com.wck.domain.WithProductVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -35,29 +49,89 @@ public class ProductMapperTest {
 	}
 	
 	
+	/*
+	 * 정기범
+	 */
 	@Test
 	void getProductList() {
-		String gd = "we";
-		List<ProductVO> vo = productMapper.getProducts(null, gd, null, null);
+		String gd = "me";
+		String tC = "me031";
+		List<ProductVO> vo = productMapper.getProducts(null, gd, null, tC);
 		
 		for(ProductVO a : vo) {
-			if(a.getPid().equals("MM2C7KTO041H9E")) {
+
 			log.info("PID :" + a.getPid());
 			for(DetailProductVO b : a.getDetailProduct()) {
 				log.info("PCID : " + b.getPCId());
 			}
-			}
 		}
+		
 	}
 	
+	/*
+	 * 정기범
+	 */
 	@Test
-	void getProductInfo() {
+	void getProductSize() {
 		String pcid = "MM2C7KTO041H9E_BK";
 		String pid = "MM2C7KTO041H9E";
 		
 		ProductInfoVO productInfo = productMapper.getProductInfo(pcid, pid);
 		
-		log.info(productInfo.getPcid());
+		for(ProductStockVO a : productInfo.getSizeNstock()) {
+			log.info(a);
+		}
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void searchProducts() {
+		String keyword = "바지";
+		List<ProductVO> vo = productMapper.searchProducts(keyword);
+	
+		for(ProductVO a : vo) {
+
+			log.info("PID :" + a.getPid());
+			for(DetailProductVO b : a.getDetailProduct()) {
+				log.info("PCID : " + b.getPCId());
+			}
+		}
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getColorChip() {
+		String pid = "MM2C7KTO041H9E";
+		
+		List<ProductColorChipVO> colorchip = productMapper.getColorChip(pid);
+		
+		for(ProductColorChipVO a : colorchip) {
+			log.info("=======" + a.getPcid());
+			log.info("=======" + a.getPcchipimg());
+		}
+	}
+	
+	/* 
+	 * 정기범
+	 */
+	@Test
+	void getWithProduct() {
+		String pcid = "SH2C7WPC510M_BG";
+		
+		List<WithProductVO> withproduct = productMapper.getWithProducts(pcid);
+		
+		for(WithProductVO a : withproduct) {
+			log.info(a.getWithpcid());
+			for(WithColorChipInfoVO b : a.getWithcolorchip()) {
+				log.info(b.getPcchipimg());
+				log.info(b.getOtherpcid());
+			}
+			log.info("=============");
+		}
 	}
 	
 	@Transactional

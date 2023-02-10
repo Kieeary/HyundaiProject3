@@ -8,6 +8,17 @@
     }
   </style>
 
+  <script>
+    function goProdDetail(psid) {
+      console.log('psid : ' + psid);
+      let [pId, cTag, sTag] = psid.split('_');
+      let pcid = pId + '_' + cTag;
+
+      location.href = `/wck/products/p?pid=${pId}&pcid=${pcid}`;
+    }
+
+  </script>
+
   <!-- ########## loading start ########## -->
   <div style="display: none">
     <div id="loadingBarDiv" style="display: none"></div>
@@ -55,16 +66,28 @@
         <div id="checkoutCartView">
 
           <!-- ########## df_box div start ########## -->
-          <div id="__div_sl" class="df_box df_box_slide">
+          <div id="__div_sl" class="df_box df_box_slide df_box_slide_on">
             <h3 class="df_box_tit">
-              주문상품<span class="df_box_tit_sub">($$개)</span>
+              주문상품<span class="df_box_tit_sub">([[${prods.size}]]개)</span>
             </h3>
 
             <!-- ########## Goods list start ########## -->
             <ul class="order_gl_item goods_list_wrap">
-              <!-- ########## main goods info ########## -->
-              <li class="ogl_main_item item_info">
-                <a href="/ko/p/CM2D1WOT105W_LE_88">
+              <th:block th:if="${#lists.size(prods)!=0}" th:each="prod, i : ${prods}">
+                <div th:if="${i.first}">
+                  <!-- ########## main goods info ########## -->
+                  <li class="ogl_main_item item_info">
+                </div>
+                <div th:if="${!i.first}">
+                  <!-- ########## sub goods info 'oridin : "display: none"> ########## -->
+                  <li class="ogl_sub_item df_box_slide_con item_info" style="display: list-item;">
+                </div>
+
+                <script>
+                  console.log('[[${prod}]]');
+                </script>
+
+                <a href="#">
                   <div class="ogl_item gl_item">
                     <div class="gl_tit">
                       <img src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_S01.jpg" alt=""
@@ -81,60 +104,13 @@
                     </ul>
                   </div>
                 </a>
+                </li>
+                <!-- ########## main goods info end ########## -->
 
-              </li>
-              <p name="__p_CM2D1WOT105W_LE_88" class="__p_sc" style="
-                  display: none;
-                  clear: both;
-                  color: #888;
-                  padding-top: 16px;
-                  font-size: 13px;
-                ">
-                해당 상품은 전국 매장을 통해 수급하여 배송 될 예정입니다.
-                <br />불량 등의 이유로 수급이 어려울 경우, 취소될 수
-                있습니다. <br />
-                <b>(평일 기준 5일 이상 소요 예정)</b>
-              </p>
-              <!-- ########## main goods info end ########## -->
 
-              <!-- ########## sub goods info ########## -->
-              <li class="ogl_sub_item df_box_slide_con item_info" style="display: none">
-                <!-- goods_list_item s -->
-                <a href="/ko/p/CM2D1WOT105W_LE_82">
-                  <div class="ogl_item gl_item">
-                    <div class="gl_tit">
-                      <img src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_S01.jpg" alt=""
-                        class="gl_thumbimg" />
-                    </div>
-                    <ul class="gl_con">
-                      <li class="gl_con_brand">the CASHMERE</li>
-                      <li class="gl_con_name">
-                        린넨 블렌드 오버사이즈 재킷
-                      </li>
-                      <li class="gl_con_option">LIGHT BEIGE / 82 / 1개</li>
-                      <li class="gl_con_price"><span> ₩745,000</span></li>
-                    </ul>
-                  </div>
-                </a>
-                <!-- goods_list_item e -->
-              </li>
-              <p name="__p_CM2D1WOT105W_LE_82" class="__p_sc" style="
-                  display: none;
-                  clear: both;
-                  color: #888;
-                  padding-top: 16px;
-                  font-size: 13px;
-                ">
-                해당 상품은 전국 매장을 통해 수급하여 배송 될 예정입니다.
-                <br />불량 등의 이유로 수급이 어려울 경우, 취소될 수
-                있습니다. <br />
-                <b>(평일 기준 5일 이상 소요 예정)</b>
-              </p>
-              <!-- ########## sub goods info end ########## -->
 
-              <!-- <script>
-                var checktHandsomepointUsableAmount = parseInt('1490000.0');
-              </script> -->
+
+              </th:block>
             </ul>
             <!-- ########## Goods list end ########## -->
 
@@ -565,7 +541,8 @@
                   <li class="swiper-slide last swiper-slide-active" style="margin-right: 20px;">
                     <div class="card_item cd_kind_add"><a href="javascript:;" class="card_add_btn"
                         onclick="checkoutWpay.btnCardRegist()">카드등록</a></div>
-                    <div style="display: hidden;"> <input type="radio" id="card_choice_" name="card_choice" value=""> </div>
+                    <div style="display: hidden;"> <input type="radio" id="card_choice_" name="card_choice" value="">
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -663,44 +640,47 @@
             </h3>
 
             <ul class="total_price_detail">
-					
+
               <li id="subtotal" class="sub_total190816">
-                <div class="ttpd_tit">상품 합계</div>	
+                <div class="ttpd_tit">상품 합계</div>
                 <div class="ttpd_con">₩980,000</div>
               </li>
-              
-              <li>	
-                  <div class="ttpd_tit">프로모션/쿠폰</div> 
-                  <div class="ttpd_con">- ₩10,000</div>
-                </li>
-              <li>	
+
+              <li>
+                <div class="ttpd_tit">프로모션/쿠폰</div>
+                <div class="ttpd_con">- ₩10,000</div>
+              </li>
+              <li>
                 <div class="ttpd_tit">
-                배송비<!-- tootip s -->
-                  <span class="dpIB"><div class="icon_help btn_tooltip" data-tooltip-target="tooltip_buy_delivery_charge"></div></span>
+                  배송비<!-- tootip s -->
+                  <span class="dpIB">
+                    <div class="icon_help btn_tooltip" data-tooltip-target="tooltip_buy_delivery_charge"></div>
+                  </span>
                   <!-- tootip : contents_area s -->
                   <div class="tooltip_contens">
                     <div class="tooltip_wrap tooltip_buy_delivery_charge" style="display: none;">
-                    <div class="tltp_close_btn btn_tltp_close"><span>닫기</span></div>
-                    <h1 class="tltp_header">배송비</h1>
-                    <div class="tltp_content">
-                      <ul class="ul_dot_blk">
-                         <li>쿠폰/바우처 할인금액 및 한섬마일리지/H.Point 사용을 제외한 실 결제금액 기준 <strong>3만원 미만 결제 시 2,500원 배송비가 부과</strong>됩니다. (3만원 이상 구매 시 무료배송)</li>
-                                                <li>도서산간 지역은 배송비가 추가 될 수 있습니다.</li>
-                                                <li>한섬마일리지, H.Point, e-money로 배송비 결제가 불가합니다.</li>
-                                            </ul>
-                    </div>
+                      <div class="tltp_close_btn btn_tltp_close"><span>닫기</span></div>
+                      <h1 class="tltp_header">배송비</h1>
+                      <div class="tltp_content">
+                        <ul class="ul_dot_blk">
+                          <li>쿠폰/바우처 할인금액 및 한섬마일리지/H.Point 사용을 제외한 실 결제금액 기준 <strong>3만원 미만 결제 시 2,500원 배송비가
+                              부과</strong>됩니다. (3만원 이상 구매 시 무료배송)</li>
+                          <li>도서산간 지역은 배송비가 추가 될 수 있습니다.</li>
+                          <li>한섬마일리지, H.Point, e-money로 배송비 결제가 불가합니다.</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                   <!-- tootip : contents_area e -->
                   <!-- tootip e -->
-                  
-                </div> 
-                
+
+                </div>
+
                 <div class="ttpd_con">₩ 0</div>
               </li>
-              </ul>
+            </ul>
 
-            
+
           </div>
           <input type="hidden" name="total" id="total" value="1490000.0" />
           <input type="hidden" name="cartDeliveryCost" id="cartDeliveryCost" value="0.0" />
@@ -715,24 +695,26 @@
           <h3 class="df_box_tit">
             적립 예정 포인트
             <!-- tootip s -->
-            <span class="dpIB"><div class="icon_help btn_tooltip" data-tooltip-target="tooltip_buy_point_guide"></div></span>
+            <span class="dpIB">
+              <div class="icon_help btn_tooltip" data-tooltip-target="tooltip_buy_point_guide"></div>
+            </span>
             <!-- tootip : contents_area s -->
             <div class="tooltip_contens">
-            <div class="tooltip_wrap tooltip_buy_point_guide" style="display: none;">
-              <div class="tltp_close_btn btn_tltp_close"><span>닫기</span></div>
-              <h1 class="tltp_header">적립 예정 포인트</h1>
-              <div class="tltp_content">
-                <ul class="ul_dot_blk">
-                  <li>기존 마이너스 포인트를 보유하고 있는 고객은 포인트가 차감되어 적립됩니다. 적립 예정 포인트가 상이할 수 있습니다.</li>
-                  <li>통합 멤버쉽으로 가입하시면, H.Point 적립 및 사용이 가능합니다.</li>
-                </ul>
+              <div class="tooltip_wrap tooltip_buy_point_guide" style="display: none;">
+                <div class="tltp_close_btn btn_tltp_close"><span>닫기</span></div>
+                <h1 class="tltp_header">적립 예정 포인트</h1>
+                <div class="tltp_content">
+                  <ul class="ul_dot_blk">
+                    <li>기존 마이너스 포인트를 보유하고 있는 고객은 포인트가 차감되어 적립됩니다. 적립 예정 포인트가 상이할 수 있습니다.</li>
+                    <li>통합 멤버쉽으로 가입하시면, H.Point 적립 및 사용이 가능합니다.</li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
             <!-- tootip : contents_area e -->
             <!-- tootip e -->
           </h3>
-          
+
           <div class="tooltip_html">
             <div class="tooltip_wrap tooltip_buy_point_guide">
               <div class="tltp_close_btn btn_tltp_close"><span>닫기</span></div>
@@ -745,12 +727,13 @@
               </div>
             </div>
           </div>
-                        
+
           <ul class="ul_dot point_back_wrap ">
-            <li><div class="udot_tit">한섬마일리지</div>
+            <li>
+              <div class="udot_tit">한섬마일리지</div>
               <div class="udot_con"><span id="txtAccumulationPoint">48,800</span> M</div>
             </li>
-            </ul>
+          </ul>
         </div>
         <!-- ########## add point info end ########## -->
 
@@ -758,28 +741,33 @@
         <div class="df_box df_box_slide agree_buyer_wrap">
           <div class="check_stl df_box_tit">
             <input type="checkbox" id="agree" value="">
-            <label for="agree"><h3 class="df_box_tit">[필수] 구매자 동의</h3></label>
+            <label for="agree">
+              <h3 class="df_box_tit">[필수] 구매자 동의</h3>
+            </label>
           </div>
-          <div class="df_box_slide_con desc_box" style="display: none; height: 34px; padding-top: 0px; margin-top: 15px; padding-bottom: 0px; margin-bottom: 0px;">주문할 상품의 상품명, 가격, 배송정보 등을 확인하였으며, <br>구매 진행에 동의합니다. (전자상거래법 제 8조 2항)</div>
+          <div class="df_box_slide_con desc_box"
+            style="display: none; height: 34px; padding-top: 0px; margin-top: 15px; padding-bottom: 0px; margin-bottom: 0px;">
+            주문할 상품의 상품명, 가격, 배송정보 등을 확인하였으며, <br>구매 진행에 동의합니다. (전자상거래법 제 8조 2항)</div>
         </div>
         <!-- ########## Buyer Agreement end ########## -->
 
         <!-- ########## Payment button start ########## -->
         <div class="df_box payment_btn_wrap last_box fs1904">
           <div class="btn_desc_oera">
-                  <p>
-                      먼저 준비된 상품부터 순차적으로 발송하므로, <br>부분 배송될 수 있습니다.</p>
-                  </div>
-              <ul class="btn_wrap btn_wrap_div1">
-          <li class="pymt_call_pg">
-            <a href="#none" class="btnstl6 solid_btn_point" id="doOrderBtn"><span><b>980,000</b> 원&nbsp;주문하기</span></a>
-          </li>
-        </ul>
-      </div>
-      <!-- ########## Payment button end ########## -->
+            <p>
+              먼저 준비된 상품부터 순차적으로 발송하므로, <br>부분 배송될 수 있습니다.</p>
+          </div>
+          <ul class="btn_wrap btn_wrap_div1">
+            <li class="pymt_call_pg">
+              <a href="#none" class="btnstl6 solid_btn_point" id="doOrderBtn"><span><b>980,000</b>
+                  원&nbsp;주문하기</span></a>
+            </li>
+          </ul>
+        </div>
+        <!-- ########## Payment button end ########## -->
 
-      <!-- ########## footer add ########## -->
-      <footer th:replace="wck/includes/footer :: fragment-footer"></footer>
+        <!-- ########## footer add ########## -->
+        <footer th:replace="wck/includes/footer :: fragment-footer"></footer>
 
       </div>
       <!-- ########## contents end ########## -->
@@ -823,7 +811,7 @@
     const style = getComputedStyle(f_info);
     const display = style.display;
 
-    if(display === 'none'){
+    if (display === 'none') {
       $(".f_info").prop("style", "display:block");
       $(".f_info_viewer").prop("class", "f_info_viewer active");
     } else {

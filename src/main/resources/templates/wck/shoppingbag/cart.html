@@ -159,7 +159,7 @@
                 psids = [];
                 $("input:checkbox[name='cartlist']").each(function (idx) {
                   if ($(this).is(":checked") == true) {
-                    psids.push($(this).data('pk'));
+                    psids.push($(this).data('pks'));
                   };
                 })
 
@@ -256,7 +256,8 @@
 
                     str += `id="gl_rd_color_${idx}_${i}" name="gl_rd_color_${idx}" data-color="${colors.colorName}" onclick="setColor('${colors.pcid}', '${sTag}',this);">
                   <label for="gl_rd_color_${idx}_${i}"></label>
-                  <span class="gl_color_val" style="background:${colors.pccolorCode} url(${colors.pcchipImg}/dims/resize/60x60) center /100% auto no-repeat">${colors.productCode}</span></li>`
+                  <span class="gl_color_val" style="background:${colors.pccolorCode} url(${colors.pcchipImg}/dims/resize/60x60) center /1
+                  00% auto no-repeat">${colors.productCode}</span></li>`
                   }
 
                   $(".btn_color_wrap").html(str);
@@ -355,7 +356,7 @@
               let subTotalPrice = 0;
               $("input:checkbox[name='cartlist']:checked").each(function() {
                 let id = $(this).val();
-                let price = $("#checkZeroPrice"+id).val();
+                let price = $("#checkZeroPrice_"+id).val();
                 let qty = $("#quantity"+id).val();
                 subTotalPrice += (price*qty);
                 count++;
@@ -396,12 +397,37 @@
             }
 
             function sendOrderForm(){
+              // let token = $("meta[name='_csrf']").attr("content");
+              // let header = $("meta[name='_csrf_header']").attr("content");
+
               let count = $('input:checkbox[name="cartlist"]:checked').length;
               if(count <= 0){
                 layerAlert('상품을 선택하세요.');
                 return;
               }
 
+              let mid = '[[${mId}]]';
+              let psids = [];
+              let qtys = [];
+
+              $("input:checkbox[name='cartlist']:checked").each(function() {
+                let id = $(this).val();
+                let psid = $(this).data('pks');
+                let qty = $("#quantity"+id).val();
+
+                psids.push(psid);
+                qtys.push(qty);
+			        });
+
+              $("#sendCartProds").submit();
+            }
+
+            function goProdDetail(psid) {
+              console.log('psid : '+psid);
+              let [pId, cTag, sTag] = psid.split('_');
+              let pcid = pId + '_' + cTag;
+
+              location.href = `/wck/products/p?pid=${pId}&pcid=${pcid}`;
             }
           </script>
 
@@ -414,6 +440,8 @@
             </div>
           </h3>
 
+          <form id="sendCartProds" action="/wck/checkout/ordersheet" method="post">
+          <!-- <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /> -->
           <ul class="goods_list_wrap">
             <!-- 활성화 : gl_item에 품절상품 : gl_status_soldout, 4PM상품 : gl_status_4pm 클래스 추가/삭제 -->
             <th:block th:if="${#lists.size(prods)==0}">
@@ -469,18 +497,19 @@
                   <!-- ########## Goods info start ########## -->
                   <div class="gl_mid">
                     <div class="gl_tit">
-                      <a th:href="@{/wck/p/{pId}(pId=${prod.PSId})}">
+                      <a href="#" th:onclick="goProdDetail([[${prod.PSId}]]);">
                         <img th:src="${prod.PImg}" class="gl_thumbimg" alt="" />
                       </a>
                     </div>
                     <ul class="gl_con">
-                      <a th:href="@{/wck/p/{pId}(pId=${prod.PSId})}">
+                      <a href="#" th:onclick="goProdDetail([[${prod.PSId}]]);">
                         <li class="gl_con_brand">[[${prod.BName}]]</li>
                         <li class="gl_con_name">[[${prod.PName}]]</li>
                       </a>
+                      <input type="hidden" th:name="'ps_'+${i.index}" th:value="${prod.PSId}"/>
                       <li class="gl_con_price">
                         ₩[[${#numbers.formatInteger(prod.PCPrice, 3, 'COMMA')}]]
-                        <input type="hidden" th:id="'checkZeroPrice'+${i.index}" name="checkZeroPrice"
+                        <input type="hidden" th:id="'checkZeroPrice_'+${i.index}" th:name="'checkZeroPrice_'+${i.index}"
                           th:value="${prod.PCPrice}" />
                       </li>
                     </ul>
@@ -566,6 +595,7 @@
             </th:block>
           </ul>
           <!-- ########## Goods list end ########## -->
+          </form>
 
           <th:block th:if="${#lists.size(prods)!=0}">
             <!-- ########## Goods list edit btn start ########## -->

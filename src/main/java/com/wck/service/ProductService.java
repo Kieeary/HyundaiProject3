@@ -1,13 +1,16 @@
 package com.wck.service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.jdbc.core.metadata.TableMetaDataProvider;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
+import com.wck.domain.OrderProductVO;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
@@ -78,19 +81,27 @@ public class ProductService {
 	public String getProductStock(String psId, int qty) {
 		String pId = psId.split("_")[0];
 		int stock = productMapper.getProductStock(psId);
-
 		String msg = "";
-		
 		log.info("pid : "+pId);
 		
 		if(qty > stock) {
 			ProductCommonVO prodInfo = productMapper.getProductSympleInfo(pId);
 			msg = "["+prodInfo.getBName()+"] "+prodInfo.getPName()+"의 재고수량은 "+stock+"개입니다. 다시 입력해 주시기 바랍니다.";
 		}
-		
 		log.info("재고 수량 : "+msg);
-		
 		return msg;
+	}
+	
+	public List<OrderProductVO> getPsIdInfo(List<String> psids){
+		
+		List<OrderProductVO> prods = new LinkedList<OrderProductVO>();
+		
+		for (String psid : psids) {
+			OrderProductVO prod = productMapper.getProductInfoWithColorName(psid);
+			prods.add(prod);
+		}
+		
+		return prods;
 	}
 
 }

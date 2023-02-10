@@ -1,41 +1,51 @@
-<div class="gl_tgl gl_tgl_option" id="pt_list_0" style="display: block;"><!-- color_size_price -->
-  <ul class="gl_edit">
-    <li>
-      <div class="gl_tit">색상</div>
-      <ul class="gl_con btn_color_wrap"> <!-- function setColorRadio 참조 -->
-        <th:each="color : ${result['colorSet']}">
-          <li>
-            <input type="radio" th:if="${}" checked="checked" id="gl_rd_color_00_07" name="gl_rd_color_00" onclick="setOptions(this, '0', 'FL2C7HBG002LFE_PK', 'style');">
-                    <label for="gl_rd_color_00_07"></label>
-                    <span class="gl_color_val" style="background:#ee84a2 url('http://newmedia.thehandsome.com/FL/2C/FW/FL2C7HBG002LFE_PK_C01.jpg/dims/resize/60x60') center /100% auto no-repeat">#ee84a2</span>
+<th:block th:if="${#lists.size(prods)!=0}" th:each="prod, i : ${prods}">
+                <th:if="${prod.first}">
+                  <!-- ########## main goods info ########## -->
+                  <li class="ogl_main_item item_info">
+                    <a href="/ko/p/CM2D1WOT105W_LE_88">
+                      <div class="ogl_item gl_item">
+                        <div class="gl_tit">
+                          <img src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_S01.jpg" alt=""
+                            class="gl_thumbimg" />
+                        </div>
+                        <ul class="gl_con">
+                          <li class="gl_con_brand">the CASHMERE</li>
+
+                          <li class="gl_con_name">
+                            린넨 블렌드 오버사이즈 재킷
+                          </li>
+                          <li class="gl_con_option">LIGHT BEIGE / 88 / 1개</li>
+                          <li class="gl_con_price"><span> ₩745,000</span></li>
+                        </ul>
+                      </div>
+                    </a>
                   </li>
-        </th:each>
-        </ul>
-      <div class="gl_con selected_color_txt">
-        <span class="sct_v">PINK</span>
-      </div>
-    </li>
-    <li>
-      <div class="gl_tit">사이즈</div>
-      <div class="gl_con">
-      <span class="sod_select  touch" tabindex="0" data-cycle="false" data-links="false" data-links-external="false" data-placeholder-option="false" data-filter=""><span class="sod_label">FR</span><span class="sod_list_wrapper"><span class="sod_list"><span class="sod_option  selected active " title="FR" data-value="FL2C7HBG002LFE_PK_FR">FR</span></span></span><select id="gl_slr_size_0" name="gl_slr_size_0" class="sodsb" onchange="setOptions(this, '0', '', 'size');">
-        <option value="FL2C7HBG002LFE_PK_FR" selected="">FR</option>
-                  </select></span>
-      </div>
-    </li>
-    <li>
-      <div class="gl_tit">수량</div>
-      <div class="gl_con">
-      <div class="gl_count_edit">
-        <a onclick="quantityMinus(this, '0');" class="btn_minus"><span>감소</span></a>
-        <div class="gl_count_num"><input type="text" title="수량" readonly="" value="1" class="mr0" id="quantity_0" name="quantity_0" path="quantity"></div>
-          <a onclick="quantityPlus(this, '0');" class="btn_plus"><span>증가</span></a>
-      </div>
-      </div>
-    </li>
-  </ul>
-  <div class="gl_tgl_btns btn_wrap btn_wrap_div2">
-    <a href="#none" class="btnstl3 solid_btn_gray btn_cancel"><span>취소</span></a>
-    <a href="#none" class="btnstl3 solid_btn_blk btn_save" id="UpdateCart_0" onclick="productModifyEvent(this);"><span>저장</span></a>
-  </div>
-  </div>
+                  <!-- ########## main goods info end ########## -->
+
+                  </th:if>
+                  <th:if="${i.first == false}">
+                    <!-- ########## sub goods info 'oridin : "display: none"> ########## -->
+                    <li class="ogl_sub_item df_box_slide_con item_info" style="display: list-item;">
+                      <!-- goods_list_item s -->
+                      <a href="/ko/p/CM2D1WOT105W_LE_82">
+                        <div class="ogl_item gl_item">
+                          <div class="gl_tit">
+                            <img src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_S01.jpg" alt=""
+                              class="gl_thumbimg">
+                          </div>
+                          <ul class="gl_con">
+                            <li class="gl_con_brand">the CASHMERE</li>
+                            <li class="gl_con_name">
+                              린넨 블렌드 오버사이즈 재킷
+                            </li>
+                            <li class="gl_con_option">LIGHT BEIGE / 82 / 1개</li>
+                            <li class="gl_con_price"><span> ₩745,000</span></li>
+                          </ul>
+                        </div>
+                      </a>
+                      <!-- goods_list_item e -->
+                    </li>
+                    <!-- ########## sub goods info end ########## -->
+
+                    </th:if>
+              </th:block>

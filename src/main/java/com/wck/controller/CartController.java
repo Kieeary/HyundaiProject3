@@ -1,11 +1,9 @@
 package com.wck.controller;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.javassist.bytecode.stackmap.MapMaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,7 +42,7 @@ public class CartController {
 		log.info("user id > "+mId);
 		
 		if (psid == null) {
-//			cartService.deleteCart(mId);
+			cartService.deleteCart(mId);
 		} else {
 			log.info("psid > "+ psid);
 			cartService.deleteCartProd(mId, psid);

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wck.domain.DetailProductVO;
+import com.wck.security.domain.Account;
 import com.wck.service.CartService;
 import com.wck.service.ProductService;
 
@@ -104,6 +107,13 @@ public class CartController {
 			log.info(msg);
 			return new ResponseEntity<> (result, HttpStatus.OK);
 		}
+	}
+	
+	@PostMapping(value = "/aaa")
+	public String addProduct(@AuthenticationPrincipal Account user, Model model) {
+		log.info(user.getId()); // mid
+		log.info(user.getEmail()); // email
+		return "";
 	}
 }
 	

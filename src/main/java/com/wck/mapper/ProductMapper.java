@@ -11,6 +11,7 @@ import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.WithProductVO;
 
 @Mapper
 public interface ProductMapper {
@@ -21,6 +22,8 @@ public interface ProductMapper {
 					@Param("sC") String sC, @Param("tC") String tC); 
 	
 	public List<ProductVO> searchProducts(String keyword);
+	
+	public List<WithProductVO> getWithProducts(String pcid);
 	
 	public List<ProductColorChipVO> getColorChip(String pid);
 

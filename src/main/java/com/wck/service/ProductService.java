@@ -16,6 +16,7 @@ import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.WithProductVO;
 import com.wck.mapper.ProductMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -89,6 +90,13 @@ public class ProductService {
 	public List<ProductVO> searchProductsList(String keyword) {
 		
 		return productMapper.searchProducts(keyword);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<WithProductVO> getWithProducts(String pcid) {
+		return productMapper.getWithProducts(pcid);
 	}
 
 	

@@ -1,59 +1,11 @@
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="wck/includes/head :: head_tag(title='더한섬닷컴')"></th:block>
 
-<head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="pragma" content="no-cache" />
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-
-	<meta charset="UTF-8" />
-	<meta name="HandheldFriendly" content="true" />
-	<meta name="viewport"
-		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
-	<meta name="format-detection" content="telephone=no" />
-
-	<!-- Mobile Smart Banner for IOS Device -->
-	<meta name="apple-itunes-app" content="app-id=1072288949" />
-	<!-- //Mobile Smart Banner for IOS Device -->
-	<meta property="og:title" content="더한섬닷컴" />
-	<meta property="og:type" content="website" />
-
-	<title>더한섬닷컴</title>
-	<link rel="shortcut icon"
-		href="http://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico" />
-	<link rel="apple-touch-icon" href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-	<link rel="apple-touch-icon-precomposed"
-		href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-	<link rel="apple-touch-icon-120x120"
-		href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-	<link rel="apple-touch-icon-120x120-precomposed"
-		href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-
-	<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> -->
-
-	<link rel="shortcut icon" type="image/x-icon" media="all" href="//" />
-
-	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/font_80.css?20221121" rel="stylesheet"
-		type="text/css" />
-	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/jquery-ui.css" rel="stylesheet"
-		type="text/css" />
-	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/selectordie.css" rel="stylesheet"
-		type="text/css" />
-	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/default.css?202200826" rel="stylesheet"
-		type="text/css" />
-	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/display.css?20221107" rel="stylesheet"
-		type="text/css" />
-	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/assist.css?20220929" rel="stylesheet"
-		type="text/css" />
-	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/devAssist.css" rel="stylesheet"
-		type="text/css" />
-
-	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/popup.css" rel="stylesheet"
-		type="text/css" />
 
 	<script type="text/javascript">
 		var handsomePageId = 'productList';
 		var main_bul = false;
+		let gnbType = '';
 	</script>
 
 	<script type="text/javascript">
@@ -66,80 +18,6 @@
 		var handsomeIsoCode = 'ko';
 		var handsomeContextPath = '/ko';
 	</script>
-
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.min.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.vticker.js"></script>
-	<!-- 200318 Ã¬Â¶ÂÃªÂ°Â -->
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/masonry.pkgd.min.js"></script>
-	<script type="text/javascript"
-		src="http://www.thehandsome.com/_ui/handsomemobile/js/imagesloaded.pkgd.min.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.form.min.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.cookie.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/swiper.min.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/selectordie.min.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.bpopup.min.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/echarts.min.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/common.js?20210501"></script>
-	<script type="text/javascript"
-		src="http://www.thehandsome.com/_ui/handsomemobile/js/assist_common.js?v=20220630"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/handsome.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/common_function.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/json2.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/SsoAjax.js"></script>
-
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/makePCookie.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/content.js"></script>
-	<script type="text/javascript"
-		src="http://www.thehandsome.com/_ui/handsomemobile/js/e-smart-zoom-jquery.min.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/popup.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/simplepagination.js"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel.js"
-		charset="UTF-8"></script>
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel_skin.js"
-		charset="UTF-8"></script>
-
-	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/unorm.js"></script>
-
-	<style media="screen">
-		.blsmflw1 {
-			animation: target_image 1.5s;
-			animation-iteration-count: 2;
-			transform-origin: 50% 50%;
-		}
-
-		@keyframes target_image {
-			0% {
-				transform: rotate(-2deg);
-			}
-
-			50% {
-				transform: rotate(9deg);
-			}
-
-			100% {
-				transform: rotate(-1deg);
-			}
-		}
-	</style>
-
-	<meta http-equiv="origin-trial"
-		content="A9+ldib+sKhGj2FcIjq5GnvBZFuIiXID0+NkE6k7cEk71MhaHFGqo3wUlUFmZ6d9w0KPwx9UxGiCTYWtRnTGDQkAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5uZXQ6NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4MDY1Mjc5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=" />
-	<meta http-equiv="origin-trial"
-		content="AzLNuh8GFzfIOcwvhEg7Ymr7YCzlYVTKeD7i2iETABbRf+sL2FAx+r+HlTtxSi1zgUFxBlJVoxgLjuhqiwTjAw4AAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5jb206NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4MDY1Mjc5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=" />
-	<script src="https://cdn.megadata.co.kr/js/socialLink/social_sns_config_min.js" type="text/javascript" defer=""
-		async=""></script>
-	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
-	<link rel="stylesheet" type="text/css" href="//static.groobee.io/dist/g2/css/grb-recommend-list_v2.css" />
-	<link rel="stylesheet" type="text/css" href="//static.groobee.io/dist/g2/css/custom-swiper.css" />
-	<script type="text/javascript" async=""
-		src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/943253288/?random=1675336323025&amp;cv=9&amp;fst=1675336323025&amp;num=1&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;eid=375603260%2C466465926&amp;u_h=709&amp;u_w=400&amp;u_ah=709&amp;u_aw=400&amp;u_cd=30&amp;u_his=10&amp;u_tz=540&amp;u_java=false&amp;u_nplug=0&amp;u_nmime=0&amp;sendb=1&amp;ig=1&amp;frm=0&amp;url=http%3A%2F%2F192.168.0.39%3A5500%2Fbrand.html&amp;ref=http%3A%2F%2F192.168.0.39%3A5500%2Fbrand.html&amp;tiba=%EB%8D%94%ED%95%9C%EC%84%AC%EB%8B%B7%EC%BB%B4&amp;hn=www.googleadservices.com&amp;rfmt=3&amp;fmt=4"></script>
-	<meta http-equiv="origin-trial"
-		content="A9+ldib+sKhGj2FcIjq5GnvBZFuIiXID0+NkE6k7cEk71MhaHFGqo3wUlUFmZ6d9w0KPwx9UxGiCTYWtRnTGDQkAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5uZXQ6NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4MDY1Mjc5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=" />
-	<meta http-equiv="origin-trial"
-		content="AzLNuh8GFzfIOcwvhEg7Ymr7YCzlYVTKeD7i2iETABbRf+sL2FAx+r+HlTtxSi1zgUFxBlJVoxgLjuhqiwTjAw4AAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5jb206NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4MDY1Mjc5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=" />
-</head>
-
 <body class="back">
 	<style>
 		.swiper-wrapper {
@@ -1166,19 +1044,19 @@
 	<aside class="hsome_quickMenu hsome_quickMenu1909 active">
 		<ul>
 			<li class="shop active">
-				<a href="/ko/mobilecommon/navShop" onclick="GA_Event('카테고리_리스트', '헤더', '샵');"><i>메뉴</i></a>
+				<a href="/ko/mobilecommon/navShop" ><i>메뉴</i></a>
 			</li>
 			<li class="sns">
-				<a href="/ko/sns/main" onclick="GA_Event('공통', '네비게이션_바', '타임라인');"><i>스타일 LIVE</i></a>
+				<a href="/ko/sns/main" ><i>스타일 LIVE</i></a>
 			</li>
 			<li class="home">
-				<a href="javascript:noLink();" onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a>
+				<a href="javascript:noLink();" ><i>홈</i></a>
 			</li>
 			<li class="myheart" id="gnbMyheartBtn">
-				<a href="/ko/mypage/myWish" onclick="GA_Event('공통', '네비게이션_바', '마이하트');"><i>마이하트</i></a>
+				<a href="/ko/mypage/myWish" ><i>마이하트</i></a>
 			</li>
 			<li class="mypage" id="gnbMyPageBtn">
-				<a href="javascript:noLink();" onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a>
+				<a href="javascript:noLink();" ><i>마이페이지</i></a>
 			</li>
 			<li class="mypage pageMove" style="display: none">
 				<a href="/ko/member/login" id="gnbMypageBtn"></a>

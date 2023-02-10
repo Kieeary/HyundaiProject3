@@ -193,113 +193,6 @@
       >mobile.bottom.top</a
     ><!-- 20180530 추가 -->
 
-    <!-- ################## hsome_quickMenu | 퀵메뉴 ################## -->
-    <aside class="hsome_quickMenu hsome_quickMenu1909">
-      <ul>
-        <li class="shop">
-          <a
-            href="/ko/mobilecommon/navShop"
-            onclick="GA_Event('공통', '네비게이션_바', '샵');"
-            ><i>메뉴</i></a
-          >
-        </li>
-        <li class="sns">
-          <a
-            href="/ko/sns/main"
-            onclick="GA_Event('공통', '네비게이션_바', '타임라인');"
-            ><i>스타일 LIVE</i></a
-          >
-        </li>
-        <li class="home">
-          <a
-            href="javascript:noLink();"
-            onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"
-            ><i>홈</i></a
-          >
-        </li>
-        <li class="myheart" id="gnbMyheartBtn">
-          <a
-            href="/ko/mypage/myWish"
-            onclick="GA_Event('공통', '네비게이션_바', '마이하트');"
-            ><i>마이하트</i></a
-          >
-        </li>
-        <li class="mypage active" id="gnbMyPageBtn">
-          <a
-            href="javascript:noLink();"
-            onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"
-            ><i>마이페이지</i></a
-          >
-        </li>
-        <li class="mypage pageMove" style="display: none">
-          <a href="" id="gnbMypageBtn"></a>
-        </li>
-        <li class="mypage" style="display: none">
-          <a href="/ko/mobilecommon/myPagePopup" id="gnbMypagePopupBtn"></a>
-        </li>
-      </ul>
-    </aside>
-    <!-- ################## //hsome_quickMenu | 퀵메뉴 ################## -->
-
-    <div class="fixed_dim_layer" onclick="familySiteSelectClosed();"></div>
-    <div class="family_site_popup_191108">
-      <ul>
-        <li>
-          <a
-            href="http://m.hfashionmall.com/sfmmbl/mbl/main.do"
-            target="_blank"
-            onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_H패션몰');"
-            >H패션몰<!-- H패션몰 --></a
-          >
-        </li>
-        <li>
-          <a
-            href="https://m.hyundaihmall.com/front/index.do"
-            target="_blank"
-            onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_현대홈쇼핑');"
-            >현대홈쇼핑<!-- (주)현대홈쇼핑 --></a
-          >
-        </li>
-        <li>
-          <a
-            href="https://m.thehyundai.com/Home.html"
-            target="_blank"
-            onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_더현대닷컴');"
-            >더현대닷컴<!-- 더현대닷컴 --></a
-          >
-        </li>
-        <li>
-          <a
-            href="http://mall.hyundailivart.co.kr/front/index_org.lv"
-            target="_blank"
-            onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_현대리바트');"
-            >현대리바트<!-- (주)현대 리바트 --></a
-          >
-        </li>
-        <li>
-          <a
-            href="https://www.h-point.co.kr/cu/main/index.nhd"
-            target="_blank"
-            onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_H.Point');"
-            >H.Point</a
-          >
-        </li>
-        <li>
-          <a
-            href="http://www.ehyundai.com/newPortal/ir/main.do"
-            target="_blank"
-            onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_현대백화점그룹');"
-            >현대백화점그룹<!-- 현대백화점 그룹 --></a
-          >
-        </li>
-      </ul>
-      <a
-        href="#;"
-        class="family_site_popup_close"
-        onclick="familySiteSelectClosed();"
-        >닫기<!-- 닫기 --></a
-      >
-    </div>
     <!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
     <div class="hsome_quickMenu_contents active absolute">
       <!-- Contents -->
@@ -462,7 +355,7 @@
 
                     <div id="myWishlists" class="s-thumb">
                       <p><span>위시리스트에 저장된 상품이 없습니다.</span></p>
-                      <a href="/ko/mypage/myWish" class="more">+0</a>
+                      <a href="/wck/mypage/wish" class="more">+0</a>
                     </div>
 
                     <div class="s-link">
@@ -499,21 +392,6 @@
               onclick="GA_Event('마이페이지','푸터','프로필 설정')"
               >프로필 설정</a
             >
-            <div class="u_setting">
-              <!-- 알림 있으면 has 클래스 붙음 -->
-              <a
-                href="/ko/mypage/noticebox"
-                class="alt"
-                onclick="GA_Event('마이페이지', '푸터', '알림');"
-                >알림</a
-              >
-              <a
-                href="javascript:noLink();"
-                class="set"
-                onclick="mypageConfigClick();GA_Event('마이페이지', '푸터', '설정');"
-                >설정</a
-              >
-            </div>
           </div>
           <div class="mypage_card_footer_logout2008">
             <a

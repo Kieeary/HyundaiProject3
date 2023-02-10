@@ -171,29 +171,8 @@
 				}
 			</script>
 
-			<!-- ################## header ################## -->
-			<header class="hsome_header">
-				<h1 class="h_ttl ellipsis" id="headerTitle">
-					검색 결과
-				</h1>
-				<script type="text/javascript">
-					$(document).ready(function () { });
-				</script>
+			<th:block th:replace="wck/includes/header :: header_tag(title='검색결과')"></th:block>
 
-				<a href="javascript:noLink();" onclick="goBack();GA_Event('카테고리_리스트', '헤더', '이전');" class="h_prev">이전
-					페이지로 가기</a>
-				<ul class="h_gnbMenu">
-					<li class="search">
-						<a href="/wck/search"
-							onclick="GA_Event('카테고리_리스트', '헤더', '검색');"><span>search</span></a>
-					</li>
-					<li class="cart">
-						<a href="/ko/shoppingbag"
-							onclick="GA_Event('카테고리_리스트', '헤더', '쇼핑백');"><span>cart</span><i>0</i></a>
-					</li>
-				</ul>
-			</header>
-			<!-- //################## header ################## -->
 			<div id="listBodyTemp" style="display: none"></div>
 			<form id="categoryListForm" action="/ko/c/categoryList">
 				<input type="hidden" id="brandCode" name="brandCode" value="br08" />

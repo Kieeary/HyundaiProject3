@@ -28,6 +28,7 @@ public class MemberController {
 	private final MemberService memberService;
 
 	/*
+	 * author : 왕종휘
 	 * 유저 아이디 / 비밀번호 찾기
 	 */
 	@GetMapping("/findIdPw")
@@ -40,6 +41,7 @@ public class MemberController {
 	}
 
 	/*
+	 * author : 왕종휘
 	 * 유저 아이디 찾기 수행 (post)
 	 */
 	@PostMapping("/findId")
@@ -51,6 +53,7 @@ public class MemberController {
 	}
 
 	/*
+	 * author : 왕종휘
 	 * 유저 비밀번호 찾기 수행 (post)
 	 */
 	@PostMapping("/findPw")
@@ -68,6 +71,7 @@ public class MemberController {
 	}
 
 	/*
+	 * author : 왕종휘
 	 * 아이디 찾기완료 페이지
 	 */
 	@GetMapping("/findIdComplete")
@@ -76,6 +80,7 @@ public class MemberController {
 	}
 
 	/*
+	 * author : 왕종휘
 	 * 비밀번호 찾기 완료 페이지
 	 */
 	@GetMapping("/findPwComplete")

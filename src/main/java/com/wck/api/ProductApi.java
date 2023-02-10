@@ -21,7 +21,10 @@ public class ProductApi {
 
 	private final ProductService productService;
 	
-	
+	/*
+	 * author : 왕종휘
+	 * 특정 상품 정보 리턴 (common + color)
+	 */
 	@GetMapping("{pId}")
 	public ResponseEntity<ProductCommonVO> getProductDetail(@PathVariable("pId") String pId){
 		log.info("getProductDetail");

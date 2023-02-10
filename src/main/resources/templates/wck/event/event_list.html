@@ -1,64 +1,5 @@
-<html lang="ko" class="back">
-<!--  이벤드 리스트에 thymeleaf 템플릿 적용하면 탭이 동작 안함 -->
-<head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="pragma" content="no-cache" />
-<meta http-equiv="Cache-Control"
-	content="no-cache, no-store, must-revalidate" />
-<meta charset="UTF-8" />
-<meta name="HandheldFriendly" content="true" />
-<meta name="viewport"
-	content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
-<meta name="format-detection" content="telephone=no" />
-
-<!-- Mobile Smart Banner for IOS Device -->
-<meta name="apple-itunes-app" content="app-id=1072288949" />
-<!-- //Mobile Smart Banner for IOS Device -->
-<meta property="og:title" content="더한섬닷컴" />
-<meta property="og:type" content="website" />
-
-<title>더한섬닷컴</title>
-<link rel="shortcut icon"
-	href="http://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico" />
-<link rel="apple-touch-icon"
-	href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-<link rel="apple-touch-icon-precomposed"
-	href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-<link rel="apple-touch-icon-120x120"
-	href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-<link rel="apple-touch-icon-120x120-precomposed"
-	href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
-
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> -->
-
-<link rel="shortcut icon" type="image/x-icon" media="all" href="//" />
-
-<link
-	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/font_80.css?20221121"
-	rel="stylesheet" type="text/css" />
-<link
-	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/jquery-ui.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/selectordie.css"
-	rel="stylesheet" type="text/css" />
-<link
-	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/default.css?202200826"
-	rel="stylesheet" type="text/css" />
-<link
-	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/display.css?20221107"
-	rel="stylesheet" type="text/css" />
-<link
-	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/assist.css?20220929"
-	rel="stylesheet" type="text/css" />
-<link
-	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/devAssist.css"
-	rel="stylesheet" type="text/css" />
-
-<link
-	href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/popup.css"
-	rel="stylesheet" type="text/css" />
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="wck/includes/head :: head_tag(title='더한섬닷컴')"></th:block>
 
 <script type="text/javascript">
       var handsomePageId = 'eventPage';
@@ -76,65 +17,6 @@
       var handsomeContextPath = '/ko';
 </script>
 
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.vticker.js"></script>
-<!-- 200318 Ã¬Â¶ÂÃªÂ°Â -->
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/masonry.pkgd.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/imagesloaded.pkgd.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.form.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.cookie.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery-ui.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/swiper.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/selectordie.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.bpopup.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/echarts.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/common.js?20210501"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/assist_common.js?v=20220630"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/assist_new.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/handsome.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/common_function.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/json2.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/SsoAjax.js"></script>
-
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/makePCookie.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/content.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/e-smart-zoom-jquery.min.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/popup.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/simplepagination.js"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel.js"
-	charset="UTF-8"></script>
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel_skin.js"
-	charset="UTF-8"></script>
-
-<script type="text/javascript"
-	src="http://www.thehandsome.com/_ui/handsomemobile/js/unorm.js"></script>
-</head>
-
 <body class="back">
 	<div class="layerArea" id="mapleLayer" style="display: none">
 		<div class="layerBg"></div>
@@ -143,19 +25,7 @@
 	<!-- ################## hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
 	<div class="hsome_allContents_wrapper">
 		<div class="hsome_allContents">
-			<header class="hsome_header">
-				<h1 class="h_ttl ellipsis" id="headerTitle">이벤트</h1>
-				<a href="javascript:noLink();" onclick="goBack();" class="h_prev">이전
-					페이지로 가기</a>
-				<ul class="h_gnbMenu">
-					<li class="search"><a href="/ko/mobilecommon/search"
-						onclick="GA_Event('공통', '헤더', '검색');"><span>search</span></a>
-					</li>
-					<li class="cart"><a href="/ko/shoppingbag"
-						onclick="GA_Event('공통', '헤더', '쇼핑백');"><span>cart</span><i>0</i></a>
-					</li>
-				</ul>
-			</header>
+			<th:block th:replace="wck/includes/header :: header_tag(title='이벤트')"></th:block>
 			<!-- //################## header ################## -->
 
 			<!-- ################## contents ################## -->
@@ -209,22 +79,21 @@
 	<!-- ################## hsome_quickMenu | 퀵메뉴 ################## -->
 	<aside class="hsome_quickMenu hsome_quickMenu1909 active">
 		<ul>
-			<li class="shop"><a href="/ko/mobilecommon/navShop"
-				onclick="GA_Event('공통', '네비게이션_바', '샵');"><i>메뉴</i></a>
+			<li class="shop"><a href="/ko/mobilecommon/navShop"><i>메뉴</i></a>
 			</li>
 			<li class="sns"><a href="/ko/sns/main"
-				onclick="GA_Event('공통', '네비게이션_바', '타임라인');"><i>스타일
+				><i>스타일
 						LIVE</i></a></li>
 			<li class="home"><a href="javascript:noLink();"
-				onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a>
+				><i>홈</i></a>
 			</li>
 			<li class="myheart" id="gnbMyheartBtn"><a
 				href="/ko/mypage/myWish"
-				onclick="GA_Event('공통', '네비게이션_바', '마이하트');"><i>마이하트</i></a>
+				><i>마이하트</i></a>
 			</li>
 			<li class="mypage" id="gnbMyPageBtn"><a
 				href="javascript:noLink();"
-				onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a>
+				><i>마이페이지</i></a>
 			</li>
 			<li class="mypage pageMove" style="display: none"><a
 				href="/ko/member/login" id="gnbMypageBtn"></a></li>
@@ -233,7 +102,7 @@
 		</ul>
 	</aside>
 	<!-- ################## //hsome_quickMenu | 퀵메뉴 ################## -->
-
+	<div class="hsome_quickMenu_contents"></div>
 	<!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
 
 	<script type="text/javascript">
@@ -320,6 +189,8 @@
         $('.one_lists.on').toggleClass('on');
       }
     </script>
+  <script type="text/javascript" th:src="@{/js/quick_menu.js}" defer></script>
+    
 </body>
 <!-- AceCounter Log Gathering Script V.7.5.2013010701 -->
 </html>

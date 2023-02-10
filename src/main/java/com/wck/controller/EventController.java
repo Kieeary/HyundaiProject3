@@ -20,7 +20,8 @@ public class EventController {
 	
 	private final EventService eventService;
 
-	/*
+	/* 
+	 * author : 왕종휘
 	 * 이벤트 목록 페이지
 	 */
 	@GetMapping
@@ -28,7 +29,8 @@ public class EventController {
 		return "wck/event/event_list";
 	}
 	
-	/*
+	/* 
+	 * author : 왕종휘
 	 * 이벤트 상세 페이지 
 	 */
 	@GetMapping("/{id}")

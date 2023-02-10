@@ -26,6 +26,9 @@ public class CartApi {
 	
 	private final CartService cartService;
 	
+	/* author : 왕종휘
+	 * 장바구니 추가
+	 */
 	@PostMapping("/add")
 	public ResponseEntity<String> addCartApi(
 			@AuthenticationPrincipal Account account,

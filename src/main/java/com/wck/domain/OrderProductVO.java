@@ -12,4 +12,5 @@ public class OrderProductVO {
 	private String pImg;
 	private String pSize;
 	private int quantity;
+	private int pcPrice;
 }

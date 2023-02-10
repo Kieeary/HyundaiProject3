@@ -92,16 +92,8 @@ public class ProductService {
 		return msg;
 	}
 	
-	public List<OrderProductVO> getPsIdInfo(List<String> psids){
-		
-		List<OrderProductVO> prods = new LinkedList<OrderProductVO>();
-		
-		for (String psid : psids) {
-			OrderProductVO prod = productMapper.getProductInfoWithColorName(psid);
-			prods.add(prod);
-		}
-		
-		return prods;
+	public OrderProductVO getPsIdInfo(String psid){
+		return productMapper.getProductInfoWithColorName(psid);
 	}
 
 }

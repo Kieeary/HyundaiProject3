@@ -126,4 +126,11 @@
 	<select id="getGradeById" resultType="int">
 		SELECT MGRADE FROM MEMBER WHERE MID = #{mId}
 	</select>
+	
+	<select id="getCouponByEmail" resultType="eventCoupon">
+		SELECT cd.CPID, e.ECOUPONTITLE, e.EDISCOUNT
+		FROM COUPON_DETAIL cd, EVENT e, MEMBER m 
+		WHERE CPEXPIREDATE > SYSDATE AND cd.ENO = e.ENO AND cd.MID = m.MID AND cd.CPSTATUS = 1 
+		AND m.MEMAIL = #{email}
+	</select>
 </mapper> 

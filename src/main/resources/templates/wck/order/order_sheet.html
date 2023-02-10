@@ -17,6 +17,88 @@
       location.href = `/wck/products/p?pid=${pId}&pcid=${pcid}`;
     }
 
+    function selectVoucher() {
+      let selected = $("#selectVoucher option:selected").val();
+      let cpCode = $("#voucherCode");
+      cpCode.val(selected);
+
+      var btn = $('.coupon_insert').children('.btnstl2');
+      if (selected == '') {
+        // 쿠폰 사용 안힘
+        btn.html('적용');
+        cpCode.val("");
+        console.log('쿠폰 미사용');
+      } else {
+        // 쿠폰 사용
+        btn.html('취소');
+        console.log('쿠폰 사용');
+
+        // 프로모션/쿠폰 사용 가격 계산
+        console.log
+      }
+    }
+
+    function selectMileage() {
+      let mileage = $("#useMileage").val();
+
+      var btn = $('.mpg_input').children('.btnstl2');
+      if(mileage != 0){
+        // 마일리지 사용함
+        btn.html('취소');
+        console.log('마일리지 사용');
+      } else {
+        // 마일리지 사용
+        btn.html('적용');
+        $("#useMileage").val("");
+        console.log('마일리지 미사용');
+      }
+
+    }
+
+    function checkMileage() {
+      console.log('checkMileage');
+      if ($('#mpg_all_use_2').is(':checked')) {
+        // checked
+        $("#useMileage").val('[[${mem.mileage}]]');
+      } else {
+        // un-checked
+        $("#useMileage").val('0');
+      }
+    }
+
+  </script>
+
+  <script th:inline="javascript">
+
+    $(document).ready(function () {
+      let beforePrice = 0;
+
+      [# th:each = "prod, i : ${prods}"]
+      console.log([[${ prod }]]);
+      beforePrice += ([[${ prod.pcPrice * prod.quantity }]]);
+      [/]
+
+      console.log('금액 합계 : ' + beforePrice);
+
+      if (beforePrice > 30000) {
+        $("#ttpd_con3").html('₩ 0');
+      } else {
+        $("#ttpd_con3").html('₩ 2,500');
+      }
+      $("input[name='beforeprice']").val(beforePrice);
+      beforePrice = beforePrice.toLocaleString('ko-KR');
+      $("#ttpd_con1").html(`₩ ${beforePrice}`);
+
+      $("input:checkbox").on('click', function () {
+        let mileage = $("#useMileage").val();
+        console.log("M : " + mileage);
+
+      })
+
+
+
+    })
+
   </script>
 
   <!-- ########## loading start ########## -->
@@ -66,7 +148,7 @@
         <div id="checkoutCartView">
 
           <!-- ########## df_box div start ########## -->
-          <div id="__div_sl" class="df_box df_box_slide df_box_slide_on">
+          <div id="__div_sl" class="df_box df_box_slide">
             <h3 class="df_box_tit">
               주문상품<span class="df_box_tit_sub">([[${prods.size}]]개)</span>
             </h3>
@@ -79,36 +161,29 @@
                   <li class="ogl_main_item item_info">
                 </div>
                 <div th:if="${!i.first}">
-                  <!-- ########## sub goods info 'oridin : "display: none"> ########## -->
-                  <li class="ogl_sub_item df_box_slide_con item_info" style="display: list-item;">
+                  <!-- ########## sub goods info ########## -->
+                  <li class="ogl_sub_item df_box_slide_con item_info" style="display: none;">
                 </div>
-
-                <script>
-                  console.log('[[${prod}]]');
-                </script>
 
                 <a href="#">
                   <div class="ogl_item gl_item">
                     <div class="gl_tit">
-                      <img src="http://newmedia.thehandsome.com/CM/2D/SS/CM2D1WOT105W_LE_S01.jpg" alt=""
-                        class="gl_thumbimg" />
+                      <img th:src="${prod.pImg}" alt="" class="gl_thumbimg" />
                     </div>
                     <ul class="gl_con">
-                      <li class="gl_con_brand">the CASHMERE</li>
+                      <li class="gl_con_brand">[[${prod.bName}]]</li>
 
                       <li class="gl_con_name">
-                        린넨 블렌드 오버사이즈 재킷
+                        [[${prod.pName}]]
                       </li>
-                      <li class="gl_con_option">LIGHT BEIGE / 88 / 1개</li>
-                      <li class="gl_con_price"><span> ₩745,000</span></li>
+                      <li class="gl_con_option">[[${prod.colorName}]] / [[${prod.pSize}]] / [[${prod.quantity}]]개</li>
+                      <li class="gl_con_price"><span> ₩[[${#numbers.formatInteger(prod.pcPrice, 3, 'COMMA')}]]</span>
+                      </li>
                     </ul>
                   </div>
                 </a>
                 </li>
                 <!-- ########## main goods info end ########## -->
-
-
-
 
               </th:block>
             </ul>
@@ -125,7 +200,7 @@
               </label>
             </div>
 
-            <!-- ########## order (?) tootip start ########## -->
+            <!-- ########## order tootip start ########## -->
             <div class="tooltip_html">
               <div class="tooltip_wrap tooltip_shoppingbag_add">
                 <div class="tltp_close_btn btn_tltp_close">
@@ -168,7 +243,7 @@
             <tbody>
               <tr>
                 <th><label for="ordrr_name">주문자</label></th>
-                <td><span class="view_data">왕종휘</span></td>
+                <td><span class="view_data">[[${mem.name}]]</span></td>
               </tr>
               <tr>
                 <th><label for="ordrr_phone">휴대폰</label></th>
@@ -187,11 +262,12 @@
                       </div>
                     </li>
                     <li class="inp_phone2">
-                      <input type="tel" name="hp0_num2" id="hp1" title="휴대폰 번호 가운데자리" maxlength="4"
-                        autocomplete="nope" />
+                      <input type="tel" name="hp0_num2" id="hp1" title="휴대폰 번호 가운데자리" maxlength="4" autocomplete="nope"
+                        th:placeholder="${#strings.substring(mem.phone, 3, 7)}" />
                     </li>
                     <li class="inp_phone3">
-                      <input type="tel" name="hp0_num3" id="hp2" title="휴대폰 번호 뒷자리" maxlength="4" autocomplete="nope" />
+                      <input type="tel" name="hp0_num3" id="hp2" title="휴대폰 번호 뒷자리" maxlength="4" autocomplete="nope"
+                        th:placeholder="${#strings.substring(mem.phone, 7, 11)}" />
                     </li>
                   </ul>
                   <!-- <p class="err_box" id="hpMsg">영문/숫자/특수문자가능(4자~15자)</p> -->
@@ -239,16 +315,55 @@
           <input type="hidden" id="defaultShipmentAddressPk" value="" />
           <div class="select_list_wrap select_list_dlvr_adrs">
             <!-- select_list : selected_item s -->
-            <!-- select_list : selected_item e -->
-            <!-- select_list : list_item s -->
-            <!-- select_list : list_item s -->
-
-            <div class="slcted_item slcted_noitem" id="dlvr_adrs_none">
-              <div class="slct_con">
-                ​<span class="dlvr_adrs_noitem">등록된 배송지가 확인되지 않습니다.<br />다른 배송지
-                  찾기를 이용하여 배송지를 등록해 주세요.<!-- 등록된 배송지가 확인되지 않습니다.<br/>다른 배송지 찾기를 이용하여 배송지를 등록해 주세요. --></span>
+            <div class=" delivery_selected_item_area">
+              <div class="slct_con bk_flag">
+                <span class="dlvr_adrs_name">[[${mem.name}]]</span> /
+                <span class="dlvr_adrs_phone">[[${#strings.substring(mem.phone, 0,
+                  3)}]]-[[${#strings.substring(mem.phone, 3, 7)}]]-[[${#strings.substring(mem.phone, 7,
+                  11)}]]</span><br>
+                (<span class="dlvr_adrs_zipcode">[[${mem.zipcode}]]</span>)
+                <span class="dlvr_adrs_adrs">
+                  <span class="address_line1">[[${mem.address1}]]</span>
+                  <span class="address_line2">[[${mem.address2}]]</span>
+                  <input type="hidden" id="address_line2_raw" value="[[${mem.address2}]]">
+                </span>
+                <span class="none_delivery" style="display:none;">
+                  <span class="none_delivery_id"></span>
+                  <span class="none_delivery_phone"></span>
+                  <span class="none_delivery_email"></span>
+                  <span class="none_delivery_firstName"></span>
+                  <span class="none_delivery_country">KR</span>
+                  <span class="none_delivery_state"></span>
+                  <span class="none_delivery_town"></span>
+                  <span class="none_delivery_localFirstName"></span>
+                  <span class="none_delivery_localLastName"></span>
+                  <span class="none_delivery_maxAmtForTax">0.0</span>
+                </span>
               </div>
             </div>
+            <!-- select_list : selected_item e -->
+            <!-- select_list : list_item s -->
+            <ul class="slct_list_con" id="shippingAddressesArea">
+              <li class="slct_list_item">
+                <div class="radio_stl"> <input type="radio" id="gl_radio_dlvr_adrs_0" name="gl_radio_dlvr_adrs" value=""
+                    checked="checked"> <label for="gl_radio_dlvr_adrs_0">
+                    <div class="slct_con bk_flag"> <span class="dlvr_adrs_name">김한울</span> / <span
+                        class="dlvr_adrs_phone">010-5355-9460</span><br> (<span class="dlvr_adrs_zipcode">13305</span>)
+                      <span class="dlvr_adrs_adrs"> <span class="address_line1">경기도 성남시 수정구 수정로119번길 6-1(태평동)</span>
+                        <span class="address_line2">802호</span> </span> <span class="none_delivery"
+                        style="display:none;"> <span class="none_delivery_id">10221658570775</span> <span
+                          class="none_delivery_phone">null</span> <span class="none_delivery_email"></span> <span
+                          class="none_delivery_firstName">null</span> <span class="none_delivery_country">KR</span>
+                        <span class="none_delivery_state">null</span> <span class="none_delivery_town">null</span> <span
+                          class="none_delivery_localFirstName">null</span> <span
+                          class="none_delivery_localLastName">null</span> <span
+                          class="none_delivery_maxAmtForTax">0</span> </span>
+                    </div>
+                  </label> </div>
+              </li>
+            </ul>
+            <!-- select_list : list_item s -->
+
           </div>
           <!-- select_list : 배송지리스트 e -->
 
@@ -412,7 +527,7 @@
           </div>
           <!-- 211026 공동현관 출입방법 E -->
 
-          <a href="/ko/mypage/mydeliveryPopup?depth=1" data-layerpop-depth="depth1"
+          <a href="/wck/mypage/mydeliveryPopup?depth=1" data-layerpop-depth="depth1"
             class="btnstl arrow_btn btn_layerpopup_call btn_other_dlvr call_link_registe_mydelivery">다른 배송지 찾기</a>
 
           <!-- select_list : 배송지메세지리스트 s -->
@@ -425,29 +540,28 @@
           <div id="voucherArea" class="couponselectArea">
             <div class="text_coupon_slct_wrap online_coupon_box">
               <div class="select_box">
-                <select id="selectVoucher">
+                <select id="selectVoucher" onchange="selectVoucher();">
                   <option value="">쿠폰을 선택해 주세요.</option>
-                  <option value="VP2-302-FM1-A03-51TXSE">
-                    [1만원] FRIEND 등급 축하 바우처 / ₩10,000
-                    (
-                    2023.02.01
-                    ~ 2023.07.31
-                    )
-                  </option>
-                  <option value="VP2-302-FP1-0A0-35199SN">
-                    [10%] FRIEND 등급 축하 바우처 / 10%
-                    (
-                    2023.02.01
-                    ~ 2023.07.31
-                    )
-                  </option>
+                  <th:block th:if="${#lists.size(coupons)!=0}" th:each="cp, i : ${coupons}">
+                    <th:block th:if="${cp.eDiscount < 100}">
+                      <option th:value="${cp.cpid}" >
+                        [[${cp.eCouponTitle}]] / [[${cp.eDiscount}]]%
+                      </option>
+                    </th:block>
+
+                    <th:block th:if="${cp.eDiscount >= 100}">
+                      <option th:value="${cp.cpid}">
+                        [[${cp.eCouponTitle}]] / ₩[[${#numbers.formatInteger(cp.eDiscount, 3, 'COMMA')}]]
+                      </option>
+                    </th:block>
+                  </th:block>
                 </select>
               </div>
             </div>
           </div>
 
           <div class="coupon_insert">
-            <input type="text" name="voucherCode" id="voucherCode" placeholder="쿠폰 코드를 입력해 주세요.">
+            <input type="text" name="voucherCode" id="voucherCode" placeholder="쿠폰 코드를 입력해 주세요." disabled>
             <a href="#none" class="btnstl2 border_btn_blk btn_input_apply">적용</a>
             <a href="#none" class="btn_input_reset"><span>초기화</span></a>
           </div>
@@ -482,7 +596,7 @@
             <li class="mpg_li_mileage" style="display:none">
               <div class="mpg_tit">
                 한섬마일리지</div>
-              <div class="mpg_input">
+              <div class="mpg1_input">
                 <input type="tel" id="pointpay" name="usePoint" class="only_number set_comma" value="" data-unit="M"
                   placeholder="0 M" autocomplete="nope" max-point="0">
                 <a href="#none" class="btnstl2 border_btn_blk btn_input_apply" id="btnUsePoint" data-poptarget="">적용</a>
@@ -495,20 +609,19 @@
             </li>
 
 
-
             <!-- mileage -->
             <li class="mpg_li_point mt0">
               <div class="mpg_tit">
                 mileage</div>
               <div class="mpg_input">
-                <input type="tel" id="hpointpay" name="useHPoint" class="only_number set_comma" data-unit="P"
-                  placeholder="0 P" autocomplete="nope" max-point="62">
+                <input type="tel" id="useMileage" name="useMileage" class="only_number set_comma" data-unit="P"
+                  placeholder="0" autocomplete="nope" th:max-point="${mem.mileage}" value="0">
                 <a href="#none" class="btnstl2 border_btn_blk btn_input_apply" id="btnUseHPoint"
-                  data-poptarget="">적용</a>
+                  data-poptarget="" onclick="selectMileage();">적용</a>
                 <a href="#none" class="btn_input_reset"><span>초기화</span></a>
                 <div class="check_stl">
-                  <input type="checkbox" id="mpg_all_use_2" value="">
-                  <label for="mpg_all_use_2">전액사용 (<span>$$</span> P)</label>
+                  <input type="checkbox" id="mpg_all_use_2" onclick="checkMileage();">
+                  <label for="mpg_all_use_2">전액사용 (<span>[[${mem.mileage}]]</span> P)</label>
                 </div>
               </div>
             </li>
@@ -636,19 +749,19 @@
           <div class="df_box total_price_wrap">
             <h3 class="df_box_tit">
               최종 결제금액
-              <div class="pay_price">₩1,490,000</div>
+              <div class="pay_price">₩0</div>
             </h3>
 
             <ul class="total_price_detail">
 
               <li id="subtotal" class="sub_total190816">
                 <div class="ttpd_tit">상품 합계</div>
-                <div class="ttpd_con">₩980,000</div>
+                <div class="ttpd_con" id="ttpd_con1">₩0</div>
               </li>
 
               <li>
                 <div class="ttpd_tit">프로모션/쿠폰</div>
-                <div class="ttpd_con">- ₩10,000</div>
+                <div class="ttpd_con" id="ttpd_con2" >- ₩0</div>
               </li>
               <li>
                 <div class="ttpd_tit">
@@ -676,16 +789,19 @@
 
                 </div>
 
-                <div class="ttpd_con">₩ 0</div>
+                <div class="ttpd_con" id="ttpd_con3">₩ 0</div>
               </li>
             </ul>
 
 
           </div>
+          <input type="hidden" name="beforeprice" id="beforeprice" value="" />
+          <input type="hidden" name="afterprice" id="afterprice" value="" />
+          <input type="hidden" id="customDueAmount" value="0" />
+
           <input type="hidden" name="total" id="total" value="1490000.0" />
           <input type="hidden" name="cartDeliveryCost" id="cartDeliveryCost" value="0.0" />
           <input type="hidden" name="voucherRateCheck" id="voucherRateCheck" value="" />
-          <input type="hidden" id="customDueAmount" value="0.0" />
         </div>
         <!-- ########## final price end ########## -->
 
@@ -778,49 +894,5 @@
 
 
 </body>
-<script type="text/javascript">
-  function goMainpage() {
-    location.href = '#';
-  }
-
-  var customerMobilePhoneNumber = '' || '';
-  var customerMobilePhoneNumbers =
-    customerMobilePhoneNumber.split('-');
-
-  if (
-    customerMobilePhoneNumbers.length >= 3 &&
-    $.trim(customerMobilePhoneNumbers[0]) != ''
-  ) {
-    $('#hp0').val(customerMobilePhoneNumbers[0]);
-  }
-  if (
-    customerMobilePhoneNumbers.length >= 3 &&
-    $.trim(customerMobilePhoneNumbers[1]) != ''
-  ) {
-    $('#hp1').val(customerMobilePhoneNumbers[1]);
-  }
-  if (
-    customerMobilePhoneNumbers.length >= 3 &&
-    $.trim(customerMobilePhoneNumbers[2]) != ''
-  ) {
-    $('#hp2').val(customerMobilePhoneNumbers[2]);
-  }
-
-  function footerCntInfo() {
-    const f_info = document.getElementsByClassName("f_info")[0];
-    const style = getComputedStyle(f_info);
-    const display = style.display;
-
-    if (display === 'none') {
-      $(".f_info").prop("style", "display:block");
-      $(".f_info_viewer").prop("class", "f_info_viewer active");
-    } else {
-      $(".f_info").prop("style", "display:none");
-      $(".f_info_viewer").prop("class", "f_info_viewer");
-    }
-  };
-
-
-</script>
 
 </html>

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -90,6 +92,18 @@ public class OrderController {
 		// set oId, omemo
 		
 		return "wck/order/order_comp";
+	}
+	
+	@GetMapping("/order")
+	public String showOrder () {
+		return "/wck/order/my_order";
+	}
+	
+	@GetMapping("/order/{oId}")
+	public String orderDetail(
+			@PathVariable("oId") String oId
+			) {
+		return "/wck/order/my_order_detail";
 	}
 
 }

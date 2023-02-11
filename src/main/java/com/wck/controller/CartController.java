@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -109,11 +110,14 @@ public class CartController {
 		}
 	}
 	
-	@PostMapping(value = "/aaa")
-	public String addProduct(@AuthenticationPrincipal Account user, Model model) {
+	@PreAuthorize("hasRole('USER')")
+	@PostMapping(value = "/addCart")
+	public String addProduct(@AuthenticationPrincipal Account user, Model model, @RequestParam(value = "psid") String psid,
+																				@RequestParam(value ="quantity") String quantity) {
 		log.info(user.getId()); // mid
 		log.info(user.getEmail()); // email
-		return "";
+		log.info(psid);
+		return "wck/";
 	}
 }
 	

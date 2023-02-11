@@ -36,6 +36,9 @@ public class CartApi {
 			return new ResponseEntity<>("error occur",HttpStatus.OK);
 		}
 		
+		log.info(cart.getPsId());
+		log.info(cart.getQty());
+		
 		cartService.addCart(account.getId(), cart.getPsId(), cart.getQty());
 		return new ResponseEntity<>("",HttpStatus.OK);
 	}

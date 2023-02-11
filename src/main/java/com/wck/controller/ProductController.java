@@ -1,6 +1,8 @@
 package com.wck.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import com.wck.domain.CategoryVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.WithProductVO;
 import com.wck.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -82,10 +85,12 @@ public class ProductController {
 		
 		ProductInfoVO productInfo = productService.getProductInfo(pcid, pid);
 		List<ProductColorChipVO> colorChip = productService.getColorChip(pid);
+		List<WithProductVO> withProduct = productService.getWithProducts(pcid);
 		
 		log.info("size" + productInfo.getSizeNstock().size());
 		model.addAttribute("productInfo", productInfo);
 		model.addAttribute("productColor", colorChip);
+		model.addAttribute("withProduct", withProduct);
 	
 		for(ProductColorChipVO a : colorChip) {
 			log.info("=======" + a.getPcid());
@@ -96,16 +101,21 @@ public class ProductController {
 	
 	@GetMapping("/p/chgColor")
 	@ResponseBody
-	public Object chgProductColor(@RequestParam String pid, @RequestParam String pcid) {
+	public Map<String, Object> chgProductColor(@RequestParam String pid, @RequestParam String pcid) {
 		
 		log.info(pid);
 		log.info(pcid);
 		
+		Map<String, Object> info = new HashMap<>();
+		
 		ProductInfoVO productInfo = productService.getProductInfo(pcid, pid);
+		List<WithProductVO> withProductInfo = productService.getWithProducts(pcid);
+		info.put("productInfo", productInfo);
+		info.put("withProductInfo", withProductInfo);
 		
 		log.info(productInfo.getPcid());
 		
-		return productInfo;
+		return info;
 	}
 
 	

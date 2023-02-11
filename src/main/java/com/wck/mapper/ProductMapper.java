@@ -7,10 +7,13 @@ import org.apache.ibatis.annotations.Param;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
+import com.wck.domain.OrderProductVO;
+import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.WithProductVO;
 
 @Mapper
 public interface ProductMapper {
@@ -21,6 +24,8 @@ public interface ProductMapper {
 					@Param("sC") String sC, @Param("tC") String tC); 
 	
 	public List<ProductVO> searchProducts(String keyword);
+	
+	public List<WithProductVO> getWithProducts(String pcid);
 	
 	public List<ProductColorChipVO> getColorChip(String pid);
 
@@ -43,4 +48,6 @@ public interface ProductMapper {
 	public int getProductStock(String psId);
 	
 	public ProductCommonVO getProductSympleInfo(String pId);
+	
+	public OrderProductVO getProductInfoWithColorName(String psId);
 }

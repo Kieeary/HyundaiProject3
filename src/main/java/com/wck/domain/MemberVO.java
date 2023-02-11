@@ -3,13 +3,16 @@ package com.wck.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
 @NoArgsConstructor
+@ToString
 public class MemberVO implements Serializable{
 
 	private static final long serialVersionUID = 1L;

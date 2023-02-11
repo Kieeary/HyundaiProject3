@@ -7,15 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
+import com.wck.domain.OrderProductVO;
 import com.wck.domain.ProductColorChipVO;
 
-import com.wck.domain.ProductColorChipVO;
-import com.wck.domain.ProductColorVO;
-
-import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.WithProductVO;
 import com.wck.mapper.ProductMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -90,6 +88,13 @@ public class ProductService {
 		
 		return productMapper.searchProducts(keyword);
 	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<WithProductVO> getWithProducts(String pcid) {
+		return productMapper.getWithProducts(pcid);
+	}
 
 	
 	public int getLikeProductCount(String id) {
@@ -117,19 +122,19 @@ public class ProductService {
 	public String getProductStock(String psId, int qty) {
 		String pId = psId.split("_")[0];
 		int stock = productMapper.getProductStock(psId);
-
 		String msg = "";
-		
 		log.info("pid : "+pId);
 		
 		if(qty > stock) {
 			ProductCommonVO prodInfo = productMapper.getProductSympleInfo(pId);
 			msg = "["+prodInfo.getBName()+"] "+prodInfo.getPName()+"의 재고수량은 "+stock+"개입니다. 다시 입력해 주시기 바랍니다.";
 		}
-		
 		log.info("재고 수량 : "+msg);
-		
 		return msg;
+	}
+	
+	public OrderProductVO getPsIdInfo(String psid){
+		return productMapper.getProductInfoWithColorName(psid);
 	}
 
 }

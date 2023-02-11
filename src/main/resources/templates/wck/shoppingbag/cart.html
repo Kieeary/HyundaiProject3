@@ -72,37 +72,6 @@
               }
             );
 
-            <!-- 2019.11.12 쇼핑백 최초 진입 시 선택 상품 없도록 수정 - 하단 합계 금액 계산 -->
-            $('.gl_check_all').click(function () {
-              var cartDivision = $('#ordersheetCartDivision').val();
-              var onlyFourPm = $('#onlyFourPm').is(':checked');
-
-              if ($(this).is(':checked') == true) {
-                var entryPkList = ',';
-                $("input[name='cartlist']").each(function () {
-                  if (
-                    $(this)
-                      .parents('#entryProductInfo')
-                      .data('outofstock') != true
-                  ) {
-                    var deliveryKind = $(this).data('deliverykind');
-                    if (onlyFourPm) {
-                      if (deliveryKind == 'FOUR_PM') {
-                        entryPkList += $(this).data('pk');
-                        entryPkList += ',';
-                      }
-                    } else {
-                      entryPkList += $(this).data('pk');
-                      entryPkList += ',';
-                    }
-                  }
-                });
-                cartListCheckPrice(entryPkList, true);
-              } else {
-                cartListCheckPrice(',', true);
-              }
-            });
-
             function continueUrl() {
               location.href = '/wck';
             }
@@ -117,17 +86,16 @@
           </script>
 
           <script>
-    	  let token = $("meta[name='_csrf']").attr("content");
+    	    let token = $("meta[name='_csrf']").attr("content");
           let header = $("meta[name='_csrf_header']").attr("content");
-            function deleteBtnEvent(productCode) {
+          
+          function deleteBtnEvent(productCode) {
               var la = new layerConfirm(
                 '선택하신 상품을 쇼핑백에서 삭제하시겠습니까?',
                 '확인',
                 '취소'
               );
               la.confirmAction = function () {
-                console.log(productCode + " 상품 장바구니 삭제");
-
                 $.ajax({
                   type: 'GET',
                   url: '/wck/shoppingbag/deleteProd?mid=[[${mId}]]&psid=' + productCode,
@@ -141,7 +109,7 @@
 
             function addWishList(productCode, obj) {
               let pid = productCode.split("_")[0];
-              console.log(pid);
+
               $.ajax({
                 url: '/api/member/like/' + pid,
                 beforeSend : function(xhr) {
@@ -149,8 +117,6 @@
               },
                 method: 'post',
                 success: function (data) {
-                  console.log(data);
-                  console.log('상품 코드 : ' + productCode);
                   if ($(obj).hasClass("icon_btn_on") === true) {
                     var la = new layerAlert('위시리스트에서 삭제했습니다.');
                     $(obj).removeClass("icon_btn_on");
@@ -186,7 +152,7 @@
                 psids = [];
                 $("input:checkbox[name='cartlist']").each(function (idx) {
                   if ($(this).is(":checked") == true) {
-                    psids.push($(this).data('pk'));
+                    psids.push($(this).data('pks'));
                   };
                 })
 
@@ -227,18 +193,10 @@
             }
 
             function productModify(obj, idx) {
-              let token = $("meta[name='_csrf']").attr("content");
-              let header = $("meta[name='_csrf_header']").attr("content");
-
               let mid = '[[${mId}]]';
               let qty = $("#quantity_" + idx).val();
               let new_psid = $("#gl_slr_size_" + idx + " option:selected").val();
               let origin_psid = $("#updateCartForm" + idx).data('origin');
-
-              // console.log('회원 ID : '+mid);
-              // console.log('선택 사이즈 : '+new_psid);
-              // console.log('선택 수량 : '+qty);
-              // console.log('기존 PSID : ' + origin_psid);
 
               $.ajax({
                 type: 'POST',
@@ -254,18 +212,15 @@
                 }),
                 contentType: "application/json",
                 success: function (msg) {
-                  layerAlert(msg['msg']);
-                },
-                error: function () {
+                  if(!msg === false){
+                    layerAlert(msg['msg']);
+                  } else{
+                    location.href = '/wck/shoppingbag';
+                  }
                 }
               });
             }
 
-
-
-          </script>
-
-          <script>
             function getOpts(obj, psid, idx) {
               let tags = psid;
               let [pId, cTag, sTag] = psid.split('_');
@@ -291,7 +246,8 @@
 
                     str += `id="gl_rd_color_${idx}_${i}" name="gl_rd_color_${idx}" data-color="${colors.colorName}" onclick="setColor('${colors.pcid}', '${sTag}',this);">
                   <label for="gl_rd_color_${idx}_${i}"></label>
-                  <span class="gl_color_val" style="background:${colors.pccolorCode} url(${colors.pcchipImg}/dims/resize/60x60) center /100% auto no-repeat">${colors.productCode}</span></li>`
+                  <span class="gl_color_val" style="background:${colors.pccolorCode} url(${colors.pcchipImg}/dims/resize/60x60) center /1
+                  00% auto no-repeat">${colors.productCode}</span></li>`
                   }
 
                   $(".btn_color_wrap").html(str);
@@ -320,7 +276,6 @@
 
               for (var i = 0; i < sizes.length; i++) {
                 let size = sizes[i];
-                // console.log(size);
                 str1 += "<span class='sod_option ";
                 str2 += "<option value='" + pcid + "_" + size + "' ";
 
@@ -385,17 +340,95 @@
               let qty = $('#quantity_' + idx);
               qty.val(Number(qty.val()) + 1);
             }
+
+            function checkTotalPrice(obj) {
+              let count = 0;
+              let subTotalPrice = 0;
+              $("input:checkbox[name='cartlist']:checked").each(function() {
+                let id = $(this).val();
+                let price = $("#checkZeroPrice_"+id).val();
+                let qty = $("#quantity"+id).val();
+                subTotalPrice += (price*qty);
+                count++;
+			        });
+              let totalPrice = subTotalPrice;
+              if(subTotalPrice < 30000){
+                $("#cartDataDeliveryCost").html(`₩2,500`);
+                totalPrice += 2500;
+              } else{
+                $("#cartDataDeliveryCost").html(`₩0`);
+              }
+
+              subTotalPrice = subTotalPrice.toLocaleString('ko-KR');
+              totalPrice = totalPrice.toLocaleString('ko-KR');
+
+              $("#selectProductCount").html(count);
+              $("#cartDataSubtotal").html(`₩${subTotalPrice}`);
+              $("#cartDataTotalPrice").html(`₩${totalPrice}`);
+              $("#cartDataTotalPrice").val(`₩${totalPrice}`);
+              $(".btn_t_1").html(`<b>${totalPrice}</b> 원`);
+            };
+
+            function checkSelectAll(obj) {
+
+              let count = $('input:checkbox[name="cartlist"]:checked').length;
+              var onlyFourPm = $('#onlyFourPm').is(':checked');
+              var checkboxes = document.getElementsByName('cartlist');
+              checkboxes.forEach((ch) => { ch.checked = true; })
+              checkTotalPrice(this);
+
+              if (count == '[[${prods.size()}]]'){
+                $("#cartDataDeliveryCost").html('₩0');
+                $("#selectProductCount").html('0');
+                $("#cartDataSubtotal").html('₩0');
+                $("#cartDataTotalPrice").html('₩0');
+                $("#cartDataTotalPrice").val(0);
+              }
+            }
+
+            function sendOrderForm(){
+              let count = $('input:checkbox[name="cartlist"]:checked').length;
+              if(count <= 0){
+                layerAlert('상품을 선택하세요.');
+                return;
+              }
+
+              let mid = '[[${mId}]]';
+              let psids = [];
+              let qtys = [];
+
+              $("input:checkbox[name='cartlist']:checked").each(function() {
+                let id = $(this).val();
+                let psid = $(this).data('pks');
+                let qty = $("#quantity"+id).val();
+
+                psids.push(psid);
+                qtys.push(qty);
+			        });
+
+              $("#sendCartProds").submit();
+            }
+
+            function goProdDetail(psid) {
+              console.log('psid : '+psid);
+              let [pId, cTag, sTag] = psid.split('_');
+              let pcid = pId + '_' + cTag;
+
+              location.href = `/wck/products/p?pid=${pId}&pcid=${pcid}`;
+            }
           </script>
 
           <!-- ########## Goods list start ########## -->
           <h3 class="section_tit mb0 gl_tit gl_4pm">
             <div class="check_stl gl_check_all_wrap">
               <!-- 2019.11.12 쇼핑백 진입 시 선택 상품 없도록 수정 -->
-              <input type="checkbox" id="gl_check_all" class="gl_check_all" value="" />
+              <input type="checkbox" id="gl_check_all" class="gl_check_all" value="" onclick="checkSelectAll(this)"/>
               <label for="gl_check_all">담은 상품<span>([[${prods.size()}]]개)</span></label>
             </div>
           </h3>
 
+          <form id="sendCartProds" action="/wck/checkout/ordersheet" method="post">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
           <ul class="goods_list_wrap">
             <!-- 활성화 : gl_item에 품절상품 : gl_status_soldout, 4PM상품 : gl_status_4pm 클래스 추가/삭제 -->
             <th:block th:if="${#lists.size(prods)==0}">
@@ -421,7 +454,7 @@
                   <div class="check_stl">
                     <input type="checkbox" th:id="'gl_check_'+${i.index}" name="cartlist" th:data-pks="${prod.PSId}"
                       data-division="" data-deliverykind="" th:value="${i.index}" th:data-soldout="${prod.PStatus}"
-                      onclick="checkTotalPrice(this);" />
+                      th:onclick="checkTotalPrice(this);" />
                     <label th:for="'gl_check_'+${i.index}"></label>
                   </div>
                   <!-- ########## Goods sub CheckBox end ########## -->
@@ -451,18 +484,19 @@
                   <!-- ########## Goods info start ########## -->
                   <div class="gl_mid">
                     <div class="gl_tit">
-                      <a th:href="@{/wck/p/{pId}(pId=${prod.PSId})}">
+                      <a href="#" th:onclick="goProdDetail([[${prod.PSId}]]);">
                         <img th:src="${prod.PImg}" class="gl_thumbimg" alt="" />
                       </a>
                     </div>
                     <ul class="gl_con">
-                      <a th:href="@{/wck/p/{pId}(pId=${prod.PSId})}">
+                      <a href="#" th:onclick="goProdDetail([[${prod.PSId}]]);">
                         <li class="gl_con_brand">[[${prod.BName}]]</li>
                         <li class="gl_con_name">[[${prod.PName}]]</li>
                       </a>
+                      <input type="hidden" th:name="'ps_'+${i.index}" th:value="${prod.PSId}"/>
                       <li class="gl_con_price">
                         ₩[[${#numbers.formatInteger(prod.PCPrice, 3, 'COMMA')}]]
-                        <input type="hidden" th:id="'checkZeroPrice'+${i.index}" name="checkZeroPrice"
+                        <input type="hidden" th:id="'checkZeroPrice_'+${i.index}" th:name="'checkZeroPrice_'+${i.index}"
                           th:value="${prod.PCPrice}" />
                       </li>
                     </ul>
@@ -477,6 +511,7 @@
                         <div class="gl_con">
                           [[${prod.PColorName}]]&nbsp;<span class="and_line">/</span> [[${prod.PSize}]] /
                           [[${prod.PQuantity}]]개
+                          <input type="hidden" th:id="'quantity'+${i.index}" th:value="${prod.PQuantity}"/>
                         </div>
                       </li>
                       <li>
@@ -547,31 +582,7 @@
             </th:block>
           </ul>
           <!-- ########## Goods list end ########## -->
-
-          <script>
-            function checkTotalPrice(obj) {
-              // if ($(obj).attr('data-soldout') == 'N') {
-              //   console.log('품절 아님. 판매 중');
-              // } else {
-              //   console.log('품절');
-              // }
-
-              let totalPrice = 0;
-              $("input:checkbox[name='cartlist']:checked").each(function() {
-                let psid = $(this).data('pks');
-                console.log('선택 psid : '+psid);
-                let id = $(this).val();
-                console.log('선택 상품 index : '+id);
-
-                // let price = $(prods.)
-
-			        });
-
-
-              // console.log($(obj).attr('data-soldout'));
-              // layerAlert('해당사이즈는 품절입니다.');
-            }
-          </script>
+          </form>
 
           <th:block th:if="${#lists.size(prods)!=0}">
             <!-- ########## Goods list edit btn start ########## -->
@@ -596,7 +607,7 @@
                   <li class="total_sum">
                     <div class="ttpd_tit">합계</div>
                     <div class="ttpd_con">
-                      <span id="cartDataTotalPrice">₩0</span>
+                      <span id="cartDataTotalPrice" value="">₩0</span>
                     </div>
                   </li>
                 </ul>
@@ -609,7 +620,7 @@
                     삭제</span></a><!-- 선택상품삭제 -->
               </div>
               <div class="btn_wrap btn_wrap btn_wrap_div1" id="orderButtonGroup">
-                <a href="javascript:checkoutPage('checkout');" class="btnstl3 solid_btn_blk gleb_order"><span>선택상품
+                <a href="#" class="btnstl3 solid_btn_blk gleb_order" onclick="sendOrderForm();"><span>선택상품
                     주문하기</span></a>
               </div>
             </div>
@@ -1283,8 +1294,8 @@
               </li>
 
               <li class="pymt_order_apply" style="display: none">
-                <a href="javascript:checkoutPage('checkout');" class="btnstl6 solid_btn_point" id="oderBtn"><span
-                    class="btn_t_1"><b>~~~~~~~</b> 원</span><span class="btn_t_2">주문하기</span></a>
+                <a href="#" class="btnstl6 solid_btn_point" id="oderBtn" onclick="sendOrderForm();"><span
+                    class="btn_t_1"><b></b> 원</span><span class="btn_t_2">주문하기</span></a>
               </li>
 
               <div style="display: none">
@@ -1423,15 +1434,10 @@
           <!-- ########## hsome topBtn end ########## -->
         </div>
 
-
-
-
       </div>
 
       <!-- ########## footer add ########## -->
       <footer th:replace="wck/includes/footer :: fragment-footer"></footer>
-
-
 
     </div>
   </div>

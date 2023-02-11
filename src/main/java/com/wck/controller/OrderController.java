@@ -21,8 +21,10 @@ import com.wck.domain.EventCouponVO;
 import com.wck.domain.InsertOrderDTO;
 import com.wck.domain.MemberVO;
 import com.wck.domain.OrderProductVO;
+import com.wck.domain.OrderVO;
 import com.wck.security.domain.Account;
 import com.wck.service.MemberService;
+import com.wck.service.OrderService;
 import com.wck.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,9 @@ public class OrderController {
 	
 	@Autowired
 	private final ProductService productService;
+	
+	@Autowired
+	private final OrderService orderService;
 	
 	@PostMapping(value = "/ordersheet")
 	public String orderForm(@AuthenticationPrincipal Account user, HttpServletRequest request, Model model) {
@@ -87,10 +92,15 @@ public class OrderController {
 									@Valid @ModelAttribute("insertOrder") InsertOrderDTO insertOrder,
 									BindingResult bindingResult,
 									Model model) {
+		if(bindingResult.hasErrors()) {
+			log.info(bindingResult.getAllErrors());
+			return "redirect:/wck/checkout/ordersheet";
+		}
+		
+		insertOrder.setMId(user.getId());
 		log.info("{}", insertOrder);
-		
-		// set oId, omemo
-		
+//		orderService.insertOrder(insertOrder);
+//		model.addAttribute("insertOrder", insertOrder);		
 		return "wck/order/order_comp";
 	}
 	

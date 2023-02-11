@@ -4,35 +4,35 @@
 <mapper namespace="com.wck.mapper.OrderMapper">
 
 	<select id="getOrderList">
-		select 
-		    o.oid, ozipcode, oaddress1, oaddress2, oreceiver,
-		    ophone, otel, omemo, oemail, OUSEDMILEAGE,
-		    obeforeprice, oafterprice, ostatus, o.mid, o.pmcode,
-		    odate, o.cpid,
-		    
-		    oi.psid, oicount, oitotalprice,
-		    
-		    pmcompany, pmmethod,
-		    
-		    ps.psize, ps.pcid,
-		    pi.pimg, pi.colorname,
-		    p.pname,
-		    pc.pcprcie,
-		    b.bno, b.bname,
-		    
-		    e.eno, e.ecoupontitle, discount
-		    
+		select
+		o.oid, ozipcode, oaddress1, oaddress2, oreceiver,
+		ophone, otel, omemo, oemail, OUSEDMILEAGE,
+		obeforeprice, oafterprice, ostatus, o.mid, o.pmcode,
+		odate, o.cpid,
+
+		oi.psid, oicount, oitotalprice,
+
+		pmcompany, pmmethod,
+
+		ps.psize, ps.pcid,
+		pi.pimg, pi.colorname,
+		p.pname,
+		pc.pcprcie,
+		b.bno, b.bname,
+
+		e.eno, e.ecoupontitle, discount
+
 		from (
-		    select rownum rn,
-		        oid, ozipcode, oaddress1, oaddress2, oreceiver,
-		        ophone, otel, omemo, oemail, OUSEDMILEAGE,
-		        obeforeprice, oafterprice, ostatus, mid, pmcode,
-		        odate, cpid
-		    from(
-		        select 
-		            *
-		        from orders 
-		        where mid = #{mId}
+		select rownum rn,
+		oid, ozipcode, oaddress1, oaddress2, oreceiver,
+		ophone, otel, omemo, oemail, OUSEDMILEAGE,
+		obeforeprice, oafterprice, ostatus, mid, pmcode,
+		odate, cpid
+		from(
+		select
+		*
+		from orders
+		where mid = #{mId}
 <![CDATA[
 		        and odate >= add_months(sysdate, #{month} * -1)
 		        order by odate
@@ -54,4 +54,25 @@
 ]]>
 	</select>
 	
+	<insert id="insertPaymentMethod">
+		INSERT INTO PAYMENT_METHOD (pmcode, pmcompany, pmmethod)
+		VALUES (#{pmCode}, #{pmCompany}, #{pmMethod})
+	</insert>
+
+	<insert id="insertOrder" parameterType="order">
+		INSERT INTO ORDERS
+			(oid, ozipcode, oaddress1, oaddress2, oreceiver,
+			ophone, otel, omemo, oemail, ousedMileage,
+			obeforeprice, oafterprice, ostatus, mid, pmcode, odate, cpid)
+		VALUES
+			(#{oid}, #{ozipcode}, #{oaddress1}, #{oaddress2}, #{oreceiver},
+			#{ophone}, #{otel}, #{omemo}, #{oemail}, #{ousedMileage},
+			#{obeforePrice}, #{oafterPrice}, #{ostatus}, #{mid}, #{pmCode}, sysdate, #{cpid})
+	</insert>
+	
+	<insert id="insertOrderItem">
+		INSERT INTO ORDER_ITEM (psid, oid, oicount, oitotalprice)
+		VALUES (#{psid}, #{oid}, #{qty}, #{totalPrice})
+	</insert>
+
 </mapper> 

@@ -292,10 +292,17 @@
 		SELECT PSSTOCK FROM PRODUCT_STOCK WHERE PSID = #{psId}
 	</select>
 	
-	<select id="getProductSympleInfo" resultType="productCommon">
+	<select id="getProducSimpleInfo" resultType="productCommon">
 		SELECT b.BNAME, pc.PNAME
 		FROM PRODUCT_COMMON pc, BRAND b  
 		WHERE pc.BNO = b.BNO AND PID = #{pId}
+	</select>
+	
+	<select id="getProductInfoWithColorName" resultType="productSimpleInfo">
+		SELECT b.BNAME, pc1.PNAME, pci.COLORNAME, pc2.PCPRICE, ps.PSIZE, pci.PIMG 
+		FROM PRODUCT_STOCK ps, PRODUCT_COMMON pc1, PRODUCT_COLOR pc2, PRODUCT_COLOR_INFO pci, BRAND b
+		WHERE ps.PCID = pc2.PCID AND pc1.PID = pc2.PID AND pc1.BNO = b.BNO AND pc2.PCID = pci.PCID 
+		AND ps.PSID = #{psId}
 	</select>
 
 </mapper>

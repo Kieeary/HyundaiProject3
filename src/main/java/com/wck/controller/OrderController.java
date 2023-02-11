@@ -4,21 +4,22 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wck.domain.EventCouponVO;
-import com.wck.domain.MemberGrade;
+import com.wck.domain.InsertOrderDTO;
 import com.wck.domain.MemberVO;
 import com.wck.domain.OrderProductVO;
 import com.wck.security.domain.Account;
-import com.wck.service.CartService;
 import com.wck.service.MemberService;
 import com.wck.service.ProductService;
 
@@ -74,11 +75,20 @@ public class OrderController {
 		model.addAttribute("coupons", coupon);	
 		log.info("coupons > {}", coupon);
 		
+		model.addAttribute("insertOrder", new InsertOrderDTO());
+		
 		return "wck/order/order_sheet";
 	}
 	
-	@GetMapping("/orderConfirmation")
-	public String orderConfirmForm(@AuthenticationPrincipal Account user, HttpServletRequest request, Model model) {
+	@PostMapping("/orderConfirmation")
+	public String orderConfirmForm(@AuthenticationPrincipal Account user,
+									@Valid @ModelAttribute("insertOrder") InsertOrderDTO insertOrder,
+									BindingResult bindingResult,
+									Model model) {
+		log.info("{}", insertOrder);
+		
+		// set oId, omemo
+		
 		return "wck/order/order_comp";
 	}
 

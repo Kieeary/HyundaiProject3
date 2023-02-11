@@ -126,7 +126,7 @@ public class ProductService {
 		log.info("pid : "+pId);
 		
 		if(qty > stock) {
-			ProductCommonVO prodInfo = productMapper.getProductSympleInfo(pId);
+			ProductCommonVO prodInfo = productMapper.getProducSimpleInfo(pId);
 			msg = "["+prodInfo.getBName()+"] "+prodInfo.getPName()+"의 재고수량은 "+stock+"개입니다. 다시 입력해 주시기 바랍니다.";
 		}
 		log.info("재고 수량 : "+msg);

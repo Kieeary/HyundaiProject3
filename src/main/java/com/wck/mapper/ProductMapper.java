@@ -47,7 +47,7 @@ public interface ProductMapper {
 
 	public int getProductStock(String psId);
 	
-	public ProductCommonVO getProductSympleInfo(String pId);
+	public ProductCommonVO getProducSimpleInfo(String pId);
 	
 	public OrderProductVO getProductInfoWithColorName(String psId);
 }

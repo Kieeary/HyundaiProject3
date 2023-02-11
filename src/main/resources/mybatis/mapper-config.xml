@@ -23,7 +23,8 @@
         <typeAlias type="com.wck.domain.ProductVO" alias="product"/>    
         <typeAlias type="com.wck.domain.ProductInfoVO" alias="productInfo"/>    
         <typeAlias type="com.wck.domain.OrderProductVO" alias="productSimpleInfo"/>  
-        <typeAlias type="com.wck.domain.ProductColorChipVO" alias="productColorChip"/>    
-        
+        <typeAlias type="com.wck.domain.ProductColorChipVO" alias="productColorChip"/>  
+          
+        <typeAlias type="com.wck.domain.OrderVO" alias="order"/>
     </typeAliases>  
 </configuration>

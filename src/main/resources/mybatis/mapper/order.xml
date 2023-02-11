@@ -3,6 +3,55 @@
 
 <mapper namespace="com.wck.mapper.OrderMapper">
 
-	
+	<select id="getOrderList">
+		select 
+		    o.oid, ozipcode, oaddress1, oaddress2, oreceiver,
+		    ophone, otel, omemo, oemail, OUSEDMILEAGE,
+		    obeforeprice, oafterprice, ostatus, o.mid, o.pmcode,
+		    odate, o.cpid,
+		    
+		    oi.psid, oicount, oitotalprice,
+		    
+		    pmcompany, pmmethod,
+		    
+		    ps.psize, ps.pcid,
+		    pi.pimg, pi.colorname,
+		    p.pname,
+		    pc.pcprcie,
+		    b.bno, b.bname,
+		    
+		    e.eno, e.ecoupontitle, discount
+		    
+		from (
+		    select rownum rn,
+		        oid, ozipcode, oaddress1, oaddress2, oreceiver,
+		        ophone, otel, omemo, oemail, OUSEDMILEAGE,
+		        obeforeprice, oafterprice, ostatus, mid, pmcode,
+		        odate, cpid
+		    from(
+		        select 
+		            *
+		        from orders 
+		        where mid = #{mId}
+<![CDATA[
+		        and odate >= add_months(sysdate, #{month} * -1)
+		        order by odate
+		        
+		    )
+		    where rownum <= #{currentPage} * #{pageSize}
+
+		)o
+		inner join order_item oi on (o.oid = oi.oid)
+		inner join payment_method pm on (pm.pmcode = o.pmcode)
+		inner join product_stock ps on (ps.psid = oi.psid)
+		inner join product_color pc on (pc.pcid = ps.pcid)
+		inner join product_color_info pi on (pi.pcid = pc.pcid)
+		inner join product_common p on (pc.pid = p.pid)
+		left join brand b on (p.bno = b.bno)
+		left join coupon_detail cp on (cp.cpid = o.cpid)
+		left join event e on (e.eno = cp.eno)
+		where rn > (#{currentPage} - 1) * #{pageSize};
+]]>
+	</select>
 	
 </mapper> 

@@ -51,4 +51,8 @@
 	<delete id="deleteCartAll">
 		DELETE FROM CART WHERE MID = #{mId}
 	</delete>
+	
+	<delete id="deleteSpecificCart">
+		DELETE FROM CART WHERE MID = #{mId} AND PSID = #{pSId} AND PQUANTITY = #{quantity}
+	</delete>
 </mapper>

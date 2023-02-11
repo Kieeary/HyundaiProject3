@@ -37,16 +37,17 @@ public class InsertOrderDTO {
 	@NotNull
 	private int[] counts;
 
-	private String address2;
-	private String gl_radio_dlvr_msg;
-	private String frontDoorSelectMessage;
-	private String voucherCode;
-	private int useMileage;
+	private String address2 = "";
+	private String gl_radio_dlvr_msg = "";
+	private String frontDoorSelectMessage = "";
+	private String voucherCode = "";
+	private int useMileage = 0;
 	private String mId;
 
 	private String status = "결제 완료";
 	private String tel;
 	private String email;
+	private String oId;
 
 	public OrderVO toOrderVO() {
 		OrderVO order = new OrderVO();
@@ -56,6 +57,7 @@ public class InsertOrderDTO {
         String date = simpleDateFormat.format(new Date());
         long unixTime = System.currentTimeMillis() / 1000;
         String oid = date + "P" + String.valueOf(unixTime);
+        this.oId = oid;
         
         String memo = "";
         if(!gl_radio_dlvr_msg.equals("") & !frontDoorSelectMessage.equals("")) {
@@ -81,13 +83,13 @@ public class InsertOrderDTO {
         order.setOstatus(status);
         order.setCpid(voucherCode);
         order.setPmCode(pmCode);
-        order.setPmCompany(pmCompany);
         order.setMid(mId);        
         if(pmCompany.equals("credit")) {
         	order.setPmMethod("0");
         } else {
         	order.setPmMethod("1");
         }
+        order.setPmCompany(pmCompany+"P" + String.valueOf(unixTime));
         
         List<OrderProductVO> prods = new LinkedList<OrderProductVO>();
         for(int i=0; i<psids.length; i++) {
@@ -99,5 +101,6 @@ public class InsertOrderDTO {
         order.setOrderProducts(prods);
         
 		return order;
+		
 	}
 }

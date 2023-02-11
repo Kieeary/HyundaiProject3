@@ -286,5 +286,9 @@
 		WHERE ps.PCID = pc2.PCID AND pc1.PID = pc2.PID AND pc1.BNO = b.BNO AND pc2.PCID = pci.PCID 
 		AND ps.PSID = #{psId}
 	</select>
+	
+	<update id="updateProductStock">
+		UPDATE PRODUCT_STOCK SET PSSTOCK = PSSTOCK - #{subQty} WHERE PSID = #{psId}
+	</update>
 
 </mapper>

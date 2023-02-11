@@ -77,23 +77,33 @@
     }
 
     function doOrder() {
-      console.log('진짜 주문 시작');
+      let token = $("meta[name='_csrf']").attr("content");
+      let header = $("meta[name='_csrf_header']").attr("content");
 
-      // 결제 API
-      // $.ajax({
-      //   type: "GET",
-      //   url: "/wck/checkout/orderConfirmation",
-      //   dataType: "applcation/json",
-      //   success: function () {
-      //     console.log('컨트롤러 넘거가기 성공');
-      //   },
-      //   error: function () {
-      //   }
-      // })
+      console.log('진짜 주문 시작');
       let pmCode = $("#pmCode").val();
       console.log(pmCode);
 
-      $("#orderForm").submit();
+      var formValues = $("form[name=orderForm]").serialize() ;
+
+      // 결제 API
+      $.ajax({
+        type: "POST",
+        beforeSend : function(xhr) {
+                      xhr.setRequestHeader(header, token);
+        },
+        url: "/wck/checkout/orderConfirmation",
+        data : formValues,
+        dataType : "text",
+        success: function (result) {
+          console.log('컨트롤러 넘거가기 성공');
+          location.href = '/wck/checkout/orderConfirmation?oId='+result;
+        },
+        error: function (request) {
+          console.log(request);
+        }
+      })
+
     }
 
     function calculateDueAmount() {
@@ -321,7 +331,7 @@ console.log(uuidv4());
       <!-- ########## contents start ########## -->
       <div id="contents" class="hsome_contents delivery_payment_wrap">
 
-        <form id="orderForm" th:object="${insertOrder}" action="/wck/checkout/orderConfirmation" method="post"><!-- 상품 리스트 -->
+        <form id="orderForm" name="orderForm" th:object="${insertOrder}" action="/wck/checkout/orderConfirmation" method="post"><!-- 상품 리스트 -->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
           <!-- ########## product list start ########## -->

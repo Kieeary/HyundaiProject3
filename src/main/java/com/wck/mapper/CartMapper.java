@@ -14,6 +14,5 @@ public interface CartMapper {
 	public void updateCart(String mId, String pSId, int pQuantity);
 	public int deleteCart(String mId, String pSId);
 	public int deleteCartAll(String mId);
-	
-	
+	public int deleteSpecificCart(String mId, String pSId, int quantity);
 }

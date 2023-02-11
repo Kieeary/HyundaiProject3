@@ -2,6 +2,7 @@ package com.wck.service;
 
 import static org.mockito.ArgumentMatchers.doubleThat;
 import static org.mockito.ArgumentMatchers.intThat;
+import static org.mockito.ArgumentMatchers.longThat;
 
 import java.util.List;
 
@@ -14,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.wck.domain.FindIdDTO;
 import com.wck.domain.FindPwDTO;
 import com.wck.domain.InsertMemberDTO;
+import com.wck.domain.MemberGrade;
 import com.wck.domain.MemberVO;
+import com.wck.mapper.MemberMapper;
 import com.wck.service.MemberServiceTest;
 
 import lombok.extern.log4j.Log4j2;
@@ -80,5 +83,4 @@ public class MemberServiceTest {
 		double result = memberService.getMileageAddRate(mId);
 		log.info("User Mileage accrual rate > " + result);
 	}
-	
 }

@@ -232,6 +232,24 @@
 	
 	</select>
 	
+	<!-- 카테고리별 상품 갯수 조회 -->
+	<select id="getProductsCount" resultType="int">
+		SELECT COUNT(pcom.pid) as cnt
+		from product_common pcom
+		INNER JOIN product_category pcat
+		ON pcom.pid = pcat.pid
+		INNER JOIN category c
+		<if test="gd != null">
+			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
+		<if test="sC!= null">
+			AND c.depth2name = #{sC}
+		</if>
+		<if test="tC!= null">
+			AND c.depth3name = #{tC}
+		</if>
+		</if>
+	</select>
+	
 	<select id="getColorChip" resultType="productColorChip">
 		select pcolor.pcchipimg, pcolor.pccolorcode, pcolor.pcid, pcolor.pid
 		from product_color pcolor

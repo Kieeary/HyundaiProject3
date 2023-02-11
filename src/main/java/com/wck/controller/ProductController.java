@@ -39,12 +39,31 @@ public class ProductController {
 		
 		CategoryVO category = new CategoryVO();
 
-		if(brand != null)	category.setBrand(brand);
-		if(gender != null)	category.setGender(gender);
-		if(secCat != null)	category.setSecCat(secCat);
-		if(thrCat != null)	category.setThrCat(thrCat);
+//		if(brand != null)	category.setBrand(brand);
+//		if(gender != null)	category.setGender(gender);
+//		if(secCat != null)	category.setSecCat(secCat);
+//		if(thrCat != null)	category.setThrCat(thrCat);
+		
+		category.setBrand(brand);
+		String br = category.getBrand();
+		if(br.equals("null"))	br = null;
+		
+		category.setGender(gender);
+		String gd = category.getGender();
+		if(gd.equals("null"))	gd = null;
+		
+		category.setSecCat(secCat);
+		String sc = category.getSecCat();
+		if(sc.equals("null"))	sc = null;
+		
+		category.setThrCat(thrCat);
+		String tc = category.getThrCat();
+		if(tc.equals("null"))	tc = null;
+		
+		int cnt = productService.getProductsCount(br, gd, sc, tc);
 		
 		model.addAttribute("category", category);
+		model.addAttribute("count", cnt);
 		
 		return "wck/product/list";
 	}

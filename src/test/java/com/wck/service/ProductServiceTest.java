@@ -38,7 +38,17 @@ public class ProductServiceTest {
 		for(ProductVO b : a) {
 			log.info(b.getPname());
 		}
+	}
+	
+	@Test
+	void getProductsCount() {
+		String gd = "me";
+		String br = null;
+		String sc = null;
+		String tc = null;
+		int cnt = productService.getProductsCount(br, gd, sc, tc);
 		
+		log.info(cnt);
 	}
 	
 	// author : 김한울

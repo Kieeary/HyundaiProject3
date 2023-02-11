@@ -119,6 +119,12 @@ public class ProductService {
 
 	}
 	
+	public int getProductsCount(@Nullable String br, @Nullable String gd,
+										@Nullable String sC, @Nullable String tC) {
+		
+		return productMapper.getProductsCount(br, gd, sC, tC);
+	}
+	
 	public String getProductStock(String psId, int qty) {
 		String pId = psId.split("_")[0];
 		int stock = productMapper.getProductStock(psId);

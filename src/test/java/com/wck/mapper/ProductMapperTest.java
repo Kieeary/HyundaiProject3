@@ -134,6 +134,19 @@ public class ProductMapperTest {
 		}
 	}
 	
+	@Test
+	void getProductsCount() {
+		
+		String br = null;
+		String gd = "we";
+		String sc = null;
+		String tc = null;
+		
+		int a = productMapper.getProductsCount(br, gd, sc, tc);
+		
+		log.info(a);
+	}
+	
 	@Transactional
 	void deleteLikeProduct() {
 		String pId = "SH2CAKCD036M";

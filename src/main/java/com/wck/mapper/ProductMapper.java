@@ -30,6 +30,9 @@ public interface ProductMapper {
 	public List<ProductColorChipVO> getColorChip(String pid);
 
 	public ProductInfoVO getProductInfo(String pcid, String pid);
+	
+	public int getProductsCount(@Param("br") String br, @Param("gd") String gd, 
+			@Param("sC") String sC, @Param("tC") String tC);
 
 	public int deleteLikeProduct(String mId, String pId); 
 	

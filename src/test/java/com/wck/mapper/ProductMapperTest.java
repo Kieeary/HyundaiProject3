@@ -25,6 +25,8 @@ import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductStockVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.WithColorChipInfoVO;
+import com.wck.domain.WithProductVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -99,7 +101,7 @@ public class ProductMapperTest {
 	}
 	
 	/*
-	 * 정기
+	 * 정기범
 	 */
 	@Test
 	void getColorChip() {
@@ -110,6 +112,25 @@ public class ProductMapperTest {
 		for(ProductColorChipVO a : colorchip) {
 			log.info("=======" + a.getPcid());
 			log.info("=======" + a.getPcchipimg());
+		}
+	}
+	
+	/* 
+	 * 정기범
+	 */
+	@Test
+	void getWithProduct() {
+		String pcid = "SH2C7WPC510M_BG";
+		
+		List<WithProductVO> withproduct = productMapper.getWithProducts(pcid);
+		
+		for(WithProductVO a : withproduct) {
+			log.info(a.getWithpcid());
+			for(WithColorChipInfoVO b : a.getWithcolorchip()) {
+				log.info(b.getPcchipimg());
+				log.info(b.getOtherpcid());
+			}
+			log.info("=============");
 		}
 	}
 	

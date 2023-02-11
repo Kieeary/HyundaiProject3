@@ -178,15 +178,58 @@
 	<resultMap type="productStock" id="sizeNstock">
 		<result property="pSize" column="PSIZE" />
 		<result property="psStock" column="PSSTOCK" />
+		<result property="psId" column="PSID"/>
 	</resultMap>
 	
 	<select id="getProductInfo" resultMap = "productInfo">
-		select pcolor.pcid, pcom.bname, pcom.pname , pcolor.pcimg1, pcolor.pcimg2, pcolor.pcimg3, pcom.pnote, pcolor.pcprice, pstock.psize, pstock.psstock from product_color pcolor
+		select pcolor.pcid, pcom.bname, pcom.pname , pcolor.pcimg1, pcolor.pcimg2, pcolor.pcimg3, pcom.pnote, pstock.psid,
+		pcolor.pcprice, pstock.psize, pstock.psstock from product_color pcolor
 		inner join product_common pcom 
 		on pcolor.pid = pcom.pid
 		inner join product_stock pstock
 		on pstock.pcid = pcolor.pcid
 		where pcolor.pid = #{pid} and pcolor.pcid =#{pcid}
+	</select>
+	
+	
+	
+	<resultMap type="withProduct" id="withProduct">
+		<id property="withpcid" column="WITHPCID" />
+		<result property="pcid" column="PCID" />
+		<result property="withpcid" column="WITHPCID" />
+		<result property="pcimg1" column="PCIMG1" />
+		<result property="pcprice" column="PCPRICE" />
+		<result property="pname" column="PNAME" />
+		<result property="bname" column="BNAME" />
+		<result property="pid" column="PID" />
+		<result property="bname" column="BNAME" />
+		<collection property="withcolorchip" resultMap="wColorChip">
+		</collection>
+	</resultMap>
+
+	<resultMap type="withColorChipInfo" id="wColorChip">
+		<result property="pcchipimg" column="PCCHIPIMG"/>
+		<result property="pccolorcode" column="PCCOLORCODE"/>	
+		<result property="otherpcid" column="OTHERPCID"/>		
+		<result property="otherpcimg1" column="OTHERPCIMG1"/>			
+	</resultMap>
+	
+	<select id="getWithProducts" resultMap ="withProduct">
+	
+		SELECT sub.pcid, sub.withpcid, sub.pcimg1, sub.pcprice, sub.pname, sub.bname, sub.pid, pcolor.pcchipimg, pcolor.pccolorcode, pcolor.pcid as otherpcid, pcolor.pcimg1 as otherpcimg1
+		FROM(
+		SELECT wp.pcid, wp.withpcid, pcolor.pcimg1, pcolor.pcprice, pcom.pname, brand.bname, pcolor.pid
+		FROM with_product wp
+		INNER JOIN product_color pcolor
+		ON pcolor.pcid = wp.withpcid and wp.pcid = #{pcid}
+		INNER JOIN product_common pcom
+		ON pcom.pid = pcolor.pid
+		INNER JOIN brand
+		ON brand.bno = pcom.bno
+		) sub
+		INNER JOIN product_color pcolor
+		ON pcolor.pid = sub.pid
+	
 	</select>
 	
 	<select id="getColorChip" resultType="productColorChip">
@@ -231,10 +274,17 @@
 		SELECT PSSTOCK FROM PRODUCT_STOCK WHERE PSID = #{psId}
 	</select>
 	
-	<select id="getProductSympleInfo" resultType="productCommon">
+	<select id="getProducSimpleInfo" resultType="productCommon">
 		SELECT b.BNAME, pc.PNAME
 		FROM PRODUCT_COMMON pc, BRAND b  
 		WHERE pc.BNO = b.BNO AND PID = #{pId}
+	</select>
+	
+	<select id="getProductInfoWithColorName" resultType="productSimpleInfo">
+		SELECT b.BNAME, pc1.PNAME, pci.COLORNAME, pc2.PCPRICE, ps.PSIZE, pci.PIMG 
+		FROM PRODUCT_STOCK ps, PRODUCT_COMMON pc1, PRODUCT_COLOR pc2, PRODUCT_COLOR_INFO pci, BRAND b
+		WHERE ps.PCID = pc2.PCID AND pc1.PID = pc2.PID AND pc1.BNO = b.BNO AND pc2.PCID = pci.PCID 
+		AND ps.PSID = #{psId}
 	</select>
 
 </mapper>

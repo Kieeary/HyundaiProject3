@@ -78,7 +78,7 @@ public class OrderController {
 	}
 	
 	@GetMapping("/orderConfirmation")
-	public String orderConfirmForm() {
+	public String orderConfirmForm(@AuthenticationPrincipal Account user, HttpServletRequest request, Model model) {
 		return "wck/order/order_comp";
 	}
 

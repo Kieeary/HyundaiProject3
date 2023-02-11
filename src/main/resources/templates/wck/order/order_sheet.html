@@ -11,53 +11,114 @@
   </style>
 
   <script type="text/javascript">
-    
-    function goProdDetail(psid) {
-      console.log('psid : ' + psid);
-      let [pId, cTag, sTag] = psid.split('_');
-      let pcid = pId + '_' + cTag;
-
-      location.href = `/wck/products/p?pid=${pId}&pcid=${pcid}`;
-    }
 
     function submitOrder() {
       let payPrice = parseInt($("#afterprice").val());
       console.log(payPrice);
-      if(payPrice < parseInt('0')){
+
+      if (payPrice < parseInt('0')) {
         layerAlert('구매하실 수 없는 조건입니다.');
         return;
       }
 
-      if(!$('#agree').is(":checked")){
-          layerAlert("구매자 동의 항목을 체크하여 주세요.");
-          $('#agree').focus();
-          return;
+      let phone = $("#hp0 option:selected").val();
+      
+
+      console.log('우편 주소 : ' + $('#adress').val());
+      if ($('#adress').val() == '') {
+        layerAlert("배송지 주소 우편번호를 입력해 주세요.");
+        $('#adress').focus();
+        return;
       }
+
+      console.log('첫 주소 : ' + $('#line1').val());
+      if ($('#line1').val() == '') {
+        layerAlert("배송지 주소 첫번째 주소를 입력해 주세요.");
+        $('#line1').focus();
+        return;
+      }
+
+      console.log('나머지 주소 : ' + $('#line2').val());
+
+      console.log('수령인 이름 : '+$("#rcpt_name").val());
+      if ($.trim($('#rcpt_name').val()) == '') {
+        layerAlert("수령인을 입력해 주세요.");
+        $('#rcpt_name').focus();
+        return;
+      }
+
+      var selectedMessage = $('input[name=frontDoorSelectMessage]:checked');
+      if ($.trim($('#orderr').val()) === '부재 시 문 앞에 놓아주세요') {
+        if (typeof selectedMessage.val() === 'undefined') {
+          layerAlert('공동현관 출입방법을 선택해주세요.');
+          return;
+        } else if (selectedMessage.val() === '자유 출입 가능') {
+          $('#frontDoorMessage').val('자유출입가능');
+        } else {
+          var message = selectedMessage.find('~ input').val();
+          $('#frontDoorMessage').val(message);
+          if ($.trim($('#frontDoorMessage').val()) == '') {
+            layerAlert('공동현관 출입방법을 입력해 주세요');
+            return;
+          }
+        }
+      } else if ($.trim($('#orderr').val()) !== '부재 시 문 앞에 놓아주세요' && $.trim($('#orderr').val()) !== '직접입력') {
+        if (selectedMessage.val() === '자유 출입 가능') {
+          $('#frontDoorMessage').val('자유출입가능');
+        } else {
+          var message = selectedMessage.find('~ input').val();
+          $('#frontDoorMessage').val(message);
+        }
+      }
+
+      // if (!$('#agree').is(":checked")) {
+      //   layerAlert("구매자 동의 항목을 체크하여 주세요.");
+      //   $('#agree').focus();
+      //   return;
+      // }
+
+      // doOrder();
+    }
+
+    function doOrder() {
+      console.log('진짜 주문 시작');
+
+      $.ajax({
+        type: "GET",
+        url: "/wck/checkout/orderConfirmation",
+        dataType: "applcation/json",
+        success: function () {
+          console.log('컨트롤러 넘거가기 성공');
+        },
+        error: function () {
+        }
+
+      })
 
     }
 
-    function calculateDueAmount(){
+    function calculateDueAmount() {
       // 쿠폰 할인액 계산
       let couponDue = parseInt($("#selectVoucher option:selected").data('code'));
-      if(couponDue < 100) {
-        couponDue = parseInt($("#beforeprice").val())*couponDue/100.0;
+      if (couponDue < 100) {
+        couponDue = parseInt($("#beforeprice").val()) * couponDue / 100.0;
       }
-      console.log('C :'+couponDue);
+      console.log('C :' + couponDue);
 
       // 마일리지 할인액 계산
       let mileageDue = parseInt($("#useMileage").val());
-      console.log('M : '+mileageDue);
+      console.log('M : ' + mileageDue);
 
-      console.log('총 할인액 : '+(couponDue+mileageDue));
-      
-      let totalDueAmount = couponDue+mileageDue;
+      console.log('총 할인액 : ' + (couponDue + mileageDue));
+
+      let totalDueAmount = couponDue + mileageDue;
       let sumProdPrice = parseInt($("#beforeprice").val());
-      let afterPrice = sumProdPrice-totalDueAmount;
-      if(sumProdPrice < 30000){
+      let afterPrice = sumProdPrice - totalDueAmount;
+      if (sumProdPrice < 30000) {
         afterPrice += parseInt('2500');
       }
       $("#afterprice").val(afterPrice);
-      
+
       $("#ttpd_con2").html(`- ₩${totalDueAmount.toLocaleString('ko-KR')}`);
       $(".pay_price").html(`₩${afterPrice.toLocaleString('ko-KR')}`);
       $("#doOrderBtn").html(`<span><b>${afterPrice.toLocaleString('ko-KR')}</b>원&nbsp;주문하기</span>`);
@@ -66,7 +127,7 @@
     function selectVoucher() {
       let btn = $('.coupon_insert').children('.btnstl2');
 
-      if(btn.html() != '취소'){
+      if (btn.html() != '취소') {
         // 쿠폰 사용함        
         btn.html('취소');
       } else {
@@ -84,7 +145,7 @@
 
       let dueAmount = $("#selectVoucher option:selected").data('code');
       dueAmount = parseInt(dueAmount);
-      console.log('data-code : '+dueAmount);
+      console.log('data-code : ' + dueAmount);
 
       let btn = $('.coupon_insert').children('.btnstl2');
       if (selected == '') {
@@ -99,9 +160,9 @@
 
         // 프로모션/쿠폰 사용 가격 계산
         let originPrice = parseInt($("#beforeprice").val());
-        if(dueAmount < 100){
+        if (dueAmount < 100) {
           // 정률 할인
-          dueAmount = originPrice*dueAmount/100.0;
+          dueAmount = originPrice * dueAmount / 100.0;
         }
         // console.log('쿠폰 할인가 : '+dueAmount);
       }
@@ -112,7 +173,7 @@
     function selectMileage() {
       let mileage = $("#useMileage").val();
       let btn = $('.mpg_input').children('.btnstl2');
-      if(btn.html() != '취소'){
+      if (btn.html() != '취소') {
         // 마일리지 사용함
         btn.html('취소');
       } else {
@@ -159,6 +220,7 @@
       }
       $("input[name='beforeprice']").val(beforePrice);
       let addMileage = beforePrice * parseFloat('[[${rate}]]');
+      $("input[name='afterprice']").val(afterPrice);
       beforePrice = beforePrice.toLocaleString('ko-KR');
       afterPrice = afterPrice.toLocaleString('ko-KR');
       addMileage = addMileage.toLocaleString('ko-KR');
@@ -220,93 +282,93 @@
       <div id="contents" class="hsome_contents delivery_payment_wrap">
 
         <form id="orderForm" action="/wck/checkout/orderConfirmation" method="POST"><!-- 상품 리스트 -->
-        <!-- ########## product list start ########## -->
-        <div id="checkoutCartView">
+          <!-- ########## product list start ########## -->
+          <div id="checkoutCartView">
 
-          <!-- ########## df_box div start ########## -->
-          <div id="__div_sl" class="df_box df_box_slide">
-            <h3 class="df_box_tit">
-              주문상품<span class="df_box_tit_sub">([[${prods.size}]]개)</span>
-            </h3>
+            <!-- ########## df_box div start ########## -->
+            <div id="__div_sl" class="df_box df_box_slide">
+              <h3 class="df_box_tit">
+                주문상품<span class="df_box_tit_sub">([[${prods.size}]]개)</span>
+              </h3>
 
-            <!-- ########## Goods list start ########## -->
-            <ul class="order_gl_item goods_list_wrap">
-              <th:block th:if="${#lists.size(prods)!=0}" th:each="prod, i : ${prods}">
-                <div th:if="${i.first}">
-                  <!-- ########## main goods info ########## -->
-                  <li class="ogl_main_item item_info">
-                </div>
-                <div th:if="${!i.first}">
-                  <!-- ########## sub goods info ########## -->
-                  <li class="ogl_sub_item df_box_slide_con item_info" style="display: none;">
-                </div>
+              <!-- ########## Goods list start ########## -->
+              <ul class="order_gl_item goods_list_wrap">
+                <th:block th:if="${#lists.size(prods)!=0}" th:each="prod, i : ${prods}">
+                  <div th:if="${i.first}">
+                    <!-- ########## main goods info ########## -->
+                    <li class="ogl_main_item item_info">
+                  </div>
+                  <div th:if="${!i.first}">
+                    <!-- ########## sub goods info ########## -->
+                    <li class="ogl_sub_item df_box_slide_con item_info" style="display: none;">
+                  </div>
 
-                <a href="#">
-                  <div class="ogl_item gl_item">
-                    <div class="gl_tit">
-                      <img th:src="${prod.pImg}" alt="" class="gl_thumbimg" />
+                  <a href="#">
+                    <div class="ogl_item gl_item">
+                      <div class="gl_tit">
+                        <img th:src="${prod.pImg}" alt="" class="gl_thumbimg" />
+                      </div>
+                      <ul class="gl_con">
+                        <li class="gl_con_brand">[[${prod.bName}]]</li>
+
+                        <li class="gl_con_name">
+                          [[${prod.pName}]]
+                        </li>
+                        <li class="gl_con_option">[[${prod.colorName}]] / [[${prod.pSize}]] / [[${prod.quantity}]]개</li>
+                        <li class="gl_con_price"><span> ₩[[${#numbers.formatInteger(prod.pcPrice, 3, 'COMMA')}]]</span>
+                        </li>
+                      </ul>
                     </div>
-                    <ul class="gl_con">
-                      <li class="gl_con_brand">[[${prod.bName}]]</li>
+                  </a>
+                  </li>
+                  <!-- ########## main goods info end ########## -->
 
-                      <li class="gl_con_name">
-                        [[${prod.pName}]]
+                </th:block>
+              </ul>
+              <!-- ########## Goods list end ########## -->
+
+
+              <div class="check_stl shoppingbag_add_check_wrap" onclick="$('#packopt').click();">
+                <input type="checkbox" name="pack_option" id="packopt" />
+                <label for="shoppingbag_add_check" class="shoppingbag_add_check">친환경 쇼핑백을 추가합니다. (무료)
+                  <span class="dpIB">
+                    <div class="icon_help btn_tooltip" data-tooltip-target="tooltip_shoppingbag_add"></div>
+                  </span>
+                  <div class="tooltip_contens"></div>
+                </label>
+              </div>
+
+              <!-- ########## order tootip start ########## -->
+              <div class="tooltip_html">
+                <div class="tooltip_wrap tooltip_shoppingbag_add">
+                  <div class="tltp_close_btn btn_tltp_close">
+                    <span>닫기</span>
+                  </div>
+                  <h1 class="tltp_header">쇼핑백추가</h1>
+                  <div class="tltp_content">
+                    <div class="shoppingbag_img">
+                      <img src="http://www.thehandsome.com/_ui/handsomemobile/images/order/img_shoppingbag.jpg"
+                        alt="쇼핑백" />
+                    </div>
+                    <ul class="ul_dot_blk">
+                      <li>
+                        선물용이나 이동 시 사용할 수 있는, 재활용이 가능한
+                        친환경 쇼핑백을 드립니다.
                       </li>
-                      <li class="gl_con_option">[[${prod.colorName}]] / [[${prod.pSize}]] / [[${prod.quantity}]]개</li>
-                      <li class="gl_con_price"><span> ₩[[${#numbers.formatInteger(prod.pcPrice, 3, 'COMMA')}]]</span>
+                      <li>
+                        더한섬닷컴 전용 친환경 쇼핑백만 발송되며, 브랜드
+                        쇼핑백은 발송이 어렵습니다.
                       </li>
                     </ul>
                   </div>
-                </a>
-                </li>
-                <!-- ########## main goods info end ########## -->
-
-              </th:block>
-            </ul>
-            <!-- ########## Goods list end ########## -->
-
-
-            <div class="check_stl shoppingbag_add_check_wrap" onclick="$('#packopt').click();">
-              <input type="checkbox" name="pack_option" id="packopt" />
-              <label for="shoppingbag_add_check" class="shoppingbag_add_check">친환경 쇼핑백을 추가합니다. (무료)
-                <span class="dpIB">
-                  <div class="icon_help btn_tooltip" data-tooltip-target="tooltip_shoppingbag_add"></div>
-                </span>
-                <div class="tooltip_contens"></div>
-              </label>
-            </div>
-
-            <!-- ########## order tootip start ########## -->
-            <div class="tooltip_html">
-              <div class="tooltip_wrap tooltip_shoppingbag_add">
-                <div class="tltp_close_btn btn_tltp_close">
-                  <span>닫기</span>
-                </div>
-                <h1 class="tltp_header">쇼핑백추가</h1>
-                <div class="tltp_content">
-                  <div class="shoppingbag_img">
-                    <img src="http://www.thehandsome.com/_ui/handsomemobile/images/order/img_shoppingbag.jpg"
-                      alt="쇼핑백" />
-                  </div>
-                  <ul class="ul_dot_blk">
-                    <li>
-                      선물용이나 이동 시 사용할 수 있는, 재활용이 가능한
-                      친환경 쇼핑백을 드립니다.
-                    </li>
-                    <li>
-                      더한섬닷컴 전용 친환경 쇼핑백만 발송되며, 브랜드
-                      쇼핑백은 발송이 어렵습니다.
-                    </li>
-                  </ul>
                 </div>
               </div>
-            </div>
-            <!-- ########## order (?) tootip end ########## -->
+              <!-- ########## order (?) tootip end ########## -->
 
+            </div>
+            <!-- ########## df_box div start ########## -->
           </div>
-          <!-- ########## df_box div start ########## -->
-        </div>
-        <!-- ########## product list end ########## -->
+          <!-- ########## product list end ########## -->
         </form>
 
 
@@ -359,13 +421,13 @@
         <!-- ########## shipping info start ########## -->
         <div class="df_box">
           <h3 class="df_box_tit">
-            배송지 정보<!-- tootip s 배송지안내 툴팁 삽입 20191022 남일희-->
+            배송지 정보
             <span class="dpIB">
               <div class="icon_help btn_tooltip" data-tooltip-target="tooltip_deliverymode_info"></div>
             </span>
             <!-- tootip : contents_area s -->
             <div class="tooltip_contens">
-              <div class="tooltip_wrap tooltip_deliverymode_info" style="display: none">
+              <div class="tooltip_wrap tooltip_deliverymode_info" style="display: none;">
                 <div class="tltp_close_btn btn_tltp_close">
                   <span>닫기</span>
                 </div>
@@ -390,64 +452,31 @@
           </h3>
           <!-- tootip : contents_area e -->
           <!-- select_list : 배송지리스트 s -->
-          <input type="hidden" id="defaultShipmentAddressPk" value="" />
-          <div class="select_list_wrap select_list_dlvr_adrs">
-            <!-- select_list : selected_item s -->
-            <div class=" delivery_selected_item_area">
-              <div class="slct_con bk_flag">
-                <span class="dlvr_adrs_name">[[${mem.name}]]</span> /
-                <span class="dlvr_adrs_phone">[[${#strings.substring(mem.phone, 0,
-                  3)}]]-[[${#strings.substring(mem.phone, 3, 7)}]]-[[${#strings.substring(mem.phone, 7,
-                  11)}]]</span><br>
-                (<span class="dlvr_adrs_zipcode">[[${mem.zipcode}]]</span>)
-                <span class="dlvr_adrs_adrs">
-                  <span class="address_line1">[[${mem.address1}]]</span>
-                  <span class="address_line2">[[${mem.address2}]]</span>
-                  <input type="hidden" id="address_line2_raw" value="[[${mem.address2}]]">
-                </span>
-                <span class="none_delivery" style="display:none;">
-                  <span class="none_delivery_id"></span>
-                  <span class="none_delivery_phone"></span>
-                  <span class="none_delivery_email"></span>
-                  <span class="none_delivery_firstName"></span>
-                  <span class="none_delivery_country">KR</span>
-                  <span class="none_delivery_state"></span>
-                  <span class="none_delivery_town"></span>
-                  <span class="none_delivery_localFirstName"></span>
-                  <span class="none_delivery_localLastName"></span>
-                  <span class="none_delivery_maxAmtForTax">0.0</span>
-                </span>
-              </div>
-            </div>
-            <!-- select_list : selected_item e -->
-            <!-- select_list : list_item s -->
-            <ul class="slct_list_con" id="shippingAddressesArea">
-              <li class="slct_list_item">
-                <div class="radio_stl"> <input type="radio" id="gl_radio_dlvr_adrs_0" name="gl_radio_dlvr_adrs" value=""
-                    checked="checked"> <label for="gl_radio_dlvr_adrs_0">
-                    <div class="slct_con bk_flag"> <span class="dlvr_adrs_name">김한울</span> / <span
-                        class="dlvr_adrs_phone">010-5355-9460</span><br> (<span class="dlvr_adrs_zipcode">13305</span>)
-                      <span class="dlvr_adrs_adrs"> <span class="address_line1">경기도 성남시 수정구 수정로119번길 6-1(태평동)</span>
-                        <span class="address_line2">802호</span> </span> <span class="none_delivery"
-                        style="display:none;"> <span class="none_delivery_id">10221658570775</span> <span
-                          class="none_delivery_phone">null</span> <span class="none_delivery_email"></span> <span
-                          class="none_delivery_firstName">null</span> <span class="none_delivery_country">KR</span>
-                        <span class="none_delivery_state">null</span> <span class="none_delivery_town">null</span> <span
-                          class="none_delivery_localFirstName">null</span> <span
-                          class="none_delivery_localLastName">null</span> <span
-                          class="none_delivery_maxAmtForTax">0</span> </span>
-                    </div>
-                  </label> </div>
-              </li>
-            </ul>
-            <!-- select_list : list_item s -->
+          <input type="hidden" id="defaultShipmentAddressPk" value="">
 
+          <h3 class="df_box_tit rcpt_info" style="margin-top: 25px;"> 수령인 </h3>
+          <div class="ip_rcpt">
+            <input type="text" id="rcpt_name" name="rcpt_name" th:value="${mem.name}" >
           </div>
-          <!-- select_list : 배송지리스트 e -->
 
-          <!-- select_list : 배송지메세지리스트 s -->
-          <input type="hidden" id="selectedCompany" name="selectedCompany" value="" />
-          <input type="hidden" id="isPermanentCompany" name="isPermanentCompany" value="" />
+          <h3 class="df_box_tit ipt_tit" style="margin-top: 25px;"> 주소 </h3>
+          <div class="ipt_con">
+            <div style="margin-bottom: 5px; display: flex">
+              <input style="width: 40%" type="text" id="zipcode" name="zipcode" th:value="${mem.zipcode}" readonly="">
+              <button id="zip_btn" style="
+                        border: 1px solid gray;
+                        padding: 0px 5px;
+                        margin-left: 5px;
+                      ">
+                주소찾기
+              </button>
+            </div>
+            <input style="margin-bottom: 5px" type="text" id="address1" name="address1" readonly="" th:value="${mem.address1}">
+            <input type="text" id="address2" name="address2" th:value="${mem.address2}" >
+          </div>
+
+          <input type="hidden" id="selectedCompany" name="selectedCompany" value="">
+          <input type="hidden" id="isPermanentCompany" name="isPermanentCompany" value="">
           <!-- 211026 공동현관 출입방법 S -->
           <h3 class="df_box_tit enter-door211026">
             배송 요청사항
@@ -490,7 +519,7 @@
             <ul class="slct_list_con">
               <li class="slct_list_item" style="cursor: pointer">
                 <div class="radio_stl">
-                  <input type="radio" id="gl_radio_dlvr_msg_0" name="gl_radio_dlvr_msg" value="" />
+                  <input type="radio" id="gl_radio_dlvr_msg_0" name="gl_radio_dlvr_msg" value="">
                   <label for="gl_radio_dlvr_msg_0">
                     <div class="slct_con" deliveryrequestmessage="배송 전 연락 바랍니다">
                       배송 전 연락 바랍니다
@@ -500,7 +529,7 @@
               </li>
               <li class="slct_list_item" style="cursor: pointer">
                 <div class="radio_stl">
-                  <input type="radio" id="gl_radio_dlvr_msg_1" name="gl_radio_dlvr_msg" value="" />
+                  <input type="radio" id="gl_radio_dlvr_msg_1" name="gl_radio_dlvr_msg" value="">
                   <label for="gl_radio_dlvr_msg_1">
                     <div class="slct_con" deliveryrequestmessage="부재 시 문 앞에 놓아주세요">
                       부재 시 문 앞에 놓아주세요
@@ -510,7 +539,7 @@
               </li>
               <li class="slct_list_item" style="cursor: pointer">
                 <div class="radio_stl">
-                  <input type="radio" id="gl_radio_dlvr_msg_2" name="gl_radio_dlvr_msg" value="" />
+                  <input type="radio" id="gl_radio_dlvr_msg_2" name="gl_radio_dlvr_msg" value="">
                   <label for="gl_radio_dlvr_msg_2">
                     <div class="slct_con" deliveryrequestmessage="부재 시 경비실에 맡겨주세요">
                       부재 시 경비실에 맡겨주세요
@@ -520,7 +549,7 @@
               </li>
               <li class="slct_list_item" style="cursor: pointer">
                 <div class="radio_stl">
-                  <input type="radio" id="gl_radio_dlvr_msg_3" name="gl_radio_dlvr_msg" value="" />
+                  <input type="radio" id="gl_radio_dlvr_msg_3" name="gl_radio_dlvr_msg" value="">
                   <label for="gl_radio_dlvr_msg_3">
                     <div class="slct_con" deliveryrequestmessage="빠른 배송 부탁드립니다">
                       빠른 배송 부탁드립니다
@@ -530,7 +559,7 @@
               </li>
               <li class="slct_list_item" style="cursor: pointer">
                 <div class="radio_stl">
-                  <input type="radio" id="gl_radio_dlvr_msg_4" name="gl_radio_dlvr_msg" value="" />
+                  <input type="radio" id="gl_radio_dlvr_msg_4" name="gl_radio_dlvr_msg" value="">
                   <label for="gl_radio_dlvr_msg_4">
                     <div class="slct_con" deliveryrequestmessage="부재 시 핸드폰으로 연락바랍니다">
                       부재 시 핸드폰으로 연락바랍니다
@@ -540,7 +569,7 @@
               </li>
               <li class="slct_list_item slct_list_item_self" style="cursor: pointer">
                 <div class="radio_stl">
-                  <input type="radio" id="gl_radio_dlvr_msg_5" name="gl_radio_dlvr_msg" value="" />
+                  <input type="radio" id="gl_radio_dlvr_msg_5" name="gl_radio_dlvr_msg" value="">
                   <label for="gl_radio_dlvr_msg_5">
                     <div class="slct_con" deliveryrequestmessage="직접입력">
                       직접입력
@@ -554,7 +583,7 @@
           <div class="slct_list_item_self_input">
             <input type="text" onkeyup="chkword('orderr','orderr_text_length',20);;"
               onblur="chkword('orderr','orderr_text_length',20);" id="orderr" name="deliveryRequestContents"
-              placeholder="20자 이내로 입력하세요." value="" />
+              placeholder="20자 이내로 입력하세요." value="">
           </div>
 
           <!-- 211026 공동현관 출입방법 S -->
@@ -562,7 +591,7 @@
             <!-- select_list : selected_item s -->
             <div class="slcted_item">
               <div class="slct_con">
-                <span class="gray_fc">공동현관 출입방법을 선택해주세요</span><br />
+                <span class="gray_fc">공동현관 출입방법을 선택해주세요</span><br>
                 <span class="gray_fc2">-문 앞 배송 요청 시 필수사항</span>
               </div>
             </div>
@@ -571,18 +600,18 @@
             <ul class="slct_list_con">
               <li class="slct_list_item">
                 <div class="radio_stl">
-                  <input type="radio" id="enter_door_04" name="frontDoorSelectMessage" value="공동현관 출입번호" />
+                  <input type="radio" id="enter_door_04" name="frontDoorSelectMessage" value="공동현관 출입번호">
                   <label for="enter_door_04">
                     <div class="slct_con">공동현관 출입번호</div>
                   </label>
                   <input type="text" class="enter_door" id="fdMessage_4" placeholder="예) #12341234# (최대 15자)"
                     onkeyup="chkword('fdMessage_4','frontDoorMessage_text_length',15);"
-                    onblur="chkword('fdMessage_4','frontDoorMessage_text_length',15);" />
+                    onblur="chkword('fdMessage_4','frontDoorMessage_text_length',15);">
                 </div>
               </li>
               <li class="slct_list_item">
                 <div class="radio_stl">
-                  <input type="radio" id="enter_door_05" name="frontDoorSelectMessage" value="자유 출입 가능" />
+                  <input type="radio" id="enter_door_05" name="frontDoorSelectMessage" value="자유 출입 가능">
                   <label for="enter_door_05">
                     <div class="slct_con">자유 출입 가능</div>
                   </label>
@@ -590,24 +619,20 @@
               </li>
               <li class="slct_list_item">
                 <div class="radio_stl">
-                  <input type="radio" id="enter_door_06" name="frontDoorSelectMessage" value="기타" />
+                  <input type="radio" id="enter_door_06" name="frontDoorSelectMessage" value="기타">
                   <label for="enter_door_06">
                     <div class="slct_con">기타</div>
                   </label>
                   <input type="text" class="enter_door add_margin_bottom" id="fdMessage_6" placeholder="15자 이내로 입력하세요"
                     onkeyup="chkword('fdMessage_6','frontDoorMessage_text_length',15);"
-                    onblur="chkword('fdMessage_6','frontDoorMessage_text_length',15);" />
+                    onblur="chkword('fdMessage_6','frontDoorMessage_text_length',15);">
                 </div>
               </li>
             </ul>
             <!-- select_list : list_item e -->
-            <input type="hidden" name="frontDoorMessage" id="frontDoorMessage" />
+            <input type="hidden" name="frontDoorMessage" id="frontDoorMessage">
           </div>
           <!-- 211026 공동현관 출입방법 E -->
-
-          <a href="/wck/mypage/mydeliveryPopup?depth=1" data-layerpop-depth="depth1"
-            class="btnstl arrow_btn btn_layerpopup_call btn_other_dlvr call_link_registe_mydelivery">다른 배송지 찾기</a>
-
           <!-- select_list : 배송지메세지리스트 s -->
         </div>
         <!-- ########## shipping info end ########## -->
@@ -694,8 +719,8 @@
               <div class="mpg_input">
                 <input type="tel" id="useMileage" name="useMileage" class="only_number set_comma" data-unit="P"
                   placeholder="0" autocomplete="nope" th:max-point="${mem.mileage}" value="0">
-                <a href="#none" class="btnstl2 border_btn_blk btn_input_apply" id="btnUseHPoint"
-                  data-poptarget="" onclick="selectMileage();">적용</a>
+                <a href="#none" class="btnstl2 border_btn_blk btn_input_apply" id="btnUseHPoint" data-poptarget=""
+                  onclick="selectMileage();">적용</a>
                 <a href="#none" class="btn_input_reset"><span>초기화</span></a>
                 <div class="check_stl">
                   <input type="checkbox" id="mpg_all_use_2" onclick="checkMileage();">
@@ -746,7 +771,7 @@
               <div class="general_pay_wrap " style="overflow:hidden;">
                 <ul class="general_pay_list gpd_tab_w1">
                   <li class="on"><a href="#none" class="gpd_a_credit" data-g-pay-kind="credit"
-                      data-g-pay-mode="KO001" >신용카드</a></li>
+                      data-g-pay-mode="KO001">신용카드</a></li>
                 </ul>
 
                 <ul class="general_pay_list gpd_tab_w3">
@@ -754,9 +779,9 @@
 
                   <!-- #2610 [주문] 가상계좌 결제수단 제외 및 중복 구매 제한 처리 요청 건 (가상계좌 선택 삭제) 50268 -->
                   <li><a href="#none" class="gpd_a_kakakopay" data-g-pay-kind="kakakopay"
-                      data-g-pay-mode="INIKakao" >카카오페이</a></li>
+                      data-g-pay-mode="INIKakao">카카오페이</a></li>
 
-                  <li><a href="#none" class="gpd_a_tosspay" data-g-pay-kind="tosspay" data-g-pay-mode="KO007" >토스</a>
+                  <li><a href="#none" class="gpd_a_tosspay" data-g-pay-kind="tosspay" data-g-pay-mode="KO007">토스</a>
                   </li>
 
 
@@ -839,7 +864,7 @@
 
               <li>
                 <div class="ttpd_tit">프로모션/쿠폰</div>
-                <div class="ttpd_con" id="ttpd_con2" >- ₩0</div>
+                <div class="ttpd_con" id="ttpd_con2">- ₩0</div>
               </li>
               <li>
                 <div class="ttpd_tit">

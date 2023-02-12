@@ -119,16 +119,5 @@ public class OrderController {
 		return "/wck/order/order_comp";
 	}
 	
-	@GetMapping("/order")
-	public String showOrder () {
-		return "/wck/order/my_order";
-	}
-	
-	@GetMapping("/order/{oId}")
-	public String orderDetail(
-			@PathVariable("oId") String oId
-			) {
-		return "/wck/order/my_order_detail";
-	}
 
 }

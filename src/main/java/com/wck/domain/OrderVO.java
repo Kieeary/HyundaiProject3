@@ -28,12 +28,17 @@ public class OrderVO {
 	private String ecoupontitle;
 	private int discount;
 	
+//<<<<<<< HEAD
+//	private String pmcode;
+//	private String pmmethod;
+//	private String pmcompany;
+//=======
 	private String pmCode;
 	private String pmCompany;
 	private String pmMethod;
 	private String mid;
 	
-	private List<OrderProductVO> orderProducts;
+	List<OrderProductVO> orderProducts;
 	
 	
 

@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -118,14 +119,14 @@ public class MypageController {
 	}
 	
 
-	@GetMapping("/order/myorders")
+	@GetMapping("/order")
 	public String orderListForm() {
 		return "wck/order/my_order";
 	}
 	
-	@GetMapping("/order/myorderdetail")
-	public String orderDetailForm(@RequestParam String code, Model model) {
-		log.info("주문 번호 : "+code);
+	@GetMapping("/order/{oid}")
+	public String orderDetailForm(@PathVariable("oid") String oid, Model model) {
+		log.info(oid);
 		return "wck/order/my_order_detail";
 	}
 

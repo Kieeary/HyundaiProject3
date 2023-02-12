@@ -1,13 +1,13 @@
 package com.wck.mapper;
 
-import static org.mockito.ArgumentMatchers.intThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.wck.domain.OrderCriteria;
 import com.wck.domain.OrderProductVO;
 import com.wck.domain.OrderVO;
 
@@ -61,6 +61,7 @@ public class OrderMapperTest {
 	}
 	
 	@Test
+	@Transactional
 	public void orderItemsInsertTest() {
 		String oid = "232211P1676119017";
 		String[] psids = {"SY2C9WSS957W_KK_61", "FL2B7HCY005LMM_SB_FR"};
@@ -80,6 +81,26 @@ public class OrderMapperTest {
 		
 		OrderVO order = orderMapper.getOrderInfo(mId, oId);
 		log.info("{}", order);
+	}
+	
+	@Test
+	public void getOrderList() {
+		OrderCriteria cri = new OrderCriteria();
+		cri.setCurrentPage(1);
+		cri.setPageSize(5);
+		cri.setMonth(1);
+		List<OrderVO> list = orderMapper.getOrderList(cri, "123123");
+		log.info(list);
+	}
+	
+	@Test
+	public void getOrderCount() {
+		OrderCriteria cri = new OrderCriteria();
+		cri.setCurrentPage(1);
+		cri.setPageSize(5);
+		cri.setMonth(1);
+		int count = orderMapper.getOrderCount(cri, "7c-41f8-8c6a-739159990a8d");
+		log.info(count);
 	}
 
 }

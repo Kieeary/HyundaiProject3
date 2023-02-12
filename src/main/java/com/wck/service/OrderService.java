@@ -1,10 +1,13 @@
 package com.wck.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wck.domain.InsertOrderDTO;
 import com.wck.domain.MemberGrade;
+import com.wck.domain.OrderCriteria;
 import com.wck.domain.OrderProductVO;
 import com.wck.domain.OrderVO;
 import com.wck.mapper.CartMapper;
@@ -25,6 +28,14 @@ public class OrderService {
 	private final EventMapper eventMapper;
 	private final MemberMapper memberMapper;
 	private final CartMapper cartMapper;
+	
+	public List<OrderVO> getOrderList(OrderCriteria cri, String mid){
+		return orderMapper.getOrderList(cri, mid);
+	}
+	
+	public int getOrderCount(OrderCriteria cri, String mid) {
+		return orderMapper.getOrderCount(cri, mid);
+	}
 	
 	@Transactional
 	public void insertOrder(InsertOrderDTO insertOrder) {

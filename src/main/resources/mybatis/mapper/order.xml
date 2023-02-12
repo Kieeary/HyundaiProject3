@@ -18,6 +18,11 @@
 		<result property="cpid" column="CPID"/>
 		<result property="pmCompany" column="PMCOMPANY"/>
 		<result property="ostatus" column="OSTATUS"/>
+		
+		<result property="cpid" column="cpid"/>
+		<result property="eno" column="eno"/>
+		<result property="discount" column="ediscount"/>
+		
 		<collection property="orderProducts" resultMap="orderProdMap"/>
 	</resultMap>
 	
@@ -41,55 +46,64 @@
 			AND o.OID = #{oId} AND MID = #{mId}
 	</select>
 	
-	
-	<select id="getOrderList">
-		select
-		o.oid, ozipcode, oaddress1, oaddress2, oreceiver,
-		ophone, otel, omemo, oemail, OUSEDMILEAGE,
-		obeforeprice, oafterprice, ostatus, o.mid, o.pmcode,
-		odate, o.cpid,
-
-		oi.psid, oicount, oitotalprice,
-
-		pmcompany, pmmethod,
-
-		ps.psize, ps.pcid,
-		pi.pimg, pi.colorname,
-		p.pname,
-		pc.pcprcie,
-		b.bno, b.bname,
-
-		e.eno, e.ecoupontitle, discount
-
-		from (
-		select rownum rn,
-		oid, ozipcode, oaddress1, oaddress2, oreceiver,
-		ophone, otel, omemo, oemail, OUSEDMILEAGE,
-		obeforeprice, oafterprice, ostatus, mid, pmcode,
-		odate, cpid
-		from(
-		select
-		*
+	<select id="getOrderCount" resultType="int">
+		select count(*)
 		from orders
 		where mid = #{mId}
 <![CDATA[
-		        and odate >= add_months(sysdate, #{month} * -1)
-		        order by odate
-		        
-		    )
-		    where rownum <= #{currentPage} * #{pageSize}
+		and odate >= add_months(sysdate, #{cri.month} * -1)
+]]>
+	</select>
+	
+	
+	<select id="getOrderList" resultMap="orderMap">
+		select
+			o.oid, ozipcode, oaddress1, oaddress2, oreceiver,
+			ophone, otel, omemo, oemail, OUSEDMILEAGE,
+			obeforeprice, oafterprice, ostatus, o.mid, o.pmcode,
+			odate, o.cpid,
+	
+			oi.psid, oicount, oitotalprice,
+	
+			pmcompany, pmmethod,
+	
+			ps.psize, ps.pcid,
+			pi.pimg, pi.colorname,
+			p.pname,
+			pc.pcprice,
+			b.bno, b.bname,
+	
+			e.eno, e.ecoupontitle, ediscount
+
+		from (
+			select rownum rn,
+				oid, ozipcode, oaddress1, oaddress2, oreceiver,
+				ophone, otel, omemo, oemail, OUSEDMILEAGE,
+				obeforeprice, oafterprice, ostatus, mid, pmcode,
+				odate, cpid
+			from(
+				select
+					*
+				from orders
+				where mid = #{mId}
+<![CDATA[
+				 and odate >= add_months(sysdate, #{cri.month} * -1)
+				 order by odate
+				        
+			    )
+			    where rownum <= #{cri.currentPage} * #{cri.pageSize}
 
 		)o
-		inner join order_item oi on (o.oid = oi.oid)
-		inner join payment_method pm on (pm.pmcode = o.pmcode)
-		inner join product_stock ps on (ps.psid = oi.psid)
-		inner join product_color pc on (pc.pcid = ps.pcid)
-		inner join product_color_info pi on (pi.pcid = pc.pcid)
-		inner join product_common p on (pc.pid = p.pid)
+		left join order_item oi on (o.oid = oi.oid)
+		left join payment_method pm on (pm.pmcode = o.pmcode)
+		left join product_stock ps on (ps.psid = oi.psid)
+		left join product_color pc on (pc.pcid = ps.pcid)
+		left join product_color_info pi on (pi.pcid = pc.pcid)
+		left join product_common p on (pc.pid = p.pid)
 		left join brand b on (p.bno = b.bno)
 		left join coupon_detail cp on (cp.cpid = o.cpid)
 		left join event e on (e.eno = cp.eno)
-		where rn > (#{currentPage} - 1) * #{pageSize};
+		where rn > (#{cri.currentPage} - 1) * #{cri.pageSize}
 ]]>
 	</select>
 	

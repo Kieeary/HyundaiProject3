@@ -8,8 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import com.wck.domain.OrderCriteria;
 import com.wck.domain.OrderVO;
 
-import com.wck.domain.OrderVO;
-
 @Mapper
 public interface OrderMapper {
 
@@ -20,5 +18,5 @@ public interface OrderMapper {
 	public int insertOrder(OrderVO order);
 	public int insertOrderItem(String psid, String oid, int qty, int totalPrice);
 	public OrderVO getOrderInfo(String mId, String oId);
-	
+	public int cancelOrder(String oId);
 }

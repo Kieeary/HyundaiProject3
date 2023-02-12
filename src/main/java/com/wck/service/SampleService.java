@@ -6,7 +6,6 @@ import com.wck.domain.SampleVO;
 import com.wck.mapper.SampleMapper;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor

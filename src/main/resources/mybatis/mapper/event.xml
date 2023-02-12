@@ -80,4 +80,10 @@
 		SET CPUSEDATE = SYSDATE, CPSTATUS = 0
 		WHERE CPID = #{cpId} AND MID = #{mId}
 	</update>
+	
+	<update id="cancelUseCoupon">
+		UPDATE COUPON_DETAIL
+		SET CPUSEDATE = NULL, CPSTATUS = 1
+		WHERE CPID = #{cpid}
+	</update>
 </mapper> 

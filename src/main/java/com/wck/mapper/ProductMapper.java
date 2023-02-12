@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.OrderProductVO;
-import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;

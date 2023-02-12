@@ -35,6 +35,7 @@ public class OrderService {
 		return orderMapper.getOrderCount(cri, mid);
 	}
 	
+	
 	@Transactional
 	public void insertOrder(InsertOrderDTO insertOrder) {
 		OrderVO order = insertOrder.toOrderVO();

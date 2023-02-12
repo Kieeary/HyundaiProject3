@@ -83,7 +83,7 @@
                 <li>
                   <a href="javascript:;" class="monthBtn" id="setDateBtn3" data-month=6>6개월<!-- 3개월 --></a>
                 </li>
-				<li>
+                <li>
                   <a href="javascript:;" class="monthBtn" id="setDateBtn4" data-month=12>1년<!-- 3개월 --></a>
                 </li>
               </ul>
@@ -99,12 +99,12 @@
 
         </div>
         <div class="pagingArea" style="display:flex; justify-content:center;">
-        	<div id="prev" style="margin-right: 10px; font-weight:bold;">이전</div>
-        	<div id="next" style="font-weight:bold;">다음</div>
+          <div id="prev" style="margin-right: 10px; font-weight:bold;">이전</div>
+          <div id="next" style="font-weight:bold;">다음</div>
         </div>
-        
 
-       
+
+
 
         <!-- ########## 주문 배송 조회 안내 시작 ########## -->
         <div class="df_box mp_order_dvlr_guide_wrap last_box">
@@ -139,7 +139,7 @@
 
 
       <div id="DeliveryLayer" style="overflow: auto"></div>
-      
+
 
       <!-- ########## footer add ########## -->
       <footer th:replace="wck/includes/footer :: fragment-footer"></footer>
@@ -213,7 +213,7 @@
   <!-- depth8 s -->
   <div class="hsome_layerpop_contents lp_depth8"></div>
   <!-- depth8 e -->
-  
+
 
   <!-- loading_layerpop s -->
   <!-- layerpop_wrap | 처리중 s -->
@@ -230,79 +230,80 @@
   <!-- layerpopupContent e -->
 
   <script type="text/javascript">
-  	$(document).ready(function(){
-  		let curPage = 1;
-  		let curMonth = 1;
-  		
-  		getOrderList(curMonth, curPage);
-  		
-  		$('.monthBtn').click(function(e){
-  			e.preventDefault();
-  			let month = $(this).data('month');
-  			console.log("moht click = "+ month);
-  			curMonth = month;
-  			curPage = 1;
-  			getOrderList(curMonth, curPage);
-  		})
-  		
-  		$('#prev').click(function(){
-  			console.log('prev clicked');
-  			if(curPage == 1) return;
-  			curPage = curPage - 1;
-  			getOrderList(curMonth, curPage);
-  		})
-  		
-  		$('#next').click(function(){
-  			console.log('next clicked');
-  			curPage = curPage + 1;
-  			getOrderList(curMonth, curPage);
-  		})
-  		
-  		
-  		
-  		
-  	  	function getOrderList(month, pageNum){
-  	  		$.ajax({
-  	            type: 'GET',
-  	            url: '/api/order?month='+month+'&pageSize=5&currentPage='+pageNum,
-  	            success: function (data) {
-  	            	
-  	            	let tmp = '';
-  	            	console.log(data);
-  	            	let orders = data['orders'];
-  	            	let count = data['count'];
-  	            	
-  	            	if(curPage == 1){
-  	            		$('#prev').css('display','none');
-  	            	}else{
-  	            		$('#prev').css('display','block');
-  	            	}
-  	            	
-  	            	if(curPage * 5 > count){
-  	            		$('#next').css('display','none');
-  	            	}else{
-  	            		$('#next').css('display','block');
-  	            	}
-  	            	
-  	            	
-  	            	$(orders).each(function(idx,d){
-  	            		tmp += printOrder(d);
-  	            	});
-  	            	
-  	            	$('#listBody').html('');
-  	            	$('#listBody').append(tmp);
-  	            	
-  	          		$( 'html, body' ).animate( { scrollTop : 0 }, 400 );
-  	      			
-  	            }
-  	        });
-  	  	}
-  	  	
-  	  	function printOrder(data){
-  	  		let item_html = '';
-  	  		$(data.orderProducts).each(function(i, product){
-  	  			
-  	  	  		let item_template = `
+
+    $(document).ready(function () {
+      let curPage = 1;
+      let curMonth = 1;
+
+      getOrderList(curMonth, curPage);
+
+      $('.monthBtn').click(function (e) {
+        e.preventDefault();
+        let month = $(this).data('month');
+        console.log("moht click = " + month);
+        curMonth = month;
+        curPage = 1;
+        getOrderList(curMonth, curPage);
+      })
+
+      $('#prev').click(function () {
+        console.log('prev clicked');
+        if (curPage == 1) return;
+        curPage = curPage - 1;
+        getOrderList(curMonth, curPage);
+      })
+
+      $('#next').click(function () {
+        console.log('next clicked');
+        curPage = curPage + 1;
+        getOrderList(curMonth, curPage);
+      })
+
+
+
+
+      function getOrderList(month, pageNum) {
+        $.ajax({
+          type: 'GET',
+          url: '/api/order?month=' + month + '&pageSize=5&currentPage=' + pageNum,
+          success: function (data) {
+
+            let tmp = '';
+            console.log(data);
+            let orders = data['orders'];
+            let count = data['count'];
+
+            if (curPage == 1) {
+              $('#prev').css('display', 'none');
+            } else {
+              $('#prev').css('display', 'block');
+            }
+
+            if (curPage * 5 > count) {
+              $('#next').css('display', 'none');
+            } else {
+              $('#next').css('display', 'block');
+            }
+
+
+            $(orders).each(function (idx, d) {
+              tmp += printOrder(d);
+            });
+
+            $('#listBody').html('');
+            $('#listBody').append(tmp);
+
+            $('html, body').animate({ scrollTop: 0 }, 400);
+
+          }
+        });
+      }
+
+      function printOrder(data) {
+        let item_html = '';
+        $(data.orderProducts).each(function (i, product) {
+
+          let item_template = `
   	  	  		<li>
   	                <div class="mpord_goods_item gl_item">
   	                  <div class="gl_tit">
@@ -329,7 +330,7 @@
   	                      <a href="javascript:;" class="btn_more_action_ul_close"><span>닫기</span></a>
   	                      <ul class="more_action_ul">
   	                        <li>
-  	                          <a href="/ko/mypage/order/cancelRequestPopup?code=230128P16572180&amp;isall=Y" class="layerpopupOpen" onclick="">주문취소</a>
+  	                          <a href="#" class="layerpopupOpen" onclick="cancelOrder('${data.oid}');">주문취소</a>
   	                        </li>
   	                      </ul>
   	                    </div>
@@ -338,10 +339,10 @@
   	              </li>
   	  	  		
   	  	  		`
-  	  	  		item_html += item_template;
-  	  		})
+          item_html += item_template;
+        })
 
-  	  		let order_template = `
+        let order_template = `
   	            <div class="df_box">
   	            <div class="mpord_tit mpord_dlvr">
   	              <div class="mpord_tit_num">택배배송 ${data.oid}</div>
@@ -356,12 +357,34 @@
   	            </ul>
   	          </div>
   	  		`
-  	  		return order_template;
-  	  	}
-  		
-  	})
+        return order_template;
+      }
 
-  
+    })
+
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
+
+    function cancelOrder(oid) {
+
+      $.ajax({
+        url: '/wck/mypage/cancelRequest/' + oid,
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+        method: 'post',
+        success : function(result){
+          if(result == "SUCCESS"){
+        	  console.log('cancel order complete');
+            location.href = '/wck/mypage/order';
+          }
+        },
+        error : function(){
+        }
+      })
+    }
+
+
   </script>
 
 </body>

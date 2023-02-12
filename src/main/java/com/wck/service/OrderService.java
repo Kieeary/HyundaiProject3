@@ -86,7 +86,7 @@ public class OrderService {
 		int nowMileage = memberMapper.getNowMileage(mId);
 		memberMapper.updateMemberInfo(mId, nowMileage - expectSubMileage, beforeGrade);
 		
-		if(order.getCpid() != null || !order.getCpid().equals("")) {
+		if(order.getCpid() != null) {
 			// 쿠폰 사용 -> 쿠폰 원복시키기
 			eventMapper.cancelUseCoupon(order.getCpid());
 		}

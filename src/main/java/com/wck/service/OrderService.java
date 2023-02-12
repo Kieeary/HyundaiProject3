@@ -35,9 +35,6 @@ public class OrderService {
 		return orderMapper.getOrderCount(cri, mid);
 	}
 	
-	public OrderVO getOrderInfo(String mid, String oid) {
-		return orderMapper.getOrderInfo(mid, oid);
-	}
 	
 	@Transactional
 	public void insertOrder(InsertOrderDTO insertOrder) {

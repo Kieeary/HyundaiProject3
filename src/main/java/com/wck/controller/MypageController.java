@@ -6,6 +6,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,6 +28,7 @@ public class MypageController {
 	private final MemberService memberService;
 	
 	/*
+	 * author : 왕종휘
 	 * 마이 페이지
 	 */
 	@GetMapping
@@ -35,6 +37,7 @@ public class MypageController {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 유저 정보 변경을 위한 비밀번호 확인 페이지
 	 */
 	@GetMapping("/change/checkpw")
@@ -49,7 +52,8 @@ public class MypageController {
 	}
 	
 	/*
-	 * 유저 정보 변경을 위한 비밀번호 확인 페이지
+	 * author : 왕종휘
+	 * 유저 정보 변경을 위한 비밀번호 확인 수행
 	 */
 	@SuppressWarnings("deprecation")
 	@PostMapping("/change/checkpw")
@@ -68,6 +72,7 @@ public class MypageController {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 유저 정보 변경 페이지
 	 */
 	@GetMapping("/change/form")
@@ -83,6 +88,7 @@ public class MypageController {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 회원 탈퇴 페이지
 	 */
 	@GetMapping("/change/secession")
@@ -91,6 +97,7 @@ public class MypageController {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 회원탈퇴 진행
 	 */
 	@PostMapping("/change/secession")
@@ -102,6 +109,7 @@ public class MypageController {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 찜한 상품 목록 페이지
 	 */
 	@GetMapping("/wish")
@@ -111,14 +119,17 @@ public class MypageController {
 	}
 	
 
-	@GetMapping("/order/myorders")
+	@GetMapping("/order")
 	public String orderListForm() {
 		return "wck/order/my_order";
 	}
 	
-	@GetMapping("/order/myorderdetail")
-	public String orderDetailForm(@RequestParam String code, Model model) {
-		log.info("주문 번호 : "+code);
+	@GetMapping("/order/{oid}")
+	public String orderDetailForm(@PathVariable("oid") String oid, Model model) {
+		
+	
+		
+		log.info(oid);
 		return "wck/order/my_order_detail";
 	}
 

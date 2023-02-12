@@ -26,6 +26,9 @@ public class CartApi {
 	
 	private final CartService cartService;
 	
+	/* author : 왕종휘
+	 * 장바구니 추가
+	 */
 	@PostMapping("/add")
 	public ResponseEntity<String> addCartApi(
 			@AuthenticationPrincipal Account account,
@@ -35,6 +38,9 @@ public class CartApi {
 			log.info(bindingResult.getAllErrors());
 			return new ResponseEntity<>("error occur",HttpStatus.OK);
 		}
+		
+		log.info(cart.getPsId());
+		log.info(cart.getQty());
 		
 		cartService.addCart(account.getId(), cart.getPsId(), cart.getQty());
 		return new ResponseEntity<>("",HttpStatus.OK);

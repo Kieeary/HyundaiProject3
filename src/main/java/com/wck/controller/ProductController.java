@@ -1,8 +1,11 @@
 package com.wck.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,9 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wck.domain.CategoryVO;
+import com.wck.domain.FirstCategoryVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.SecondCategoryVO;
+import com.wck.domain.ThirdCategoryVO;
+import com.wck.domain.WithProductVO;
 import com.wck.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +35,7 @@ public class ProductController {
 	
 	// 상품 조회
 	@GetMapping("/list")
+	@Transactional
 	public String getBrandProducts(Model model,
 									@RequestParam(value="brand", required=false) String brand,
 									@RequestParam(value="gender", required=false) String gender,
@@ -37,11 +45,23 @@ public class ProductController {
 		CategoryVO category = new CategoryVO();
 
 		if(brand != null)	category.setBrand(brand);
-		if(gender != null)	category.setGender(gender);
-		if(secCat != null)	category.setSecCat(secCat);
-		if(thrCat != null)	category.setThrCat(thrCat);
+		if(gender != null)	{
+			category.setGender(gender);
+			List<SecondCategoryVO> secondCategory = productService.getSecondCategory(gender);
+			model.addAttribute("detailcategory", secondCategory);
+		}
+		if(secCat != null)	{
+			category.setSecCat(secCat);
+			List<ThirdCategoryVO> thirdCategory = productService.getThirdCategory(secCat);
+			model.addAttribute("detailcategory", thirdCategory);
+		}
 		
+		if(thrCat != null)	category.setThrCat(thrCat);
+						
+		int cnt = productService.getProductsCount(category.getBrand(), category.getGender(), category.getSecCat(), category.getThrCat());
+				
 		model.addAttribute("category", category);
+		model.addAttribute("count", cnt);
 		
 		return "wck/product/list";
 	}
@@ -51,7 +71,8 @@ public class ProductController {
 	public Object list(@RequestParam(value="brand", required=false) String brand,
 					   @RequestParam(value="gender", required=false) String gender,
 					   @RequestParam(value="secCat", required=false) String secCat,
-					   @RequestParam(value="thrCat", required=false) String thrCat) {
+					   @RequestParam(value="thrCat", required=false) String thrCat,
+					   @RequestParam(value="start") int start, @RequestParam(value="last") int last) {
 		
 		String br = brand;
 		String gd = gender;
@@ -62,8 +83,10 @@ public class ProductController {
 		log.info(br);
 		log.info(sC);
 		log.info(tC);
+		log.info(start);
+		log.info(last);
 		
-		List<ProductVO> list = productService.productList(br, gd, sC, tC);
+		List<ProductVO> list = productService.productList(br, gd, sC, tC, start, last);
 		
 		for(ProductVO a : list) {
 			log.info(a.getPid());
@@ -82,10 +105,12 @@ public class ProductController {
 		
 		ProductInfoVO productInfo = productService.getProductInfo(pcid, pid);
 		List<ProductColorChipVO> colorChip = productService.getColorChip(pid);
+		List<WithProductVO> withProduct = productService.getWithProducts(pcid);
 		
 		log.info("size" + productInfo.getSizeNstock().size());
 		model.addAttribute("productInfo", productInfo);
 		model.addAttribute("productColor", colorChip);
+		model.addAttribute("withProduct", withProduct);
 	
 		for(ProductColorChipVO a : colorChip) {
 			log.info("=======" + a.getPcid());
@@ -96,16 +121,30 @@ public class ProductController {
 	
 	@GetMapping("/p/chgColor")
 	@ResponseBody
-	public Object chgProductColor(@RequestParam String pid, @RequestParam String pcid) {
+	public Map<String, Object> chgProductColor(@RequestParam String pid, @RequestParam String pcid) {
 		
 		log.info(pid);
 		log.info(pcid);
 		
+		Map<String, Object> info = new HashMap<>();
+		
 		ProductInfoVO productInfo = productService.getProductInfo(pcid, pid);
+		List<WithProductVO> withProductInfo = productService.getWithProducts(pcid);
+		info.put("productInfo", productInfo);
+		info.put("withProductInfo", withProductInfo);
 		
 		log.info(productInfo.getPcid());
 		
-		return productInfo;
+		return info;
+	}
+	
+	@ResponseBody
+	@GetMapping("/category")
+	public Object getfCategory() {
+		
+		List<FirstCategoryVO> category = productService.getCategoryName();
+		
+		return category;
 	}
 
 	

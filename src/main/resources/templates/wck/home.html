@@ -164,9 +164,7 @@
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/SsoAjax.js"></script>
 
-    <script
-      type="text/javascript"
-      src="http://www.thehandsome.com/_ui/handsomemobile/js/instagramAPI.js"></script>
+
     <script
       type="text/javascript"
       src="http://www.thehandsome.com/_ui/handsomemobile/js/makePCookie.js"></script>
@@ -205,24 +203,21 @@
           class="hsome_header main201909 header-fix t-prent header-top white-header">
           <h1 class="h_logo" id="headerTitle">
             <a
-              href="javascript:noLink();"
-              onclick="goMainpage();GA_Event('공통', '로고', '상단');"
+              href="/wck"
               >THEHANDSOME.COM</a
             >
           </h1>
           <ul class="h_gnbMenu">
             <li class="search">
               <a
-                href="/ko/mobilecommon/search"
-                onclick="GA_Event('공통', '헤더', '검색');"
+                href="/wck/search"
                 ><span>search</span></a
               >
             </li>
             <li class="cart">
             </a>
               <a
-                href="/wck/shoppingbag"
-                onclick="GA_Event('공통', '헤더', '쇼핑백');">
+                href="/wck/shoppingbag">
                 <span>cart</span>
                 <i sec:authorize="isAuthenticated()" sec:authentication="principal.cartCount" >1</i>
                 <i sec:authorize="isAnonymous()">0</i>
@@ -235,7 +230,6 @@
                 <a
                   href="#contents-home"
                   class="home"
-                  onclick="GA_Event('공통', 'GNB', '홈');"
                   >홈</a
                 >
               </li>
@@ -243,7 +237,7 @@
                 <a
                   href="#contents-newitem"
                   class="new_item"
-                  onclick="GA_Event('공통', 'GNB', '신상품');"
+
                   >신상품</a
                 >
               </li>
@@ -251,7 +245,6 @@
                 <a
                   href="#contents-best"
                   class="best"
-                  onclick="GA_Event('공통', 'GNB', '베스트');"
                   >베스트</a
                 >
               </li>
@@ -344,8 +337,7 @@
                             data-swiper-slide-index="0"
                             style="width: 412px">
                             <a
-                              href="/magazine/editorials/8807037622344"
-                              onclick="GA_Event('메인','메인배너_0', '%uC6B0%uB9AC%uB4E4%uC758%20%uBE14%uB8E8%uC2A4');"
+                              href="/wck/file-test"
                               class="link-box">
                               <div class="img">
                                 <img
@@ -1505,7 +1497,7 @@
                               <li><a href="#"></a></li>
                               <li>
                                 <a
-                                  href="/ko/member/login"
+                                  href="/wck/login"
                                   class="login"
                                   style="float: left"
                                   onclick="GA_Event('공통', '푸터_메뉴', '로그인');"
@@ -2187,7 +2179,7 @@
                               <li><a href="#"></a></li>
                               <li>
                                 <a
-                                  href="/ko/member/login"
+                                  href="/wck/login"
                                   class="login"
                                   style="float: left"
                                   onclick="GA_Event('공통', '푸터_메뉴', '로그인');"
@@ -2975,7 +2967,7 @@
                               <li><a href="#"></a></li>
                               <li>
                                 <a
-                                  href="/ko/member/login"
+                                  href="/wck/login"
                                   class="login"
                                   style="float: left"
                                   onclick="GA_Event('공통', '푸터_메뉴', '로그인');"
@@ -3387,7 +3379,7 @@
                 <li><a href="#"></a></li>
                 <li>
                   <a
-                    href="/ko/member/login"
+                    href="/wck/login"
                     class="login"
                     style="float: left"
                     onclick="GA_Event('공통', '푸터_메뉴', '로그인');"

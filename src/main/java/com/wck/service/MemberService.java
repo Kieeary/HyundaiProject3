@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wck.domain.EventCouponVO;
 import com.wck.domain.FindIdDTO;
 import com.wck.domain.FindPwDTO;
 import com.wck.domain.InsertMemberDTO;
@@ -128,4 +129,11 @@ public class MemberService {
 		return grade.getAccruRate();
 	}
 	
+	public List<EventCouponVO> getCoupon(String email) {
+		return memberMapper.getCouponByEmail(email);
+	}
+	
+	public long getTotalUsePrice(String mId) {
+		return memberMapper.getTotalOrderPrice(mId);
+	}
 }

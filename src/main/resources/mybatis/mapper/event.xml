@@ -74,4 +74,16 @@
 		values
 		(seq_coupon_detail.nextval, #{eno}, #{mId}, sysdate, sysdate + 180, 1)
 	</insert>
+	
+	<update id="useCoupon">
+		UPDATE COUPON_DETAIL
+		SET CPUSEDATE = SYSDATE, CPSTATUS = 0
+		WHERE CPID = #{cpId} AND MID = #{mId}
+	</update>
+	
+	<update id="cancelUseCoupon">
+		UPDATE COUPON_DETAIL
+		SET CPUSEDATE = NULL, CPSTATUS = 1
+		WHERE CPID = #{cpid}
+	</update>
 </mapper> 

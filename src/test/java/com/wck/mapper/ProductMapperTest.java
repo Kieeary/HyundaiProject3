@@ -8,23 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
+import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
+import com.wck.domain.FirstCategoryVO;
 import com.wck.domain.ProductColorChipVO;
-import com.wck.domain.Criteria;
-import com.wck.domain.DetailProductVO;
-
-
-import com.wck.domain.ProductColorVO;
-
-import com.wck.domain.Criteria;
-import com.wck.domain.DetailProductVO;
-
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductStockVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.SecondCategoryVO;
+import com.wck.domain.ThirdCategoryVO;
+import com.wck.domain.WithColorChipInfoVO;
+import com.wck.domain.WithProductVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -54,7 +49,9 @@ public class ProductMapperTest {
 	void getProductList() {
 		String gd = "me";
 		String tC = "me031";
-		List<ProductVO> vo = productMapper.getProducts(null, gd, null, tC);
+		int start = 0;
+		int last = 1;
+		List<ProductVO> vo = productMapper.getProducts(null, gd, null, tC, start, last);
 		
 		for(ProductVO a : vo) {
 
@@ -86,7 +83,7 @@ public class ProductMapperTest {
 	 */
 	@Test
 	void searchProducts() {
-		String keyword = "캐시미어";
+		String keyword = "바지";
 		List<ProductVO> vo = productMapper.searchProducts(keyword);
 	
 		for(ProductVO a : vo) {
@@ -99,7 +96,7 @@ public class ProductMapperTest {
 	}
 	
 	/*
-	 * 정기
+	 * 정기범
 	 */
 	@Test
 	void getColorChip() {
@@ -111,6 +108,83 @@ public class ProductMapperTest {
 			log.info("=======" + a.getPcid());
 			log.info("=======" + a.getPcchipimg());
 		}
+	}
+	
+	/* 
+	 * 정기범
+	 */
+	@Test
+	void getWithProduct() {
+		String pcid = "SH2C7WPC510M_BG";
+		
+		List<WithProductVO> withproduct = productMapper.getWithProducts(pcid);
+		
+		for(WithProductVO a : withproduct) {
+			log.info(a.getWithpcid());
+			for(WithColorChipInfoVO b : a.getWithcolorchip()) {
+				log.info(b.getPcchipimg());
+				log.info(b.getOtherpcid());
+			}
+			log.info("=============");
+		}
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getProductsCount() {
+		
+		String br = null;
+		String gd = "we";
+		String sc = null;
+		String tc = null;
+		
+		int a = productMapper.getProductsCount(br, gd, sc, tc);
+		
+		log.info(a);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getCategoryName() {
+		
+		List<FirstCategoryVO> a = productMapper.getCategoryName();
+		
+		for(FirstCategoryVO b : a) {
+			log.info(b);
+		}
+		return ;
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getSecondCategory() {
+		
+		String depth1name = "me";
+		
+			List<SecondCategoryVO> a = productMapper.getSecondCategory(depth1name);
+			for(SecondCategoryVO s : a) {
+				log.info(s.getSecondname());
+			}
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getThirdCategory() {
+		
+		String depth2name = "me03";
+		
+			List<ThirdCategoryVO> a = productMapper.getThirdCategory(depth2name);
+			for(ThirdCategoryVO s : a) {
+				log.info(s.getDetailname());
+			}
 	}
 	
 	@Transactional

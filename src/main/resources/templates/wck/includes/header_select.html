@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- ########## header start ########## -->
+
+        <header 
+         th:fragment="header_select_tag(options,title)"
+        class="hsome_header header_noline header_mypage">
+          <!-- 마이페이지 알림 아이콘 -->
+          <a href="/wck" class="h_top_home"><span>Home</span></a>
+          <h1 class="h_select">
+          <!--  이부분 -->
+          <select th:replace="${options}"></select>
+            <div class="selected_text">
+              <span >[[${title}]]</span>
+            </div>
+          </h1>
+          <a href="javascript:noLink();" onclick="goBack();" class="h_prev"
+            >이전 페이지로 가기</a
+          >
+          <ul class="h_gnbMenu">
+            <li class="search">
+              <a href="/wck/search"><span>search</span></a>
+            </li>
+            <li class="cart">
+              <a href="/wck/shoppingbag"><span>cart</span>
+                    <i sec:authorize="isAuthenticated()" sec:authentication="principal.cartCount" >1</i>
+            		<i sec:authorize="isAnonymous()">0</i>
+              </a>
+            </li>
+          </ul>
+        </header>
+
+<!-- ########## header end ########## -->
+
+</html>

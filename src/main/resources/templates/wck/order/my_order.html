@@ -75,34 +75,19 @@
             <div>
               <ul class="border_tab_1 grid_4">
                 <li class="on">
-                  <a href="javascript:;" id="setDateBtn1" onclick="GA_Event('주문/배송조회', '탭', '1주일');">1주일<!-- 1주일 --></a>
+                  <a href="javascript:;" class="monthBtn" id="setDateBtn1" data-month=1>1개월<!-- 1주일 --></a>
                 </li>
                 <li>
-                  <a href="javascript:;" id="setDateBtn2" onclick="GA_Event('주문/배송조회', '탭', '1개월');">1개월<!-- 1개월 --></a>
+                  <a href="javascript:;" class="monthBtn" id="setDateBtn2" data-month=2>2개월<!-- 1개월 --></a>
                 </li>
                 <li>
-                  <a href="javascript:;" id="setDateBtn3" onclick="GA_Event('주문/배송조회', '탭', '3개월');">3개월<!-- 3개월 --></a>
+                  <a href="javascript:;" class="monthBtn" id="setDateBtn3" data-month=6>6개월<!-- 3개월 --></a>
                 </li>
                 <li>
-                  <a href="javascript:;" class="sort_date"
-                    onclick="GA_Event('주문/배송조회', '탭', '조건검색');">조건검색<!-- 조건검색 --></a>
+                  <a href="javascript:;" class="monthBtn" id="setDateBtn4" data-month=12>1년<!-- 3개월 --></a>
                 </li>
               </ul>
 
-              <div class="sort_date_input_wrap">
-                <ul class="sort_date_input">
-                  <li class="sort_date_start">
-                    <input type="date" name="sterm" class="hs_datepicker" title="mypage.order.history.serch.term.insert"
-                      id="sterm" />
-                  </li>
-                  <li class="blt_gubun">~</li>
-                  <li class="sort_date_end">
-                    <input type="date" name="eterm" class="hs_datepicker" title="mypage.order.history.serch.term.insert"
-                      id="eterm" />
-                  </li>
-                </ul>
-                <a href="javascript:;" class="btnstl3 border_btn_gray btn_term_search searchBtn"><span>검색</span></a>
-              </div>
             </div>
           </div>
         </form>
@@ -110,107 +95,16 @@
         <div class="mp_order_dlvr_list_wrap" id="listBody">
           <!-- ########## Goods list start ########## -->
 
-          <div class="df_box">
-            <div class="mpord_tit mpord_dlvr">
-              <div class="mpord_tit_num">택배배송 230128P16572180</div>
-              <div class="mpord_tit_sub">2023.01.28. 22:21:22</div>
-              <a href="/wck/mypage/order/myorderdetail?code=230128P16572180" class="arrow_btn list_detail_btn"
-                onclick="">
-                상세보기
-              </a>
-            </div>
-            <ul class="mpord_goods_ul goods_list_wrap">
-              <li>
-                <div class="mpord_goods_item gl_item">
-                  <div class="gl_tit">
-                    <a href="#" onclick="">
-                      <img src="http://newmedia.thehandsome.com/SH/2C/SS/SH2C1ACK416M_GY_S01.jpg" class="gl_thumbimg"
-                        alt="컬러 블록 양말" />
-                    </a>
-                  </div>
-                  <ul class="gl_con">
-                    <li class="gl_con_brand">
-                      <a href="#" onclick="">SYSTEM
-                        HOMME</a>
-                    </li>
-                    <li class="gl_con_name">
-                      <a href="#" onclick="">컬러 블록
-                        양말</a>
-                    </li>
-                    <li class="gl_con_option">GREY / FR / 1개</li>
-                    <li class="gl_con_price">￦6,000</li>
-                    <li class="gl_con_price">
-                      <p name="__p_PSID" class="guide_comment2" style="">
-                        해당 상품은 전국 매장을 통해 수급하여 배송 될
-                        예정입니다. <br />불량 등의 이유로 수급이 어려울 경우,
-                        취소될 수 있습니다. <br />
-                        <b>(평일 기준 5일 이상 소요 예정)</b>
-                      </p>
-                    </li>
-                    <li class="gl_con_status">
-                      <span class="ord_status">결제완료</span> (2023.01.28)
-                    </li>
-                  </ul>
-                  <div class="more_action_wrap">
-                    <a href="javascript:;" class="btn_more_action"><span>변경</span></a>
-                    <div class="more_action_ul_wrap">
-                      <a href="javascript:;" class="btn_more_action_ul_close"><span>닫기</span></a>
-                      <ul class="more_action_ul">
-                        <li>
-                          <a href="/ko/mypage/order/cancelRequestPopup?code=230128P16572180&amp;isall=Y"
-                            class="layerpopupOpen" onclick="">주문취소</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </li>
-
-            </ul>
-
-          </div>
-
-          <div class="df_box">
-            <div class="mpord_tit mpord_dlvr">
-              <div class="mpord_tit_num">택배배송 230131P16604245</div>
-              <div class="mpord_tit_sub">2023.01.31. 16:53:00</div> <a
-                href="/ko/mypage/order/myorderdetail?code=230131P16604245" class="arrow_btn list_detail_btn"
-                onclick="GA_Event('주문/배송조회', '상세보기', '클릭');" style="display: none;"> 상세보기 </a>
-            </div>
-            <ul class="mpord_goods_ul goods_list_wrap">
-              <li>
-                <div class="mpord_goods_item gl_item">
-                  <div class="gl_tit"> <a href="/ko/p/SJ2C7ACK472W_CR_FR"
-                      onclick="GA_Event('주문/배송조회', '상세보기', '%uAE00%uB9AC%uD130%uB9C1%20%uB9AC%uBE0C%20%uC591%uB9D0');">
-                      <img src="http://newmedia.thehandsome.com/SJ/2C/FW/SJ2C7ACK472W_CR_S01.jpg" class="gl_thumbimg"
-                        alt="글리터링 리브 양말"> </a> </div>
-                  <ul class="gl_con">
-                    <li class="gl_con_brand"><a href="/ko/p/SJ2C7ACK472W_CR_FR"
-                        onclick="GA_Event('주문/배송조회', '상세보기', '%uAE00%uB9AC%uD130%uB9C1%20%uB9AC%uBE0C%20%uC591%uB9D0');">SJSJ</a>
-                    </li>
-                    <li class="gl_con_name"><a href="/ko/p/SJ2C7ACK472W_CR_FR"
-                        onclick="GA_Event('주문/배송조회', '상세보기', '%uAE00%uB9AC%uD130%uB9C1%20%uB9AC%uBE0C%20%uC591%uB9D0');">글리터링
-                        리브 양말</a></li>
-                    <li class="gl_con_option">CREAM / FR / <span class="cancel_op">1개</span>&nbsp;0개</li>
-                    <li class="gl_con_price">￦0</li>
-                    <li class="gl_con_price">
-                      <p name="__p_SJ2C7ACK472W_CR_FR" class="guide_comment2" style="display: none;">해당 상품은 전국 매장을 통해
-                        수급하여 배송 될 예정입니다. <br>불량 등의 이유로 수급이 어려울 경우, 취소될 수 있습니다. <br> <b>(평일 기준 5일 이상 소요 예정)</b></p>
-                    </li>
-                    <li class="gl_con_status"><span class="ord_status">취소</span> (2023.01.31)</li>
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </div>
           <!-- ########## Goods list end ########## -->
 
         </div>
+        <div class="pagingArea" style="display:flex; justify-content:center;">
+          <div id="prev" style="margin-right: 10px; font-weight:bold;">이전</div>
+          <div id="next" style="font-weight:bold;">다음</div>
+        </div>
 
-        <!-- <div class="hs_paging assist">
-          <a href="javascript:void(0);" class="pre disabled">이전</a><a href="javascript:void(0);" class="cur">1</a><a
-            href="javascript:void(0);" class="nxt disabled">다음</a>
-        </div> -->
+
+
 
         <!-- ########## 주문 배송 조회 안내 시작 ########## -->
         <div class="df_box mp_order_dvlr_guide_wrap last_box">
@@ -245,6 +139,7 @@
 
 
       <div id="DeliveryLayer" style="overflow: auto"></div>
+
 
       <!-- ########## footer add ########## -->
       <footer th:replace="wck/includes/footer :: fragment-footer"></footer>
@@ -318,7 +213,7 @@
   <!-- depth8 s -->
   <div class="hsome_layerpop_contents lp_depth8"></div>
   <!-- depth8 e -->
-  
+
 
   <!-- loading_layerpop s -->
   <!-- layerpop_wrap | 처리중 s -->
@@ -334,7 +229,163 @@
   <!-- hsome_layer_menu_contents | 레이어팝업메뉴 컨텐츠 영역 e -->
   <!-- layerpopupContent e -->
 
-  
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+      let curPage = 1;
+      let curMonth = 1;
+
+      getOrderList(curMonth, curPage);
+
+      $('.monthBtn').click(function (e) {
+        e.preventDefault();
+        let month = $(this).data('month');
+        console.log("moht click = " + month);
+        curMonth = month;
+        curPage = 1;
+        getOrderList(curMonth, curPage);
+      })
+
+      $('#prev').click(function () {
+        console.log('prev clicked');
+        if (curPage == 1) return;
+        curPage = curPage - 1;
+        getOrderList(curMonth, curPage);
+      })
+
+      $('#next').click(function () {
+        console.log('next clicked');
+        curPage = curPage + 1;
+        getOrderList(curMonth, curPage);
+      })
+
+
+
+
+      function getOrderList(month, pageNum) {
+        $.ajax({
+          type: 'GET',
+          url: '/api/order?month=' + month + '&pageSize=5&currentPage=' + pageNum,
+          success: function (data) {
+
+            let tmp = '';
+            console.log(data);
+            let orders = data['orders'];
+            let count = data['count'];
+
+            if (curPage == 1) {
+              $('#prev').css('display', 'none');
+            } else {
+              $('#prev').css('display', 'block');
+            }
+
+            if (curPage * 5 > count) {
+              $('#next').css('display', 'none');
+            } else {
+              $('#next').css('display', 'block');
+            }
+
+
+            $(orders).each(function (idx, d) {
+              tmp += printOrder(d);
+            });
+
+            $('#listBody').html('');
+            $('#listBody').append(tmp);
+
+            $('html, body').animate({ scrollTop: 0 }, 400);
+
+          }
+        });
+      }
+
+      function printOrder(data) {
+        let item_html = '';
+        $(data.orderProducts).each(function (i, product) {
+
+          let item_template = `
+  	  	  		<li>
+  	                <div class="mpord_goods_item gl_item">
+  	                  <div class="gl_tit">
+  	                    <a href="#" onclick="">
+  	                      <img src="${product.pimg}" class="gl_thumbimg" alt="컬러 블록 양말">
+  	                    </a>
+  	                  </div>
+  	                  <ul class="gl_con">
+  	                    <li class="gl_con_brand">
+  	                      <a href="#" onclick="">${product.bname}</a>
+  	                    </li>
+  	                    <li class="gl_con_name">
+  	                      <a href="#" onclick="">${product.pname}</a>
+  	                    </li>
+  	                    <li class="gl_con_option">${product.colorName} / ${product.psize} / ${product.quantity}개</li>
+  	                    <li class="gl_con_price">￦${product.quantity * product.pcPrice}</li>
+  	                    <li class="gl_con_status">
+  	                      <span class="ord_status">${data.ostatus}</span> (${data.odate})
+  	                    </li>
+  	                  </ul>
+  	                  <div class="more_action_wrap">
+  	                    <a href="javascript:;" class="btn_more_action"><span>변경</span></a>
+  	                    <div class="more_action_ul_wrap">
+  	                      <a href="javascript:;" class="btn_more_action_ul_close"><span>닫기</span></a>
+  	                      <ul class="more_action_ul">
+  	                        <li>
+  	                          <a href="#" class="layerpopupOpen" onclick="cancelOrder('${data.oid}');">주문취소</a>
+  	                        </li>
+  	                      </ul>
+  	                    </div>
+  	                  </div>
+  	                </div>
+  	              </li>
+  	  	  		
+  	  	  		`
+          item_html += item_template;
+        })
+
+        let order_template = `
+  	            <div class="df_box">
+  	            <div class="mpord_tit mpord_dlvr">
+  	              <div class="mpord_tit_num">택배배송 ${data.oid}</div>
+  	              <div class="mpord_tit_sub">${data.odate}</div>
+  	              <a href="/wck/mypage/order/${data.oid}" class="arrow_btn list_detail_btn"
+  	                onclick="">
+  	                상세보기
+  	              </a>
+  	            </div>
+  	            <ul class="mpord_goods_ul goods_list_wrap">
+  	            ${item_html}
+  	            </ul>
+  	          </div>
+  	  		`
+        return order_template;
+      }
+
+    })
+
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
+
+    function cancelOrder(oid) {
+
+      $.ajax({
+        url: '/wck/mypage/cancelRequest/' + oid,
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader(header, token);
+        },
+        method: 'post',
+        success : function(result){
+          if(result == "SUCCESS"){
+        	  console.log('cancel order complete');
+            location.href = '/wck/mypage/order';
+          }
+        },
+        error : function(){
+        }
+      })
+    }
+
+
+  </script>
 
 </body>
 <!-- This script is for AceCounter START -->

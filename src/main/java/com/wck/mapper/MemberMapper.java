@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.wck.domain.EventCouponVO;
 import com.wck.domain.FindPwDTO;
 import com.wck.domain.MemberVO;
 import com.wck.domain.UpdateMemberDTO;
@@ -23,5 +24,9 @@ public interface MemberMapper {
 	public int getGradeById(String mId);
 	
 	public int getCartCount(String mId);
+	public List<EventCouponVO> getCouponByEmail(String email);
+	public long getTotalOrderPrice(String mId);
+	public int getNowMileage(String mId);
+	public int updateMemberInfo(String mId, int newMileage, int grade);
 }
 

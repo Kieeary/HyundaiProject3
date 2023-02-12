@@ -126,4 +126,28 @@
 	<select id="getGradeById" resultType="int">
 		SELECT MGRADE FROM MEMBER WHERE MID = #{mId}
 	</select>
+	
+	<select id="getCouponByEmail" resultType="eventCoupon">
+		SELECT cd.CPID, e.ECOUPONTITLE, e.EDISCOUNT
+		FROM COUPON_DETAIL cd, EVENT e, MEMBER m 
+		WHERE CPEXPIREDATE > SYSDATE AND cd.ENO = e.ENO AND cd.MID = m.MID AND cd.CPSTATUS = 1 
+		AND m.MEMAIL = #{email}
+	</select>
+	
+	<select id="getTotalOrderPrice" resultType="long">
+		SELECT SUM(OAFTERPRICE) 
+		FROM ORDERS 
+		WHERE TO_CHAR(ODATE, 'yyyy') LIKE TO_CHAR(SYSDATE, 'yyyy')  
+		AND MID = #{mId}
+	</select>
+	
+	<select id="getNowMileage" resultType="int">
+		SELECT MMILEAGE FROM MEMBER WHERE MID = #{mId}
+	</select>
+	
+	<update id="updateMemberInfo">
+		UPDATE MEMBER
+		SET MMILEAGE = #{newMileage}, MGRADE = #{grade}
+		WHERE MID = #{mId}
+	</update>
 </mapper> 

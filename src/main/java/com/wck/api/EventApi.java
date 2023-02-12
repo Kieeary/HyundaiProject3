@@ -8,7 +8,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +28,7 @@ public class EventApi {
 	private final EventService eventService;
 	
 	/*
+	 * author : 왕종휘
 	 * 진행 중인 이벤트 / 종료한 이벤트
 	 */
 	@GetMapping("/list")
@@ -47,6 +47,7 @@ public class EventApi {
 	}
 
 	/*
+	 * author : 왕종휘
 	 * 내 쿠폰 확인
 	 */
 	@GetMapping("/mycoupon")
@@ -56,7 +57,8 @@ public class EventApi {
 		return new ResponseEntity<List<EventCouponVO>>(list, HttpStatus.OK);
 	}
 	
-	/**
+	/*
+	 * author : 왕종휘
 	 * 해당 이벤트에 참여 헀는지 확인
 	 */
 	@GetMapping("{eventId}/check")
@@ -70,7 +72,8 @@ public class EventApi {
 		return new ResponseEntity<Boolean>(result, HttpStatus.OK);
 	}
 	
-	/**
+	/*
+	 * author : 왕종휘
 	 * 쿠폰 발급
 	 */
 	@PostMapping("{eventId}/coupon")

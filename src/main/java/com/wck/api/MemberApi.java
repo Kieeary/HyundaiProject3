@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,7 +40,8 @@ public class MemberApi {
 	private final MemberService memberSerivce;
 	private final ProductService productService;
 	
-	/**
+	/*
+	 * author : 왕종휘
 	 * 이미 가입된 회원이 있는지 확인 = 가입된 회원이 있다면 : true / 없다면 : false 
 	 */
 	@GetMapping("/isExist")
@@ -52,6 +52,7 @@ public class MemberApi {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 유저의 비밀번호 변경을 위한 기존 비밀번호 재확인
 	 */
 	@PostMapping("/check/pw")
@@ -63,6 +64,7 @@ public class MemberApi {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 회원정보 변경 
 	 */
 	@PostMapping("/update")
@@ -81,6 +83,7 @@ public class MemberApi {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 회원 비밀번호 변경
 	 */
 	@PostMapping("/update/pw")
@@ -97,6 +100,7 @@ public class MemberApi {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 유저가 찜한 상품 리스트 반환
 	 */
 	@GetMapping("/like")
@@ -118,6 +122,7 @@ public class MemberApi {
 	}
 	
 	/*
+	 * author : 왕종휘
 	 * 유저 좋아요 생성 / 삭제
 	 */
 	@PostMapping("/like/{pId}")

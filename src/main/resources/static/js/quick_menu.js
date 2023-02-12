@@ -10292,18 +10292,6 @@ function moveBrandLookBook(brandCode) {
               </li>
               <li class="one_lists">
                 <div class="one_wrap">
-                  <a
-                    href="#"
-                    class="one_link"
-                    id="cate_gf"
-                    onclick="GA_Event('공통_카테고리', '1DEPTH', '골프');">
-                    <span class="category_tit"
-                      >골프<img
-                        class="icon-new-m"
-                        src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common_sub/icon_new_m.png"
-                        alt="newIcon" />
-                    </span>
-                  </a>
                 </div>
                 <ul class="two_depth" style="display: none">
                   <li class="two_lists">
@@ -11588,11 +11576,122 @@ function moveBrandLookBook(brandCode) {
   >
 </div>
 </div>
+
+<script>
+
+	$(document).ready(function () {
+	$.ajax({
+		type: 'get',
+		url: '/wck/products/category',
+		success: function (result) {
+			
+			console.log(result);
+	
+		}, 
+		error : function (result) {
+			console.log("통신 실패");
+		}
+	})
+	}
+
+</script>
 `;
+
 
 $('.hsome_quickMenu .shop a').click(function (e) {
   e.preventDefault();
   console.log('shop click');
+  
+  	$.ajax({
+		type: 'get',
+		url: '/wck/products/category',
+		success: function (result) {
+			
+			console.log(result);
+			
+			let categorylist = '';
+			categorylist += `<div class="cate_shop_cate_wrap2004">
+            <ul
+              class="shop_list_category ctgr one_depth"
+              style="min-height: 633px">`
+              
+            for(var i = 0; i<result.length; i++) {  
+            categorylist += `<li class="lists_${i}">
+                <div class="one_wrap">
+                  <a
+                    href="#"
+                    class="one_link"
+                    id="cate_we"
+                    onclick="GA_Event('공통_카테고리', '1DEPTH', '여성');">
+                    <span class="category_tit">${result[i].firstname}</span>
+                  </a>
+                </div>
+                <ul class="two_depth" style="display: none">
+                  <li class="two_lists">
+                    <a
+                      href="#"
+                      class="two_link js-cate-link"
+                      onclick="GA_Event('공통_카테고리', '2DEPTH', '여성_전체보기');"
+                      >전체보기</a
+                    >
+                  </li>`
+                  for(var s = 0; s<result[i].secondCategory.length; s++) {
+					  categorylist += `<li class="two_lists">
+                    <a
+                      href="#"
+                      class="two_link js-cate-link"
+                      onclick="GA_Event('공통_카테고리', '2DEPTH', '여성_아우터');"
+                      >${result[i].secondCategory[s].secondname}</a>
+					  <li class="three_lists">
+                        <button
+                          type="button"
+                          class="like"
+                          id="gnb_we05_like"
+                          onclick="applyCategory('gnb_we05');GA_Event('공통_카테고리', '좋아요', '여성_아우터_전체');">
+                          찜하기</button>
+                          <a
+                          href="/ko/c/we05"
+                          class="three_link"
+                          onclick="GA_Event('공통_카테고리', '3DEPTH', '여성_아우터_전체');"
+                          >전체</a></li>`
+                          
+                          for(var t = 0; t<result[i].secondCategory[s].thirdCategory.length; t++) {
+							  
+						  categorylist += `<input type="hidden" id="gnb_we051" value="we051|아우터>재킷|woman|false" />
+                      		<li class="three_lists">
+                        	<button
+                          type="button"
+                          class="like"
+                          id="gnb_we051_like"
+                          onclick="applyCategory('gnb_we051');GA_Event('공통_카테고리', '좋아요', '여성_아우터_재킷');">
+                          찜하기
+                        </button>
+                        <a
+                          href="/ko/c/we051"
+                          class="three_link"
+                          onclick="GA_Event('공통_카테고리', '3DEPTH', '여성_아우터_재킷');"
+                          >재킷</a
+                        >
+                      </li>
+						  `
+					  }
+				  }
+                 
+             }
+             
+             	console.log("*****결과 확인******");
+				console.log(categorylist);
+             
+	$("#tab-02").html(categorylist);
+		}, 
+		error : function (result) {
+			console.log("통신 실패");
+		}
+	})
+	
+
+	
+	
   $('.hsome_quickMenu_contents').addClass('active absolute');
   $('.hsome_quickMenu_contents').html(template);
 });

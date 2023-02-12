@@ -1,5 +1,7 @@
 package com.wck.mapper;
 
+import static org.mockito.ArgumentMatchers.intThat;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Assertions;
@@ -61,6 +63,14 @@ public class EventMapperTest {
 		String mid = "123123";
 		int row = eventMapper.insertCouponDetail(eno, mid);
 		Assertions.assertEquals(row, 1);
+	}
+	
+	@Test
+	void useCouponTest() {
+		String mId = "7c-41f8-8c6a-739159990a8d";
+		String cpId = "21";
+		int result = eventMapper.useCoupon(cpId, mId);
+		Assertions.assertEquals(result, 1);
 	}
 
 }

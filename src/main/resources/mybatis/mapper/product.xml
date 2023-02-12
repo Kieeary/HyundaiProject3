@@ -86,7 +86,7 @@
  		<result property="ColorName" column="COLORNAME" />
  	</resultMap>
  	
-
+<!-- 
 	<select id="getProducts" resultMap = "productsMap">
         SELECT pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
         pstock.psstock
@@ -109,8 +109,44 @@
         ON pstock.pcid = pcolor.pcid
         group by pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
         pstock.psstock
+        
 	</select>
-	
+ -->
+ 
+ 	<select id="getProducts" resultMap = "productsMap">
+ 		SELECT sub.pid, sub.pcid, sub.pname, sub.bname, sub.pstatus, sub.bno, 
+        sub.pcprice, sub.pccolorcode, sub.pcimg1, sub.pcchipimg,sub.psstock, sub.preleasedate, sub.rnum
+		FROM (
+        SELECT rsub.pid, rsub.pname, rsub.bname, rsub.pstatus, rsub.bno, rsub.rnum, pcolor.pcid, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
+        pcolor.preleasedate, pstock.psstock
+        FROM
+        (SELECT pcom.pid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno , ROW_NUMBER() over (order by pcom.pid) rnum
+        from product_common pcom
+        INNER JOIN product_category pcat
+		ON pcom.pid = pcat.pid
+        INNER JOIN category c
+		<if test="gd != null">
+			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
+			<if test="sC!= null">
+				AND c.depth2name = #{sC}
+			</if>
+			<if test="tC!= null">
+				AND c.depth3name = #{tC}
+			</if>
+		</if>
+		) rsub
+		INNER JOIN product_color pcolor
+		ON pcolor.pid = rsub.pid
+        INNER JOIN product_stock pstock
+        ON pstock.pcid = pcolor.pcid
+        group by rsub.pid, pcolor.pcid, rsub.pname, rsub.bname, rsub.pstatus, rsub.bno, 
+        pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg, pstock.psstock, pcolor.preleasedate, rsub.rnum) sub
+        WHERE rnum BETWEEN #{start} * 14 AND (#{last} * 14)
+        ORDER BY rnum
+	</select>
+ 
+ 
+ 
 	<!-- 추후 getProducts 와 합칠수 있으면 합치자  -->
 	
 	<resultMap type="product" id="searchProductsMap">
@@ -178,10 +214,12 @@
 	<resultMap type="productStock" id="sizeNstock">
 		<result property="pSize" column="PSIZE" />
 		<result property="psStock" column="PSSTOCK" />
+		<result property="psId" column="PSID"/>
 	</resultMap>
 	
 	<select id="getProductInfo" resultMap = "productInfo">
-		select pcolor.pcid, pcom.bname, pcom.pname , pcolor.pcimg1, pcolor.pcimg2, pcolor.pcimg3, pcom.pnote, pcolor.pcprice, pstock.psize, pstock.psstock from product_color pcolor
+		select pcolor.pcid, pcom.bname, pcom.pname , pcolor.pcimg1, pcolor.pcimg2, pcolor.pcimg3, pcom.pnote, pstock.psid,
+		pcolor.pcprice, pstock.psize, pstock.psstock from product_color pcolor
 		inner join product_common pcom 
 		on pcolor.pid = pcom.pid
 		inner join product_stock pstock
@@ -189,10 +227,117 @@
 		where pcolor.pid = #{pid} and pcolor.pcid =#{pcid}
 	</select>
 	
+	
+	
+	<resultMap type="withProduct" id="withProduct">
+		<id property="withpcid" column="WITHPCID" />
+		<result property="pcid" column="PCID" />
+		<result property="withpcid" column="WITHPCID" />
+		<result property="pcimg1" column="PCIMG1" />
+		<result property="pcprice" column="PCPRICE" />
+		<result property="pname" column="PNAME" />
+		<result property="bname" column="BNAME" />
+		<result property="pid" column="PID" />
+		<result property="bname" column="BNAME" />
+		<collection property="withcolorchip" resultMap="wColorChip">
+		</collection>
+	</resultMap>
+
+	<resultMap type="withColorChipInfo" id="wColorChip">
+		<result property="pcchipimg" column="PCCHIPIMG"/>
+		<result property="pccolorcode" column="PCCOLORCODE"/>	
+		<result property="otherpcid" column="OTHERPCID"/>		
+		<result property="otherpcimg1" column="OTHERPCIMG1"/>			
+	</resultMap>
+	
+	<select id="getWithProducts" resultMap ="withProduct">
+	
+		SELECT sub.pcid, sub.withpcid, sub.pcimg1, sub.pcprice, sub.pname, sub.bname, sub.pid, pcolor.pcchipimg, pcolor.pccolorcode, pcolor.pcid as otherpcid, pcolor.pcimg1 as otherpcimg1
+		FROM(
+		SELECT wp.pcid, wp.withpcid, pcolor.pcimg1, pcolor.pcprice, pcom.pname, brand.bname, pcolor.pid
+		FROM with_product wp
+		INNER JOIN product_color pcolor
+		ON pcolor.pcid = wp.withpcid and wp.pcid = #{pcid}
+		INNER JOIN product_common pcom
+		ON pcom.pid = pcolor.pid
+		INNER JOIN brand
+		ON brand.bno = pcom.bno
+		) sub
+		INNER JOIN product_color pcolor
+		ON pcolor.pid = sub.pid
+	
+	</select>
+	
+	<!-- 카테고리별 상품 갯수 조회 -->
+	<select id="getProductsCount" resultType="int">
+		SELECT COUNT(pcom.pid) as cnt
+		from product_common pcom
+		INNER JOIN product_category pcat
+		ON pcom.pid = pcat.pid
+		INNER JOIN category c
+		<if test="gd != null">
+			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
+		<if test="sC!= null">
+			AND c.depth2name = #{sC}
+		</if>
+		<if test="tC!= null">
+			AND c.depth3name = #{tC}
+		</if>
+		</if>
+	</select>
+	
+	
+	<!-- 카테고리 정보 가져오기 -->
+	
+	<resultMap type="firstCategory" id="firstCategory">
+		<id property="firstname" column="FIRSTNAME" />
+		<result property="depth1name" column="DEPTH1NAME" />		
+		<collection property="secondCategory" resultMap="secondCategory"/>
+	</resultMap>
+	
+	<resultMap type="secondCategory" id="secondCategory">
+		<id property="secondname" column="SECONDNAME" />
+		<result property="depth2name" column="DEPTH2NAME"/>
+		<collection property="thirdCategory" resultMap="thirdCategory"/>
+	</resultMap>
+	
+	<resultMap type="thirdCategory" id="thirdCategory">
+		<id property="detailname" column="DETAILNAME" />
+		<result property="depth3name" column="DEPTH3NAME"/>
+	</resultMap>
+	
+	<select id="getCategoryName" resultMap="firstCategory">
+		select cn.firstname, cn.secondname, cn.detailname, c.depth1name, c.depth2name, c.depth3name
+		from category_name cn
+		inner join category c on c.cateno = cn.cateno
+	</select>
+	
 	<select id="getColorChip" resultType="productColorChip">
 		select pcolor.pcchipimg, pcolor.pccolorcode, pcolor.pcid, pcolor.pid
 		from product_color pcolor
 		where pcolor.pid = #{pid}
+	</select>
+	
+	
+	<!-- 카테고리 리스트 뿌리기 -->
+	<select id="getSecondCategory" resultType="secondCategory">
+		SELECT secondname, depth2name
+		FROM category_name cn
+		INNER JOIN category c 
+		ON cn.cateno = c.cateno
+		WHERE c.depth1name = #{keyword}
+		GROUP BY secondname, depth2name
+		ORDER BY secondname
+	</select>
+	
+	<select id="getThirdCategory" resultType="thirdCategory">
+		SELECT detailname, depth3name
+		FROM category_name cn
+		inner join category c 
+		on cn.cateno = c.cateno
+		where c.depth2name = #{keyword}
+		group by detailname, depth3name
+		order by detailname
 	</select>
 	
 
@@ -231,10 +376,21 @@
 		SELECT PSSTOCK FROM PRODUCT_STOCK WHERE PSID = #{psId}
 	</select>
 	
-	<select id="getProductSympleInfo" resultType="productCommon">
+	<select id="getProducSimpleInfo" resultType="productCommon">
 		SELECT b.BNAME, pc.PNAME
 		FROM PRODUCT_COMMON pc, BRAND b  
 		WHERE pc.BNO = b.BNO AND PID = #{pId}
 	</select>
+	
+	<select id="getProductInfoWithColorName" resultType="productSimpleInfo">
+		SELECT ps.PSID, b.BNAME, pc1.PNAME, pci.COLORNAME, pc2.PCPRICE, ps.PSIZE, pci.PIMG 
+		FROM PRODUCT_STOCK ps, PRODUCT_COMMON pc1, PRODUCT_COLOR pc2, PRODUCT_COLOR_INFO pci, BRAND b
+		WHERE ps.PCID = pc2.PCID AND pc1.PID = pc2.PID AND pc1.BNO = b.BNO AND pc2.PCID = pci.PCID 
+		AND ps.PSID = #{psId}
+	</select>
+	
+	<update id="updateProductStock">
+		UPDATE PRODUCT_STOCK SET PSSTOCK = PSSTOCK - #{subQty} WHERE PSID = #{psId}
+	</update>
 
 </mapper>

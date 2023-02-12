@@ -47,6 +47,10 @@ public class ProductService {
 		return isExist ? 0 : 1;
 	}
 	
+	public boolean isLikeProduct(String mid, String pid) {
+		return productMapper.isLikeProduct(mid, pid);
+	}
+	
 	public ProductCommonVO getProductDetail(String pId) {
 		ProductCommonVO vo = productMapper.getProductDetailByPid(pId);
 		if(vo == null) throw new RuntimeException("존재하지 않는 PID");

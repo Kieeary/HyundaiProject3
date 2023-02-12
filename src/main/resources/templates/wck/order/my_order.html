@@ -28,42 +28,9 @@
     <div class="hsome_allContents">
 
       <!-- ########## header start ########## -->
-      <header class="hsome_header header_noline header_mypage">
-        <h1 class="h_select">
-          <select id="headerMypageSelect"
-            onchange="GA_Event('마이페이지', 'MY_GNB', this.selectedOptions[0].text.replaceAll(' ', '').replace('신청/조회',''));">
-            <option value="" style="display: none"></option>
-            <option value="/ko/mypage/mypageFloatingPopup">
-              마이페이지<!-- 마이페이지 -->
-            </option>
-            <option value="/ko/mypage/order/myorders">
-              주문/배송조회<!-- 주문/배송조회 -->
-            </option>
-            <option value="/ko/mypage/myWish">
-              마이하트<!-- 위시리스트 -->
-            </option>
-            <option value="/ko/mypage/personInfomationChange">
-              개인정보변경<!-- 개인정보변경 -->
-            </option>
-            <option value="/ko/mypage/voucher">쿠폰<!-- 쿠폰 --></option>
-            <option value="/ko/mypage/myreview">상품평<!-- 상품평 --></option>
-          </select>
-
-          <div class="selected_text">
-            <span> 주문/배송조회</span>
-          </div>
-        </h1>
-
-        <a href="javascript:noLink();" onclick="goBack();" class="h_prev">이전 페이지로 가기</a>
-        <ul class="h_gnbMenu">
-          <li class="search">
-            <a href="#" onclick=""><span>search</span></a>
-          </li>
-          <li class="cart">
-            <a href="/wck/shoppingbag"><span>cart</span><i>$$</i></a>
-          </li>
-        </ul>
-      </header>
+        <header  
+        th:replace = "wck/includes/header_select2 :: header_select_tag('주문배송조회',2)"
+        class="hsome_header header_noline header_mypage"></header>
       <!-- ########## header end ########## -->
 
       <input type="hidden" id="tempCheckQuick" />
@@ -151,31 +118,7 @@
   <a href="noLink();" class="hsome_topBtn upper" id="handsomeTopBtn">mobile.bottom.top</a>
 
   <!-- ################## hsome_quickMenu | 퀵메뉴 ################## -->
-  <aside class="hsome_quickMenu hsome_quickMenu1909 active">
-    <ul>
-      <li class="shop">
-        <a href="#" onclick=""><i>메뉴</i></a>
-      </li>
-      <li class="sns">
-        <a href="#" onclick=""><i>스타일 LIVE</i></a>
-      </li>
-      <li class="home">
-        <a href="#" onclick=""><i>홈</i></a>
-      </li>
-      <li class="myheart" id="gnbMyheartBtn">
-        <a href="#" onclick=""><i>마이하트</i></a>
-      </li>
-      <li class="mypage active" id="gnbMyPageBtn">
-        <a href="#" onclick=""><i>마이페이지</i></a>
-      </li>
-      <li class="mypage pageMove" style="display: none">
-        <a href="" id="gnbMypageBtn"></a>
-      </li>
-      <li class="mypage" style="display: none">
-        <a href="/ko/mobilecommon/myPagePopup" id="gnbMypagePopupBtn"></a>
-      </li>
-    </ul>
-  </aside>
+<th:block th:replace="wck/includes/quick_menu"></th:block>
   <!-- ################## //hsome_quickMenu | 퀵메뉴 ################## -->
 
 
@@ -386,7 +329,7 @@
 
 
   </script>
-
+<script type="text/javascript" th:src="@{/js/quick_menu.js}" defer></script>
 </body>
 <!-- This script is for AceCounter START -->
 

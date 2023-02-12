@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import com.wck.domain.ProductVO;
 import com.wck.domain.SecondCategoryVO;
 import com.wck.domain.ThirdCategoryVO;
 import com.wck.domain.WithProductVO;
+import com.wck.security.domain.Account;
 import com.wck.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -97,7 +99,9 @@ public class ProductController {
 	}
 	
 	@GetMapping("/p")
-	public String getProductInfo(Model model, @RequestParam String pid, @RequestParam String pcid) {
+	public String getProductInfo(Model model, 
+			@AuthenticationPrincipal Account account,
+			@RequestParam String pid, @RequestParam String pcid) {
 		String pi = pid;
 		String pci = pcid;
 		log.info(pid);
@@ -106,11 +110,15 @@ public class ProductController {
 		ProductInfoVO productInfo = productService.getProductInfo(pcid, pid);
 		List<ProductColorChipVO> colorChip = productService.getColorChip(pid);
 		List<WithProductVO> withProduct = productService.getWithProducts(pcid);
+		boolean isLike = false;
+		if(account != null) isLike = productService.isLikeProduct(account.getId(), pid);
 		
 		log.info("size" + productInfo.getSizeNstock().size());
 		model.addAttribute("productInfo", productInfo);
 		model.addAttribute("productColor", colorChip);
 		model.addAttribute("withProduct", withProduct);
+		model.addAttribute("isLike", isLike);
+		
 	
 		for(ProductColorChipVO a : colorChip) {
 			log.info("=======" + a.getPcid());

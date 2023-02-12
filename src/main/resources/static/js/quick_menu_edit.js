@@ -7700,24 +7700,6 @@ function moveBrandLookBook(brandCode) {
 </div>
 </div>
 
-<script>
-
-	$(document).ready(function () {
-	$.ajax({
-		type: 'get',
-		url: '/wck/products/category',
-		success: function (result) {
-			
-			console.log(result);
-	
-		}, 
-		error : function (result) {
-			console.log("통신 실패");
-		}
-	})
-	}
-
-</script>
 `;
 
 
@@ -7817,16 +7799,6 @@ $('.hsome_quickMenu .shop a').click(function (e) {
 
              }                 
 			 categorylist += `</ul></div>`
-             
-             
-             
-             
-              
-              
-             
-             
-             
-             
              
             console.log("*****결과 확인******");
 			console.log(categorylist);

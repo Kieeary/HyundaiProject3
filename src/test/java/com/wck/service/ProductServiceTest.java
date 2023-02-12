@@ -21,9 +21,11 @@ public class ProductServiceTest {
 		String gd = "me";
 		String br = null;
 		String sC = null;
-		String tC = "me031";
+		String tC = "me03";
+		int start = 0;
+		int last = 1;
 		
-		List<ProductVO> a = productService.productList(br, gd, sC, tC);
+		List<ProductVO> a = productService.productList(br, gd, sC, tC, start, last);
 		
 		for(ProductVO b : a) {
 			log.info(b.getPid());

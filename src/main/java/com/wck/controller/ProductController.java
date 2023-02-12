@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wck.domain.CategoryVO;
+import com.wck.domain.FirstCategoryVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
@@ -75,7 +76,8 @@ public class ProductController {
 	public Object list(@RequestParam(value="brand", required=false) String brand,
 					   @RequestParam(value="gender", required=false) String gender,
 					   @RequestParam(value="secCat", required=false) String secCat,
-					   @RequestParam(value="thrCat", required=false) String thrCat) {
+					   @RequestParam(value="thrCat", required=false) String thrCat,
+					   @RequestParam(value="start") int start, @RequestParam(value="last") int last) {
 		
 		String br = brand;
 		String gd = gender;
@@ -86,8 +88,10 @@ public class ProductController {
 		log.info(br);
 		log.info(sC);
 		log.info(tC);
+		log.info(start);
+		log.info(last);
 		
-		List<ProductVO> list = productService.productList(br, gd, sC, tC);
+		List<ProductVO> list = productService.productList(br, gd, sC, tC, start, last);
 		
 		for(ProductVO a : list) {
 			log.info(a.getPid());
@@ -137,6 +141,15 @@ public class ProductController {
 		log.info(productInfo.getPcid());
 		
 		return info;
+	}
+	
+	@ResponseBody
+	@GetMapping("/category")
+	public Object getfCategory() {
+		
+		List<FirstCategoryVO> category = productService.getCategoryName();
+		
+		return category;
 	}
 
 	

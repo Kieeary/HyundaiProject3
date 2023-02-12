@@ -49,7 +49,7 @@ public class OrderController {
 			int qty = Integer.parseInt((String) request.getParameter("quantity_"+id));
 			qtys.add(qty);
 		}
-		
+				
 		List<OrderProductVO> prods = new LinkedList<OrderProductVO>();
 		for(int i=0; i<prodIdx.length; i++) {
 			String psid = psids.get(i);

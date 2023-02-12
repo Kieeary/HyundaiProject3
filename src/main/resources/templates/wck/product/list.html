@@ -3620,8 +3620,10 @@
 			  let sc = [[${category.secCat}]];
 			  let tc = [[${category.thrCat}]];
 		      /*]]>*/
-
-						
+		      
+			
+		    var start = 0;
+		    var last = 1;
 			var query = '';
 			if(gd != null) query += "gender="+gd; 
 			if(br != null) {
@@ -3631,6 +3633,8 @@
 			if(sc != null) query += "&secCat="+sc;
 			if(tc != null) query += "&thrCat="+tc;
 						
+			query += "&start="+start+"&last="+last;
+			
 			console.log(query);
 			
 		//	url: '/wck/products/list/p?gender='+gd+'&brand='+br+'&secCat='+sc+'&thrCat='+tc,
@@ -3641,7 +3645,6 @@
 				url: '/wck/products/list/p?'+query,
 				success: function (result) {
 					console.log("통신");
-					console.log(result);
 					let productlist = '';
 					
 					
@@ -3651,7 +3654,7 @@
 						productlist += `<li class="float active" id="listBody_li_${i}" value="hihi">`
 						productlist += `<div id="tmp_${i}">`
 						productlist += `<a id="pcid_${i}" onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
-						productlist += `<div class="img index_img_${i}">`
+						productlist += `<div class="img index_img_${i}" style="margin-top:10%">`
 						productlist += '<img id="img_' + i + '" src="' + result[i].detailProduct[0].pcimg1 + '"/>'
 						productlist += '</div>'
 						productlist += '</a>'
@@ -3682,7 +3685,6 @@
 						productlist += '</div>'
 						productlist += '</li>'
 					}
-					console.log(productlist);
 					$('#listBody').append(productlist);
 					console.log($("#listBody_li_0").val() + '======');
 
@@ -3691,6 +3693,81 @@
 					console.log("통신 실패");
 				}
 			})
+			
+			
+			$(window).scroll(function(){
+				
+				if (Math.round($(window).scrollTop()) == $(document).height() - $(window).height()) {
+				
+					 	start = last;
+					    last = last+1;
+						var query = '';
+						if(gd != null) query += "gender="+gd; 
+						if(br != null) {
+						if(gd == null)	query += "brand="+br;
+							else query += "&brand="+br;
+						}
+						if(sc != null) query += "&secCat="+sc;
+						if(tc != null) query += "&thrCat="+tc;
+									
+						query += "&start="+start+"&last="+last;
+						
+						console.log(query);
+						
+						$.ajax({
+							type: 'get',
+							url: '/wck/products/list/p?'+query,
+							success: function (result) {
+								console.log("통신");
+								let productlist = '';
+								
+								
+
+								for (var i = 0; i < result.length; i++) {
+
+									productlist += `<li class="float active" id="listBody_li_${i}" value="hihi">`
+									productlist += `<div id="tmp_${i}">`
+									productlist += `<a id="pcid_${i}" onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
+									productlist += `<div class="img index_img_${i}" style="margin-top:10%">`
+									productlist += '<img id="img_' + i + '" src="' + result[i].detailProduct[0].pcimg1 + '"/>'
+									productlist += '</div>'
+									productlist += '</a>'
+									productlist += '</div>'
+									productlist += '<div class=tmp2>'
+									productlist += '<div class="info_cont">'
+									productlist += '<div class="color_chip">'
+
+										for(var n=0; n<result[i].detailProduct.length; n++){	
+											console.log(result[i].detailProduct[n].pccolorCode)
+											
+											productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '`  +result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' )">`
+									//		productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' , '` + result[i].detailProduct.length + `', '` + result[i].detailProduct[n].pccolorCode + `'  ,  +                      )"            >`
+											console.log(result[i]);
+											var tmp = result[i];
+										
+											console.log(result[i].detailProduct[n].pcchipImg);
+											
+											productlist += '<button class="chip on" ' +
+			                						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url('+result[i].detailProduct[n].pcchipImg+')"></button></a>'
+			                						}
+									productlist += '</div>'
+									productlist += '<p class="brand">' + result[i].bname + '</p>'
+									productlist += '<p class="name">' + result[i].pname + '</p>'
+									productlist += '<p class="price" id="listPrice0">'
+									productlist += '<span id="price_CM2D1KTO513W_TG">' + result[i].pcprice + '</span></p>'
+									productlist += '</div>'
+									productlist += '</div>'
+									productlist += '</li>'
+								}
+								$('#listBody').append(productlist);
+
+							},
+							error: function (result) {
+								console.log("통신 실패");
+							}
+						})
+						}
+		    })
 		})
 
 	</script>
@@ -3717,7 +3794,7 @@
 		function chgColorChip(pcid, pid, pcimg1, index) {
 			
 			console.log($('#listBody_li_'+index).val());
-			var tmp = `<a onclick="goProductDetail('` + pid + `' , '` + pcid + `')"><div class="img"><img src="${pcimg1}"></div></a>`
+			var tmp = `<a onclick="goProductDetail('` + pid + `' , '` + pcid + `')"><div class="img" style="margin-top:10%"><img src="${pcimg1}"></div></a>`
 			
 			$('#tmp_'+index).html(tmp); 
 			
@@ -3725,9 +3802,10 @@
 		}
 
 	</script>
+
 	
     <script type="text/javascript" th:src="@{/js/search.js}" defer></script>
-    <script type="text/javascript" th:src="@{/js/quick_menu.js}" defer></script>
+    <script type="text/javascript" th:src="@{/js/quick_menu_edit.js}" defer></script>
 </body>
 <!-- AceCounter Log Gathering Script V.7.5.2013010701 -->
 

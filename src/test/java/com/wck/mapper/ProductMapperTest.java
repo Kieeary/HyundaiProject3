@@ -8,19 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
+import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
+import com.wck.domain.FirstCategoryVO;
 import com.wck.domain.ProductColorChipVO;
-import com.wck.domain.Criteria;
-import com.wck.domain.DetailProductVO;
-
-
-import com.wck.domain.ProductColorVO;
-
-import com.wck.domain.Criteria;
-import com.wck.domain.DetailProductVO;
-
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductStockVO;
@@ -56,7 +47,9 @@ public class ProductMapperTest {
 	void getProductList() {
 		String gd = "me";
 		String tC = "me031";
-		List<ProductVO> vo = productMapper.getProducts(null, gd, null, tC);
+		int start = 0;
+		int last = 1;
+		List<ProductVO> vo = productMapper.getProducts(null, gd, null, tC, start, last);
 		
 		for(ProductVO a : vo) {
 
@@ -134,6 +127,9 @@ public class ProductMapperTest {
 		}
 	}
 	
+	/*
+	 * 정기범
+	 */
 	@Test
 	void getProductsCount() {
 		
@@ -145,6 +141,20 @@ public class ProductMapperTest {
 		int a = productMapper.getProductsCount(br, gd, sc, tc);
 		
 		log.info(a);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getCategoryName() {
+		
+		List<FirstCategoryVO> a = productMapper.getCategoryName();
+		
+		for(FirstCategoryVO b : a) {
+			log.info(b);
+		}
+		return ;
 	}
 	
 	@Transactional

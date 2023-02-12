@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
+import com.wck.domain.FirstCategoryVO;
 import com.wck.domain.OrderProductVO;
 import com.wck.domain.ProductColorChipVO;
-
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
@@ -52,9 +52,9 @@ public class ProductService {
 	}
 
 	public List<ProductVO> getProductList(@Nullable String br, @Nullable String gd, @Nullable String sC,
-			@Nullable String tC) {
+			@Nullable String tC, int start, int last) {
 
-		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
+		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC, start, last);
 
 		log.info("service 임");
 		
@@ -70,9 +70,9 @@ public class ProductService {
 	
 	
 	public List<ProductVO> productList(@Nullable String br, @Nullable String gd,
-										@Nullable String sC, @Nullable String tC) {
+										@Nullable String sC, @Nullable String tC, int start, int last) {
 		
-		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
+		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC, start, last);
 		
 		for(ProductVO a : productList) {
 			log.info(a.getPid());
@@ -94,6 +94,13 @@ public class ProductService {
 	 */
 	public List<WithProductVO> getWithProducts(String pcid) {
 		return productMapper.getWithProducts(pcid);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<FirstCategoryVO> getCategoryName() {
+		return productMapper.getCategoryName();
 	}
 
 	

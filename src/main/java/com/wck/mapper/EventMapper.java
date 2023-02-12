@@ -22,4 +22,6 @@ public interface EventMapper {
 	public int insertCouponDetail(int eno, String mId);
 	
 	public int useCoupon(String cpId, String mId);
+	
+	public int cancelUseCoupon(String cpid);
 }

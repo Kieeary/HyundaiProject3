@@ -10,4 +10,5 @@ public interface OrderMapper {
 	public int insertOrder(OrderVO order);
 	public int insertOrderItem(String psid, String oid, int qty, int totalPrice);
 	public OrderVO getOrderInfo(String mId, String oId);
+	public int cancelOrder(String oId);
 }

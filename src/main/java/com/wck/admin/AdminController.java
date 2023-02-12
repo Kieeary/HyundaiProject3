@@ -6,8 +6,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.wck.domain.Criteria;
 import com.wck.domain.MemberVO;
+import com.wck.domain.PageDTO;
+import com.wck.domain.ProductCommonVO;
+import com.wck.domain.ProductVO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -28,7 +33,24 @@ public class AdminController {
 		return "admin/user";
 	}
 	@GetMapping("/product")
-	public String product() {
+	public String product(
+			@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
+			@RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+			Model model
+			) {
+		Criteria cri = new Criteria();
+		cri.setCurrentPage(currentPage);
+		cri.setPageSize(pageSize);
+		
+		int total = adminService.getProductCommonCount();
+		List<ProductCommonVO> products = adminService.getProductCommonList(cri);
+		
+		PageDTO dto = new PageDTO(cri, total);
+		
+		model.addAttribute("products", products);
+		model.addAttribute("paging", dto);
+		
+		
 		return "admin/product";
 	}
 	@GetMapping("/order")

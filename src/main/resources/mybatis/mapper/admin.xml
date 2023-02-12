@@ -5,10 +5,60 @@
 
 	<select id="getMemberList" resultType="member">
 		select 
-			mid id, manme name, memail email, mbirth birth, 
-			mgender gender, mlogintype logintype, menabled enabled, mrole role, mgrade grade
-			
+			mid id, mname name, memail email, mbirth birth, 
+			mgender gender, mlogintype logintype, menabled enabled, mrole role, mgrade grade,
+			mmileage mileage
 		from member
+		order by mid
+	</select>
+	
+	<update id="updateMember">
+		update member
+		set mgrade = #{grade}, menabled = #{enabled}, mrole = #{role}
+		where mid = #{id} 
+	</update>
+	
+	<select id="getProductCommonList" resultType="productCommon">
+		select *
+		from (
+			select rownum rn, 
+				pid, pname, pnote, pstatus,
+				bno, bname
+			from (
+				select 
+					pid, pname, pnote, pstatus,
+					b.bno, b.bname
+				from product_common p
+				inner join brand b on (b.bno = p.bno)
+				order by pid
+<![CDATA[
+			) 
+			where rownum <= #{currentPage} * #{pageSize}
+		)
+		where rn > (#{currentPage} - 1) * #{pageSize}
+]]>
+	</select>
+	
+	<select id="getProductCommonCount" resultType="int">
+		select count(*) from product_common
+	</select>
+	
+	<update id="updateProductCommon">
+		update product_common 
+		set pname = #{name}, pnote = #{note}, bno = #{bno}, pstatus=#{status}
+		where pid = #{id} 
+	</update>
+	
+	<select id="getProductColorList" resultType="productColor">
+		select * 
+		from product_color
+		where pid = #{pid}
+	</select>
+	
+	<select id="getProductStockList" resultType="productStock">
+		select *
+		from product_stock
+		where pcid = #{pcid}
 	</select>
 	
 </mapper> 

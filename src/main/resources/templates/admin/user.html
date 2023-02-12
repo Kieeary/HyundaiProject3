@@ -19,23 +19,34 @@
       <th scope="col">GRADE</th>
       <th scope="col">MILEAGE</th>
       <th scope="col">ROLE</th>
-      <th scope="col">PURCHASE</th>
     </tr>
   </thead>
   <tbody>
     <tr th:each="m : ${members}">
-      <th th:text="${mStat.index}" scope="row" data-toggle="modal" data-target=".bd-example-modal-lg"><a href='#'>1</a></th>
+      <th th:data-id=${m.id} th:data-name="${m.name}" th:data-email="${m.email}"
+      		th:data-enabled="${m.enabled}" th:data-mileage="${m.mileage}"
+      		th:data-role="${m.role}" th:data-grade="${m.grade}"
+       th:text="${mStat.index}" scope="row" data-toggle="modal" data-target=".bd-example-modal-lg"><a href='#'>1</a></th>
       <td th:text="${m.id}">123123</td>
       <td th:text="${m.name}">왕종휘</td>
       <td th:text="${m.email}">wangjh789@gmail.com</td>
       <td th:text="${m.loginType}">Email</td>
-      <td th:text="${birth}">27</td>
-      <td th:text="${gender == 1}? '남' : '여'">남</td>
-      <td>O</td>
-      <td>Friend</td>
-      <td>1000</td>
-      <td>USER</td>
-      <td>100000</td>
+      <td th:text="${m.birth}">27</td>
+     
+	<th:block th:switch="${m.gender}">
+		   <td th:case="1">남</td>
+		   <td th:case="2">여</td>
+		   <td th:case="-1">??</td>
+	</th:block>
+	
+      <td th:text="${m.enabled}? 'O' : 'X'">O</td>
+    <th:block th:switch="${m.grade}">
+		   <td th:case="1">FRIEND</td>
+		   <td th:case="2">MANIA</td>
+		   <td th:case="3">STAR</td>
+	</th:block>
+      <td th:text="${m.mileage}">1000</td>
+      <td th:text="${m.role}">USER</td>
     </tr>
   </tbody>
 </table>
@@ -63,6 +74,7 @@
 
 <!-- https://getbootstrap.com/docs/4.1/components/modal/ -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <input type="hidden" id="idInput">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-content">
@@ -77,40 +89,40 @@
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">EMAIL</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+      <input type="text" readonly class="form-control-plaintext" id="emailInput" value="email@example.com">
     </div>
   </div>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">NAME</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+      <input type="text" readonly class="form-control-plaintext" id="nameInput" value="email@example.com">
     </div>
   </div>
     <div class="form-group">
     <label for="exampleFormControlSelect1">GRADE</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>Friend</option>
-      <option>Gold</option>
+    <select class="form-control" id="gradeSelect">
+      <option value="1">FRIEND</option>
+      <option value="2">MANIA</option>
+      <option value="3">STAR</option>
     </select>
   </div>
     <div class="form-group">
     <label for="exampleFormControlSelect1">ENABLED</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>O</option>
-      <option>X</option>
+    <select class="form-control" id="enabledSelect">
+      <option value='true'>O</option>
+      <option value='false'>X</option>
     </select>
   </div>
       <div class="form-group">
     <label for="exampleFormControlSelect1">ROLE</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>ROLE_MEMBER</option>
-      <option>ROLE_ADMIN</option>
+    <select class="form-control" id="roleSelect">
+      <option value="ROLE_USER">ROLE_USER</option>
+      <option value="ROLE_ADMIN">ROLE_ADMIN</option>
     </select>
   </div>
   <div class="form-group" style="display:flex; justify-content: flex-end;">
-  <button type="button" class="btn btn-danger" style='margin-right : 10px'>CANCEL</button>
-  <button type="button" class="btn btn-primary">SAVE</button>
-  
+  <button id="cancelBtn" type="button" class="btn btn-danger" style='margin-right : 10px'>CANCEL</button>
+  <button id="saveBtn" type="button" class="btn btn-primary">SAVE</button>
   </div>
 </form>
 
@@ -121,9 +133,51 @@
 </div>
 
 <script>
-	/* $(document).ready(function(){
-		console.log('tt');
-	}) */
+	$(document).ready(function(){
+		$('#cancelBtn').click(function(e){
+			$('.close').click();
+		})
+		
+		$('th').click(function(e){
+			$('#idInput').val($(this).data('id'))
+			$('#emailInput').val($(this).data('email'));
+			$('#nameInput').val($(this).data('name'));
+			$('#gradeSelect').val($(this).data('grade'));
+			$('#enabledSelect').val($(this).data('enabled')?'true':'false');
+			$('#roleSelect').val($(this).data('role'));
+		})
+		
+		$('#saveBtn').click(function(){
+			let grade = $('#gradeSelect').val();
+			let enabled = $('#enabledSelect').val();
+			let role = $('#roleSelect').val();
+			let id = $('#idInput').val();
+			console.log(grade, enabled, role)
+			
+			$.ajax({
+				beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+              	},
+				url:"/api/admin/member/update",
+				data: JSON.stringify({
+					id : id,
+					grade : grade,
+					enabled : enabled,
+					role : role
+				}),
+				method : 'POST',
+				contentType: 'application/json; charset=utf-8',
+				success : function(data){
+					alert(data);
+					location.reload();
+				}
+			})
+		})
+		
+		
+		
+		
+	})
 </script>
 </th:block>
 </html>

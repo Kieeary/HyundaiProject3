@@ -6,13 +6,12 @@
     
     <th:block layout:fragment="content">
  <div style="display:flex; justify-content: space-between; padding: 30px ">
- <div style="width : 50%;">
- <table class="table product_common" >
+ <div style="width : 50%;" class="table product_common" >
+ <table >
   <thead>
     <tr>
       <th scope="col">ID</th>
       <th scope="col">NAME</th>
-      <th scope="col">PRICE</th>
       <th scope="col">STATUS</th>
       <th scope="col">BNO</th>
       <th scope="col">BNAME</th>
@@ -20,41 +19,22 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><a href="#" data-toggle="modal" data-target=".common_modal">CM2C9FOT505W</a></td>
-      <td>램스킨 퍼 재킷</td>
-      <td>10000</td>
-      <td>O</td>
-      <td>8</td>
-      <td>the CASHMERE</td>
-      <td><button type="button" class="btn btn-link">MORE</button></td>
-    </tr>
-    <tr>
-      <td><a href="#">YS2C7WJM010WF5</a></td>
-      <td>[FIORUCCI] 프린팅 봄버 점퍼</td>
-      <td>10000</td>
-      <td>O</td>
-      <td>8</td>
-      <td>the CASHMERE</td>
-      <td><button type="button" class="btn btn-link">MORE</button></td>
-    </tr>
-        <tr>
-      <td><a href="#">YS2C7WJM010WF5</a></td>
-      <td>[FIORUCCI] 프린팅 봄버 점퍼</td>
-      <td>10000</td>
-      <td>O</td>
-      <td>8</td>
-      <td>the CASHMERE</td>
-      <td><button type="button" class="btn btn-link">MORE</button></td>
-    </tr>
-        <tr>
-      <td><a href="#">YS2C7WJM010WF5</a></td>
-      <td>[FIORUCCI] 프린팅 봄버 점퍼</td>
-      <td>10000</td>
-      <td>O</td>
-      <td>8</td>
-      <td>the CASHMERE</td>
-      <td><button type="button" class="btn btn-link">MORE</button></td>
+    <tr th:each=" product : ${products}">
+      <td><a 
+      class="commonId"
+      th:data-id='${product.pId}' th:data-name="${product.pName}" th:data-note="${product.pNote}"
+      th:data-status="${product.pStatus}" th:data-bno="${product.bNo}"
+      th:text='${product.pId}' href="#" data-toggle="modal" data-target=".common_modal">CM2C9FOT505W</a></td>
+      <td th:text="${product.pName}">램스킨 퍼 재킷</td>
+      
+	<th:block th:switch="${product.pStatus}">
+		   <td th:case="1">O</td>
+		   <td th:case="0">X</td>
+	</th:block>
+	
+      <td th:text="${product.bNo}">8</td>
+      <td th:text="${product.bName}">the CASHMERE</td>
+      <td><button th:data-id="${product.pId}" type="button" class="commonMore btn btn-link" >MORE</button></td>
     </tr>
   </tbody>
 </table>
@@ -63,7 +43,7 @@
 </div>
 </div>
 
-<div style="width : 45%; ">
+<div style="width : 45%;">
 
 <div class="product_color">
  <table class="table">
@@ -73,45 +53,11 @@
       <th scope="col">IMG1</th>
       <th scope="col">IMG2</th>
       <th scope="col">IMG3</th>
-      <th scope="col">STATUS</th>
+      <th scope="col">PRICE</th>
       <th scope="col">MORE</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td><a href="#" data-toggle="modal" data-target=".color_modal">CM2C9FOT505W_BS</a></td>
-      <td><div style="width:70px;">
-      <img src="http://newmedia.thehandsome.com/CM/2C/FW/CM2C9FOT505W_BS_W01.jpg/dims/resize/684x1032/"
-      	style="width:100%; height:100%"
-      /></div> </td>
-      <td><div style="width:70px;">
-      <img src="http://newmedia.thehandsome.com/CM/2C/FW/CM2C9FOT505W_BS_W01.jpg/dims/resize/684x1032/"
-      	style="width:100%; height:100%"
-      /></div> </td>
-      <td><div style="width:70px;">
-      <img src="http://newmedia.thehandsome.com/CM/2C/FW/CM2C9FOT505W_BS_W01.jpg/dims/resize/684x1032/"
-      	style="width:100%; height:100%"
-      /></div> </td>
-      <td>O</td>
-      <td><button type="button" class="btn btn-link">MORE</button></td>
-    </tr>
-        <tr>
-      <td><a href="#" >CM2C9FOT505W_LK</a></td>
-      <td><div style="width:70px;">
-      <img src="http://newmedia.thehandsome.com/CM/2C/FW/CM2C9FOT505W_LK_W01.jpg/dims/resize/684x1032/"
-      	style="width:100%; height:100%"
-      /></div> </td>
-      <td><div style="width:70px;">
-      <img src="http://newmedia.thehandsome.com/CM/2C/FW/CM2C9FOT505W_LK_W01.jpg/dims/resize/684x1032/"
-      	style="width:100%; height:100%"
-      /></div> </td>
-      <td><div style="width:70px;">
-      <img src="http://newmedia.thehandsome.com/CM/2C/FW/CM2C9FOT505W_LK_W01.jpg/dims/resize/684x1032/"
-      	style="width:100%; height:100%"
-      /></div> </td>
-      <td>O</td>
-      <td><button type="button" class="btn btn-link">MORE</button></td>
-    </tr>
+  <tbody class="colorBody">
   </tbody>
 </table>
 <div style="display:flex; justify-content: flex-end">
@@ -119,7 +65,7 @@
 </div>
 </div>
 
-<div style="margin-top: 30px" class="product_stock">
+<div style="margin-top: 30px; " class="product_stock">
  <table class="table">
   <thead>
     <tr>
@@ -129,11 +75,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+<!--     <tr>
       <td><a href="#" data-toggle="modal" data-target=".stock_modal">CM2C9FOT505W_BS_82</a></td>
       <td>100</td>
       <td>82</td>
-    </tr>
+    </tr> -->
 
   </tbody>
 </table>
@@ -148,16 +94,17 @@
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
+      <a th:if="${paging.prev}" th:data-val="${paging.startPage-1}"  class="page-link" href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
         <span class="sr-only">Previous</span>
       </a>
     </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
+    <li class="page-item"
+    th:each="p : ${#numbers.sequence(paging.startPage ,paging.endPage )}" >
+    	<a class="page-link"  href="#" th:text="${p}" th:data-val="${p}" th:style="${paging.cri.currentPage == p ? 'color:gray':''}">1</a>
+    </li>
     <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
+      <a th:if="${paging.next}" class="page-link" href="#" aria-label="Next" th:data-val="${paging.endPage+1}">
         <span aria-hidden="true">&raquo;</span>
         <span class="sr-only">Next</span>
       </a>
@@ -183,43 +130,44 @@
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">ID</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="staticEmail" value="CM2C9FOT505W">
+      <input type="text" class="form-control" id="commonIdInput" value="CM2C9FOT505W">
     </div>
   </div>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">NAME</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="staticEmail" value="램스킨 퍼 재킷">
+      <input type="text" class="form-control" id="commonNameInput" value="램스킨 퍼 재킷">
     </div>
   </div>
-  <div class="form-group row">
+<!--   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">PRICE</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="staticEmail" value="10000">
     </div>
-  </div>
+  </div> -->
   <div class="form-group">
     <label for="exampleFormControlTextarea1">NOTE</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3">
+    <textarea class="form-control" id="commonNoteInput" rows="3">
     드롭 숄더 디자인의 여유로운 실루엣으로 한층 캐주얼한 무드를 선사하는 이 봄버 점퍼는, 뒷면에 디스코텍 그래픽이 프린팅되어 있어 이전에는 그 누구도 볼 수 없었던 이국적이고 독창적인 브랜드만의 아이덴티티를 느낄 수 있습니다. 소매 부분에 다양한 간격에 셔링을 잡아 포인트 디테일을 더해 한층 스타일리시한 감각이 느껴집니다.</textarea>
   </div>
     <div class="form-group">
     <label for="exampleFormControlSelect1">STATUS</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>O</option>
-      <option>X</option>
+    <select class="form-control" id="commonStatusSelect">
+      <option value="1">O</option>
+      <option value="0">X</option>
     </select>
   </div>
       <div class="form-group">
     <label for="exampleFormControlSelect1">BRAND</label>
-    <select class="form-control" id="exampleFormControlSelect1">
-      <option>the CASHMERE</option>
-      <option>MINE</option>
+    <select class="form-control" id="commonBrandSelect">
+      <option value="8">the CASHMERE</option>
+      <option value="7">MINE</option>
+      <option value="61">oear</option>
     </select>
   </div>
   <div class="form-group" style="display:flex; justify-content: flex-end;">
-  <button type="button" class="btn btn-danger" style='margin-right : 10px'>취소</button>
-  <button type="button" class="btn btn-primary">저장</button>
+  <button type="button" class="cancelBtn btn btn-danger" style='margin-right : 10px'>Cancel</button>
+  <button type="button" class="commonSaveBtn btn btn-primary">Save</button>
   
   </div>
 </form>
@@ -248,45 +196,52 @@
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">ID</label>
     <div class="col-sm-10">
-      <input type="text"  class="form-control" id="staticEmail" value="CM2C9FOT505W_KB">
+      <input type="text"  class="form-control-plaintext" readonly id="colorIdInput" value="CM2C9FOT505W_KB">
     </div>
   </div>
   
    <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">IMG1</label>
     <div class="col-sm-10">
-      <input type="file" class="form-control" id="staticEmail">
+      <input type="file" class="form-control" id="colorImg1Input">
     </div>
   </div>
      <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">IMG2</label>
     <div class="col-sm-10">
-      <input type="file" class="form-control" id="staticEmail">
+      <input type="file" class="form-control" id="colorImg2Input">
     </div>
   </div>
      <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">IMG3</label>
     <div class="col-sm-10">
-      <input type="file" class="form-control" id="staticEmail">
+      <input type="file" class="form-control" id="colorImg3Input">
     </div>
   </div>
      <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">CHIPIMG</label>
     <div class="col-sm-10">
-      <input type="file" class="form-control" id="staticEmail">
+      <input type="file" class="form-control" id="colorChipImgInput">
     </div>
   </div>
   
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">COLORCODE</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="staticEmail" value="#927f6c">
+      <input type="text" class="form-control" id="colorColorCodeInput" value="#927f6c">
+    </div>
+  </div>
+  
+    <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">PRICE</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="colorPriceInput" value="19000">
     </div>
   </div>
   
   <div class="form-group" style="display:flex; justify-content: flex-end;">
-	  <button type="button" class="btn btn-danger" style='margin-right : 10px'>취소</button>
-	  <button type="button" class="btn btn-primary">저장</button>
+	  <button type="button" class="cancelBtn btn btn-danger" style='margin-right : 10px'>Cancel</button>
+	  <button type="button" class="btn btn-primary">Save</button>
 	  
   </div>
 </form>
@@ -333,7 +288,7 @@
   </div>
   
   <div class="form-group" style="display:flex; justify-content: flex-end;">
-	  <button type="button" class="btn btn-danger" style='margin-right : 10px'>취소</button>
+	  <button type="button" class="cancelBtn btn btn-danger" style='margin-right : 10px'>취소</button>
 	  <button type="button" class="btn btn-primary">저장</button>
 	  
   </div>
@@ -346,9 +301,154 @@
 </div>
 
 <script>
-	/* $(document).ready(function(){
-		console.log('tt');
-	}) */
+	$(document).ready(function(){
+		$('.cancelBtn').click(function(){
+			$('.close').click();
+		})
+		
+		$('.page-link').click(function(e){
+			let val = $(this).data('val');
+			location.href="/admin/product?currentPage="+val;
+		})
+		
+		// color more
+		$(document).on('click', '.stockMore',function(){
+			$('.product_stock tbody').html('');
+			let pcid = $(this).data('pcid');
+			console.log(pcid);
+			$.ajax({
+				beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+              	},
+              	url:"/api/admin/productcolor/"+pcid,
+				method : 'GET',
+				success : function(list){
+					console.log(list);
+					$(list).each(function(idx, l){
+						let template= `
+							<tr>
+						      <td><a 
+						      data-psStock=${l.psStock} data-psize=${l.psize}
+						      class='stockId' href="#" data-toggle="modal" data-target=".stock_modal">${l.psId}</a></td>
+						      <td>${l.psStock}</td>
+						      <td>${l.psize}</td>
+						    </tr> 
+						`;
+						$('.product_stock tbody').append(template);
+						
+					})
+				}
+			})
+		})
+		
+		// stock modal
+		$(document).on('click','.stockId',function(){
+			console.log($(this).data('psize'))
+		})
+		
+		// color modal TODO : 파일처리
+		$('.product_color').on('click', '.colorId', function(){
+			$('.color_modal #colorIdInput').val($(this).data('pcid'))
+			$('.color_modal #colorCodeInput').val($(this).data('pccolorcode'))
+			$('.color_modal #colorPriceInput').val($(this).data('pcprice'))
+			
+		})
+		
+		// common more
+		$('.commonMore').click(function(){
+			$('.product_stock tbody').html('')
+			let id = $(this).data('id')
+			$.ajax({
+				beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+              	},
+              	url:"/api/admin/productcommon/"+id,
+				method : 'GET',
+				success : function(data){
+					console.log(data);
+					$(data).each(function(idx, d){
+						let template = `
+							 <tr>
+						      <td><a 
+						      class='colorId'
+						      data-pcId=${d.pcId} data-pcColorCode=${d.colorCode} data-pcChipImg=${d.pcChipImg}
+						      data-pcImg1=${d.pcImg1} data-pcImg2=${d.pcImg2} data-pcImg3=${d.pcImg3}
+						      data-pcPrice=${d.pcPrice}
+						      href="#" data-toggle="modal" data-target=".color_modal">${d.pcId}</a></td>
+						      <td>
+							      <div style="width:70px;">
+								      <img src="${d.pcImg1}"
+								      	style="width:100%; height:100%"/>
+							      </div> 
+						      </td>
+						      <td>
+							      <div style="width:70px;">
+							      <img src="${d.pcImg2}"
+							      	style="width:100%; height:100%"/>
+							      </div> 
+						      </td>
+						      <td>
+							      <div style="width:70px;">
+							      <img src="${d.pcImg3}"
+							      	style="width:100%; height:100%"/>
+							      </div> 
+						      </td>
+						      <td>${d.pcPrice}</td>
+						      <td><button type="button" class="btn btn-link stockMore" data-pcId=${d.pcId} >MORE</button></td>
+						    </tr>
+						`;
+						$('.product_color  .colorBody').html(template);
+						
+					})
+				}
+			})
+		})
+		// common modal 이벤트
+		$('.commonId').click(function(e){
+			let id = $(this).data('id');
+			let name = $(this).data('name');
+			let note = $(this).data('note');
+			let status = $(this).data('status');
+			let brand = $(this).data('bno');
+			console.log(id, name, note, status, brand);
+			
+			$('.common_modal #commonIdInput').val(id);
+			$('.common_modal #commonNameInput').val(name);
+			$('.common_modal #commonNoteInput').val(note);
+			$('.common_modal #commonStatusSelect').val(status);
+			$('.common_modal #commonBrandSelect').val(brand);
+		})
+		$('.commonSaveBtn').click(function(){
+			let id = $('.common_modal #commonIdInput').val();
+			let name = $('.common_modal #commonNameInput').val()
+			let note = $('.common_modal #commonNoteInput').val();
+			let status = $('.common_modal #commonStatusSelect').val();
+			let bno = $('.common_modal #commonBrandSelect').val();
+			
+			
+			$.ajax({
+				beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+              	},
+				url:"/api/admin/productcommon/update",
+				data: JSON.stringify({
+					id : id,
+					name : name,
+					note : note,
+					status : status,
+					bno : bno
+				}),
+				method : 'POST',
+				contentType: 'application/json; charset=utf-8',
+				success : function(data){
+					alert(data);
+					location.reload();
+				}
+			})
+			
+		})
+		
+	})
 </script>
 </th:block>
 </html>

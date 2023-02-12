@@ -4,21 +4,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wck.domain.EventCouponVO;
+import com.wck.domain.InsertOrderDTO;
 import com.wck.domain.MemberVO;
 import com.wck.domain.OrderProductVO;
+import com.wck.domain.OrderVO;
 import com.wck.security.domain.Account;
 import com.wck.service.MemberService;
+import com.wck.service.OrderService;
 import com.wck.service.ProductService;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +46,9 @@ public class OrderController {
 	
 	@Autowired
 	private final ProductService productService;
+	
+	@Autowired
+	private final OrderService orderService;
 	
 	@PostMapping(value = "/ordersheet")
 	public String orderForm(@AuthenticationPrincipal Account user, HttpServletRequest request, Model model) {
@@ -73,24 +87,37 @@ public class OrderController {
 		model.addAttribute("coupons", coupon);	
 		log.info("coupons > {}", coupon);
 		
+		model.addAttribute("insertOrder", new InsertOrderDTO());
+		
 		return "wck/order/order_sheet";
 	}
 	
+	@PostMapping("/orderConfirmation")
+	@ResponseBody
+	public ResponseEntity<String> orderConfirmForm(@AuthenticationPrincipal Account user,
+									@Valid @ModelAttribute("insertOrder") InsertOrderDTO insertOrder,
+									BindingResult bindingResult,
+									Model model) {
+		if(bindingResult.hasErrors()) {
+			log.info(bindingResult.getAllErrors());
+			return new ResponseEntity<> ("fail", HttpStatus.BAD_REQUEST);
+		}
+		
+		insertOrder.setMId(user.getId());
+		log.info("{}", insertOrder);
+		orderService.insertOrder(insertOrder);
+		model.addAttribute("oId", insertOrder.getOId());		
+		return new ResponseEntity<> (insertOrder.getOId(), HttpStatus.OK);
+	}
+	
 	@GetMapping("/orderConfirmation")
-	public String orderConfirmForm(@AuthenticationPrincipal Account user, HttpServletRequest request, Model model) {
-		return "wck/order/order_comp";
+	public String orderConfirmForm(@AuthenticationPrincipal Account user,
+									@RequestParam("oId") String oId,
+									Model model) {
+		// model 정보 담기
+		log.info("order confirmation get mappind with oId = "+oId);
+		return "/wck/order/order_comp";
 	}
 	
-	@GetMapping("/order")
-	public String showOrder () {
-		return "/wck/order/my_order";
-	}
-	
-	@GetMapping("/order/{oId}")
-	public String orderDetail(
-			@PathVariable("oId") String oId
-			) {
-		return "/wck/order/my_order_detail";
-	}
 
 }

@@ -50,4 +50,6 @@ public interface ProductMapper {
 	public ProductCommonVO getProducSimpleInfo(String pId);
 	
 	public OrderProductVO getProductInfoWithColorName(String psId);
+	
+	public int updateProductStock(String psId, int subQty);
 }

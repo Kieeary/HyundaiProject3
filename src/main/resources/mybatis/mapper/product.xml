@@ -281,10 +281,14 @@
 	</select>
 	
 	<select id="getProductInfoWithColorName" resultType="productSimpleInfo">
-		SELECT b.BNAME, pc1.PNAME, pci.COLORNAME, pc2.PCPRICE, ps.PSIZE, pci.PIMG 
+		SELECT ps.PSID, b.BNAME, pc1.PNAME, pci.COLORNAME, pc2.PCPRICE, ps.PSIZE, pci.PIMG 
 		FROM PRODUCT_STOCK ps, PRODUCT_COMMON pc1, PRODUCT_COLOR pc2, PRODUCT_COLOR_INFO pci, BRAND b
 		WHERE ps.PCID = pc2.PCID AND pc1.PID = pc2.PID AND pc1.BNO = b.BNO AND pc2.PCID = pci.PCID 
 		AND ps.PSID = #{psId}
 	</select>
+	
+	<update id="updateProductStock">
+		UPDATE PRODUCT_STOCK SET PSSTOCK = PSSTOCK - #{subQty} WHERE PSID = #{psId}
+	</update>
 
 </mapper>

@@ -127,6 +127,4 @@ public class MemberMapperTest {
 		log.info("User Grade > " + grade.getGrade());
 		log.info("User Mileage accrual rate > " + grade.getAccruRate());
 	}
-
-
 }

@@ -15,7 +15,7 @@ public class OrderVO {
 	private String oreceiver;
 	private String ophone;
 	private String otel;
-	private String omeno;
+	private String omemo;
 	private String oemail;
 	private int ousedMileage;
 	private int obeforePrice;
@@ -28,9 +28,15 @@ public class OrderVO {
 	private String ecoupontitle;
 	private int discount;
 	
-	private String pmcode;
-	private String pmmethod;
-	private String pmcompany;
+//<<<<<<< HEAD
+//	private String pmcode;
+//	private String pmmethod;
+//	private String pmcompany;
+//=======
+	private String pmCode;
+	private String pmCompany;
+	private String pmMethod;
+	private String mid;
 	
 	List<OrderProductVO> orderProducts;
 	

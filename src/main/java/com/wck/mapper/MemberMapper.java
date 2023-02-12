@@ -25,5 +25,8 @@ public interface MemberMapper {
 	
 	public int getCartCount(String mId);
 	public List<EventCouponVO> getCouponByEmail(String email);
+	public long getTotalOrderPrice(String mId);
+	public int getNowMileage(String mId);
+	public int updateMemberInfo(String mId, int newMileage, int grade);
 }
 

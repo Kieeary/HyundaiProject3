@@ -35,5 +35,12 @@ public enum MemberGrade {
 		return GradeArr[gradeFlag - 1];
 	}
 	
+	public static int of(long totalOrderPrice) {
+		int gradeFlag  = (int) Math.floor((double) totalOrderPrice / 10000);
+		gradeFlag = gradeFlag / 500;
+		if(gradeFlag > 2) gradeFlag = 2;
+		return gradeFlag+1;
+	}
+	
 	
 }

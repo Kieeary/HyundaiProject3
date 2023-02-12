@@ -168,7 +168,6 @@ public class WckController {
 		return "wck/sample/prod_detail";
 	}
 	
-	
 	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/shoppingbag")
 	public String cartForm(@AuthenticationPrincipal Account user, Model model) {

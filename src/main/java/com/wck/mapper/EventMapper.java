@@ -20,4 +20,6 @@ public interface EventMapper {
 	public boolean isJoined(int eventId, String mId);
 
 	public int insertCouponDetail(int eno, String mId);
+	
+	public int useCoupon(String cpId, String mId);
 }

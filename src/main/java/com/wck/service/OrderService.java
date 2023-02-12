@@ -58,5 +58,9 @@ public class OrderService {
 		int nowMileage = memberMapper.getNowMileage(mId);
 		memberMapper.updateMemberInfo(mId, nowMileage+addMileage, grade);
 	}
+	
+	public OrderVO getOrderInfo(String mId, String oId) {
+		return orderMapper.getOrderInfo(mId, oId);
+	}
 
 }

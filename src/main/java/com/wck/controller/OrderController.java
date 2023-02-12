@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wck.domain.EventCouponVO;
 import com.wck.domain.InsertOrderDTO;
+import com.wck.domain.MemberGrade;
 import com.wck.domain.MemberVO;
 import com.wck.domain.OrderProductVO;
 import com.wck.domain.OrderVO;
@@ -89,7 +90,7 @@ public class OrderController {
 		
 		model.addAttribute("insertOrder", new InsertOrderDTO());
 		
-		return "wck/order/order_sheet";
+		return "/wck/order/order_sheet";
 	}
 	
 	@PostMapping("/orderConfirmation")
@@ -114,8 +115,16 @@ public class OrderController {
 	public String orderConfirmForm(@AuthenticationPrincipal Account user,
 									@RequestParam("oId") String oId,
 									Model model) {
-		// model 정보 담기
-		log.info("order confirmation get mappind with oId = "+oId);
+		OrderVO order = orderService.getOrderInfo(user.getId(), oId);
+		log.info("{}",order);
+		model.addAttribute("order", order);
+		
+		// 적립 예정 마일리지 계산
+		long totalOrderPrice = memberService.getTotalUsePrice(user.getId());
+		int grade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
+		int expectAddMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(grade).getAccruRate());
+		model.addAttribute("addM", expectAddMileage);
+		
 		return "/wck/order/order_comp";
 	}
 	

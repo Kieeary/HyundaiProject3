@@ -31,4 +31,5 @@ public class ProductApi {
 		ProductCommonVO prod = productService.getProductDetail(pId);
 		return new ResponseEntity<ProductCommonVO>(prod, HttpStatus.OK);
 	}
+	
 }

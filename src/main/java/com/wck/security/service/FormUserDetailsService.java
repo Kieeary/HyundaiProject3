@@ -48,7 +48,7 @@ public class FormUserDetailsService implements UserDetailsService {
 		authorities.add(new SimpleGrantedAuthority(member.getRole()));
 
 		Account account = new Account(member.getId(), member.getEmail(), member.getPassword(), member.getName(),
-				member.getGender(), member.getLoginType(), authorities);
+				member.getGender(), member.getLoginType(), authorities, member.getGrade());
 
 		int cartCount = memberMapper.getCartCount(member.getId());
 		account.setCartCount(cartCount);

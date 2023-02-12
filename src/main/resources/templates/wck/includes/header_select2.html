@@ -4,13 +4,28 @@
 <!-- ########## header start ########## -->
 
         <header 
-         th:fragment="header_select_tag(options,title)"
+         th:fragment="header_select_tag(title, idx)"
         class="hsome_header header_noline header_mypage">
           <!-- 마이페이지 알림 아이콘 -->
           <a href="/wck" class="h_top_home"><span>Home</span></a>
           <h1 class="h_select">
           <!--  이부분 -->
-          <select th:replace="${options}"></select>
+          <select
+              id="headerMypageSelect">
+              <option value="" style="display: none"></option>
+              <option value="/wck/mypage" th:if="${idx==1}? 'selected':''">
+                마이페이지<!-- 마이페이지 -->
+              </option>
+              <option value="/wck/mypage/order" th:if="${idx==2}? 'selected':''">
+                주문/배송조회<!-- 주문/배송조회 -->
+              </option>
+              <option value="/wck/mypage/wish" th:if="${idx==3}? 'selected':''">
+                마이하트<!-- 위시리스트 -->
+              </option>
+              <option value="/wck/mypage/change/checkpw" th:if="${idx==4}? 'selected':''">
+                개인정보변경<!-- 개인정보변경 -->
+              </option>
+            </select>
             <div class="selected_text">
               <span >[[${title}]]</span>
             </div>
@@ -29,6 +44,13 @@
               </a>
             </li>
           </ul>
+          
+          <script>
+          	$('#headerMypageSelect').change(function(e){
+          		console.log($(this).val());
+          		location.href=$(this).val();
+          	})
+          </script>
         </header>
 
 <!-- ########## header end ########## -->

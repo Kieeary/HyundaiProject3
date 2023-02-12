@@ -232,5 +232,13 @@ public class ProductMapperTest {
 		}
 	}
 	
+	@Test
+	void isLikeProduct() {
+		String pid = "SJ2C9ASZ097W";
+		String mid = "123123";
+		boolean result = productMapper.isLikeProduct(mid, pid);
+		log.info(result);
+	}
+	
 
 }

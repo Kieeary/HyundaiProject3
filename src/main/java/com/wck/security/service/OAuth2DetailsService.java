@@ -66,7 +66,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 			authorities.add(new SimpleGrantedAuthority(member.getRole()));
 
 			Account account = new Account(member.getId(), member.getEmail(), member.getPassword(), member.getName(),
-					member.getGender(), member.getLoginType(), authorities, oAuth2User.getAttributes());
+					member.getGender(), member.getLoginType(), authorities, member.getGender(),oAuth2User.getAttributes());
 			
 			int cartCount = memberMapper.getCartCount(member.getId());
 			

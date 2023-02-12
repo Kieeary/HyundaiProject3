@@ -30,6 +30,12 @@
 		<result property="pSize" column="pSize"/>
 	</resultMap>
 	
+	<select id="isLikeProduct" resultType="boolean">
+		select count(*)
+		from likes 
+		where mid = #{mid} and pid = #{pid}
+	</select>
+	
 	<select id="getLikeProductList" resultMap="productCommonMap">
             select rn,
 				l.pid, p.pname, p.pnote, b.bno, p.pstatus,

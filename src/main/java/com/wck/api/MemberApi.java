@@ -21,10 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.MemberVO;
+import com.wck.domain.OrderCriteria;
+import com.wck.domain.OrderVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.UpdateMemberDTO;
 import com.wck.security.domain.Account;
 import com.wck.service.MemberService;
+import com.wck.service.OrderService;
 import com.wck.service.ProductService;
 
 import lombok.Data;
@@ -39,7 +42,7 @@ public class MemberApi {
 	
 	private final MemberService memberSerivce;
 	private final ProductService productService;
-	
+
 	/*
 	 * author : 왕종휘
 	 * 이미 가입된 회원이 있는지 확인 = 가입된 회원이 있다면 : true / 없다면 : false 

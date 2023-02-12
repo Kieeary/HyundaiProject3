@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.wck.domain.OrderVO;
 import com.wck.domain.UpdateMemberDTO;
 import com.wck.security.domain.Account;
 import com.wck.service.MemberService;
+import com.wck.service.OrderService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -26,6 +28,7 @@ import lombok.extern.log4j.Log4j2;
 public class MypageController {
 	
 	private final MemberService memberService;
+	private final OrderService orderService;
 	
 	/*
 	 * author : 왕종휘
@@ -125,9 +128,12 @@ public class MypageController {
 	}
 	
 	@GetMapping("/order/{oid}")
-	public String orderDetailForm(@PathVariable("oid") String oid, Model model) {
+	public String orderDetailForm(
+			@AuthenticationPrincipal Account account,
+			@PathVariable("oid") String oid, Model model) {
+		OrderVO order = orderService.getOrderInfo(account.getId(), oid);
 		
-	
+		model.addAttribute("order", order);
 		
 		log.info(oid);
 		return "wck/order/my_order_detail";

@@ -48,8 +48,9 @@ public class Account extends User implements OAuth2User{
             int gender,
             String loginType,
             List<GrantedAuthority> authorities,
+            int grade,
 			Map<String, Object> OA2_attr) {
-		this(id,email,password,name,gender,loginType, authorities);
+		this(id,email,password,name,gender,loginType, authorities,grade);
 		this.OA2_attr = OA2_attr;
 	}
 	
@@ -61,7 +62,8 @@ public class Account extends User implements OAuth2User{
             String name,
             int gender,
             String loginType,
-            List<GrantedAuthority> authorities
+            List<GrantedAuthority> authorities, 
+            int grade
             ) {
 		super(email, password, authorities);
 		this.id = id;
@@ -70,6 +72,7 @@ public class Account extends User implements OAuth2User{
 		this.name = name;
 		this.gender = gender;
 		this.loginType = loginType;
+		this.grade = grade;
 	}
 	
 }

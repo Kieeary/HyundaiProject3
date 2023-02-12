@@ -63,4 +63,6 @@ public interface ProductMapper {
 	public OrderProductVO getProductInfoWithColorName(String psId);
 	
 	public int updateProductStock(String psId, int subQty);
+	
+	public boolean isLikeProduct(String mid, String pid);
 }

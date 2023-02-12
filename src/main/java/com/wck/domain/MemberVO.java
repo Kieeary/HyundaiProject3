@@ -3,7 +3,6 @@ package com.wck.domain;
 import java.io.Serializable;
 import java.sql.Date;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,10 +1,14 @@
 package com.wck.service;
 
+import static org.mockito.ArgumentMatchers.intThat;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.wck.domain.InsertOrderDTO;
+import com.wck.domain.OrderVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -33,6 +37,27 @@ public class OrderServiceTest {
 		orderDTO.setCounts(new int[] {7});
 		
 		orderService.insertOrder(orderDTO);
+	}
+	
+	@Test
+	public void getOrderInfoTesr() {
+		String mId = "7c-41f8-8c6a-739159990a8d";
+		String oId = "230212P1676129267";
+		
+		OrderVO order = orderService.getOrderInfo(mId, oId);
+		log.info("{}", order);
+	}
+	
+	@Test
+	public void orderCancelTest() {
+		String mId = "7c-41f8-8c6a-739159990a8d";
+		String oId = "230212P1676129267";
+		
+		OrderVO order = orderService.getOrderInfo(mId, oId);
+		
+		int result = orderService.cancelOrder(mId, order);
+		log.info("cancel result > "+result);
+		Assertions.assertEquals(result, 1);
 	}
 
 }

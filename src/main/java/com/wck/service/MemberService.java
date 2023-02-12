@@ -133,4 +133,7 @@ public class MemberService {
 		return memberMapper.getCouponByEmail(email);
 	}
 	
+	public long getTotalUsePrice(String mId) {
+		return memberMapper.getTotalOrderPrice(mId);
+	}
 }

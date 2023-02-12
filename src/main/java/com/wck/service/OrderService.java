@@ -17,10 +17,8 @@ import com.wck.mapper.OrderMapper;
 import com.wck.mapper.ProductMapper;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
 
 @Service
-@Log4j2
 @RequiredArgsConstructor
 public class OrderService {
 	private final OrderMapper orderMapper;
@@ -60,10 +58,10 @@ public class OrderService {
 		String mId = order.getMid();
 		
 		// 쿠폰 사용으로 변경
-		if(!order.getCpid().equals(""))
+		if(order.getCpid() != null || !order.getCpid().equals(""))
 			eventMapper.useCoupon(order.getCpid(), mId);
 		
-		// 마일리지 변동(+추가 마일리지 - 사용 마일리지), 등급 업그레이
+		// 마일리지 변동(+추가 마일리지 - 사용 마일리지), 등급 업그레이드 확인 및 변경
 		double rate = MemberGrade.of(memberMapper.getGradeById(mId)).getAccruRate();
 		int addMileage = ((int) Math.floor(order.getObeforePrice()*rate)) - order.getOusedMileage();
 		
@@ -72,6 +70,39 @@ public class OrderService {
 		
 		int nowMileage = memberMapper.getNowMileage(mId);
 		memberMapper.updateMemberInfo(mId, nowMileage+addMileage, grade);
+	}
+	
+	public OrderVO getOrderInfo(String mId, String oId) {
+		return orderMapper.getOrderInfo(mId, oId);
+	}
+	
+	@Transactional
+	public int cancelOrder(String mId, OrderVO order) {
+		// 적립된 마일리지 (이전 등급의 적립률이 적용됨)
+		long totalOrderPrice = memberMapper.getTotalOrderPrice(mId);
+		int beforeGrade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
+		int expectSubMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(beforeGrade).getAccruRate());
+
+		// 사용된 마일리지
+		expectSubMileage += order.getOusedMileage();
+
+		// 마일리지 변경 및 회원 등급 확인 및 변동
+		int nowMileage = memberMapper.getNowMileage(mId);
+		memberMapper.updateMemberInfo(mId, nowMileage - expectSubMileage, beforeGrade);
+		
+		if(order.getCpid() != null || !order.getCpid().equals("")) {
+			// 쿠폰 사용 -> 쿠폰 원복시키기
+			eventMapper.cancelUseCoupon(order.getCpid());
+		}
+
+		// 상품 재고 업데이트
+		for(int i=0; i<order.getOrderProducts().size(); i++) {
+			String psid = order.getOrderProducts().get(i).getPsId();
+			int qty =  -1 * order.getOrderProducts().get(i).getQuantity();
+			productMapper.updateProductStock(psid, qty);
+		}
+		
+		return orderMapper.cancelOrder(order.getOid());
 	}
 
 }

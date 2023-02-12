@@ -67,45 +67,32 @@
 
             <ul class="mpord_goods_ul goods_list_wrap">
               <!-- 개 -->
-              <li>
+              <li th:each="product : ${order.orderProducts}">
                 <div class="mpord_goods_item gl_item">
                   <div class="gl_tit">
-                    <a href="/ko/p/SH2C1ACK416M_GY_FR" onclick="GA_Event('주문상세조회', '상세보기', '컬러 블록 양말');">
-                      <img src="http://newmedia.thehandsome.com/SH/2C/SS/SH2C1ACK416M_GY_S01.jpg" class="gl_thumbimg"
-                        alt="컬러 블록 양말" />
+                    <a href="/ko/p/SH2C1ACK416M_GY_FR">
+                      <img th:src="${product.pImg}" src="http://newmedia.thehandsome.com/SH/2C/SS/SH2C1ACK416M_GY_S01.jpg" class="gl_thumbimg"
+                        alt="컬러 블록 양말" th:alt="${product.pName}" />
                     </a>
                   </div>
 
                   <ul class="gl_con">
                     <li class="gl_con_brand">
-                      <a href="/ko/p/SH2C1ACK416M_GY_FR" onclick="GA_Event('주문상세조회', '상세보기', '컬러 블록 양말');">
+                      <a href="/ko/p/SH2C1ACK416M_GY_FR" th:text="${product.bName}">
                         SYSTEM HOMME</a>
                     </li>
                     <li class="gl_con_name">
                       <a href="/ko/p/SH2C1ACK416M_GY_FR" onclick="GA_Event('주문상세조회', '상세보기', '컬러 블록 양말');">컬러 블록 양말</a>
                     </li>
-                    <li class="gl_con_option">GREY / FR / 1개</li>
-                    <li class="gl_con_price">￦6,000</li>
-                    <li>
-                      <p name="__p_SH2C1ACK416M_GY_FR" class="pre_order_txt1903_s" style="">
-                        해당 상품은 전국 매장을 통해 수급하여 배송 될
-                        예정입니다. <br />불량 등의 이유로 수급이 어려울 경우,
-                        취소될 수 있습니다. <br />
-                        <b>(평일 기준 5일 이상 소요 예정)</b>
-                      </p>
-                    </li>
+                    <li class="gl_con_option" th:text="${product.colorName} + ' / ' + ${product.quantity}+'개'" >GREY / FR / 1개</li>
+                    <li class="gl_con_price" th:text="'￦'+${#numbers.formatInteger(product.pcPrice * product.quantity, 0, 'COMMA')}">￦6,000</li>
                     <li class="gl_con_status">
-                      <span class="ord_status">결제완료</span>
-                      &nbsp;(2023.01.28)
+                      <span class="ord_status" th:text="${order.ostatus}" >결제완료</span>
+                     <span th:text="'('+${order.odate}+')'">(2023.01.28)</span>
+                      
                     </li>
                   </ul>
                   <div class="btn_wrap btn_wrap_div2" style="opacity: 1">
-                    <a href="javascript:void(0);"
-                      class="btnstl border_btn_gray btn_mpg_dlvr_edit myorderAddrModifyPopup" code="230128P16572180"
-                      addr1="서울특별시 영등포구 선유로9나길 8(문래동5가, 문래 두산위브)" addr2="103동 708호" zip="07285" rcname="왕종휘" hp1="010"
-                      hp2="2339" hp3="8197" ph1="" ph2="" ph3="" or="부재 시 경비실에 맡겨주세요" emailid="" emaildomain=""
-                      frontdoorselectmessage="" frontdoormessage=""
-                      onclick="GA_Event('주문상세조회', '상세조회', '배송지 수정');"><span>배송정보 수정<!-- 배송지 수정 --></span></a>
                     <a href="/ko/mypage/order/cancelRequestPopup?code=230128P16572180&amp;isall=Y"
                       class="btnstl border_btn_gray layerpopupOpen" onclick="GA_Event('주문상세조회', '상세조회', '주문취소');">
                       <span>주문취소</span>
@@ -114,8 +101,7 @@
                   <!-- //버튼 -->
                 </div>
               </li>
-              <!-- 사은품 -->
-              <!--//사은품  -->
+
             </ul>
           </div>
           <!-- df_box e -->
@@ -125,27 +111,22 @@
         <div class="df_box mp_delivery_info_wrap">
           <h3 class="df_box_tit">배송지 정보<!-- 배송지정보 --></h3>
           <div class="dlvr_adrs">
-            <span class="dlvr_adrs_name">왕종휘</span> /
-            <span class="dlvr_adrs_phone">010-2339-8197</span><br />
-            (<span class="dlvr_adrs_zipcode">07285</span>)
-            <span class="dlvr_adrs_adrs">
-              서울특별시 영등포구 선유로9나길 8(문래동5가, 문래
-              두산위브)&nbsp;103동 708호</span>
+            <span class="dlvr_adrs_name" th:text="${order.oreceiver}" >name</span> /
+            <span class="dlvr_adrs_phone" th:text="${order.ophone}">010-0000-0000</span><br />
+            (<span class="dlvr_adrs_zipcode" th:text="${order.ozipcode}">07285</span>)
+            <span class="dlvr_adrs_adrs" th:text="${order.oaddress1}">addr1</span>
+            <br>
+            <span class="dlvr_adrs_adrs" th:text="${order.oaddress2}"> addr2</span>
           </div>
 
-          <a href="javascript:void(0);" class="btnstl arrow_btn btn_dlvr_edit myorderAddrModifyPopup"
-            code="230128P16572180" addr1="서울특별시 영등포구 선유로9나길 8(문래동5가, 문래 두산위브)" addr2="103동 708호" zip="07285"
-            rcname="왕종휘" hp1="010" hp2="2339" hp3="8197" ph1="" ph2="" ph3="" or="부재 시 경비실에 맡겨주세요" emailid=""
-            emaildomain="" frontdoorselectmessage="" frontdoormessage=""
-            onclick="GA_Event('주문상세조회', '상세조회', '배송지 수정');">배송정보 수정<!-- 배송지 수정 --></a>
-        </div>
+       </div>
         <!-- df_box : 주문상세_배송지정보 e -->
 
         <!-- df_box : 주문상세_배송 요청사항 s -->
         <!-- 211026 공동현관 출입방법 S -->
         <div class="df_box mp_delivery_info_wrap">
           <h3 class="df_box_tit">배송 요청사항<!-- 배송 요청사항 --></h3>
-          <div class="dlvr_adrs">부재 시 경비실에 맡겨주세요</div>
+          <div class="dlvr_adrs" th:text="${order.omemo}">부재 시 경비실에 맡겨주세요</div>
         </div>
         <!-- 211026 공동현관 출입방법 E -->
         <!-- df_box : 주문상세_배송 요청사항 e -->
@@ -154,30 +135,42 @@
         <div class="df_box">
           <h3 class="df_box_tit">결제정보<!-- 결제정보 --></h3>
           <div class="payment_total_info">
-            토스머니&nbsp;
-            <span class="pay_total_price">￦8,500</span>
-
-            (일시불)
+          	<span th:text="${order.pmCompany}">토스머니&nbsp;</span><br>
+            <span class="pay_total_price" th:text="'￦'+${#numbers.formatInteger(order.oafterPrice, 0, 'COMMA')}">￦8,500</span>
           </div>
 
           <ul class="total_price_detail mp_summary_detail">
             <li>
               <div class="ttpd_tit">판매가<!-- 판매가 --></div>
-              <div class="ttpd_con">￦6,000</div>
+              <div class="ttpd_con" th:text="${order.obeforePrice-2500>30000}? 
+              '￦'+${#numbers.formatInteger(order.obeforePrice, 0, 'COMMA')}:
+              '￦'+${#numbers.formatInteger(order.obeforePrice-2500, 0, 'COMMA')}">￦6,000</div>
+            </li>
+            <li th:if="${order.eno != null}">
+              <div class="ttpd_tit">쿠폰</div>
+              <div class="ttpd_con" th:text="${order.discount>100}? 
+              '￦'+${#numbers.formatInteger(order.discount, 0, 'COMMA')}
+              :'￦'+${#numbers.formatInteger(order.obeforePrice * order.discount / 100, 0, 'COMMA')}">￦2,500</div>
+            </li>
+            <li th:if="${order.ousedMileage > 0}">
+              <div class="ttpd_tit">사용 마일리지</div>
+              <div class="ttpd_con" th:text="'￦'+${#numbers.formatInteger(order.ousedMileage, 0, 'COMMA')}">￦2,500</div>
             </li>
             <li>
               <div class="ttpd_tit">배송비<!-- 배송비 --></div>
-              <div class="ttpd_con">￦2,500</div>
+              <div class="ttpd_con" th:text="${order.obeforePrice-2500>30000}? '￦0':'￦2,500'">￦2,500</div>
             </li>
             <li class="line">
               <div class="ttpd_tit">합계<!-- 합계 --></div>
-              <div class="ttpd_con">￦8,500</div>
+              <div class="ttpd_con" th:text="'￦'+${#numbers.formatInteger(order.oafterPrice, 0, 'COMMA')}">￦8,500</div>
             </li>
             <li class="sub">
               <div class="ttpd_tit">
-                적립마일리지/포인트<!-- 적립마일리지/포인트 -->
+                적립마일리지
               </div>
-              <div class="ttpd_con">60M/6P</div>
+              <div class="ttpd_con" th:text="${order.obeforePrice-2500>30000}? 
+              ${#numbers.formatInteger(order.obeforePrice * 0.1, 0, 'COMMA')}:
+              ${#numbers.formatInteger((order.obeforePrice-2500) * 0.1, 0, 'COMMA')}">60M</div>
             </li>
           </ul>
         </div>

@@ -13,6 +13,8 @@ import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.SecondCategoryVO;
+import com.wck.domain.ThirdCategoryVO;
 import com.wck.domain.WithProductVO;
 import com.wck.mapper.ProductMapper;
 
@@ -101,6 +103,32 @@ public class ProductService {
 	 */
 	public List<FirstCategoryVO> getCategoryName() {
 		return productMapper.getCategoryName();
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<ThirdCategoryVO> ThirdCategoryName(String depth2name) {
+		
+		List<ThirdCategoryVO> categoryName = productMapper.getThirdCategory(depth2name);
+		return categoryName;
+		
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<SecondCategoryVO> getSecondCategory(String depth1name) {
+		List<SecondCategoryVO> categoryName = productMapper.getSecondCategory(depth1name);
+		return categoryName;
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<ThirdCategoryVO> getThirdCategory(String depth2name) {
+		List<ThirdCategoryVO> categoryName = productMapper.getThirdCategory(depth2name);
+		return categoryName;
 	}
 
 	

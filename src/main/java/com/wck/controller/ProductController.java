@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,8 @@ import com.wck.domain.FirstCategoryVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.SecondCategoryVO;
+import com.wck.domain.ThirdCategoryVO;
 import com.wck.domain.WithProductVO;
 import com.wck.service.ProductService;
 
@@ -32,6 +35,7 @@ public class ProductController {
 	
 	// 상품 조회
 	@GetMapping("/list")
+	@Transactional
 	public String getBrandProducts(Model model,
 									@RequestParam(value="brand", required=false) String brand,
 									@RequestParam(value="gender", required=false) String gender,
@@ -41,30 +45,21 @@ public class ProductController {
 		CategoryVO category = new CategoryVO();
 
 		if(brand != null)	category.setBrand(brand);
-		if(gender != null)	category.setGender(gender);
-		if(secCat != null)	category.setSecCat(secCat);
+		if(gender != null)	{
+			category.setGender(gender);
+			List<SecondCategoryVO> secondCategory = productService.getSecondCategory(gender);
+			model.addAttribute("detailcategory", secondCategory);
+		}
+		if(secCat != null)	{
+			category.setSecCat(secCat);
+			List<ThirdCategoryVO> thirdCategory = productService.getThirdCategory(secCat);
+			model.addAttribute("detailcategory", thirdCategory);
+		}
+		
 		if(thrCat != null)	category.setThrCat(thrCat);
-		
-		
-		
-//		category.setBrand(brand);
-//		String br = category.getBrand();
-//		if(br.equals("null"))	br = null;
-//		
-//		category.setGender(gender);
-//		String gd = category.getGender();
-//		if(gd.equals("null"))	gd = null;
-//		
-//		category.setSecCat(secCat);
-//		String sc = category.getSecCat();
-//		if(sc.equals("null"))	sc = null;
-//		
-//		category.setThrCat(thrCat);
-//		String tc = category.getThrCat();
-//		if(tc.equals("null"))	tc = null;
-//		
+						
 		int cnt = productService.getProductsCount(category.getBrand(), category.getGender(), category.getSecCat(), category.getThrCat());
-		
+				
 		model.addAttribute("category", category);
 		model.addAttribute("count", cnt);
 		

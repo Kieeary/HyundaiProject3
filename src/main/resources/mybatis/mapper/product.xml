@@ -318,6 +318,28 @@
 		where pcolor.pid = #{pid}
 	</select>
 	
+	
+	<!-- 카테고리 리스트 뿌리기 -->
+	<select id="getSecondCategory" resultType="secondCategory">
+		SELECT secondname, depth2name
+		FROM category_name cn
+		INNER JOIN category c 
+		ON cn.cateno = c.cateno
+		WHERE c.depth1name = #{keyword}
+		GROUP BY secondname, depth2name
+		ORDER BY secondname
+	</select>
+	
+	<select id="getThirdCategory" resultType="thirdCategory">
+		SELECT detailname, depth3name
+		FROM category_name cn
+		inner join category c 
+		on cn.cateno = c.cateno
+		where c.depth2name = #{keyword}
+		group by detailname, depth3name
+		order by detailname
+	</select>
+	
 
 	<select id="existLikeProduct" resultType="boolean">
 		select count(*) from likes

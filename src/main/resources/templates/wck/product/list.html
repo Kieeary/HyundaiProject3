@@ -223,14 +223,20 @@
 					<!-- flag_wrap -->
 
 			<div class="flag_wrap case swiper-container depth2 swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal"> <!-- //전체보기 아닌 case(이전카테고리 노출될경우) class 추가-->
-	                    <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);"><!-- //아울렛 전체보기 임시주석처리 -->
-                            <li class="swiper-slide flag" id="categoryNav01" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&secCat=me03" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">아우터&nbsp;전체</a></li>
+	             <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.gender} != null and ${category.secCat} == null">
+                     <li class="swiper-slide flag" id="categoryNav01" style="margin-right: 6px;"><a th:href="@{/wck/products/list(gender=${category.gender})}" class="name" th:text="${category.gender}"onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">&nbsp;전체</a></li>
                             <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
-	                        <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me031" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');">재킷</a></li>
-		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me032" class="name"	>점퍼</a></li>
-			                <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me033" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '트렌치코트');">트렌치코트</a></li>
-		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me034" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '코트');">코트</a></li>
-		                    <li class="swiper-slide flag" style="margin-right: 6px;"><a href="/wck/products/list?gender=me&thrCat=me035" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '다운/패딩');">다운/패딩</a></li>
+                     
+	                 <li th:each="detail : ${detailcategory}" class="swiper-slide flag" style="margin-right: 6px;">
+	                 	<a th:href="@{/wck/products/list(gender=${category.gender},secCat=${detail.depth2name})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');" th:text="${detail.secondname}"></a></li>
+		                 </ul>
+		                 
+		          <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.secCat} != null and ${category.thrCat == null} ">
+                     <li class="swiper-slide flag" id="categoryNav01" style="margin-right: 6px;"><a th:href="@{/wck/products/list(gender=${category.gender},secCat=${category.secCat})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">여기 넣어야함</a></li>
+                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
+                     
+	                 <li th:each="detail : ${detailcategory}" class="swiper-slide flag" style="margin-right: 6px;">
+	                 	<a th:href="@{/wck/products/list(gender=${category.gender},thrCat=${detail.depth3name})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');" th:text="${detail.detailname}"></a></li>
 		                 </ul>
                     </div>
 

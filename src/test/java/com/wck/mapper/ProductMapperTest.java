@@ -16,6 +16,8 @@ import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductStockVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.SecondCategoryVO;
+import com.wck.domain.ThirdCategoryVO;
 import com.wck.domain.WithColorChipInfoVO;
 import com.wck.domain.WithProductVO;
 
@@ -155,6 +157,34 @@ public class ProductMapperTest {
 			log.info(b);
 		}
 		return ;
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getSecondCategory() {
+		
+		String depth1name = "me";
+		
+			List<SecondCategoryVO> a = productMapper.getSecondCategory(depth1name);
+			for(SecondCategoryVO s : a) {
+				log.info(s.getSecondname());
+			}
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getThirdCategory() {
+		
+		String depth2name = "me03";
+		
+			List<ThirdCategoryVO> a = productMapper.getThirdCategory(depth2name);
+			for(ThirdCategoryVO s : a) {
+				log.info(s.getDetailname());
+			}
 	}
 	
 	@Transactional

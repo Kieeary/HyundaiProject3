@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.wck.domain.ProductVO;
+import com.wck.domain.SecondCategoryVO;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -21,9 +22,11 @@ public class ProductServiceTest {
 		String gd = "me";
 		String br = null;
 		String sC = null;
-		String tC = "me031";
+		String tC = "me03";
+		int start = 0;
+		int last = 1;
 		
-		List<ProductVO> a = productService.productList(br, gd, sC, tC);
+		List<ProductVO> a = productService.productList(br, gd, sC, tC, start, last);
 		
 		for(ProductVO b : a) {
 			log.info(b.getPid());
@@ -38,7 +41,27 @@ public class ProductServiceTest {
 		for(ProductVO b : a) {
 			log.info(b.getPname());
 		}
+	}
+	
+	@Test
+	void getProductsCount() {
+		String gd = "me";
+		String br = null;
+		String sc = null;
+		String tc = null;
+		int cnt = productService.getProductsCount(br, gd, sc, tc);
 		
+		log.info(cnt);
+	}
+	
+	@Test
+	void getSecondCategory() {
+		String depth1name = "me";
+		List<SecondCategoryVO> a = productService.getSecondCategory(depth1name);
+		
+		for(SecondCategoryVO s : a) {
+			log.info(s.getSecondname());
+		}
 	}
 	
 	// author : 김한울

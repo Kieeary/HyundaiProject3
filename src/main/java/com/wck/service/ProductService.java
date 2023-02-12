@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
+import com.wck.domain.FirstCategoryVO;
 import com.wck.domain.OrderProductVO;
 import com.wck.domain.ProductColorChipVO;
-
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
 import com.wck.domain.ProductVO;
+import com.wck.domain.SecondCategoryVO;
+import com.wck.domain.ThirdCategoryVO;
 import com.wck.domain.WithProductVO;
 import com.wck.mapper.ProductMapper;
 
@@ -52,9 +54,9 @@ public class ProductService {
 	}
 
 	public List<ProductVO> getProductList(@Nullable String br, @Nullable String gd, @Nullable String sC,
-			@Nullable String tC) {
+			@Nullable String tC, int start, int last) {
 
-		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
+		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC, start, last);
 
 		log.info("service 임");
 		
@@ -70,9 +72,9 @@ public class ProductService {
 	
 	
 	public List<ProductVO> productList(@Nullable String br, @Nullable String gd,
-										@Nullable String sC, @Nullable String tC) {
+										@Nullable String sC, @Nullable String tC, int start, int last) {
 		
-		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC);
+		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC, start, last);
 		
 		for(ProductVO a : productList) {
 			log.info(a.getPid());
@@ -94,6 +96,39 @@ public class ProductService {
 	 */
 	public List<WithProductVO> getWithProducts(String pcid) {
 		return productMapper.getWithProducts(pcid);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<FirstCategoryVO> getCategoryName() {
+		return productMapper.getCategoryName();
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<ThirdCategoryVO> ThirdCategoryName(String depth2name) {
+		
+		List<ThirdCategoryVO> categoryName = productMapper.getThirdCategory(depth2name);
+		return categoryName;
+		
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<SecondCategoryVO> getSecondCategory(String depth1name) {
+		List<SecondCategoryVO> categoryName = productMapper.getSecondCategory(depth1name);
+		return categoryName;
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<ThirdCategoryVO> getThirdCategory(String depth2name) {
+		List<ThirdCategoryVO> categoryName = productMapper.getThirdCategory(depth2name);
+		return categoryName;
 	}
 
 	
@@ -117,6 +152,12 @@ public class ProductService {
 	public List<DetailProductVO> getColorSet(String pId) {
 		return productMapper.getColorSet(pId);
 
+	}
+	
+	public int getProductsCount(@Nullable String br, @Nullable String gd,
+										@Nullable String sC, @Nullable String tC) {
+		
+		return productMapper.getProductsCount(br, gd, sC, tC);
 	}
 	
 	public String getProductStock(String psId, int qty) {

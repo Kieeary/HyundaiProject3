@@ -23,14 +23,14 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row" data-toggle="modal" data-target=".bd-example-modal-lg"><a href='#'>1</a></th>
-      <td>123123</td>
-      <td>왕종휘</td>
-      <td>wangjh789@gmail.com</td>
-      <td>Email</td>
-      <td>27</td>
-      <td>남</td>
+    <tr th:each="m : ${members}">
+      <th th:text="${mStat.index}" scope="row" data-toggle="modal" data-target=".bd-example-modal-lg"><a href='#'>1</a></th>
+      <td th:text="${m.id}">123123</td>
+      <td th:text="${m.name}">왕종휘</td>
+      <td th:text="${m.email}">wangjh789@gmail.com</td>
+      <td th:text="${m.loginType}">Email</td>
+      <td th:text="${birth}">27</td>
+      <td th:text="${gender == 1}? '남' : '여'">남</td>
       <td>O</td>
       <td>Friend</td>
       <td>1000</td>

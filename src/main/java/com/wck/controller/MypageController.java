@@ -126,6 +126,8 @@ public class MypageController {
 	
 	@GetMapping("/order/{oid}")
 	public String orderDetailForm(@PathVariable("oid") String oid, Model model) {
+		
+		
 		log.info(oid);
 		return "wck/order/my_order_detail";
 	}

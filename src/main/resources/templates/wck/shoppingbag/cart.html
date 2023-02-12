@@ -81,6 +81,10 @@
               const checkboxes = document.getElementsByName('cartlist');
               checkboxes.forEach(checkbox => { checkbox.checked = false; });
 
+              if('[[${error}]]' != ''){
+            	  layerAlert('[[${error}]]');
+              }
+
             });
 
           </script>
@@ -246,8 +250,7 @@
 
                     str += `id="gl_rd_color_${idx}_${i}" name="gl_rd_color_${idx}" data-color="${colors.colorName}" onclick="setColor('${colors.pcid}', '${sTag}',this);">
                   <label for="gl_rd_color_${idx}_${i}"></label>
-                  <span class="gl_color_val" style="background:${colors.pccolorCode} url(${colors.pcchipImg}/dims/resize/60x60) center /1
-                  00% auto no-repeat">${colors.productCode}</span></li>`
+                  <span class="gl_color_val" style="background:${colors.pccolorCode} url(${colors.pcchipImg}/dims/resize/60x60) center /100% auto no-repeat">${colors.productCode}</span></li>`
                   }
 
                   $(".btn_color_wrap").html(str);

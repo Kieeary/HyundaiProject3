@@ -170,7 +170,11 @@ public class WckController {
 	
 	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/shoppingbag")
-	public String cartForm(@AuthenticationPrincipal Account user, Model model) {
+	public String cartForm(@AuthenticationPrincipal Account user,
+							@RequestParam(required = false, name = "error") String msg,
+							Model model) {
+		model.addAttribute("error", msg);
+		log.info("error > "+msg);
 		model.addAttribute("mId", user.getId());
 		List<CartVO> prods = cartService.readCartList(user.getId()); 
 		model.addAttribute("prods", prods);

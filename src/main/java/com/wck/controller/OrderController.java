@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.wck.domain.EventCouponVO;
 import com.wck.domain.InsertOrderDTO;
@@ -50,7 +51,10 @@ public class OrderController {
 	private final OrderService orderService;
 	
 	@PostMapping(value = "/ordersheet")
-	public String orderForm(@AuthenticationPrincipal Account user, HttpServletRequest request, Model model) {
+	public String orderForm(@AuthenticationPrincipal Account user, 
+							HttpServletRequest request,
+							RedirectAttributes redirect,
+							Model model) {
 		List<String> psids = new LinkedList<String>();
 		List<Integer> qtys = new LinkedList<Integer>();
 		
@@ -66,6 +70,17 @@ public class OrderController {
 		for(int i=0; i<prodIdx.length; i++) {
 			String psid = psids.get(i);
 			int qty = qtys.get(i);
+			
+			String msg = productService.getProductStock(psid, qty);
+			if(!msg.equals("")) {
+				String referer = request.getHeader("referer");
+		        referer = referer.substring(16, referer.length());
+				log.info("before page url > " + referer);
+				log.info("return url > "+referer+"?error="+msg);
+				redirect.addAttribute("error", msg);
+				return "redirect:"+referer;
+			}
+			
 			OrderProductVO prod = productService.getPsIdInfo(psid);
 			prod.setQuantity(qty);
 			prods.add(prod);

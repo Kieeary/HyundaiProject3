@@ -116,7 +116,7 @@ public class OrderController {
 									Model model) {
 		// model 정보 담기
 		log.info("order confirmation get mappind with oId = "+oId);
-		return "wck/order/order_comp";
+		return "/wck/order/order_comp";
 	}
 	
 	@GetMapping("/order")

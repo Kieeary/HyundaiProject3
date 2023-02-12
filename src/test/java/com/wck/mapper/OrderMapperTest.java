@@ -72,5 +72,14 @@ public class OrderMapperTest {
 		}
 		log.info(result==psids.length ? "Order Item Insert All OK" : "Order Item Insert ERROR!");
 	}
+	
+	@Test
+	public void getOrderInfoTest() {
+		String mId = "7c-41f8-8c6a-739159990a8d";
+		String oId = "230212P1676129267";
+		
+		OrderVO order = orderMapper.getOrderInfo(mId, oId);
+		log.info("{}", order);
+	}
 
 }

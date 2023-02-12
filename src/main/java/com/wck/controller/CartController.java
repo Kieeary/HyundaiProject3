@@ -109,15 +109,5 @@ public class CartController {
 			return new ResponseEntity<> (result, HttpStatus.OK);
 		}
 	}
-	
-	@PreAuthorize("hasRole('USER')")
-	@PostMapping(value = "/addCart")
-	public String addProduct(@AuthenticationPrincipal Account user, Model model, @RequestParam(value = "psid") String psid,
-																				@RequestParam(value ="quantity") String quantity) {
-		log.info(user.getId()); // mid
-		log.info(user.getEmail()); // email
-		log.info(psid);
-		return "wck/";
-	}
 }
 	

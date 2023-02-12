@@ -1,4 +1,12 @@
-let template = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+
 <style rel="stylesheet" type="text/css">
 body {
   line-height: inherit;
@@ -7685,11 +7693,15 @@ function moveBrandLookBook(brandCode) {
             $shopCateList.css('min-height', shopCateListH + 'px');
           }
         </script>
+        
+        
         <div class="cont on" id="tab_02">
           <div class="cate_shop_cate_wrap2004">
             <ul
               class="shop_list_category ctgr one_depth"
               style="min-height: 633px">
+              
+              
               <li class="one_lists">
                 <div class="one_wrap">
                   <a
@@ -7714,8 +7726,7 @@ function moveBrandLookBook(brandCode) {
                       href="#"
                       class="two_link js-cate-link"
                       onclick="GA_Event('공통_카테고리', '2DEPTH', '여성_아우터');"
-                      >아우터</a
-                    >
+                      >아우터</a>
                     <ul class="three_depth" style="">
                       <input
                         type="hidden"
@@ -7850,6 +7861,9 @@ function moveBrandLookBook(brandCode) {
                           >다운/패딩</a
                         >
                       </li>
+                   
+                   
+                   
                     </ul>
                   </li>
                   <li class="two_lists">
@@ -11559,6 +11573,9 @@ function moveBrandLookBook(brandCode) {
                   </li>
                 </ul>
               </li>
+           
+           
+           
             </ul>
             <!-- lnb_themaga_sns_wrap2004-->
 
@@ -11578,8 +11595,9 @@ function moveBrandLookBook(brandCode) {
 </div>
 
 <script>
-
-	$(document).ready(function () {
+	
+$(document).ready(function () {
+	
 	$.ajax({
 		type: 'get',
 		url: '/wck/products/category',
@@ -11592,106 +11610,15 @@ function moveBrandLookBook(brandCode) {
 			console.log("통신 실패");
 		}
 	})
-	}
+}
+
 
 </script>
-`;
 
 
 $('.hsome_quickMenu .shop a').click(function (e) {
   e.preventDefault();
   console.log('shop click');
-  
-  	$.ajax({
-		type: 'get',
-		url: '/wck/products/category',
-		success: function (result) {
-			
-			console.log(result);
-			
-			let categorylist = '';
-			categorylist += `<div class="cate_shop_cate_wrap2004">
-            <ul
-              class="shop_list_category ctgr one_depth"
-              style="min-height: 633px">`
-              
-            for(var i = 0; i<result.length; i++) {  
-            categorylist += `<li class="lists_${i}">
-                <div class="one_wrap">
-                  <a
-                    href="#"
-                    class="one_link"
-                    id="cate_we"
-                    onclick="GA_Event('공통_카테고리', '1DEPTH', '여성');">
-                    <span class="category_tit">${result[i].firstname}</span>
-                  </a>
-                </div>
-                <ul class="two_depth" style="display: none">
-                  <li class="two_lists">
-                    <a
-                      href="#"
-                      class="two_link js-cate-link"
-                      onclick="GA_Event('공통_카테고리', '2DEPTH', '여성_전체보기');"
-                      >전체보기</a
-                    >
-                  </li>`
-                  for(var s = 0; s<result[i].secondCategory.length; s++) {
-					  categorylist += `<li class="two_lists">
-                    <a
-                      href="#"
-                      class="two_link js-cate-link"
-                      onclick="GA_Event('공통_카테고리', '2DEPTH', '여성_아우터');"
-                      >${result[i].secondCategory[s].secondname}</a>
-					  <li class="three_lists">
-                        <button
-                          type="button"
-                          class="like"
-                          id="gnb_we05_like"
-                          onclick="applyCategory('gnb_we05');GA_Event('공통_카테고리', '좋아요', '여성_아우터_전체');">
-                          찜하기</button>
-                          <a
-                          href="/ko/c/we05"
-                          class="three_link"
-                          onclick="GA_Event('공통_카테고리', '3DEPTH', '여성_아우터_전체');"
-                          >전체</a></li>`
-                          
-                          for(var t = 0; t<result[i].secondCategory[s].thirdCategory.length; t++) {
-							  
-						  categorylist += `<input type="hidden" id="gnb_we051" value="we051|아우터>재킷|woman|false" />
-                      		<li class="three_lists">
-                        	<button
-                          type="button"
-                          class="like"
-                          id="gnb_we051_like"
-                          onclick="applyCategory('gnb_we051');GA_Event('공통_카테고리', '좋아요', '여성_아우터_재킷');">
-                          찜하기
-                        </button>
-                        <a
-                          href="/ko/c/we051"
-                          class="three_link"
-                          onclick="GA_Event('공통_카테고리', '3DEPTH', '여성_아우터_재킷');"
-                          >재킷</a
-                        >
-                      </li>
-						  `
-					  }
-				  }
-                 
-             }
-             
-             	console.log("*****결과 확인******");
-				console.log(categorylist);
-             
-	$("#tab-02").html(categorylist);
-		}, 
-		error : function (result) {
-			console.log("통신 실패");
-		}
-	})
-	
-
-	
-	
   $('.hsome_quickMenu_contents').addClass('active absolute');
   $('.hsome_quickMenu_contents').html(template);
 });
@@ -11720,3 +11647,10 @@ function closeMenu() {
   $('.hsome_quickMenu_contents').removeClass('active absolute');
   $('.hsome_quickMenu_contents').html('');
 }
+
+
+
+
+
+</body>
+</html>

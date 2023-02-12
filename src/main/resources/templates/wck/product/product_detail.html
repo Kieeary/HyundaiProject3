@@ -4581,6 +4581,13 @@
               <!-- 서비스 배너 -->
               <!-- 서비스 배너 -->
             </div>
+            
+			<form class="sendOrderSheet" action="/wck/checkout/ordersheet" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+				<input type="hidden" name="cartlist" class="send_cartlist" value = "0">
+				<input type="hidden" name="ps_0" class="send_ps">
+				<input type="hidden" name="quantity_0" class="send_qty">
+			</form>
 
             <!-- 하단 플로팅 -->
             <script type="text/javascript">
@@ -4591,18 +4598,18 @@
                 let header = $("meta[name='_csrf_header']").attr("content");
                 var cur_scrl_pos = 0;
                 var $buying_type = 0;
+                
 
                 /* 쇼핑백담기 vs 바로구매 버튼 클릭 */
                 var hst_btm_btnwrap = false;
-                //	$('.hs_btm_btnwrap .trigger').click(functionx(){
+
                 $('.hs_btm_btnwrap .trigger').on('click', function () {
                   if (hst_btm_btnwrap) return;
 
                   console.log("하이루")
                   let psid = $('.hs_btn_size_wrap .size_area .size .on').attr('psid')
-                  
-                  console.log(psid);
                   let qty = 1;
+                  console.log(psid);
                   
                   let jsonData = {
                			  "psId" : psid,
@@ -4611,6 +4618,7 @@
                   
                   hst_btm_btnwrap = true;
 
+                  //쇼핑백 담기 눌렀을 때
                   if ($(this).attr('class').indexOf('cart') != -1) {
                     //쇼핑백 담기
                     console.log("쇼핑백 담음")
@@ -4630,60 +4638,26 @@
                         error: function (xhr, Status, error) {},
                       });
                     
-                  } else if ($(this).attr('class').indexOf('direct') != -1) {
-                    //바로구매
+                  } 
+                  //바로구매
+                  else if ($(this).attr('class').indexOf('direct') != -1) {
+                    
                     console.log("바로 구매")
                     $buying_type = 1;
-                  } else {
-                    //원클릭구매
-                    $buying_type = 2;
+                    
+                    $(".send_ps").val(psid);
+                    $(".send_qty").val(qty);
+                    $(".sendOrderSheet").submit();
+                   
+                  } 
 
-                    var appYn = 'N';
-
-                  }
-
-                  // cur_scrl_pos = $(window).scrollTop();
                   var $page_url = '/ko/product/prodfloating';
 
-                  /*
-                  // setTimeout(function(){
-                  jQuery.ajax({
-                    url: $page_url,
-                    data: {
-                      productcode: $(
-                        '.hs_prd_info_wrap .hs_btn_color_chip.infoColor button.chip.on'
-                      )
-                        .attr('id')
-                        .replace('info_', ''),
-                      sizecode: $(
-                        '.hs_btn_size_wrap .size_area .size.on .btn'
-                      ).attr('data-value'),
-                      buying_type: $buying_type,
-                    },
-                    type: 'get',
-                    success: function (data) {
-                      $('body .hsome_allContents_wrapper').append(data);
-                      setTimeout(function () {
-                        $('.hs_pro_view_floating').addClass('active');
-                        $('.hs_pro_view_layer').fadeIn('fast');
-                        holdBodyShow(); //body 잠그기
 
-                        hst_btm_btnwrap = false;
-
-                      }, 400);
-                    },
-                    error: function (xhr, Status, error) {
-                      hst_btm_btnwrap = false;
-
-                      var la = new layerAlert('[Error] ' + error);
-                    },
-                  }); */
-                  // }, 300);
 
                   return false;
-                  //}
-                }); // $('.hs_btm_btnwrap .trigger').click
-                /* 쇼핑백담기 vs 바로구매 버튼 클릭 */
+                 
+                }); 
 
                 /* 쇼핑백담기 vs 바로구매 팝업 닫기 */
                 $(document).on(

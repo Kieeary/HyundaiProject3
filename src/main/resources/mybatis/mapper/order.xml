@@ -3,7 +3,45 @@
 
 <mapper namespace="com.wck.mapper.OrderMapper">
 
-	<select id="getOrderList">
+	<resultMap type="order" id="orderMap">
+		<id property="oid" column="pid"/>
+		<result property="ozipcode" column="ozipcode"/>
+		<result property="oaddress1" column="oaddress1"/>
+		<result property="oaddress2" column="oaddress2"/>
+		<result property="oreceiver" column="oreceiver"/>
+		<result property="ophone" column="ophone"/>
+		<result property="otel" column="otel"/>
+		<result property="omemo" column="omemo"/>
+		<result property="oemail" column="oemail"/>
+		<result property="ousedMileage" column="OUSEDMILEAGE"/>
+		<result property="obeforePrice" column="obeforeprice"/>
+		<result property="oafterPrice" column="oafterprice"/>
+		<result property="ostatus" column="ostatus"/>
+		<result property="odate" column="odate"/>
+		<result property="cpid" column="cpid"/>
+		<result property="eno" column="eno"/>
+		<result property="ecoupontitle" column="ecoupontitle"/>
+		<result property="discount" column="discount"/>
+		<result property="cpid" column="cpid"/>
+		<result property="pmcode" column="pmcode"/>
+		<result property="pmmethod" column="pmmethod"/>
+		<result property="pmcompany" column="pmcompany"/>
+		<collection property="orderProducts" resultMap="productOrderMap"/>
+	</resultMap>
+	
+	<resultMap type="productSimpleInfo" id="productOrderMap">
+		<id property="psId" column="psid"/>
+		<result property="bName" column="bname"/>
+		<result property="pName" column="pname"/>
+		<result property="colorName" column="colorname"/>
+		<result property="pImg" column="pimg"/>
+		<result property="pSize" column="psize"/>
+		<result property="quantity" column="oicount"/>
+		<result property="pcPrice" column="pcprcie"/>
+	</resultMap>
+
+
+	<select id="getOrderList" resultMap="orderMap">
 		select 
 		    o.oid, ozipcode, oaddress1, oaddress2, oreceiver,
 		    ophone, otel, omemo, oemail, OUSEDMILEAGE,
@@ -34,11 +72,11 @@
 		        from orders 
 		        where mid = #{mId}
 <![CDATA[
-		        and odate >= add_months(sysdate, #{month} * -1)
+		        and odate >= add_months(sysdate, #{cri.month} * -1)
 		        order by odate
 		        
 		    )
-		    where rownum <= #{currentPage} * #{pageSize}
+		    where rownum <= #{cri.currentPage} * #{cri.pageSize}
 
 		)o
 		inner join order_item oi on (o.oid = oi.oid)
@@ -50,7 +88,7 @@
 		left join brand b on (p.bno = b.bno)
 		left join coupon_detail cp on (cp.cpid = o.cpid)
 		left join event e on (e.eno = cp.eno)
-		where rn > (#{currentPage} - 1) * #{pageSize};
+		where rn > (#{cri.currentPage} - 1) * #{cri.pageSize};
 ]]>
 	</select>
 	

@@ -30,8 +30,9 @@ public class OrderVO {
 	
 	private String pmcode;
 	private String pmmethod;
+	private String pmcompany;
 	
-	private List<OrderProductVO> orderProducts;
+	List<OrderProductVO> orderProducts;
 	
 	
 

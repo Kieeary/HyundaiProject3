@@ -17,9 +17,9 @@ public class CartServiceTests {
 	@Test
 	public void addCartTest() {
 		String mId = "7c-41f8-8c6a-739159990a8d";
-		String psIds[] = {"SY2C9KTOT15W_BK_90"};
+		String psIds[] = {"TM2C9WSC549WP2_BK_61"};
 		for (String psId : psIds) {
-			cartService.addCart(mId, psId, 12);
+			cartService.addCart(mId, psId, 1);
 		}
 	}
 

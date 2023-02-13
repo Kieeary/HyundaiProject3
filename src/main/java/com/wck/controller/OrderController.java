@@ -1,12 +1,16 @@
 package com.wck.controller;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,13 +18,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 import com.wck.domain.EventCouponVO;
 import com.wck.domain.InsertOrderDTO;
 import com.wck.domain.MemberGrade;
@@ -76,7 +86,6 @@ public class OrderController {
 				String referer = request.getHeader("referer");
 		        referer = referer.substring(16, referer.length());
 				log.info("before page url > " + referer);
-				log.info("return url > "+referer+"?error="+msg);
 				redirect.addAttribute("error", msg);
 				return "redirect:"+referer;
 			}
@@ -106,6 +115,31 @@ public class OrderController {
 		return "/wck/order/order_sheet";
 	}
 	
+	
+	// /wck/checkout/orderConfirmation/
+	@GetMapping("/orderConfirmation/{muui}")
+	public String orderConfirmForm(
+			@AuthenticationPrincipal Account user,
+			@PathVariable("muui") String pmcode,
+			Model model) {
+		System.out.println();
+		System.out.println();
+		System.out.println("Get mapping >>>>>>>>>>>>>>>>>>>>>");
+		OrderVO order = orderService.getOrderInfo(pmcode);
+		log.info("{}",order);
+		model.addAttribute("order", order);
+
+		// 적립 예정 마일리지 계산
+		long totalOrderPrice = memberService.getTotalUsePrice(user.getId());
+		int grade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
+		int expectAddMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(grade).getAccruRate());
+		model.addAttribute("addM", expectAddMileage);
+
+		return "/wck/order/order_comp";
+	}
+	
+	
+	// original
 	@PostMapping("/orderConfirmation")
 	@ResponseBody
 	public ResponseEntity<String> orderConfirmForm(@AuthenticationPrincipal Account user,
@@ -124,20 +158,50 @@ public class OrderController {
 		return new ResponseEntity<> (insertOrder.getOId(), HttpStatus.OK);
 	}
 	
-	@GetMapping("/orderConfirmation")
-	public String orderConfirmForm(@AuthenticationPrincipal Account user,
-									@RequestParam("oId") String oId,
-									Model model) {
-		OrderVO order = orderService.getOrderInfo(user.getId(), oId);
-		log.info("{}",order);
-		model.addAttribute("order", order);
-		
-		// 적립 예정 마일리지 계산
-		long totalOrderPrice = memberService.getTotalUsePrice(user.getId());
-		int grade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
-		int expectAddMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(grade).getAccruRate());
-		model.addAttribute("addM", expectAddMileage);
-		
-		return "/wck/order/order_comp";
-	}
+	
+	
+//	@Autowired(required=true)
+//	private IamportClient api;
+//	
+//	@ResponseBody
+//	@RequestMapping(value = "/orderConfirmation/{imp_uid}")
+//	public IamportResponse<Payment> paymentByImpUid(
+//			@PathVariable(value = "imp_uid") String imp_uid
+//			, @RequestParam(required = false) String merchant_uid
+//			, Model model
+//			, HttpSession session)
+//					throws IamportResponseException, IOException {
+//		log.info("Get order Confirmation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+//		// imp_uid=imp_389291808416
+//		// merchant_uid=nobody_1676246291597
+//		// imp_success=false
+//		// error_msg=F0005%3A결제가+중단되었습니다%28imp_389291808416%29.01+%7C+사용자가+결제를+취소+하였습니다.
+//		
+//		// http//locaslhost/wck/checkout/orderConfirmation?imp_uid=imp_904255033222&merchant_uid=403e-60a0-4e0f-85e8-673c&imp_success=true
+//			
+//		log.info("imp uid ", imp_uid);
+////		log.info("imp success ", imp_success);
+//		log.info("imp MU ", merchant_uid);
+////		log.info("imp error msg ", msg);
+////		log.info("{}", insertOrder);
+//		
+//		return api.paymentByImpUid(imp_uid);
+//	}
+	
+//	@GetMapping("/orderConfirmation")
+//	public String orderConfirmForm(@AuthenticationPrincipal Account user,
+//									@RequestParam("oId") String oId,
+//									Model model) {
+//		OrderVO order = orderService.getOrderInfo(user.getId(), oId);
+//		log.info("{}",order);
+//		model.addAttribute("order", order);
+//		
+//		// 적립 예정 마일리지 계산
+//		long totalOrderPrice = memberService.getTotalUsePrice(user.getId());
+//		int grade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
+//		int expectAddMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(grade).getAccruRate());
+//		model.addAttribute("addM", expectAddMileage);
+//		
+//		return "/wck/order/order_comp";
+//	}
 }

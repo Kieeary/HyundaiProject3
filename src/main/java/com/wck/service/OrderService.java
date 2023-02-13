@@ -73,6 +73,10 @@ public class OrderService {
 		return orderMapper.getOrderInfo(mId, oId);
 	}
 	
+	public OrderVO getOrderInfo(String pmcode) {
+		return orderMapper.getOrderInfoWithPMcode(pmcode);
+	}
+	
 	@Transactional
 	public int cancelOrder(String mId, OrderVO order) {
 		// 적립된 마일리지 (이전 등급의 적립률이 적용됨)

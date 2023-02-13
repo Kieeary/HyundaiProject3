@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Locale;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -43,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @RestController
 public class VerifyController {
-	private final IamportClient api;
+	private IamportClient api;
 //    private final ParticipantService participantService;
 //    private final ChallengeService challengeService;
 	
@@ -54,11 +55,16 @@ public class VerifyController {
 	@Value("${private.ip}") 
     private String privateIp;
 	
-	// 생성자를 통해 REST API 와 REST API secret 입력
-	@Autowired
-	public VerifyController() {
+	@PostConstruct
+	public void setApi() {
 		this.api = new IamportClient(restapi,secret);
 	}
+	
+	// 생성자를 통해 REST API 와 REST API secret 입력
+//	@Autowired
+//	public VerifyController() {
+//		this.api = new IamportClient(restapi,secret);
+//	}
 
 	// iamport를 이용하여 결제하기를 완료하였을때
 	@PostMapping("/verifyIamport/{imp_uid}")

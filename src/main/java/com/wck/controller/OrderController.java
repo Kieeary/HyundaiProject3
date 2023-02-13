@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -114,6 +115,13 @@ public class OrderController {
 		
 		return "/wck/order/order_sheet";
 	}
+	
+	@GetMapping(value = "/ordersheet")
+	public String getOrderSheet(Map<String, Object> check) {
+		log.info("{}", check);
+		return "/wck/home";
+	}
+
 	
 	
 	// /wck/checkout/orderConfirmation/

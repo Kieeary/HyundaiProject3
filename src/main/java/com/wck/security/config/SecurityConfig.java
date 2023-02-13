@@ -124,14 +124,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			.deleteCookies("JSESSIONID" , "remember-me")
 		;
 	}
-	@Bean
-	public FilterRegistrationBean fileterRegistrationBean() throws Exception{
-		FilterRegistrationBean fileterRegistrationBean = new FilterRegistrationBean<>();
-		fileterRegistrationBean.setFilter(customFilterSecurityInterceptor());
-		fileterRegistrationBean.setEnabled(false);
-		return fileterRegistrationBean;
-	}
-	
+//	@Bean
+//	public FilterRegistrationBean fileterRegistrationBean() throws Exception{
+//		FilterRegistrationBean fileterRegistrationBean = new FilterRegistrationBean<>();
+//		fileterRegistrationBean.setFilter(customFilterSecurityInterceptor());
+//		fileterRegistrationBean.setEnabled(false);
+//		return fileterRegistrationBean;
+//	}
+//	
 	@Bean
 	public FilterSecurityInterceptor customFilterSecurityInterceptor() throws Exception {
 		

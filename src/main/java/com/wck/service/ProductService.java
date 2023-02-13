@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import com.wck.domain.BrandCategoryVO;
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.FirstCategoryVO;
@@ -74,6 +75,10 @@ public class ProductService {
 		
 	}
 	
+	public String getBrandImg(String br) {
+		return productMapper.getBrandImg(br);
+	}
+	
 	
 	public List<ProductVO> productList(@Nullable String br, @Nullable String gd,
 										@Nullable String sC, @Nullable String tC, int start, int last) {
@@ -134,7 +139,14 @@ public class ProductService {
 		List<ThirdCategoryVO> categoryName = productMapper.getThirdCategory(depth2name);
 		return categoryName;
 	}
-
+	
+	/*
+	 * 정기범
+	 */
+	public List<BrandCategoryVO> getBrandCategory(){
+		List<BrandCategoryVO> brandCategory = productMapper.getBrandCategory();
+		return brandCategory;
+	}
 	
 	public int getLikeProductCount(String id) {
 		return productMapper.getLikeProductCount(id);

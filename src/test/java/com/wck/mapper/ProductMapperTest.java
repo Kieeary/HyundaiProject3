@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.wck.domain.BrandCategoryVO;
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.FirstCategoryVO;
@@ -60,6 +61,37 @@ public class ProductMapperTest {
 				log.info("PCID : " + b.getPCId());
 			}
 		}
+		
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getBrandProductList() {
+		String br = "3";
+		
+		int start = 0;
+		int last = 1;
+		List<ProductVO> vo = productMapper.getProducts(br, null, null, null, start, last);
+		
+		for(ProductVO a : vo) {
+
+			log.info("PID :" + a.getPid());
+			for(DetailProductVO b : a.getDetailProduct()) {
+				log.info("PCID : " + b.getPCId());
+			}
+		}
+		
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getBrandImg() {
+		String br = "1";
+		String gd = "me";
 		
 	}
 	
@@ -185,6 +217,18 @@ public class ProductMapperTest {
 			for(ThirdCategoryVO s : a) {
 				log.info(s.getDetailname());
 			}
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void getBrandCategory() {
+		
+		List<BrandCategoryVO> a = productMapper.getBrandCategory();
+		for(BrandCategoryVO s : a) {
+			log.info(s.getBrandname());
+		}
 	}
 	
 	@Transactional

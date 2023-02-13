@@ -1,0 +1,3909 @@
+<html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+
+	<meta charset="UTF-8" />
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport"
+		content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<meta name="format-detection" content="telephone=no" />
+
+	<!-- Mobile Smart Banner for IOS Device -->
+	<meta name="apple-itunes-app" content="app-id=1072288949" />
+	<!-- //Mobile Smart Banner for IOS Device -->
+	<meta property="og:title" content="더한섬닷컴" />
+	<meta property="og:type" content="website" />
+
+	<title>더한섬닷컴</title>
+	<link rel="shortcut icon"
+		href="http://www.thehandsome.com/_ui/mobile/common/images/common/thehandsome_ic_16x16.ico" />
+	<link rel="apple-touch-icon" href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
+	<link rel="apple-touch-icon-precomposed"
+		href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
+	<link rel="apple-touch-icon-120x120"
+		href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
+	<link rel="apple-touch-icon-120x120-precomposed"
+		href="http://www.thehandsome.com/_ui/mobile/common/images/common/app_ban_logo.png" />
+
+	<!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> -->
+
+	<link rel="shortcut icon" type="image/x-icon" media="all" href="//" />
+
+	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/font_80.css?20221121" rel="stylesheet"
+		type="text/css" />
+	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/jquery-ui.css" rel="stylesheet"
+		type="text/css" />
+	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/selectordie.css" rel="stylesheet"
+		type="text/css" />
+	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/default.css?202200826" rel="stylesheet"
+		type="text/css" />
+	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/display.css?20221107" rel="stylesheet"
+		type="text/css" />
+	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/assist.css?20220929" rel="stylesheet"
+		type="text/css" />
+	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/devAssist.css" rel="stylesheet"
+		type="text/css" />
+
+	<link href="http://www.thehandsome.com/_ui/handsomemobile/css/handsomecss/popup.css" rel="stylesheet"
+		type="text/css" />
+
+	<script type="text/javascript">
+		var handsomePageId = 'productList';
+		var main_bul = false;
+	</script>
+
+	<script type="text/javascript">
+		var handsomeUserLoginYn = 'N';
+	</script>
+	<script type="text/javascript">
+		var isoKoYn = 'Y';
+	</script>
+	<script type="text/javascript">
+		var handsomeIsoCode = 'ko';
+		var handsomeContextPath = '/ko';
+	</script>
+
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.min.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.vticker.js"></script>
+	<!-- 200318 Ã¬Â¶ÂÃªÂ°Â -->
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/masonry.pkgd.min.js"></script>
+	<script type="text/javascript"
+		src="http://www.thehandsome.com/_ui/handsomemobile/js/imagesloaded.pkgd.min.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.form.min.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/swiper.min.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/selectordie.min.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/jquery.bpopup.min.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/echarts.min.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/common.js?20210501"></script>
+	<script type="text/javascript"
+		src="http://www.thehandsome.com/_ui/handsomemobile/js/assist_common.js?v=20220630"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/handsome.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/common_function.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/json2.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/SsoAjax.js"></script>
+
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/makePCookie.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/content.js"></script>
+	<script type="text/javascript"
+		src="http://www.thehandsome.com/_ui/handsomemobile/js/e-smart-zoom-jquery.min.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/popup.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/simplepagination.js"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel.js"
+		charset="UTF-8"></script>
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/netfunnel_skin.js"
+		charset="UTF-8"></script>
+
+	<script type="text/javascript" src="http://www.thehandsome.com/_ui/handsomemobile/js/unorm.js"></script>
+
+	<style media="screen">
+		.blsmflw1 {
+			animation: target_image 1.5s;
+			animation-iteration-count: 2;
+			transform-origin: 50% 50%;
+		}
+
+		@keyframes target_image {
+			0% {
+				transform: rotate(-2deg);
+			}
+
+			50% {
+				transform: rotate(9deg);
+			}
+
+			100% {
+				transform: rotate(-1deg);
+			}
+		}
+	</style>
+
+	<meta http-equiv="origin-trial"
+		content="A9+ldib+sKhGj2FcIjq5GnvBZFuIiXID0+NkE6k7cEk71MhaHFGqo3wUlUFmZ6d9w0KPwx9UxGiCTYWtRnTGDQkAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5uZXQ6NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4MDY1Mjc5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=" />
+	<meta http-equiv="origin-trial"
+		content="AzLNuh8GFzfIOcwvhEg7Ymr7YCzlYVTKeD7i2iETABbRf+sL2FAx+r+HlTtxSi1zgUFxBlJVoxgLjuhqiwTjAw4AAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5jb206NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4MDY1Mjc5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=" />
+	<script src="https://cdn.megadata.co.kr/js/socialLink/social_sns_config_min.js" type="text/javascript" defer=""
+		async=""></script>
+	<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css" />
+	<link rel="stylesheet" type="text/css" href="//static.groobee.io/dist/g2/css/grb-recommend-list_v2.css" />
+	<link rel="stylesheet" type="text/css" href="//static.groobee.io/dist/g2/css/custom-swiper.css" />
+	<script type="text/javascript" async=""
+		src="https://googleads.g.doubleclick.net/pagead/viewthroughconversion/943253288/?random=1675336323025&amp;cv=9&amp;fst=1675336323025&amp;num=1&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;eid=375603260%2C466465926&amp;u_h=709&amp;u_w=400&amp;u_ah=709&amp;u_aw=400&amp;u_cd=30&amp;u_his=10&amp;u_tz=540&amp;u_java=false&amp;u_nplug=0&amp;u_nmime=0&amp;sendb=1&amp;ig=1&amp;frm=0&amp;url=http%3A%2F%2F192.168.0.39%3A5500%2Fbrand.html&amp;ref=http%3A%2F%2F192.168.0.39%3A5500%2Fbrand.html&amp;tiba=%EB%8D%94%ED%95%9C%EC%84%AC%EB%8B%B7%EC%BB%B4&amp;hn=www.googleadservices.com&amp;rfmt=3&amp;fmt=4"></script>
+	<meta http-equiv="origin-trial"
+		content="A9+ldib+sKhGj2FcIjq5GnvBZFuIiXID0+NkE6k7cEk71MhaHFGqo3wUlUFmZ6d9w0KPwx9UxGiCTYWtRnTGDQkAAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5uZXQ6NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4MDY1Mjc5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=" />
+	<meta http-equiv="origin-trial"
+		content="AzLNuh8GFzfIOcwvhEg7Ymr7YCzlYVTKeD7i2iETABbRf+sL2FAx+r+HlTtxSi1zgUFxBlJVoxgLjuhqiwTjAw4AAACAeyJvcmlnaW4iOiJodHRwczovL2NyaXRlby5jb206NDQzIiwiZmVhdHVyZSI6IlByaXZhY3lTYW5kYm94QWRzQVBJcyIsImV4cGlyeSI6MTY4MDY1Mjc5OSwiaXNTdWJkb21haW4iOnRydWUsImlzVGhpcmRQYXJ0eSI6dHJ1ZX0=" />
+</head>
+
+<body class="back">
+	<style>
+		.swiper-wrapper {
+			height: auto;
+		}
+	</style>
+
+	<div id="mapleMainPopwrap" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        width: 81.333333%;
+        z-index: 805;
+        transform: translate(-50%, -50%);
+        display: none;
+      "></div>
+
+	<div class="layerArea" id="mapleLayer" style="display: none">
+		<div class="layerBg"></div>
+	</div>
+
+	<!-- ################## hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
+	<div class="hsome_allContents_wrapper">
+		<div class="hsome_allContents">
+			<script type="text/javascript">
+				function goMainpage() {
+					window.sessionStorage.removeItem('moveYn');
+					location.href = '/ko/main';
+				}
+			</script>
+
+			<!-- ################## header ################## -->
+			<header class="hsome_header">
+				<h1 class="h_ttl ellipsis" id="headerTitle">
+					<a href="javascript:noLink();" onclick="openGnbPopup();" 
+					class="select_"
+					th:if="${category.gender} == 'me'"
+					th:text='남성'>
+					</a>
+				</h1>
+				<script type="text/javascript">
+					$(document).ready(function () { });
+				</script>
+
+				<a href="javascript:noLink();" onclick="goBack();GA_Event('카테고리_리스트', '헤더', '이전');" class="h_prev">이전
+					페이지로 가기</a>
+				<a href="/ko/store-finder/storeInformation?brandCode=BR08" class="h_map">브랜드 매장안내</a>
+				<ul class="h_gnbMenu">
+					<li class="search">
+						<a href="/wck/search"
+							onclick="GA_Event('카테고리_리스트', '헤더', '검색');"><span>search</span></a>
+					</li>
+					<li class="cart">
+						<a href="/ko/shoppingbag"
+							onclick="GA_Event('카테고리_리스트', '헤더', '쇼핑백');"><span>cart</span><i>0</i></a>
+					</li>
+				</ul>
+			</header>
+			<!-- //################## header ################## -->
+			<div id="listBodyTemp" style="display: none"></div>
+			<form id="categoryListForm" action="/ko/c/categoryList">
+				<input type="hidden" id="brandCode" name="brandCode" value="br08" />
+				<input type="hidden" id="brandName" name="brandName" value="" />
+				<input type="hidden" id="subBrand" name="subBrand" value="" />
+				<input type="hidden" id="categoryCode" name="categoryCode" value="br08" />
+				<input type="hidden" id="mainCateFlag" name="mainCateFlag" value="" />
+				<input type="hidden" id="repProdColorCode" name="repProdColorCode" value="" />
+				<input type="hidden" id="repSizeEnumCode" name="repSizeEnumCode" value="" />
+				<input type="hidden" id="priceOrderCode" name="priceOrderCode" value="" />
+				<input type="hidden" id="productOrderCode" name="productOrderCode" value="NEW" />
+				<input type="hidden" id="check4pmCode" name="check4pmCode" value="" />
+				<input type="hidden" id="checkAtHomeCode" name="checkAtHomeCode" value="" />
+				<input type="hidden" id="checkSaleCode" name="checkSaleCode" value="" />
+				<input type="hidden" id="checkQuickCode" name="checkQuickCode" value="" />
+				<input type="hidden" id="checkDeliveryCode" name="checkDeliveryCode" value="" />
+				<!-- 뒤로가기 버튼 클릭시 페이징 기억용 -->
+				<input type="hidden" id="rememberPage" name="rememberPage" value="" />
+			</form>
+			<!-- ################## contents ################## -->
+			<div class="hs_product_list_wrap">
+					<!-- flag_wrap -->
+
+			<div class="flag_wrap case swiper-container depth2 swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal"> <!-- //전체보기 아닌 case(이전카테고리 노출될경우) class 추가-->
+	             <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.gender} != null and ${category.secCat} == null">
+                     <li class="swiper-slide flag" id="categoryNav01" style="margin-right: 6px;"><a th:href="@{/wck/products/list(gender=${category.gender})}" class="name" th:text="${category.gender}"onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">&nbsp;전체</a></li>
+                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
+                     
+	                 <li th:each="detail : ${detailcategory}" class="swiper-slide flag" style="margin-right: 6px;">
+	                 	<a th:href="@{/wck/products/list(gender=${category.gender},secCat=${detail.depth2name})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');" th:text="${detail.secondname}"></a></li>
+		                 </ul>
+		                 
+		          <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.secCat} != null and ${category.thrCat == null} ">
+                     <li class="swiper-slide flag" id="categoryNav01" style="margin-right: 6px;"><a th:href="@{/wck/products/list(gender=${category.gender},secCat=${category.secCat})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">여기 넣어야함</a></li>
+                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
+                     
+	                 <li th:each="detail : ${detailcategory}" class="swiper-slide flag" style="margin-right: 6px;">
+	                 	<a th:href="@{/wck/products/list(gender=${category.gender},thrCat=${detail.depth3name})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');" th:text="${detail.detailname}"></a></li>
+		                 </ul>
+                    </div>
+                    
+                    
+                    <div id="brandBanner">
+                    <script type="text/javascript">
+$(document).ready(function(){
+    
+    // get oera brand banner
+    if("BR08" == 'BR61' || "BR08" == 'BR63'){
+        $.ajax({
+            url: '/ko/c/getOeraBanner',
+            type: "GET",
+            data: {brandCode: 'BR08'},
+            success: function(data){
+                
+                if(data != null){
+                    if(data.introBanner != null) {
+                        var imageHtml = '';
+                        imageHtml += '<img src="'+data.introBanner+'" alt="">';
+                        
+                        $('.brand-img-list .brand-img').append(imageHtml);
+                    }
+                    
+                    if(data.oeraBannerList != null && data.oeraBannerList.length > 0){
+                        var innerHtml = "";
+                        
+                        $.each(data.oeraBannerList, function(){
+                            innerHtml += '<li class="swiper-slide">';
+                            var linkUrl = this.linkUrl != null && this.linkUrl != "" ? this.linkUrl : "javascript:void(0);";
+                            
+                            innerHtml += '   <a class="banner-wrap" href="'+linkUrl+'">';
+                            innerHtml += '       <div class="banner-img">';
+                            innerHtml += '           <img src="'+this.imageUrl+'"  alt="" />';
+                            innerHtml += '           <div class="swiper-pagination"></div>';
+                            innerHtml += '       </div>';
+                            innerHtml += '       <div class="brand-tit">';
+                            innerHtml += '           <strong>'+this.mainText+'</strong>';
+                            innerHtml += '           <p>'+this.subText+'</p>';
+                            innerHtml += '       </div>';
+                            innerHtml += '   </a>';
+                            innerHtml += '</li>';
+                        });
+                        
+                        $("#oeraArea").append(innerHtml);
+                        $("#oreaBoxWrap").show();
+                        
+                        if(data.oeraBannerList.length > 1) {
+	                        brandBnSwiperInit();
+                        }else {
+                            $('.brand-img-list .brand-img').show();
+                            $("#oreaBoxWrap").addClass('brand-bn-single');
+                            $("#oreaBoxWrap").removeClass('brand-bn-slide');
+                        }
+                        
+                    }
+                }
+            },
+            error: function(request, status, error) {
+                console.log( "code:" + request.status+"\n" + "message:" + request.responseText+"\n" + "error:" + error );
+            }
+        });
+    }
+    
+});
+
+//oera brand banner swiper init
+function brandBnSwiperInit(){
+    var brandBnSwiper = new Swiper('.brand-bn-slide', {
+        slidesPerView: 'auto',                              
+        spaceBetween: 10,
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            type: 'fraction',
+        },
+        on: {
+            slideChange: function (){       
+                $('.brand-img-list .brand-img').show();
+            } 
+        }
+    });
+}
+
+</script>
+						<div class="img_cont">
+							<a href="javascript:noLink();">
+								<div class="img" th:style="'background-image: url('+ ${brand} +' );'">
+								<img th:src="${brand}" th:style="${'width:100%'}" alt=""></div>
+								<p class="txt"></p>
+								</a>
+						</div>
+						</div>
+
+
+					<script type="text/javascript">
+						$(document).ready(function () {
+							if ('true' == 'true') {
+								// 브랜드
+								if ('false' == 'false') {
+									// 전체보기
+									if ('Y' == 'Y') {
+										if ('false' == 'true') {
+											var innerHtml =
+												"<li><a href=\"\" onclick=\"GA_Event('브랜드 전체보기', '룩북/스페셜샵', 'SPECIAL SHOP');\" ><span>SPECIAL SHOP</span></a></li>";
+											$('.brand-quick-tab-link ul').append(innerHtml);
+										}
+										$('.brand-quick-tab-link').show();
+									}
+								}
+							}
+						});
+					</script>
+					<!--// flag_wrap -->
+
+
+
+
+
+
+					<!--// brand_video_slide -->
+					<script type="text/javascript">
+						var rate_en = '',
+							symbol_en = '',
+							rate_zh = '',
+							symbol_zh = '';
+
+						$(document).ready(function () {
+							var productOrderCode = 'SALES';
+							var brandCode = 'BR08';
+
+							if (false == true && true == true) {
+								getEdShopBrand(brandCode);
+							} else {
+								$.ajax({
+									type: 'get',
+									url:
+										'/ko/b/newBestList' +
+										'?productOrderCode=' +
+										productOrderCode +
+										'&brandCode=' +
+										brandCode,
+									cache: false,
+									dataType: 'json',
+									contentType: 'application/json',
+									error: function (request, status, error) {
+										console.log(
+											'code:' +
+											request.status +
+											'\n' +
+											'message:' +
+											request.responseText +
+											'\n' +
+											'error:' +
+											error
+										);
+									},
+									success: function (result) {
+										var listTag = '';
+										var li_check = 0;
+										var end = result.length;
+										if (end > 20) {
+											end = 20;
+										}
+										for (var i = 0; i < result.length; i++) {
+											if (result[i].productName.length > 0) {
+												window.sessionStorage.setItem(
+													'ecommerceDataList',
+													JSON.stringify(result)
+												);
+												listTag += '<li class="swiper-slide"> \n';
+												listTag +=
+													'    <a href="/ko/p/' +
+													result[i].productCode +
+													'" onclick=\'setEcommerceData(' +
+													i +
+													");' > \n";
+												listTag += '		<div class="img"> \n';
+												listTag +=
+													'        	<img src="' +
+													result[i].imageUrl +
+													'" id="' +
+													productOrderCode +
+													'_T01_IMG_' +
+													i +
+													'" alt="" targetCode="' +
+													result[i].productCode +
+													'" onError="this.src=\'/_ui/handsomemobile/images/common/no_img.jpg\'" class="respon_image"/> \n';
+												listTag += '		</div> \n';
+												listTag += '		<div class="txt"> \n';
+												listTag +=
+													"            <p class='name'>" +
+													result[i].productName +
+													'</p> \n';
+												if (result[i].productPrice === 0) {
+													listTag += '            <p class="price"></p> \n';
+												} else {
+													listTag +=
+														'            <p class="price">' +
+														getExchangePrice(result[i].productPrice) +
+														'</p> \n';
+												}
+												listTag += '		</div> \n';
+												listTag += '    </a> \n';
+												listTag += '</li> \n';
+												li_check++;
+											}
+											if (li_check == end) {
+												break;
+											}
+										}
+
+										$('#brandBest').html(listTag);
+										/*// 180622_수정 */
+
+										//best상품 없을경우, 영역 숨김처리
+										var chkBest = $('#brandBest').html();
+										if (chkBest == '') {
+											$('.top_item_wrap').hide();
+										}
+
+										var topItemSwiper = new Swiper(
+											'.top_item_slide.swiper-container',
+											{
+												slidesPerView: 'auto',
+												freeMode: true,
+												spaceBetween: 5,
+											}
+										);
+									},
+								});
+							}
+
+							getExchangeRate();
+						});
+
+						function setEcommerceData(idx) {
+							var prodList = JSON.parse(
+								window.sessionStorage.getItem('ecommerceDataList')
+							);
+							if (prodList != null) {
+								if (prodList.length > 0) {
+									var prodInfo = prodList[idx];
+
+									dataLayer.push({
+										event: 'ga_event',
+										layerCategory: 'Ecommerce',
+										layerAction: 'Click',
+										layerLabel: undefined,
+										ecommerce: {
+											currencyCode: 'KRW', //통화
+											click: {
+												actionField: {list: '브랜드_전체보기_탑셀러'}, //상품 리스트명
+												products: [
+													{
+														id: prodInfo.productCode, //상품코드
+														name: prodInfo.productName, //상품명
+														brand: prodInfo.productBrandName, //상품 브랜드
+														category: '', //상품 카테고리
+
+														position: 3, //상품 위치
+													},
+												],
+											},
+										},
+									});
+
+									/* Ecommerce data 초기화
+						dataLayer에 남아 있는 경우에는 전자상거래 단계만을 위해 사용하는
+						필드들이 세팅되어 있으므로 undefined를 통해 초기화합니다. */
+									dataLayer.push({
+										layerCategory: undefined,
+										layerAction: undefined,
+										nonInteraction: false,
+										ecommerce: undefined,
+									});
+								}
+							}
+						}
+
+						function getExchangeRate() {
+							$.ajax({
+								type: 'get',
+								url: '/ko/intro/getExchageRate',
+								dataType: 'json',
+								async: true,
+								success: function (result) {
+									if (result.length > 0) {
+										for (var i = 0; i < result.length; i++) {
+											if (result[i].currencyCode == 'USD') {
+												rate_en = result[i].exchangeRate;
+												symbol_en = result[i].symbol;
+											} else {
+												rate_zh = result[i].exchangeRate;
+												symbol_zh = result[i].symbol;
+											}
+										}
+									}
+								},
+							});
+						}
+
+						function getExchangePrice(price) {
+							var exchangePrice = '';
+
+							exchangePrice = '￦' + addComma(price);
+
+							return exchangePrice;
+						}
+
+						function moveBrandLookBook(brandCode) {
+							var url = '/ko/magazine/lookbook';
+							var $form = $('<form></form>');
+							$form.attr('action', url);
+							$form.attr('method', 'post');
+							$form.append(
+								"<input type='hidden' name='CSRFToken' value='13c48883-1706-4f5a-810b-2f670f464334' />"
+							);
+							$form.append(
+								"<input type='hidden' name='paramBrandCode' value='" +
+								brandCode +
+								"' />"
+							);
+							$form.appendTo('body');
+
+							$form.submit();
+						}
+
+						function getEdShopBrand(brandCd) {
+							$.ajax({
+								url: '/ko/ed/getEdShopBrand',
+								type: 'GET',
+								data: {brandCode: brandCd},
+								success: function (data) {
+									var innerHtml = '';
+									if (data != null) {
+										if (data.edBrandSubBrandList.length > 0) {
+											$.each(data.edBrandSubBrandList, function () {
+												innerHtml += '<li class="swiper-slide">';
+												innerHtml +=
+													'    <a href="/ko/c/' +
+													this.edShopBrandCode.toLowerCase() +
+													'/' +
+													this.edShopBrandCode.toLowerCase() +
+													'?subBrand=' +
+													this.edShopSubBrandCode +
+													"\" onclick=\"GA_Event('브랜드_전체보기','브랜드_배너','" +
+													escape(this.edShopSubBrandName) +
+													'\');">';
+												innerHtml += '        <div class="img">';
+												innerHtml +=
+													'            <img src="' +
+													this.imageUrl +
+													'"  alt="" />';
+												innerHtml += '        </div>';
+												innerHtml +=
+													'        <strong class="hel_txt">' +
+													this.edShopSubBrandName +
+													'</strong>';
+												innerHtml += '    </a>';
+												innerHtml += '</li>';
+											});
+
+											$('#edBrandSubBrandArea').append(innerHtml);
+											$('#subBrandBoxWrap').show();
+											initSwiperFn();
+										}
+									}
+								},
+								error: function (request, status, error) {
+									console.log(
+										'code:' +
+										request.status +
+										'\n' +
+										'message:' +
+										request.responseText +
+										'\n' +
+										'error:' +
+										error
+									);
+								},
+							});
+						}
+						function initSwiperFn() {
+							var productSwiper01 = new Swiper('.hs_editshop_list', {
+								slidesPerView: '3.3',
+								freeMode: true,
+								spaceBetween: 10,
+							});
+						}
+					</script>
+
+				
+				<!-- sort_tit -->
+				<div class="sort_tit">
+					<p class="num_txt" id="totalSpan" th:text="${count} + '개'"></p>
+					<div class="hs_tit_select">
+						<select id="st2" title="신상품" onchange="setGAProdSort(this.selectedOptions[0].value);">
+							<option value="NEW">신상품</option>
+							<option value="SALES">판매순</option>
+							<option value="HIGH">고가순</option>
+							<option value="LOW">저가순</option>
+							<option value="REVIEW">평점순</option>
+						</select>
+					</div>
+				</div>
+				<!--// sort_tit -->
+
+
+				<!--// filter_wrap -->
+				<!-- product_list -->
+				<div class="hs_product_list" id="hsProductList">
+					<ul id="listBody">
+					</ul>
+				</div>
+				<!--// product_list -->
+			</div>
+			<!-- //################## contents ################## -->
+			<!-- 레이어 팝업// -->
+			<!-- 필터링 -->
+			<!-- 레이어 팝업// -->
+			<!-- 필터링 -->
+			<div class="hsome_layer_popup product_filter_pop" style="z-index: 1000">
+				<h2 class="pop-comm-ttl">필터링</h2>
+				<div class="pop-comm-cnts fix_btn_wrap">
+					<ul class="ui_toggle toggle_list">
+						<li class="lists">
+							<a href="#" class="toggle_link">색상<span id="colorFilterTitle"
+									style="padding: 0 0 0 15px"></span><span class="arr wid7"></span></a>
+							<div class="toggle_cont" style="display: none">
+								<ul class="hs_color_check_list">
+									<li class="hs_color_check" onclick="filterClick('#clr_BEIGE');">
+										<input class="colorFt" type="checkbox" id="clr_BEIGE" name="BEIGE"
+											onclick="colorFilterClick('BEIGE');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #fae7c4"></span>
+											<span class="txt">BEIGE</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_BLACK');">
+										<input class="colorFt" type="checkbox" id="clr_BLACK" name="BLACK"
+											onclick="colorFilterClick('BLACK');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #000000"></span>
+											<span class="txt">BLACK</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_BLUE');">
+										<input class="colorFt" type="checkbox" id="clr_BLUE" name="BLUE"
+											onclick="colorFilterClick('BLUE');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #0f45bc"></span>
+											<span class="txt">BLUE</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_BROWN');">
+										<input class="colorFt" type="checkbox" id="clr_BROWN" name="BROWN"
+											onclick="colorFilterClick('BROWN');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #673915"></span>
+											<span class="txt">BROWN</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_BURGUNDY');">
+										<input class="colorFt" type="checkbox" id="clr_BURGUNDY" name="BURGUNDY"
+											onclick="colorFilterClick('BURGUNDY');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #741313"></span>
+											<span class="txt">BURGUNDY</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_CAMEL');">
+										<input class="colorFt" type="checkbox" id="clr_CAMEL" name="CAMEL"
+											onclick="colorFilterClick('CAMEL');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #876c41"></span>
+											<span class="txt">CAMEL</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_GOLD');">
+										<input class="colorFt" type="checkbox" id="clr_GOLD" name="GOLD"
+											onclick="colorFilterClick('GOLD');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #ffc733"></span>
+											<span class="txt">GOLD</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_GREEN');">
+										<input class="colorFt" type="checkbox" id="clr_GREEN" name="GREEN"
+											onclick="colorFilterClick('GREEN');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #0f6f0e"></span>
+											<span class="txt">GREEN</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_GREY');">
+										<input class="colorFt" type="checkbox" id="clr_GREY" name="GREY"
+											onclick="colorFilterClick('GREY');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #444445"></span>
+											<span class="txt">GREY</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_IVORY');">
+										<input class="colorFt" type="checkbox" id="clr_IVORY" name="IVORY"
+											onclick="colorFilterClick('IVORY');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #fff8d9"></span>
+											<span class="txt">IVORY</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_KHAKI');">
+										<input class="colorFt" type="checkbox" id="clr_KHAKI" name="KHAKI"
+											onclick="colorFilterClick('KHAKI');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #465626"></span>
+											<span class="txt">KHAKI</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_LAVENDER');">
+										<input class="colorFt" type="checkbox" id="clr_LAVENDER" name="LAVENDER"
+											onclick="colorFilterClick('LAVENDER');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #9c81bb"></span>
+											<span class="txt">LAVENDER</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_METAL');">
+										<input class="colorFt" type="checkbox" id="clr_METAL" name="METAL"
+											onclick="colorFilterClick('METAL');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #9d9fa2"></span>
+											<span class="txt">METAL</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_MINT');">
+										<input class="colorFt" type="checkbox" id="clr_MINT" name="MINT"
+											onclick="colorFilterClick('MINT');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #95d0ab"></span>
+											<span class="txt">MINT</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_MULTI');">
+										<input class="colorFt" type="checkbox" id="clr_MULTI" name="MULTI"
+											onclick="colorFilterClick('MULTI');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #534741"></span>
+											<span class="txt">MULTI</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_NAVY');">
+										<input class="colorFt" type="checkbox" id="clr_NAVY" name="NAVY"
+											onclick="colorFilterClick('NAVY');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #061836"></span>
+											<span class="txt">NAVY</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_OLIVE');">
+										<input class="colorFt" type="checkbox" id="clr_OLIVE" name="OLIVE"
+											onclick="colorFilterClick('OLIVE');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #5d682d"></span>
+											<span class="txt">OLIVE</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_ORANGE');">
+										<input class="colorFt" type="checkbox" id="clr_ORANGE" name="ORANGE"
+											onclick="colorFilterClick('ORANGE');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #ee6423"></span>
+											<span class="txt">ORANGE</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_PINK');">
+										<input class="colorFt" type="checkbox" id="clr_PINK" name="PINK"
+											onclick="colorFilterClick('PINK');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #ea589b"></span>
+											<span class="txt">PINK</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_PURPLE');">
+										<input class="colorFt" type="checkbox" id="clr_PURPLE" name="PURPLE"
+											onclick="colorFilterClick('PURPLE');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #833b95"></span>
+											<span class="txt">PURPLE</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_RED');">
+										<input class="colorFt" type="checkbox" id="clr_RED" name="RED"
+											onclick="colorFilterClick('RED');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #ec1e24"></span>
+											<span class="txt">RED</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_SILVER');">
+										<input class="colorFt" type="checkbox" id="clr_SILVER" name="SILVER"
+											onclick="colorFilterClick('SILVER');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #c0c0c0"></span>
+											<span class="txt">SILVER</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_SKY');">
+										<input class="colorFt" type="checkbox" id="clr_SKY" name="SKY"
+											onclick="colorFilterClick('SKY');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #a2d6f3"></span>
+											<span class="txt">SKY</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_VIOLET');">
+										<input class="colorFt" type="checkbox" id="clr_VIOLET" name="VIOLET"
+											onclick="colorFilterClick('VIOLET');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #4c2b7b"></span>
+											<span class="txt">VIOLET</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_WHITE');">
+										<input class="colorFt" type="checkbox" id="clr_WHITE" name="WHITE"
+											onclick="colorFilterClick('WHITE');" />
+										<label style="cursor: pointer">
+											<span class="color white" style="background: #ffffff"></span>
+											<span class="txt">WHITE</span>
+										</label>
+									</li>
+									<li class="hs_color_check" onclick="filterClick('#clr_YELLOW');">
+										<input class="colorFt" type="checkbox" id="clr_YELLOW" name="YELLOW"
+											onclick="colorFilterClick('YELLOW');" />
+										<label style="cursor: pointer">
+											<span class="color" style="background: #ffea0a"></span>
+											<span class="txt">YELLOW</span>
+										</label>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="lists">
+							<a href="#" class="toggle_link">사이즈<span id="sizeFilterTitle"
+									style="padding: 0 0 0 15px"></span><span class="arr wid7"></span></a>
+							<div class="toggle_cont pd2" style="">
+								<ul class="hs_box_check_list">
+									<li class="hs_box_check" onclick="filterClick('#sz_XXXS');">
+										<input class="sizeFt" type="checkbox" id="sz_XXXS" name="XXXS"
+											onclick="sizeFilterClick('XXXS');" />
+										<label style="cursor: pointer">XXXS</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_XXS');">
+										<input class="sizeFt" type="checkbox" id="sz_XXS" name="XXS"
+											onclick="sizeFilterClick('XXS');" />
+										<label style="cursor: pointer">XXS</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_XS');">
+										<input class="sizeFt" type="checkbox" id="sz_XS" name="XS"
+											onclick="sizeFilterClick('XS');" />
+										<label style="cursor: pointer">XS</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_S');">
+										<input class="sizeFt" type="checkbox" id="sz_S" name="S"
+											onclick="sizeFilterClick('S');" />
+										<label style="cursor: pointer">S</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_M');">
+										<input class="sizeFt" type="checkbox" id="sz_M" name="M"
+											onclick="sizeFilterClick('M');" />
+										<label style="cursor: pointer">M</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_L');">
+										<input class="sizeFt" type="checkbox" id="sz_L" name="L"
+											onclick="sizeFilterClick('L');" />
+										<label style="cursor: pointer">L</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_XL');">
+										<input class="sizeFt" type="checkbox" id="sz_XL" name="XL"
+											onclick="sizeFilterClick('XL');" />
+										<label style="cursor: pointer">XL</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_XXL');">
+										<input class="sizeFt" type="checkbox" id="sz_XXL" name="XXL"
+											onclick="sizeFilterClick('XXL');" />
+										<label style="cursor: pointer">XXL</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_XXXL');">
+										<input class="sizeFt" type="checkbox" id="sz_XXXL" name="XXXL"
+											onclick="sizeFilterClick('XXXL');" />
+										<label style="cursor: pointer">XXXL</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_XXXXL');">
+										<input class="sizeFt" type="checkbox" id="sz_XXXXL" name="XXXXL"
+											onclick="sizeFilterClick('XXXXL');" />
+										<label style="cursor: pointer">XXXXL</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_FREE');">
+										<input class="sizeFt" type="checkbox" id="sz_FREE" name="FREE"
+											onclick="sizeFilterClick('FREE');" />
+										<label style="cursor: pointer">FREE</label>
+									</li>
+									<li class="hs_box_check" onclick="filterClick('#sz_ETC');">
+										<input class="sizeFt" type="checkbox" id="sz_ETC" name="ETC"
+											onclick="sizeFilterClick('ETC');" />
+										<label style="cursor: pointer">ETC</label>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="lists">
+							<a href="#" class="toggle_link">가격<span id="priceFilterTitle"
+									style="padding: 0 0 0 15px"></span><span class="arr wid7"></span></a>
+							<div class="toggle_cont" style="">
+								<ul class="hs_check_list">
+									<li class="hs_check01" style="cursor: pointer" onclick="filterClick('#price01');">
+										<input class="priceFt" type="checkbox" style="cursor: pointer" id="price01"
+											name="price01" onclick="priceFilterClick('1','￦100,000 이하');" />
+										<label style="cursor: pointer">￦100,000 이하</label>
+									</li>
+									<li class="hs_check01" style="cursor: pointer" onclick="filterClick('#price02');">
+										<input class="priceFt" type="checkbox" style="cursor: pointer" id="price02"
+											name="price02" onclick="priceFilterClick('2','￦100,000 ~ ￦300,000');" />
+										<label style="cursor: pointer">￦100,000 ~ ￦300,000</label>
+									</li>
+									<li class="hs_check01" style="cursor: pointer" onclick="filterClick('#price03');">
+										<input class="priceFt" type="checkbox" style="cursor: pointer" id="price03"
+											name="price03" onclick="priceFilterClick('3','￦300,000 ~ ￦500,000');" />
+										<label style="cursor: pointer">￦300,000 ~ ￦500,000</label>
+									</li>
+									<li class="hs_check01" style="cursor: pointer" onclick="filterClick('#price04');">
+										<input class="priceFt" type="checkbox" style="cursor: pointer" id="price04"
+											name="price04" onclick="priceFilterClick('4','￦500,000 ~ ￦1,000,000');" />
+										<label style="cursor: pointer">￦500,000 ~ ￦1,000,000</label>
+									</li>
+									<li class="hs_check01" style="cursor: pointer" onclick="filterClick('#price05');">
+										<input class="priceFt" type="checkbox" style="cursor: pointer" id="price05"
+											name="price05" onclick="priceFilterClick('5','￦1,000,000 이상');" />
+										<label style="cursor: pointer">￦1,000,000 이상</label>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+					<div class="hs_btm_btnwrap">
+						<button type="button" class="hs_btm_btn gray" onclick="filterResetBtnClick();">
+							초기화
+						</button>
+						<button type="button" class="hs_btm_btn black" onclick="filterApply();">
+							적용
+						</button>
+					</div>
+				</div>
+				<a href="#" class="pop-comm-cls" id="filterLayerPopupClose">닫기</a>
+			</div>
+			<!--// 필터링 -->
+			<!-- //레이어 팝업 -->
+			<!--// 필터링 -->
+
+			<!-- //레이어 팝업 -->
+			<script type="text/javascript">
+				//<![CDATA[
+				var height = 20;
+				var num = 0;
+				var max = height * num;
+				var move = 0;
+				var lastChild;
+				var notiCnt = 0;
+				var curTabId = 0;
+
+				$(document).ready(function () {
+					//자동로그인
+
+					var ssoUrl =
+						'https://sso.h-point.co.kr:29865' + '/co/setSsoReqJSONP.hd';
+					//gfnSsoReqAjax(ssoUrl, hpAutoLogin);
+
+					$('.chatbotlink').click(function () {
+						callChatbot();
+					});
+
+					// 2022.03.29 푸터 공지사항 추가
+					getFooterNotices('/ko/svcenter');
+				});
+
+
+
+
+
+
+
+				//app 언어설정창 추가
+				function selectLangChg(obj) { }
+
+				//외부 브라우저로 링크 열기
+				function callWebBrowser() {
+					var appYn = 'N';
+					if (getCookie('app') == null || getCookie('app') == '') {
+						//
+					} else {
+						// 앱 접속일 경우 앱 여부 Y
+						appYn = 'Y';
+					}
+					var appOs = '';
+
+					if (appYn == 'Y') {
+						if (appOs == 'ios') {
+							webkit.messageHandlers.callWebBrowser.postMessage(
+								'http://www.naver.com'
+							);
+						} else {
+							Android.callWebBrowser('http://www.naver.com');
+						}
+					}
+				}
+
+				/************************Footer Notice Start*********************/
+				function getFooterNotices(moveUrl) {
+					to_date = new Date();
+					$.ajax({
+						type: 'get',
+						url: moveUrl + '/getFooterNotices?now=' + to_date.getTime(),
+						dataType: 'json',
+						error: function (request, status, error) {
+							console.log(error);
+						},
+						success: function (data) {
+							notiCnt = data.length;
+							var noticeContent = '';
+							//var viewCnt = 0;
+							$.each(data, function () {
+								//if(viewCnt < 4){
+								var listTag = '<li>';
+								listTag +=
+									'<a href="' +
+									moveUrl +
+									'/mobilenotice?noticeCode=' +
+									this.pk +
+									'">' +
+									this.subject +
+									'</a>';
+								listTag += '</li>';
+
+								noticeContent += listTag;
+								//viewCnt++;
+								//}
+							});
+
+							$('.notice-wrap').html(noticeContent);
+						},
+					});
+				}
+          /**********************Footer Notice End****************************/
+          //]]>
+			</script>
+			<script>
+				$(window).load(function () {
+					function noticeRolling() {
+						if (notiCnt > 1) {
+							height = 20;
+							num = notiCnt;
+							max = height * num;
+							move += height;
+
+							//메인여부 체크(메인진입시 1개, 메인탭별 푸터 진입시 1개씩 추가)
+							if ($('.notice-wrap').length > 1) {
+								$('#topNav1909 li').each(function (index) {
+									if ($(this).hasClass('on')) {
+										curTabId = index;
+									}
+								});
+								$('footer#footer' + curTabId + ' .notice-wrap').animate(
+									{top: -move},
+									600,
+									function () {
+										if (move >= max) {
+											$(this).css('top', 0);
+											move = 0;
+										}
+									}
+								);
+							} else {
+								$('.notice-wrap').animate({top: -move}, 600, function () {
+									if (move >= max) {
+										$(this).css('top', 0);
+										move = 0;
+									}
+								});
+							}
+						}
+					}
+					noticeRollingOff = setInterval(noticeRolling, 3000);
+
+					//메인여부 체크(메인진입시 1개, 메인탭별 푸터 진입시 1개씩 추가)
+					if ($('.notice-wrap').length > 1) {
+						$('#topNav1909 li').each(function (index) {
+							if ($(this).hasClass('on')) {
+								curTabId = index;
+							}
+						});
+						$('footer#footer' + curTabId + ' .notice-wrap').append(
+							$('footer#footer' + curTabId + ' .notice-wrap li')
+								.first()
+								.clone()
+						);
+					} else {
+						$('.notice-wrap').append($('.notice-wrap li').first().clone());
+					}
+				});
+			</script>
+			<form id="autologinForm" name="autologinForm" action="/ko/hp/autologin" method="get">
+				<input type="hidden" name="hcid" id="hcid" value="e2gaf@naver.com" />
+			</form>
+			<!-- ################## footer ################## -->
+			<!-- 푸터 공지 추가 220404 -->
+			<footer id="footer" class="hsome_footer new181127 footer_kr" style="display: none">
+				<div class="main-notice">
+					<div class="tit-notice">공지</div>
+					<div class="list-notice">
+						<ul class="notice-wrap" style="top: 0px">
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804711092144">[당첨자 발표] 2023 신년 기프트 향수 이벤트
+									당첨자 발표</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804547317680">[당첨자 발표] 1월 뷰티 릴레이 체험단
+									당첨</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804678520752">[당첨자 발표] 핸썸TV 더한섬닷컴 설선물 라이브
+									방송(1/17)
+									사은품 및 스페셜 마일리지 당첨자 발표</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804678487984">결제완료(주문완료) 페이지 오류 안내</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804711092144">[당첨자 발표] 2023 신년 기프트 향수 이벤트
+									당첨자 발표</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804711092144">[당첨자 발표] 2023 신년 기프트 향수 이벤트
+									당첨자 발표</a>
+							</li>
+						</ul>
+					</div>
+					<div class="btn-more">
+						<a href="/ko/svcenter/mobilenotice"><img
+								src="http://cdn.thehandsome.com/_ui/handsomemobile/images/main/btn_arr_notice.png"
+								alt="" /></a>
+					</div>
+				</div>
+				<div class="f_wrap">
+					<div class="f_menu re1911">
+						<!-- 수정 190207 -->
+						<ul class="top_line">
+							<li><a href="#"></a></li>
+							<li>
+								<a href="/ko/member/login" class="login" style="float: left"
+									onclick="GA_Event('공통', '푸터_메뉴', '로그인');">로그인
+									<!--로그인-->
+								</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilemain?uiel=Mobile" class="customer"
+									style="float: left; width: 32%" onclick="GA_Event('공통', '푸터_메뉴', '고객센터');">고객센터
+									<!--고객센터-->
+								</a>
+							</li>
+							<li>
+								<a href="/ko/store-finder/storeInformation?uiel=Mobile" class="storeinfo"
+									style="float: left" onclick="GA_Event('공통', '푸터_메뉴', '매장안내');">매장안내</a>
+							</li>
+						</ul>
+						<ul class="btm_line1911">
+							<li>
+								<a href="/ko/svcenter/theClubInfo?uiel=Mobile" class="memberBenefit"
+									style="float: left; letter-spacing: -1px"
+									onclick="GA_Event('공통', '푸터_메뉴', '한섬 회원 혜택');">한섬 회원 혜택
+									<!-- 한섬 회원 혜택 -->
+								</a>
+							</li>
+							<li>
+								<a href="http://www.handsome.co.kr/ko/company/aboutHandsome.do?leng=ko" target="_blank"
+									style="float: left; letter-spacing: -1px"
+									onclick="GA_Event('공통', '푸터_메뉴', '회사소개');">회사소개</a>
+							</li>
+							<li id="family_site">
+								<span class="language family_site1911 for_iph_css1911"
+									onclick="familySiteSelect();GA_Event('공통', '푸터_CNT', 'FAMILYSITE');">FAMILY
+									SITE&nbsp;</span>
+							</li>
+						</ul>
+						<!-- 챗봇 테스트 -->
+					</div>
+
+					<div class="f_sns">
+						<a href="javascript:noLink();"
+							onclick="GA_Event('공통', '푸터_SNS', 'INSTAGRAM');window.open('https://instagram.com/thehandsome_official/','instagram');return false"
+							class="ist">인스타그램</a>
+						<a href="javascript:noLink();"
+							onclick="GA_Event('공통', '푸터_SNS', 'YOUTUBE');window.open('https://www.youtube.com/channel/UC0fmjgbVA8iZrPbIR3dppUQ','youtube');return false"
+							class="ytb">유튜브</a>
+					</div>
+					<div class="f_policy">
+						<a href="/ko/footer/footerTermBusiness?uiel=Mobile">서비스이용약관</a>
+						<a href="/ko/footer/footerPrivacy?uiel=Mobile" style="font-weight: bold">개인정보처리방침</a>
+
+						<!-- web -->
+						<!-- 180706 추가// -->
+						<span class="language">
+							<select id="footerSelectLang" onchange="if(this.value) language(this.value);"
+								onclick="GA_Event('공통', '푸터_CNT', 'LANGUAGE');">
+								<option value="" selected="selected" disabled="" hidden="">
+									LANGUAGE
+								</option>
+								<option value="ko">한국어</option>
+								<option value="en">ENGLISH</option>
+								<option value="zh">中文</option>
+							</select>
+						</span>
+						<!-- //180706 추가 -->
+					</div>
+
+					<div class="f_copyright">
+						COPYRIGHT © 2018 HANDSOME. ALL RIGHT RESERVED
+					</div>
+
+					<a href="javascript:noLink();" class="f_info_viewer" onclick="GA_Event('공통', '푸터_CNT', 'INFO');">
+						<span class="f-txt">(주) 한섬 </span>
+						<span class="f-logo"><img
+								src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/mob-footer-handsome-logo.png"
+								alt="" /></span>
+					</a>
+
+					<div class="f_info">
+						<div class="corp">
+							대표이사 : 김민덕 | 서울시 강남구 도산대로 523 한섬빌딩<br />TEL
+							: 1800-5700 (유료) | FAX : 02-6078-2856 <br />개인정보보호책임자
+							: 윤인수 | 호스팅서비스 : (주) 한섬<br />사업자등록번호 :
+							120-81-26337<br />통신판매업신고번호 : 제 2009-서울강남-00826호
+						</div>
+						<div class="link">
+							<a href="https://recruit.ehyundai.com/recruit-info/announcement/list.nhd?pageNo=1&amp;hireGb=01&amp;coCd=HDHAN"
+								target="_blank" onclick="GA_Event('공통', '푸터_CNT', 'INFO_채용정보');">채용정보</a>
+							<a href="http://www.handsome.co.kr/ko/sustainability/sharedGrowth01.do" target="_blank"
+								onclick="GA_Event('공통', '푸터_CNT', 'INFO_동반성장');">동반성장</a>
+							<a href="http://www.handsome.co.kr/ko/sustainability/ecoFriendly01.do" target="_blank"
+								onclick="GA_Event('공통', '푸터_CNT', 'INFO_환경경영');">환경경영</a>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!-- // 푸터 공지 추가 220404 -->
+			<!-- //################## footer ################## -->
+		</div>
+	</div>
+	<!-- ################## //hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
+	<a href="noLink();" class="hsome_topBtn active upper" id="handsomeTopBtn">mobile.bottom.top</a><!-- 20180530 추가 -->
+
+	<aside class="hsome_quickMenu hsome_quickMenu1909 active">
+		<ul>
+			<li class="shop active">
+				<a href="/ko/mobilecommon/navShop" onclick="GA_Event('카테고리_리스트', '헤더', '샵');"><i>메뉴</i></a>
+			</li>
+			<li class="sns">
+				<a href="/ko/sns/main" onclick="GA_Event('공통', '네비게이션_바', '타임라인');"><i>스타일 LIVE</i></a>
+			</li>
+			<li class="home">
+				<a href="javascript:noLink();" onclick="goMainpage();GA_Event('공통', '네비게이션_바', '홈');"><i>홈</i></a>
+			</li>
+			<li class="myheart" id="gnbMyheartBtn">
+				<a href="/ko/mypage/myWish" onclick="GA_Event('공통', '네비게이션_바', '마이하트');"><i>마이하트</i></a>
+			</li>
+			<li class="mypage" id="gnbMyPageBtn">
+				<a href="javascript:noLink();" onclick="goMypage();GA_Event('공통', '네비게이션_바', '마이페이지');"><i>마이페이지</i></a>
+			</li>
+			<li class="mypage pageMove" style="display: none">
+				<a href="/ko/member/login" id="gnbMypageBtn"></a>
+			</li>
+			<li class="mypage" style="display: none">
+				<a href="/ko/mobilecommon/myPagePopup" id="gnbMypagePopupBtn"></a>
+			</li>
+		</ul>
+	</aside>
+	<!-- ################## //hsome_quickMenu | 퀵메뉴 ################## -->
+
+	<div class="fixed_dim_layer" onclick="familySiteSelectClosed();"></div>
+	<div class="family_site_popup_191108">
+		<ul>
+			<li>
+				<a href="http://m.hfashionmall.com/sfmmbl/mbl/main.do" target="_blank"
+					onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_H패션몰');">H패션몰
+					<!-- H패션몰 -->
+				</a>
+			</li>
+			<li>
+				<a href="https://m.hyundaihmall.com/front/index.do" target="_blank"
+					onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_현대홈쇼핑');">현대홈쇼핑
+					<!-- (주)현대홈쇼핑 -->
+				</a>
+			</li>
+			<li>
+				<a href="https://m.thehyundai.com/Home.html" target="_blank"
+					onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_더현대닷컴');">더현대닷컴
+					<!-- 더현대닷컴 -->
+				</a>
+			</li>
+			<li>
+				<a href="http://mall.hyundailivart.co.kr/front/index_org.lv" target="_blank"
+					onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_현대리바트');">현대리바트
+					<!-- (주)현대 리바트 -->
+				</a>
+			</li>
+			<li>
+				<a href="https://www.h-point.co.kr/cu/main/index.nhd" target="_blank"
+					onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_H.Point');">H.Point</a>
+			</li>
+			<li>
+				<a href="http://www.ehyundai.com/newPortal/ir/main.do" target="_blank"
+					onclick="GA_Event('공통', '푸터_CNT', 'FAMILYSITE_현대백화점그룹');">현대백화점그룹
+					<!-- 현대백화점 그룹 -->
+				</a>
+			</li>
+		</ul>
+		<a href="#;" class="family_site_popup_close" onclick="familySiteSelectClosed();">닫기
+			<!-- 닫기 -->
+		</a>
+	</div>
+	<!-- ################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+	<div class="hsome_quickMenu_contents"></div>
+	<!-- //################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
+
+	<script type="text/javascript">
+		$(document).ready(function () {
+			if (false) {
+				$('#cateTab').click();
+			}
+		});
+
+		function closeAction() {
+			$('.twoDepthNavPopup').hide();
+			$('.one_lists.on').toggleClass('on');
+		}
+	</script>
+	<div class="hsome_layer_popup hs_brand_category_pop2 multibrd-category-pop blk">
+		<h2 class="pop-comm-ttl">편집샵</h2>
+		<ul class="ui_tab hs_red_border_tab size02">
+			<li class="on">
+				<a href="#brand_tab" id="brandTab" onclick="GA_Event('편집샵_카테고리','1DEPTH','브랜드');">브랜드</a>
+			</li>
+			<li>
+				<a href="#category_tab" id="cateTab" onclick="GA_Event('편집샵_카테고리','1DEPTH','카테고리');">카테고리</a>
+			</li>
+			<li class="fcs"></li>
+		</ul>
+		<div class="pop-comm-cnts">
+			<div class="tab_cont shop_cont">
+				<!-- 브랜드 -->
+				<div class="cont on" id="brand_tab">
+					<ul class="one_depth brand">
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="javascript:noLink();" class="one_link" id="BR15_oneDepth"
+									onclick="GA_Event('편집샵_카테고리','2DEPTH','TOM GREYHOUND');">TOM GREYHOUND</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_전체보기');">
+										전체보기
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TN" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_TOM GREYHOUND');">
+										TOM GREYHOUND</a>
+									<a href="/ko/c/br15/br15?subBrand=TN" class="ico-pb-all"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_TOM GREYHOUND');">
+										<img src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/ico_pb.png"
+											alt="ico_pb" />
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGGX" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_GANNI');">
+										GANNI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGTM" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_TOTEME');">
+										TOTEME</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TG13" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_R13');">
+										R13</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGOS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_OPERA SPORT');">
+										OPERA SPORT</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGRX" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_REST &amp;amp;amp; RECREATION');">
+										REST &amp; RECREATION</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGDU" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_DUNST');">
+										DUNST</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TG29" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_PUMA');">
+										PUMA</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TG4Q" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_AGOLDE');">
+										AGOLDE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGYY" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_LEE.Y');">
+										LEE.Y</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGDI" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_ADIDAS');">
+										ADIDAS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGGW" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_GLOWNY');">
+										GLOWNY</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGZO" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_MOTHER DENIM');">
+										MOTHER DENIM</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGAL" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_ALIGHIERI');">
+										ALIGHIERI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGED" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_EDMMOND STUDIO');">
+										EDMMOND STUDIO</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGSK" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_SHOREDITCH SKI CLUB');">
+										SHOREDITCH SKI CLUB</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGJF" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_JAMES PERSE');">
+										JAMES PERSE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGVL" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_MUVEIL');">
+										MUVEIL</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGWD" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_WILD DONKEY');">
+										WILD DONKEY</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGRT" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_RUE MADAM PARIS');">
+										RUE MADAM PARIS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGSL" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_SELETTI');">
+										SELETTI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGCP" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_ROHE');">
+										ROHE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGHK" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_HVISK');">
+										HVISK</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGX3" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_XIRENA');">
+										XIRENA</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGOR" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_WEHOURS');">
+										WEHOURS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGD6" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_DROGHERIA CRIVELLINI');">
+										DROGHERIA CRIVELLINI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGHC" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_HOTEL CERRITOS');">
+										HOTEL CERRITOS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br15/br15?subBrand=TGRR" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','TOM GREYHOUND_RECREATIONAL HABITS');">
+										RECREATIONAL HABITS</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="javascript:noLink();" class="one_link" id="BR35_oneDepth"
+									onclick="GA_Event('편집샵_카테고리','2DEPTH','FOURM THE STORE');">FOURM THE STORE</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_전체보기');">
+										전체보기
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YN" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_FOURM THE STORE');">
+										FOURM THE STORE</a>
+									<a href="/ko/c/br35/br35?subBrand=YN" class="ico-pb-all"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_FOURM THE STORE');">
+										<img src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/ico_pb.png"
+											alt="ico_pb" />
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSZS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_SAINT JAMES');">
+										SAINT JAMES</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSZO" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_MOTHER DENIM');">
+										MOTHER DENIM</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSNS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_RE/DONE');">
+										RE/DONE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSHS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_HOUSE OF SUNNY');">
+										HOUSE OF SUNNY</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSFE" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_FRAME');">
+										FRAME</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSJS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_JOSHUA SANDERS');">
+										JOSHUA SANDERS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSRP" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_REPLUME');">
+										REPLUME</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSEK" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_EENK');">
+										EENK</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSAB" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_ANINE BING');">
+										ANINE BING</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSFS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_FRONT STREET 8');">
+										FRONT STREET 8</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSKA" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_KARHU');">
+										KARHU</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSVJ" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_VEJA');">
+										VEJA</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YS46" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_JUMPER 1234');">
+										JUMPER 1234</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSRT" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_ROTATE');">
+										ROTATE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YS4D" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_GRLFRND');">
+										GRLFRND</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSTC" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_TACH CLOTHING');">
+										TACH CLOTHING</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSOS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_OSOI');">
+										OSOI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSML" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_MADLUV');">
+										MADLUV</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YS8B" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_JAMIE WANDER');">
+										JAMIE WANDER</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSND" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_BONNE MAISON');">
+										BONNE MAISON</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSOT" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_ROSEANNA');">
+										ROSEANNA</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSGS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_GCDS');">
+										GCDS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSTB" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_KSUBI');">
+										KSUBI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSKT" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_KITRI');">
+										KITRI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YS4Q" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_AGOLDE');">
+										AGOLDE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSPD" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_PAIRS DELI&amp;amp;amp;GROCERY');">
+										PAIRS DELI&amp;GROCERY</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSF5" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_FIORUCCI');">
+										FIORUCCI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSRX" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_RIXO');">
+										RIXO</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSHO" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_HOLZWEILER');">
+										HOLZWEILER</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSGR" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_G KERO');">
+										G KERO</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSGE" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_GESTUZ');">
+										GESTUZ</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSET" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_ETRE CECILE');">
+										ETRE CECILE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSPA" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_PAIRS');">
+										PAIRS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br35/br35?subBrand=YSIP" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM THE STORE_IPANEMA');">
+										IPANEMA</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="javascript:noLink();" class="one_link" id="BR30_oneDepth"
+									onclick="GA_Event('편집샵_카테고리','2DEPTH','FOURM STUDIO');">FOURM STUDIO</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_전체보기');">
+										전체보기
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CN" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_FOURM STUDIO');">
+										FOURM STUDIO</a>
+									<a href="/ko/c/br30/br30?subBrand=CN" class="ico-pb-all"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_FOURM STUDIO');">
+										<img src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/ico_pb.png"
+											alt="ico_pb" />
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CS71" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_LE17SEPTEMBRE');">
+										LE17SEPTEMBRE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSMG" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_MARGESHERWOOD');">
+										MARGESHERWOOD</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSMS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_MATIAS');">
+										MATIAS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CS51" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_REJINA PYO');">
+										REJINA PYO</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSLV" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_LVIR');">
+										LVIR</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSZ8" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_ERIKA CAVALLINI');">
+										ERIKA CAVALLINI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSMJ" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_MIJEONG PARK');">
+										MIJEONG PARK</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSNL" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_NEUL');">
+										NEUL</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSLE" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_LEMELS');">
+										LEMELS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSGM" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_GREY MANSION');">
+										GREY MANSION</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSLS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_LSA INTERNATIONAL');">
+										LSA INTERNATIONAL</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSCS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_CA4LA');">
+										CA4LA</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSCT" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_CATERINA BERTINI');">
+										CATERINA BERTINI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSHY" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_HAY');">
+										HAY</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSMZ" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_MAISON LOUIS MARIE');">
+										MAISON LOUIS MARIE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSCZ" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_CRYSTAL HAZE');">
+										CRYSTAL HAZE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSD7" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_ALLUDE');">
+										ALLUDE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSIN" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_INOUI EDITION');">
+										INOUI EDITION</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br30/br30?subBrand=CSGG" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM STUDIO_GI&amp;#039;N&amp;#039;GI');">
+										GI'N'GI</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="javascript:noLink();" class="one_link" id="BR32_oneDepth"
+									onclick="GA_Event('편집샵_카테고리','2DEPTH','FOURM MEN&amp;#039;S LOUNGE');">FOURM MEN'S
+									LOUNGE</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_전체보기');">
+										전체보기
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSPO" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_POP TRADING COMPANY');">
+										POP TRADING COMPANY</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSSS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_STANCE SEOUL');">
+										STANCE SEOUL</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSRN" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_NORTH WORKS');">
+										NORTH WORKS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HS0T" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_WILD DONKEY');">
+										WILD DONKEY</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSXQ" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_JOHNSTONS OF ELGIN');">
+										JOHNSTONS OF ELGIN</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSXY" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_BEGG x CO');">
+										BEGG x CO</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSKA" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_KASSIOPEA');">
+										KASSIOPEA</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSOC" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_OROBIANCO');">
+										OROBIANCO</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSXV" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_MADOVA');">
+										MADOVA</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSHN" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_HOWLIN');">
+										HOWLIN</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSBE" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_BEARBRICK');">
+										BEARBRICK</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSPT" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_PHILIPPE AUDIBERT');">
+										PHILIPPE AUDIBERT</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSIN" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_INOUITOOSH');">
+										INOUITOOSH</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HS2K" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_KARHU');">
+										KARHU</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSMH" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_MARSHALL');">
+										MARSHALL</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br32/br32?subBrand=HSPE" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','FOURM MEN&amp;#039;S LOUNGE_PUEBCO');">
+										PUEBCO</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="javascript:noLink();" class="one_link" id="BR16_oneDepth"
+									onclick="GA_Event('편집샵_카테고리','2DEPTH','MUE');">MUE</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_전체보기');">
+										전체보기
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MU5E" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_ESSENTIALS | Fear of God');">
+										ESSENTIALS | Fear of God</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MUT0" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_AUTRY');">
+										AUTRY</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MUMY" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_MIHARA YASUHIRO');">
+										MIHARA YASUHIRO</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MU0P" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_MUSEUM OF PEACE&amp;amp;QUIET');">
+										MUSEUM OF PEACE&amp;QUIET</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MUJ9" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_JACQUEMUS');">
+										JACQUEMUS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MU0H" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_HOMME GIRLS');">
+										HOMME GIRLS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MUUN" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_EMOTIONALLY UNAVAILABLE');">
+										EMOTIONALLY UNAVAILABLE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MUYX" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_KHAITE');">
+										KHAITE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MUGF" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_GALLERY DEPARTMENT');">
+										GALLERY DEPARTMENT</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MU7M" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_MARINE SERRE');">
+										MARINE SERRE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MU6O" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_MM6 MAISON MARGIELA');">
+										MM6 MAISON MARGIELA</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MUNS" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_RE/DONE');">
+										RE/DONE</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br16/br16?subBrand=MUP7" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','MUE_PACO RABANNE');">
+										PACO RABANNE</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="javascript:noLink();" class="one_link" id="BR47_oneDepth"
+									onclick="GA_Event('편집샵_카테고리','2DEPTH','H : SCENE');">H : SCENE</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/br47/br47" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','H : SCENE_전체보기');">
+										전체보기
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br47/br47?subBrand=ON" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','H : SCENE_H:SCENE');">
+										H:SCENE</a>
+									<a href="/ko/c/br47/br47?subBrand=ON" class="ico-pb-all"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','H : SCENE_H:SCENE');">
+										<img src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/ico_pb.png"
+											alt="ico_pb" />
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br47/br47?subBrand=ONYN" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','H : SCENE_YUN');">
+										YUN</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br47/br47?subBrand=ONAP" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','H : SCENE_APPEAR SEOUL');">
+										APPEAR SEOUL</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="javascript:noLink();" class="one_link" id="BR62_oneDepth"
+									onclick="GA_Event('편집샵_카테고리','2DEPTH','Liquides Perfume Bar');">Liquides Perfume
+									Bar<img class="icon-new-m"
+										src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common_sub/icon_new_m.png"
+										alt="newIcon" /></a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_전체보기');">
+										전체보기
+									</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62?subBrand=LPBD" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_BDK');">
+										BDK</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62?subBrand=LPCR" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_Carine Roitfeld');">
+										Carine Roitfeld</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62?subBrand=LPDO" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_D&amp;#039;ORSAY');">
+										D'ORSAY</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62?subBrand=LPFR" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_FRAPIN');">
+										FRAPIN</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62?subBrand=LPGB" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_GOLDFIELD &amp;amp; BANKS');">
+										GOLDFIELD &amp; BANKS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62?subBrand=LPOB" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_OBVIOUS');">
+										OBVIOUS</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62?subBrand=LPRF" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_Regime des Fleurs');">
+										Regime des Fleurs</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62?subBrand=LPVG" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_VERONIQUE GABAI');">
+										VERONIQUE GABAI</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/br62/br62?subBrand=LPAM" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','Liquides Perfume Bar_AMEN');">
+										AMEN</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!--// 브랜드 -->
+				<!-- 카테고리 -->
+				<div class="cont" id="category_tab">
+					<ul class="one_depth category">
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="#" class="one_link" onclick="GA_Event('편집샵_카테고리','2DEPTH','여성');">여성</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/we05/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','여성_아우터');">아우터</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/we10/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','여성_니트');">니트</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/we01/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','여성_탑');">탑</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/we04/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','여성_드레스');">드레스</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/we02/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','여성_팬츠');">팬츠</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/we03/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','여성_스커트');">스커트</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/we09/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','여성_SPECIAL SHOP*');">SPECIAL SHOP*</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="#" class="one_link" onclick="GA_Event('편집샵_카테고리','2DEPTH','남성');">남성</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/me03/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','남성_아우터');">아우터</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/me10/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','남성_니트');">니트</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/me01/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','남성_탑');">탑</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/me02/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','남성_팬츠');">팬츠</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="#" class="one_link" onclick="GA_Event('편집샵_카테고리','2DEPTH','잡화');">잡화</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/as01/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','잡화_여성슈즈');">여성슈즈</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/as02/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','잡화_남성슈즈');">남성슈즈</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/as03/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','잡화_여성백');">여성백</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/as04/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','잡화_남성백');">남성백</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/as05/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','잡화_머플러/스카프');">머플러/스카프</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/as06/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','잡화_주얼리');">주얼리</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/as07/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','잡화_기타 ACC');">기타 ACC</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="#" class="one_link" onclick="GA_Event('편집샵_카테고리','2DEPTH','뷰티');">뷰티</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/be03/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','뷰티_바디/헤어케어');">바디/헤어케어</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/be04/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','뷰티_향수');">향수</a>
+								</li>
+							</ul>
+						</li>
+						<li class="one_lists">
+							<div class="one_wrap">
+								<a href="#" class="one_link"
+									onclick="GA_Event('편집샵_카테고리','2DEPTH','라이프스타일');">라이프스타일</a>
+							</div>
+							<ul class="two_depth twoDepthNavPopup">
+								<li class="two_lists">
+									<a href="/ko/c/ls01/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','라이프스타일_홈');">홈</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/ls02/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','라이프스타일_배스');">배스</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/ls03/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','라이프스타일_키친');">키친</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/ls04/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','라이프스타일_데스크');">데스크</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/ls06/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','라이프스타일_키즈');">키즈</a>
+								</li>
+								<li class="two_lists">
+									<a href="/ko/c/ls05/ed" class="two_link"
+										onclick="GA_Event('편집샵_카테고리','3DEPTH','라이프스타일_펫');">펫</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<!--// 카테고리 -->
+			</div>
+		</div>
+		<a href="javascript:noLink();" onclick="closeAction();" class="pop-comm-cls">닫기</a>
+	</div>
+
+	<script>
+		//if(handsomePageId == "productList" && getCookie("handsomeproductback") == "Y") {
+		//window.history.back();
+		//}
+
+		$(document).ready(function () {
+			var appVersionCheckOS = getCookie('app');
+			var appVersionCheckVer = getCookie('appVer');
+			if (
+				(appVersionCheckOS == 'ios' && appVersionCheckVer.startsWith('1.')) ||
+				(appVersionCheckOS == 'android' && appVersionCheckVer < 43)
+			) {
+				location.href = '/ko/mobilecommon/appDownload';
+				return;
+			}
+
+			var todayDate = new Date();
+
+			if (getCookie('mainNoticeWrapKo') != todayDate.getDate()) {
+				var innerHtml = '';
+				innerHtml +=
+					'<div class="notice_pop" id="mainNoticeWrap" style="z-index:100000;">                                                                              ';
+				innerHtml +=
+					'    <div class="popwrap_renewal1910" id="mainNoticeWrapKo">                                                                                       ';
+				innerHtml +=
+					'        <div class="pop_cnt">                                                                                                                     ';
+				innerHtml +=
+					'            <h3 class="pop_tlt" style="font-size:20px">                                                                                           ';
+				innerHtml +=
+					'            아이폰 APP <br>                                                                                                                       ';
+				innerHtml +=
+					'            카드결제 불가 안내                                                                                                                    ';
+				innerHtml +=
+					'            </h3>                                                                                                                                 ';
+				innerHtml +=
+					'            <p class="pop_txt">                                                                                                                   ';
+				innerHtml +=
+					'            아이폰 APP 2.2.2 버전에서<br/>일부 결제 오류가 발생하고 있습니다.<br/>(원클릭결제는 정상)<br/><br/>                                   ';
+				innerHtml +=
+					'            2.2.3 버전으로 업데이트 하시면<br/>정상 결제가 가능합니다.<br/>업데이트 후, 결제 진행 부탁드립니다.<br/><br/>                         ';
+				innerHtml +=
+					'            고객님께 불편을 드려 죄송합니다.                                                                                                      ';
+				innerHtml +=
+					'            </p>                                                                                                                                  ';
+				innerHtml +=
+					'        </div>                                                                                                                                    ';
+				innerHtml +=
+					'        <div class="btnwrap">                                                                                                                     ';
+				innerHtml +=
+					'            <input type="button" class="btn stoptoday closeLayerPopup" value="오늘은 그만보기 ">                                                  ';
+				innerHtml +=
+					'            <input type="button" class="btn close closeLayerPopup" value="닫기">                                                                  ';
+				innerHtml +=
+					'        </div>                                                                                                                                    ';
+				innerHtml +=
+					'        <a href="#" class="btn_close closeLayerPopup"></a>                                                                                        ';
+				innerHtml +=
+					'    </div>                                                                                                                                        ';
+				innerHtml += '</div> ';
+				innerHtml +=
+					'<div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:9999;" id="notice_pop_layer"><div style="position:fixed; top:0; left:0; width:100%; height:100%; background:#fff; opacity:0;"></div> </div> ';
+
+				if (appVersionCheckOS == 'ios' && appVersionCheckVer == '2.2.2') {
+					if ('productList' == 'ordersheet' || 'productList' == 'cartPage') {
+						$('.hsome_contents').after(innerHtml);
+						$('#notice_pop_layer').show();
+					}
+				}
+			}
+
+			$('.closeLayerPopup').on('click', function () {
+				$('#notice_pop_layer').hide();
+				if ($(this).hasClass('stoptoday')) {
+					//오늘은 그만보기
+					var todayDate = new Date();
+					var cookieId = $(this).parents('.popwrap_renewal1910').attr('id');
+					setOneDayCookie(cookieId, todayDate.getDate(), 1);
+				}
+				$(this).parents('.popwrap_renewal1910').css('display', 'none');
+			});
+
+			//        else if((appVersionCheckOS == "ios" && "2.0.1".indexOf(appVersionCheckVer)  < 0)
+			//            ||   (appVersionCheckOS == "android" && "44".indexOf(appVersionCheckVer) < 0))
+
+			//        {
+			//            var la = new layerConfirm("새로운 기능이 추가되었습니다.<br>업데이트 하시겠습니까?", "확인", "취소");
+			//            la.cancleAction = function(){//취소 호출 펑션
+			//             };
+
+			//             la.confirmAction = function(){//확인 호출 펑션
+			//                 //location.href = '/ko/mobilecommon/appDownload';
+			//                 goDownload1(appVersionCheckOS);
+			//                 return;
+			//             };
+			//         }
+
+			if (handsomePageId != 'mainIntro') {
+				if ($.cookie('handsomecategorypagecnt') !== null) {
+					$.removeCookie('handsomecategorypagecnt', {path: '/'});
+				}
+				if ($.cookie('handsomecategoryscroll') !== null) {
+					$.removeCookie('handsomecategoryscroll', {path: '/'});
+				}
+				if ($.cookie('handsomelayerscroll') !== null) {
+					$.removeCookie('handsomelayerscroll', {path: '/'});
+				}
+				if (
+					$.cookie('handsomeproductback') !== null &&
+					handsomePageId != 'productList'
+				) {
+					$.removeCookie('handsomeproductback', {path: '/'});
+				}
+				if (
+					$.cookie('handsomecategoryhash') !== null &&
+					!(
+						handsomePageId == 'productList' ||
+						handsomePageId == 'hsProductDetailPage'
+					)
+				) {
+					$.removeCookie('handsomecategoryhash', {path: '/'});
+				}
+			}
+			/* var la = new layerConfirm('메시지','확인 버튼 텍스트','취소 버튼 텍스트');
+	la.cancleAction = function(){//취소 호출 펑션
+	return;
+	};
+	
+	la.confirmAction = function(){//확인 호출 펑션
+	return;
+	}; */
+
+			$(document).on('click', '.set', function () {
+				location.href = '/ko/mypage/configMain';
+			});
+		});
+
+		// 쿠키 생성
+		function setCookie(cName, cValue, cDay) {
+			var expire = new Date();
+			expire.setDate(expire.getDate() + cDay);
+			cookies = cName + '=' + escape(cValue) + '; path=/ ';
+			if (typeof cDay != 'undefined')
+				cookies += ';expires=' + expire.toGMTString() + ';';
+			document.cookie = cookies;
+		}
+
+		//쿠키 삭제
+		function deletecookie(name, pram_searchwords) {
+			var today = new Date();
+			var path = '/ko/';
+			var lastIndex = path.lastIndexOf('/');
+			path = path.substring(0, lastIndex);
+			today.setDate(today.getDate() + -1);
+			document.cookie =
+				name + '=; path=' + path + '; expires=' + today.toGMTString() + ';';
+			$('.' + pram_searchwords).css('display', 'none');
+		}
+
+		function deletecookiePath(name, pram_searchwords, path) {
+			var today = new Date();
+			if (path == '') {
+				path = '/';
+			}
+			today.setDate(today.getDate() + -1);
+			document.cookie =
+				name + '=; path=' + path + '; expires=' + today.toGMTString() + ';';
+			if (pram_searchwords != '') {
+				$('.' + pram_searchwords).css('display', 'none');
+			}
+		}
+
+		//언어설정
+		function language(isoCode) {
+			//같은언어 선택시 문구 비노출
+			if ('ko' == isoCode) {
+				languageProcess(isoCode);
+				$('#footerSelectLang').val('').change();
+			} else {
+				var la = new layerConfirm(
+					'서비스 언어를 변경하시겠습니까?<br/>서비스 언어를 변경하시면 쇼핑백에 담은 상품이 삭제됩니다.',
+					'확인',
+					'취소'
+				);
+				la.confirmAction = function () {
+					//확인 호출 펑션
+					languageProcess(isoCode);
+				};
+
+				la.cancleAction = function () {
+					$('#footerSelectLang').val('').change();
+				};
+
+				$('#confirmCloseDiv').on('click', function () {
+					$('#footerSelectLang').val('').change();
+				});
+			}
+		}
+
+		function languageProcess(isoCode) {
+			gaIsoCodeEncoding(isoCode);
+			if (location.href.indexOf('/handsome/') > -1) {
+				$.ajax({
+					type: 'post',
+					url: '/ko/_s/language' + '?' + 'code=' + isoCode,
+					dataType: 'json',
+					error: function (request, status, error) {
+						console.log(
+							'code:' +
+							request.status +
+							'\n' +
+							'message:' +
+							request.responseText +
+							'\n' +
+							'error:' +
+							error
+						);
+					},
+					success: function (result) {
+						location.href = '/ko/';
+					},
+				});
+			} else {
+				location.href = '/' + isoCode;
+			}
+		}
+
+		function getCSRFToken() {
+			return 'CSRFToken=' + $("#CSRFForm [name='CSRFToken']").first().val();
+		}
+
+		function slideOnMain() {
+			var autocom_swiper = new Swiper('#autocompleteImg', {
+				slidesPerView: 3.333,
+				paginationClickable: false,
+				spaceBetween: '1.5625%',
+				freeMode: true,
+			});
+		}
+
+		//재입고 알림 오픈
+		function getWarehousingPage(productcode, layer) {
+			$.ajax({
+				url: '/ko/p/checkRewareHousing',
+				type: 'GET',
+				dataType: 'json',
+				data: {code: productcode},
+				success: function (data) {
+					if ('N' == data.loginYn) {
+						var la = new layerConfirm(
+							'장시간 사용하지 않아 로그아웃 되었습니다.',
+							'확인',
+							'취소'
+						);
+						la.confirmAction = function () {
+							location.href = '/ko/member/login';
+						};
+					}
+					if (data.rewareHousingUserYn == 'Y') {
+						var lc = new layerAlert(
+							'' +
+							data.userID +
+							'(ID) 로<br/>이미 재입고 알림 신청 이력이 있습니다.<br/>(동일 e-mail)'
+						);
+					} else if (data.rewareHousingYn == 'Y') {
+						var cla = new layerAlert('이미 신청을 완료하였습니다.');
+					} else {
+						if (data.rewareHouseOtherProductYn == 'Y') {
+							var lc = new layerConfirm(
+								'동일상품의 재입고 알림 신청내역이 있습니다.<br/>다른 옵션으로 재입고 알림 신청을<br/>추가하시겠습니까?',
+								'확인',
+								'취소'
+							);
+							lc.confirmAction = function () {
+								layerPopupOpen(
+									'/ko/product/rewarehousing?productcode=' +
+									productcode +
+									'&layer=' +
+									layer,
+									layer,
+									'.hsome_layer_popup.product_warehousing_pop'
+								);
+							};
+						} else {
+							layerPopupOpen(
+								'/ko/product/rewarehousing?productcode=' +
+								productcode +
+								'&layer=' +
+								layer,
+								layer,
+								'.hsome_layer_popup.product_warehousing_pop'
+							);
+						}
+					}
+				},
+			});
+		}
+		//재입고 알림 닫기
+		function warehousingPageClose(layer) {
+			layerPopupClose2(layer, '.hsome_layer_popup.product_warehousing_pop');
+		}
+
+		//상품 검색 오픈
+		function getProductSearchPage() {
+			layerPopupOpen(
+				'/ko/mobilecommon/productsearch',
+				'.hsome_layerpop_contents.lp_depth1',
+				'.layerpop_wrap.lp_cs_qna_search_wrap'
+			);
+		}
+
+		//상품 검색 닫기
+		function productSearchPageClose() {
+			$('.layerpop_wrap.lp_cs_qna_search_wrap .ui_tab').find('.fcs').remove();
+			layerPopupClose(
+				'.hsome_layerpop_contents.lp_depth1',
+				'.layerpop_wrap.lp_cs_qna_search_wrap'
+			);
+			// SNS 댓글의 경우 검색창 닫기 후 댓글창 active
+			if (window.isSnsReplySearchPop) {
+				$('.sns_comment_ipt_pop .sns-comment-ipt').addClass('active');
+			}
+		}
+
+		//상품 검색 오픈
+		function getProductSearchPage2() {
+			layerPopupOpen(
+				'/ko/mobilecommon/productsearch?type=manto',
+				'.hsome_layerpop_contents.lp_depth1',
+				'.layerpop_wrap.lp_cs_qna_search_wrap2'
+			);
+		}
+
+		//상품 검색 닫기
+		function productSearchPageClose2() {
+			layerPopupClose(
+				'.hsome_layerpop_contents.lp_depth1',
+				'.layerpop_wrap.lp_cs_qna_search_wrap2'
+			);
+			// SNS 댓글의 경우 검색창 닫기 후 댓글창 active
+			if (window.isSnsReplySearchPop) {
+				$('.sns_comment_ipt_pop .sns-comment-ipt').addClass('active');
+			}
+		}
+
+		//상품상세 > 상품 검색 오픈
+		function getProductSearchPageOnProductDetail() {
+			layerPopupOpen(
+				'/ko/mobilecommon/productsearch',
+				'.hsome_layerpop_contents.lp_depth2',
+				'.layerpop_wrap.lp_cs_qna_search_wrap'
+			);
+			setTimeout(function () {
+				$(
+					'.hsome_layerpop_contents.lp_depth2 .lyrpp_close.lyrpp_close_stl1'
+				).attr('onclick', 'productSearchPageOnProductDetailClose();');
+			}, 400);
+		}
+
+		//상품 검색 닫기
+		function productSearchPageOnProductDetailClose() {
+			$('.layerpop_wrap.lp_cs_qna_search_wrap .ui_tab').find('.fcs').remove();
+			layerPopupClose(
+				'.hsome_layerpop_contents.lp_depth2',
+				'.layerpop_wrap.lp_cs_qna_search_wrap'
+			);
+			// SNS 댓글의 경우 검색창 닫기 후 댓글창 active
+			if (window.isSnsReplySearchPop) {
+				$('.sns_comment_ipt_pop .sns-comment-ipt').addClass('active');
+			}
+		}
+
+		//레이어 팝업 오픈
+		function layerPopupOpen(url, layer, pop) {
+			$.cookie('handsomelayerscroll', $(document).scrollTop(), {path: '/'});
+			$(layer).addClass('active');
+
+			setTimeout(function () {
+				$('.hsome_allContents').addClass('disabled');
+			}, 300);
+			setTimeout(function () {
+				$(layer).addClass('visible');
+			}, 400);
+
+			//$(layer).html('<img src="http://www.thehandsome.com/_ui/handsomemobile/images/common/ico_loader.gif" alt="loading" class="hsome_quickMenu_loader" />');
+			$(layer).html(
+				'<img src="http://www.thehandsome.com/_ui/handsomemobile/images/common/Spinner-1s-200px.png" alt="loading" class="hsome_quickMenu_loader" />'
+			);
+
+			jQuery.ajax({
+				url: url,
+				data: '',
+				type: 'get',
+				success: function (data) {
+					setTimeout(function () {
+						$(layer).html(data);
+						$(pop).addClass('visible');
+					}, 0);
+					setTimeout(function () {
+						$(pop).addClass('active');
+					}, 0);
+					setTimeout(function () {
+						$(pop).addClass('activated');
+					}, 400);
+				},
+			});
+		}
+
+		//레이어 팝업 닫기
+		function layerPopupClose(layer, pop) {
+			var $popup = $(this).closest(pop);
+			$popup.removeClass('activated');
+			$popup.removeClass('active');
+			setTimeout(function () {
+				$popup.removeClass('visible');
+				$('.hsome_allContents').removeClass('disabled');
+				$(layer).removeClass('active');
+				$(layer).removeClass('visible');
+				if ($.cookie('handsomelayerscroll') !== null) {
+					$(document).scrollTop(getCookie('handsomelayerscroll'));
+				}
+			}, 400);
+			return false;
+		}
+
+		//레이어 팝업 닫기
+		function layerPopupClose2(layer, pop) {
+			$(pop).removeClass('activated');
+			$(pop).removeClass('active');
+			setTimeout(function () {
+				$(pop).removeClass('visible');
+				$('.hsome_allContents').removeClass('disabled');
+				$(layer).removeClass('active');
+				$(layer).removeClass('visible');
+				if ($.cookie('handsomelayerscroll') !== null) {
+					$(document).scrollTop(getCookie('handsomelayerscroll'));
+				}
+			}, 400);
+			return false;
+		}
+
+		function saveWishContents(
+			contentType,
+			templateType,
+			contentPK,
+			contentSubject
+		) {
+			$.ajax({
+				url: '/ko/magazine/saveMyWishContents',
+				type: 'POST',
+				datatype: 'json',
+				data: {
+					contentType: contentType,
+					templateType: templateType,
+					contentPK: contentPK,
+					contentSubject: contentSubject,
+					CSRFToken: $("#CSRFForm [name='CSRFToken']").first().val(),
+				},
+				success: function (data) {
+					//alert(data);
+				},
+			});
+		}
+
+		function ftLogout() {
+			deletecookie('UID');
+			deletecookie('criteoEmail');
+			deletecookie('memberGb');
+
+			location.href = '/ko/logout';
+		}
+
+		var oneclick = {
+			isEvent: false,
+			depthIndex: 0,
+			open: function (products, vipDeliAvail) {
+				var broadcastIndex = '';
+				var inflowTime = '';
+				var broadcastDate = '';
+				if (broadcastIndex != '') {
+					inflowTime = '20230128213642';
+				}
+
+				if (this.isEvent) return;
+
+				this.depthIndex = layerNextActiveIndex();
+				$('.hsome_layerpop_contents.lp_depth' + this.depthIndex).css(
+					'bottom',
+					'-1000px'
+				);
+				$('.hsome_layerpop_contents.lp_depth' + this.depthIndex).load(
+					'/ko/checkout/oneclick?products=' +
+					products +
+					'&vipDeliAvail=' +
+					vipDeliAvail +
+					'&broadcastIndex=' +
+					broadcastIndex +
+					'&inflowTime=' +
+					inflowTime +
+					'&broadcastDate=' +
+					broadcastDate,
+					function () {
+						$(this)
+							.removeClass('lp_stl_black')
+							.removeClass('lp_stl_trans')
+							.removeClass('dir_w')
+							.removeClass('dir_h');
+						$(this).addClass(
+							'dir_h lp_stl_black lp_stl_trans visible active'
+						);
+						oneclick.isEvent = true;
+					}
+				);
+			},
+			calliFramePopup: function (depth) {
+				$('.iframe_popup_wrap')
+					.removeClass('lp_stl_black')
+					.removeClass('lp_stl_trans')
+					.removeClass('dir_w')
+					.removeClass('dir_h'); //초기화
+				curScrollPosition = $(window).scrollTop();
+				holdBodyShow();
+				$('.iframe_popup_wrap').addClass('dir_h'); //슬라이드방향
+
+				// showLoadingLpIdx("2001");
+				return false;
+			},
+			init: function () {
+				if (this.isEvent) return;
+
+				if (window.addEventListener) {
+					window.addEventListener('message', oneclickPostMessage, false);
+				} else if (window.attachEvent) {
+					window.attachEvent('onmessage', oneclickPostMessage, false);
+				}
+
+				this.isEvent = true;
+			},
+		};
+
+		function oneclickPostLoaded() {
+			$('.iframe_popup_wrap').addClass('lp_stl_trans'); //black 배경 활성화
+			$('.iframe_popup_wrap').addClass('visible');
+			$('.iframe_popup_wrap').addClass('active');
+		}
+
+		function oneclickPostSubmit(data) {
+			var payForm = data,
+				formName = 'oneclickPayForm';
+
+			if ($('#' + formName).length > 0) {
+				$('#' + formName).remove();
+			}
+			var $oneclickPayForm = $('<form/>', {
+				id: formName,
+				enctype: 'application/x-www-form-urlencodeed',
+			}).appendTo($('body'));
+			$oneclickPayForm.empty();
+
+			$.each(payForm, function (name, value) {
+				addHidden($oneclickPayForm, name, value);
+			});
+
+			$oneclickPayForm.attr({
+				method: 'POST',
+				action:
+					'https://www.thehandsome.com/ko/inicis/inipaywpay/sop/response',
+				target: '_top',
+			});
+
+			$oneclickPayForm.submit();
+		}
+
+		function oneclickPostPointSubmit(data) {
+			var payForm = data,
+				formName = 'oneclickPayForm';
+
+			if ($('#' + formName).length > 0) {
+				$('#' + formName).remove();
+			}
+
+			var $oneclickPayForm = $('<form/>', {
+				id: formName,
+			}).appendTo($('body'));
+			$oneclickPayForm.empty();
+
+			$.each(payForm, function (name, value) {
+				addHidden($oneclickPayForm, name, value);
+			});
+			$oneclickPayForm.attr({
+				method: 'POST',
+				action: 'https://www.thehandsome.com/ko/checkout/placepoint',
+				target: '_top',
+			});
+			$oneclickPayForm.submit();
+		}
+
+		function payFormData(data) {
+			var payForm = data,
+				formName = 'PAY_FORM';
+
+			if ($('#' + formName).length > 0) {
+				$('#' + formName).remove();
+			}
+			var $oneclickPayForm = $('<form/>', {
+				id: formName,
+			}).appendTo($('body'));
+			$oneclickPayForm.empty();
+
+			$.each(payForm, function (name, value) {
+				addHidden($oneclickPayForm, name, value);
+			});
+		}
+
+		function requestPaymentSubmit(data) {
+			WPAY.paymentAuthSubmit(data);
+		}
+
+		function oneclickPostClose() {
+			$.get('/ko/shoppingbag/oneclickCancel');
+			holdBodyHide();
+			if (oneclick.depthIndex > 0) {
+				$('.lp_oneclick_buy_pay_wrap').removeClass('visible');
+				$('.lp_oneclick_buy_pay_wrap').removeClass('active');
+			} else {
+				$('.iframe_popup_wrap').removeClass('visible');
+				$('.iframe_popup_wrap').removeClass('active');
+			}
+
+			$('.hs_pro_view_floating .floating_box').removeClass('active');
+			$('.hs_pro_view_floating .floating_box').eq(1).addClass('active');
+
+			$('#onclickLodingArea').hide();
+			$('#lpOrderApplyBtns').show();
+			$('#lyrppTopColseArea').show();
+
+			$('body').css({marginTop: curScrollPosition * -1});
+			setTimeout(function () {
+				$('body').css({marginTop: 0});
+				$('body').scrollTop(curScrollPosition);
+
+				if (oneclick.depthIndex > 0) {
+					$(
+						'.hsome_layerpop_contents.lp_depth' + oneclick.depthIndex
+					).empty();
+					$(
+						'.hsome_layerpop_contents.lp_depth' + oneclick.depthIndex
+					).removeClass('dir_h lp_stl_black lp_stl_trans visible active');
+					oneclick.isEvent = false;
+				} else {
+					$('.iframe_popup_wrap').remove();
+				}
+			}, 400);
+		}
+
+		function oneclickPostMovePage(data) {
+			location.href = data.url;
+		}
+
+		function oneclickPostMessage(event) {
+			if ('https://www.thehandsome.com/ko'.indexOf(event.origin) == -1)
+				return;
+
+			var data = event.data;
+
+			if (typeof window[data.func] == 'function') {
+				window[data.func].call(null, data.data);
+			}
+		}
+
+		function callSaveAppPush(pushMsg) {
+			var obj = JSON.parse($.trim(pushMsg).replace(/(?:\r\n|\r|\n)/g, ''));
+			var notiTitle = obj.notiTitle; // 제목
+			var notiMsg = obj.notiMsg; // 메세지 텍스트
+			var notiImg = obj.notiImg; // 이미지 링크
+			var message = obj.message; // html 전달
+			var msgLink = obj.msgLink; // link
+			var msgType = obj.msgType; // 메시지 유형 ('T' - Text, 'H' - Html, 'L' - Link)
+
+			if (obj.notiTitle != '[스타일라이브♥]') {
+				$.ajax({
+					type: 'POST',
+					url: '/ko/mobilecommon/saveMarketPush',
+					datatype: 'json',
+					data: {
+						CSRFToken: $("#CSRFForm [name='CSRFToken']").first().val(),
+						msg: notiMsg,
+						title: notiTitle,
+						img: notiImg,
+						html: encodeURIComponent(message),
+						msgLink: msgLink,
+						msgType: msgType,
+					},
+					error: function (request, status, error) {
+						//    	       console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
+					},
+					success: function (result) {
+						if (result == 'SUCCESS') {
+						}
+					},
+				});
+			}
+		}
+
+		//쿠키 생성
+		function setOneDayCookie(cName, cValue, cDay) {
+			var currentDate = new Date();
+			var expire = new Date(
+				currentDate.getFullYear(),
+				currentDate.getMonth(),
+				currentDate.getDate() + cDay,
+				0,
+				0,
+				0
+			);
+			cookies = cName + '=' + escape(cValue) + '; path=/ ';
+			if (typeof cDay != 'undefined')
+				cookies += ';expires=' + expire.toGMTString() + ';';
+			document.cookie = cookies;
+		}
+	</script>
+
+	<script type="text/javascript">
+		/*
+  layer popup 형식의 alert 창
+  
+  ========================[example code]===========================
+  layerAlert('메세지를 입력하세요');
+  
+  var lc = new layerAlert('입력하신 정보가 변경완료 되었습니다.');
+  lc.confirmAction = function(){
+  //alert화면 실행후 후속 처리 부분 추가
+  location.href="/ko/mypage/order/myorders";
+  };
+  =============================================================
+  */
+
+		var btnConfirmText = '확인';
+		var btnCancleText = '취소';
+		var btnCloseText = '닫기';
+		var layerAlert = function (msg, refresh) {
+			btnConfirmText = '확인';
+			var t = this;
+			this.confirmAction = function () {
+				//console.log('함수를 재정의 해주세요!');
+			};
+
+			var alertTag = '';
+			alertTag += '<div class="dvp_container">';
+			alertTag +=
+				'	<div class="dvp_close_btn b-close" id="alertCloseDiv"><span>' +
+				btnCloseText +
+				'</span></div>';
+			alertTag += '	<h1 class="dvp_header"></h1>';
+			alertTag += '	<div class="dvp_content">';
+			alertTag += '		<div class="desc_box">' + msg + '</div>';
+			alertTag += '	</div>';
+			alertTag += '	<div class="btn_wrap">';
+			alertTag +=
+				'		<button class="btn btn_bg_b btn-alert-confirm">' +
+				btnConfirmText +
+				'</button>';
+			alertTag += '	</div>';
+			alertTag += '</div>';
+
+			$('#popAlertConfirmDiv').html(alertTag);
+
+			$('.divpop_wrap_dev.pop_alert_confirm').bPopup({
+				follow: [false, false],
+				escClose: false,
+				modalClose: false,
+				opacity: 0.3,
+				positionStyle: 'fixed',
+				onClose: function () {
+					holdBodyHide();
+					$('#popAlertConfirmDiv').html('');
+				},
+			});
+			holdBodyShow();
+
+			$('#popAlertConfirmDiv')
+				.find('.btn-alert-confirm')
+				.click(function () {
+					if (refresh == true) location.reload();
+					$('#alertCloseDiv').click();
+					t.confirmAction();
+				});
+		};
+
+		/*
+  layer popup 형식의 alert 창 변형 -> 팝업창에서의 팝업창일 때 확인 누르거나 X 눌렀을 때 holdBodyHide();를 타면서 Gnb가 나타나는 현상 때문에 layerAlertGnb로 하나 추가하여
+  refresh 변수 제거, onClose function 제거
+  
+  ========================[example code]===========================
+  layerAlertGnb('메세지를 입력하세요');
+  
+  var la = new layerAlertGnb('입력하신 정보가 변경완료 되었습니다.');
+  
+  =============================================================
+  */
+		var layerAlertGnb = function (msg) {
+			btnConfirmText = '확인';
+			var t = this;
+			this.confirmAction = function () {
+				//console.log('함수를 재정의 해주세요!');
+			};
+
+			var alertTag = '';
+			alertTag += '<div class="dvp_container">';
+			alertTag +=
+				'	<div class="dvp_close_btn b-close" id="alertCloseDiv"><span>' +
+				btnCloseText +
+				'</span></div>';
+			alertTag += '	<h1 class="dvp_header"></h1>';
+			alertTag += '	<div class="dvp_content">';
+			alertTag += '		<div class="desc_box">' + msg + '</div>';
+			alertTag += '	</div>';
+			alertTag += '	<div class="btn_wrap">';
+			alertTag +=
+				'		<button class="btn btn_bg_b btn-alert-confirm">' +
+				btnConfirmText +
+				'</button>';
+			alertTag += '	</div>';
+			alertTag += '</div>';
+
+			$('#popAlertConfirmDiv').html(alertTag);
+
+			$('.divpop_wrap_dev.pop_alert_confirm').bPopup({
+				follow: [false, false],
+				escClose: false,
+				modalClose: false,
+				opacity: 0.3,
+				positionStyle: 'fixed',
+				/* onClose: function() { 
+			holdBodyHide();
+			$("#popAlertConfirmDiv").html("");
+		  } */ //body 클래스 scroll 상태 유지
+			});
+			holdBodyShow();
+
+			$('#popAlertConfirmDiv')
+				.find('.btn-alert-confirm')
+				.click(function () {
+					//if(refresh==true) location.reload(); //refresh check 제거
+					$('#alertCloseDiv').click();
+					t.confirmAction();
+				});
+		};
+
+		/*
+  layer popup 형식의 confirm 창
+  
+  
+  
+  ========================[example code]===========================
+  
+  var lc = new layerConfirm('메세지를 입력하세요', '확인버튼', '취소버튼');
+  lc.confirmAction = function(){
+  console.log('재정의한 함수입니다.');
+  };
+  
+  =============================================================
+  
+  */
+		var layerConfirm = function (msg, confirmMsg, cancleMsg) {
+			var t = this;
+
+			var t = this;
+			this.confirmAction = function () {
+				//console.log('함수를 재정의 해주세요!');
+			};
+			this.cancleAction = function () {
+				//console.log('함수를 재정의 해주세요!');
+			};
+
+			if (confirmMsg != '') {
+				btnConfirmText = confirmMsg;
+			} else {
+				btnConfirmText = '확인';
+			}
+			if (cancleMsg != '') {
+				btnCancleText = cancleMsg;
+			} else {
+				btnCancleText = '취소';
+			}
+
+			var confirmTag = '';
+			confirmTag += '<div class="dvp_container">';
+			confirmTag +=
+				'	<div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>' +
+				btnCloseText +
+				'</span></div>';
+			confirmTag += '	<div class="dvp_content">';
+			confirmTag += '		<div class="desc_box">' + msg + '</div>';
+			confirmTag += '	</div>';
+			confirmTag += '	<div class="btn_wrap btns">';
+			confirmTag +=
+				'		<button class="btn btn_bd_g btn-alert-close">' +
+				btnCancleText +
+				'</button>';
+			confirmTag +=
+				'		<button class="btn btn_bg_b btn-alert-confirm">' +
+				btnConfirmText +
+				'</button>';
+			confirmTag += '	</div>';
+			confirmTag += '</div>';
+
+			$('#popAlertConfirmDiv').html(confirmTag);
+
+			$('.divpop_wrap_dev.pop_alert_confirm').bPopup({
+				follow: [false, false],
+				escClose: false,
+				modalClose: false,
+				opacity: 0.3,
+				positionStyle: 'fixed',
+				onClose: function () {
+					holdBodyHide();
+					$('#popAlertConfirmDiv').html('');
+				},
+			});
+			holdBodyShow();
+
+			$('#popAlertConfirmDiv')
+				.find('.btn-alert-close')
+				.click(function () {
+					$('#confirmCloseDiv').click();
+					t.cancleAction();
+				});
+
+			$('#popAlertConfirmDiv')
+				.find('.btn-alert-confirm')
+				.click(function () {
+					$('#confirmCloseDiv').click();
+					t.confirmAction();
+				});
+		};
+
+		/*
+  layer popup 형식의 confirm 창
+  특정 ios 기종에서 하단 버튼부분이 짤려나오는 현상이 있어서 ios용으로 별도 생성
+  */
+		var layerConfirmIos = function (msg, confirmMsg, cancleMsg) {
+			var t = this;
+
+			var t = this;
+			this.confirmAction = function () {
+				//console.log('함수를 재정의 해주세요!');
+			};
+			this.cancleAction = function () {
+				//console.log('함수를 재정의 해주세요!');
+			};
+
+			if (confirmMsg != '') {
+				btnConfirmText = confirmMsg;
+			} else {
+				btnConfirmText = '확인';
+			}
+			if (cancleMsg != '') {
+				btnCancleText = cancleMsg;
+			} else {
+				btnCancleText = '취소';
+			}
+
+			var confirmTag = '';
+			confirmTag += '<div class="dvp_container">';
+			confirmTag +=
+				' <div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>' +
+				btnCloseText +
+				'</span></div>';
+			confirmTag += ' <div class="dvp_content">';
+			confirmTag += ' <div class="desc_box">' + msg + '</div>';
+			confirmTag += ' </div>';
+			confirmTag += ' <div class="btn_wrap btns">';
+			confirmTag +=
+				' <button class="btn btn_bd_g btn-alert-close">' +
+				btnCancleText +
+				'</button>';
+			confirmTag +=
+				' <button class="btn btn_bg_b btn-alert-confirm">' +
+				btnConfirmText +
+				'</button>';
+			confirmTag += ' </div>';
+			confirmTag += '</div>';
+
+			$('#popAlertConfirmDiv').html(confirmTag);
+
+			$('.divpop_wrap_dev.pop_alert_confirm').bPopup({
+				follow: [false, false],
+				escClose: false,
+				modalClose: false,
+				opacity: 0.3,
+				positionStyle: 'fixed',
+				onClose: function () {
+					holdBodyHide();
+					$('#popAlertConfirmDiv').html('');
+				},
+			});
+			$('.divpop_wrap_dev.pop_alert_confirm').css({
+				top: '50%',
+				margin: '0',
+				transform: 'translate3d(0, -50%, 0)',
+			});
+			holdBodyShow();
+
+			$('#popAlertConfirmDiv')
+				.find('.btn-alert-close')
+				.click(function () {
+					$('#confirmCloseDiv').click();
+					t.cancleAction();
+				});
+
+			$('#popAlertConfirmDiv')
+				.find('.btn-alert-confirm')
+				.click(function () {
+					$('#confirmCloseDiv').click();
+					t.confirmAction();
+				});
+		};
+
+		/*
+		 * var lc = new layerConfirm2('메세지를 입력하세요', '취소버튼', '확인버튼');
+		 */
+		var layerConfirm2 = function (msg, confirmMsg, cancleMsg) {
+			var t = this;
+
+			var t = this;
+			this.confirmAction = function () {
+				//console.log('함수를 재정의 해주세요!');
+			};
+			this.cancleAction = function () {
+				//console.log('함수를 재정의 해주세요!');
+			};
+
+			if (confirmMsg != '') {
+				btnConfirmText = confirmMsg;
+			} else {
+				btnConfirmText = '확인';
+			}
+			if (cancleMsg != '') {
+				btnCancleText = cancleMsg;
+			} else {
+				btnCancleText = '취소';
+			}
+
+			var confirmTag = '';
+			confirmTag += '<div class="dvp_container">';
+			confirmTag +=
+				' <div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>' +
+				btnCloseText +
+				'</span></div>';
+			confirmTag += ' <div class="dvp_content">';
+			confirmTag += '     <div class="desc_box">' + msg + '</div>';
+			confirmTag += ' </div>';
+			confirmTag += ' <div class="btn_wrap btns">';
+			confirmTag +=
+				'     <button class="btn btn_bg_b btn-alert-confirm">' +
+				btnConfirmText +
+				'</button>';
+			confirmTag +=
+				'     <button class="btn btn_bd_g btn-alert-close">' +
+				btnCancleText +
+				'</button>';
+			confirmTag += ' </div>';
+			confirmTag += '</div>';
+
+			$('#popAlertConfirmDiv').html(confirmTag);
+
+			$('.divpop_wrap_dev.pop_alert_confirm').bPopup({
+				follow: [false, false],
+				escClose: false,
+				modalClose: false,
+				opacity: 0.3,
+				positionStyle: 'fixed',
+				onClose: function () {
+					holdBodyHide();
+					$('#popAlertConfirmDiv').html('');
+				},
+			});
+			holdBodyShow();
+
+			$('#popAlertConfirmDiv')
+				.find('.btn-alert-close')
+				.click(function () {
+					$('#confirmCloseDiv').click();
+					t.cancleAction();
+				});
+
+			$('#popAlertConfirmDiv')
+				.find('.btn-alert-confirm')
+				.click(function () {
+					$('#confirmCloseDiv').click();
+					t.confirmAction();
+				});
+		};
+
+		var editableLayer = function (msg, style, refresh) {
+			btnConfirmText = '확인';
+			var t = this;
+			this.confirmAction = function () {
+				//console.log('함수를 재정의 해주세요!');
+			};
+
+			var alertTag = '';
+			alertTag += '<div class="dvp_container" style="' + style + '">';
+			alertTag +=
+				'   <div class="dvp_close_btn b-close" id="alertCloseDiv"><span>' +
+				btnCloseText +
+				'</span></div>';
+			alertTag += '   <h1 class="dvp_header"></h1>';
+			alertTag += '   <div class="dvp_content" style="margin-top: -21px;">';
+			alertTag += '       <div class="desc_box">' + msg + '</div>';
+			alertTag += '   </div>';
+			alertTag += '   <div class="btn_wrap" style="margin-top: 0px;">';
+			alertTag +=
+				'       <button class="btn btn_bg_b btn-alert-confirm">' +
+				btnConfirmText +
+				'</button>';
+			alertTag += '   </div>';
+			alertTag += '</div>';
+
+			$('#popAlertConfirmDiv').html(alertTag);
+
+			$('.divpop_wrap_dev.pop_alert_confirm').bPopup({
+				follow: [false, false],
+				escClose: false,
+				modalClose: false,
+				opacity: 0.3,
+				positionStyle: 'fixed',
+				onClose: function () {
+					holdBodyHide();
+					$('#popAlertConfirmDiv').html('');
+				},
+			});
+			holdBodyShow();
+
+			$('#popAlertConfirmDiv')
+				.find('.btn-alert-confirm')
+				.click(function () {
+					if (refresh == true) location.reload();
+					$('#alertCloseDiv').click();
+				});
+			$('#alertCloseDiv').click(function () {
+				t.confirmAction();
+			});
+		};
+
+		/*
+		 * 챗봇 관련 스크립트
+		 */
+		// 앱이 백그라운도 들어 갈 때에
+		//function  appWillEnterBackground() {
+		//    alert("enter background");
+		//
+		//}
+		// 앱이 포어그라운드로 들어갈 때에
+		//function appDidEnterForground() {
+		//    alert("enter foreground");
+		//
+		//}
+		// 챗봇의 푸시링크를 클릭했을 때
+		function openChatView(token, talkId) {
+			callChatbot(token, talkId);
+		}
+
+		function updateLocation() {
+			$.ajax({
+				type: 'POST',
+				url: '/ko/mobilecommon/updateLocation',
+				datatype: 'json',
+				data: {
+					CSRFToken: '13c48883-1706-4f5a-810b-2f670f464334',
+					provideLocationYN: $('#isChcked').val(),
+				},
+				error: function (request, status, error) {
+					// 			console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
+				},
+				success: function (result) {
+					if (result == 'SUCCESS') {
+					}
+				},
+			});
+		}
+
+		function updatePush() {
+			$.ajax({
+				type: 'POST',
+				url: '/ko/mobilecommon/updatePush',
+				datatype: 'json',
+				data: {
+					CSRFToken: '13c48883-1706-4f5a-810b-2f670f464334',
+					pushCd: $('#pushCd').val(),
+					pushVal: $('#pushVal').val(),
+				},
+				error: function (request, status, error) {
+					// 			console.log( "code:" + request.status+"\n\n\n\n" + "message:" + request.responseText+"\n\n\n\n" + "error:" + error );
+				},
+				success: function (result) {
+					if (result == 'SUCCESS') {
+					}
+				},
+			});
+		}
+
+		function AppCallLocation(result) {
+			$('#isChcked').val(result);
+			updateLocation();
+		}
+
+		function AppCallPushAll(result) {
+			$('#pushCd').val('all');
+			$('#pushVal').val(result);
+			updatePush();
+		}
+
+		function AppCallPushOrder(result) {
+			$('#pushCd').val('order');
+			$('#pushVal').val(result);
+			updatePush();
+		}
+
+		function AppCallPushEvent(result) {
+			$('#pushCd').val('event');
+			$('#pushVal').val(result);
+			updatePush();
+		}
+
+		function AppCallPushBenefit(result) {
+			$('#pushCd').val('benefit');
+			$('#pushVal').val(result);
+			updatePush();
+		}
+
+		function AppCallPushSilent(result) {
+			$('#pushCd').val('silent');
+			$('#pushVal').val(result);
+			updatePush();
+		}
+
+		function gpsAllowAndroid() {
+			// 가까운 매장순 탭 이동 및 리스트 호출
+			if ('productList' == 'hsProductDetailPage') {
+				if (appYn == 'Y') {
+					Android.getLocation();
+
+					$('.sort_tab li').removeClass('on');
+					$('.sort_tab li').eq(0).addClass('on');
+					setTimeout(function () {
+						searchStore(1);
+					}, 500);
+				}
+			} else if ('productList' == 'content1Page') {
+				if (appYn == 'Y') {
+					Android.getLocation();
+
+					$('.sort_tab li').removeClass('on');
+					$('.sort_tab li').eq(0).addClass('on');
+					setTimeout(function () {
+						searchStore(1);
+					}, 500);
+				}
+			}
+		}
+
+		function gpsAlertExitAndroid() {
+			// 재고 많은순 탭 선택
+			if ('productList' == 'hsProductDetailPage') {
+				if (appYn == 'Y') {
+					$('.sort_tab li').removeClass('on');
+					$('.sort_tab li').eq(1).addClass('on');
+				}
+			} else if ('productList' == 'content1Page') {
+				if (appYn == 'Y') {
+					$('.sort_tab li').removeClass('on');
+					$('.sort_tab li').eq(1).addClass('on');
+				}
+			}
+		}
+
+		function gpsAlertOkAndroid() {
+			// 재고 많은순 탭 선택
+			if ('productList' == 'hsProductDetailPage') {
+				if (appYn == 'Y') {
+					$('.sort_tab li').removeClass('on');
+					$('.sort_tab li').eq(1).addClass('on');
+				}
+			} else if ('productList' == 'content1Page') {
+				if (appYn == 'Y') {
+					$('.sort_tab li').removeClass('on');
+					$('.sort_tab li').eq(1).addClass('on');
+				}
+			}
+		}
+
+		function gpsAlertExitIOS() {
+			// 재고 많은순 탭 선택
+			if ('productList' == 'hsProductDetailPage') {
+				if (appYn == 'Y') {
+					$('.sort_tab li').removeClass('on');
+					$('.sort_tab li').eq(1).addClass('on');
+				}
+			} else if ('productList' == 'content1Page') {
+				if (appYn == 'Y') {
+					$('.sort_tab li').removeClass('on');
+					$('.sort_tab li').eq(1).addClass('on');
+				}
+			}
+		}
+
+		function gpsSetOkIOS() {
+			// 위치동의 여부 확인 후 (Y : 가까운 매장순 탭 이동 및 리스트 호출, N : 재고 많은순 탭 선택)
+			if ('productList' == 'hsProductDetailPage') {
+				if (appYn == 'Y') {
+					webkit.messageHandlers.getLocation.postMessage('');
+
+					setTimeout(function () {
+						if (lat != 0 && lng != 0) {
+							$('.sort_tab li').removeClass('on');
+							$('.sort_tab li').eq(0).addClass('on');
+
+							searchStore(1);
+						}
+					}, 500);
+				}
+			} else if ('productList' == 'content1Page') {
+				if (appYn == 'Y') {
+					webkit.messageHandlers.getLocation.postMessage('');
+
+					setTimeout(function () {
+						if (lat != 0 && lng != 0) {
+							$('.sort_tab li').removeClass('on');
+							$('.sort_tab li').eq(0).addClass('on');
+
+							searchStore(1);
+						}
+					}, 500);
+				}
+			}
+		}
+	</script>
+
+	<div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv"></div>
+
+	<!-- layerpopupContent s -->
+
+	<script>
+		$('html').on(
+			'scroll touchmove mousewheel',
+			'.hold_body .sns_comment_ipt_pop .sns-comment-op',
+			function (e) {
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
+		);
+
+		$(document).ready(function () {
+			$('.write_form_area .reply-write-line #comment').keyup(function (e) {
+				var content = $(this).val();
+				$('.reply_write_box #counter').html(content.length);
+			});
+
+			$('.sns_comment_pop #sns_commont_close').on('click', function () {
+				$('.sns_comment_ipt_pop .reply-call-btn').removeClass('on');
+				//         $('.sns_comment_ipt_pop .sns-comment-ipt').removeClass('active');
+				$('.hsome_allContents_wrapper').css('display', 'block');
+				scrollHeightHistory(); //$(window).scrollTop(win_Scroll);
+				$('.sns_comment_pop').scrollTop(0);
+
+				$('body').removeClass('hidden');
+			});
+
+			$('.reply_write_box').on('focus', 'textarea', putBlur);
+
+			// 20200706 댓글 버튼 active 액션
+			$('.sns_comment_ipt_pop').on(
+				'click',
+				'.reply-call-btn > button',
+				function () {
+					$('.sns_comment_ipt_pop .sns-comment-ipt').addClass('active');
+					$('.reply-call-btn').removeClass('on');
+					$('.sns-comment-ipt .reply_write_box #counter').html(0);
+				}
+			);
+
+			$('.sns_comment_ipt_pop').on(
+				'click',
+				'.reply-close-btn  a',
+				function (e) {
+					var replu_None = $(
+						'.sns_comment_ipt_pop .sns-comment-ipt .ipt-re-uploaded'
+					).hasClass('is-active');
+					e.preventDefault();
+
+					$('.sns_comment_ipt_pop .sns-comment-ipt').removeClass('active');
+					$('.sns_comment_ipt_pop .reply-call-btn').addClass('on');
+
+					if (replu_None == true) {
+						$(
+							'.sns_comment_ipt_pop .sns-comment-ipt .ipt-re-uploaded'
+						).removeClass('is-active');
+					}
+				}
+			);
+
+			function putBlur() {
+				var $thisTextarea = $(this);
+				$('.hsome_layer_popup').on('touchstart', function (e) {
+					$thisTextarea.blur();
+				});
+			}
+		});
+	</script>
+
+
+
+	<script th:inline="javascript">
+		$(document).ready(function () {
+			
+		    /*<![CDATA[*/
+		      let gd = [[${category.gender}]];
+		      let br = [[${category.brand}]];
+			  let sc = [[${category.secCat}]];
+			  let tc = [[${category.thrCat}]];
+		      /*]]>*/
+		      
+			
+		    var start = 0;
+		    var last = 1;
+			var query = '';
+			if(gd != null) query += "gender="+gd; 
+			if(br != null) {
+			if(gd == null)	query += "brand="+br;
+				else query += "&brand="+br;
+			}
+			if(sc != null) query += "&secCat="+sc;
+			if(tc != null) query += "&thrCat="+tc;
+						
+			query += "&start="+start+"&last="+last;
+			
+			console.log(query);
+			
+		//	url: '/wck/products/list/p?gender='+gd+'&brand='+br+'&secCat='+sc+'&thrCat='+tc,
+
+
+			$.ajax({
+				type: 'get',
+				url: '/wck/products/list/p?'+query,
+				success: function (result) {
+					console.log("통신");
+					let productlist = '';
+					
+					
+
+					for (var i = 0; i < result.length; i++) {
+
+						productlist += `<li class="float active" id="listBody_li_${i}" value="hihi">`
+						productlist += `<div id="tmp_${i}">`
+						productlist += `<a id="pcid_${i}" onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
+						productlist += `<div class="img index_img_${i}" style="margin-top:10%">`
+						productlist += '<img id="img_' + i + '" src="' + result[i].detailProduct[0].pcimg1 + '"/>'
+						productlist += '</div>'
+						productlist += '</a>'
+						productlist += '</div>'
+						productlist += '<div class=tmp2>'
+						productlist += '<div class="info_cont">'
+						productlist += '<div class="color_chip">'
+
+							for(var n=0; n<result[i].detailProduct.length; n++){	
+								console.log(result[i].detailProduct[n].pccolorCode)
+								
+								productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '`  +result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' )">`
+						//		productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' , '` + result[i].detailProduct.length + `', '` + result[i].detailProduct[n].pccolorCode + `'  ,  +                      )"            >`
+								console.log(result[i]);
+								var tmp = result[i];
+							
+								console.log(result[i].detailProduct[n].pcchipImg);
+								
+								productlist += '<button class="chip on" ' +
+                						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url('+result[i].detailProduct[n].pcchipImg+')"></button></a>'
+                						}
+						productlist += '</div>'
+						productlist += '<p class="brand">' + result[i].bname + '</p>'
+						productlist += '<p class="name">' + result[i].pname + '</p>'
+						productlist += '<p class="price" id="listPrice0">'
+						productlist += '<span id="price_CM2D1KTO513W_TG">' + result[i].pcprice + '</span></p>'
+						productlist += '</div>'
+						productlist += '</div>'
+						productlist += '</li>'
+					}
+					$('#listBody').append(productlist);
+					console.log($("#listBody_li_0").val() + '======');
+
+				},
+				error: function (result) {
+					console.log("통신 실패");
+				}
+			})
+			
+			
+			$(window).scroll(function(){
+				
+				if (Math.round($(window).scrollTop()) == $(document).height() - $(window).height()) {
+				
+					 	start = last;
+					    last = last+1;
+						var query = '';
+						if(gd != null) query += "gender="+gd; 
+						if(br != null) {
+						if(gd == null)	query += "brand="+br;
+							else query += "&brand="+br;
+						}
+						if(sc != null) query += "&secCat="+sc;
+						if(tc != null) query += "&thrCat="+tc;
+									
+						query += "&start="+start+"&last="+last;
+						
+						console.log(query);
+						
+						$.ajax({
+							type: 'get',
+							url: '/wck/products/list/p?'+query,
+							success: function (result) {
+								console.log("통신");
+								let productlist = '';
+								
+								
+
+								for (var i = 0; i < result.length; i++) {
+
+									productlist += `<li class="float active" id="listBody_li_${i}" value="hihi">`
+									productlist += `<div id="tmp_${i}">`
+									productlist += `<a id="pcid_${i}" onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
+									productlist += `<div class="img index_img_${i}" style="margin-top:10%">`
+									productlist += '<img id="img_' + i + '" src="' + result[i].detailProduct[0].pcimg1 + '"/>'
+									productlist += '</div>'
+									productlist += '</a>'
+									productlist += '</div>'
+									productlist += '<div class=tmp2>'
+									productlist += '<div class="info_cont">'
+									productlist += '<div class="color_chip">'
+
+										for(var n=0; n<result[i].detailProduct.length; n++){	
+											console.log(result[i].detailProduct[n].pccolorCode)
+											
+											productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '`  +result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' )">`
+									//		productlist += `<a onclick="chgColorChip('` + result[i].detailProduct[n].pcid  +`' , '`+ result[i].pid +`' , '` + result[i].detailProduct[n].pcimg1 +`' , '`+ i + `' , '` + result[i].detailProduct.length + `', '` + result[i].detailProduct[n].pccolorCode + `'  ,  +                      )"            >`
+											console.log(result[i]);
+											var tmp = result[i];
+										
+											console.log(result[i].detailProduct[n].pcchipImg);
+											
+											productlist += '<button class="chip on" ' +
+			                						'style="background:' + result[i].detailProduct[n].pccolorCode + ' url('+result[i].detailProduct[n].pcchipImg+')"></button></a>'
+			                						}
+									productlist += '</div>'
+									productlist += '<p class="brand">' + result[i].bname + '</p>'
+									productlist += '<p class="name">' + result[i].pname + '</p>'
+									productlist += '<p class="price" id="listPrice0">'
+									productlist += '<span id="price_CM2D1KTO513W_TG">' + result[i].pcprice + '</span></p>'
+									productlist += '</div>'
+									productlist += '</div>'
+									productlist += '</li>'
+								}
+								$('#listBody').append(productlist);
+
+							},
+							error: function (result) {
+								console.log("통신 실패");
+							}
+						})
+						}
+		    })
+		})
+
+	</script>
+
+	<form action="/wck/products/p" method="get" class="goProductInfo">
+		<input type="hidden" name="pid" class="pid">
+		<input type="hidden" name="pcid" class="pcid">
+	</form>
+
+
+	<script>
+		function goProductDetail(myPid, myPcid) {
+			let pid = myPid;
+			let pcid = myPcid;
+			$(".pcid").val(pcid);
+			$(".pid").val(pid);
+			$(".goProductInfo").submit();
+		}
+
+	</script>
+	
+		<script>
+	
+		function chgColorChip(pcid, pid, pcimg1, index) {
+			
+			console.log($('#listBody_li_'+index).val());
+			var tmp = `<a onclick="goProductDetail('` + pid + `' , '` + pcid + `')"><div class="img" style="margin-top:10%"><img src="${pcimg1}"></div></a>`
+			
+			$('#tmp_'+index).html(tmp); 
+			
+
+		}
+
+	</script>
+
+	
+    <script type="text/javascript" th:src="@{/js/search.js}" defer></script>
+    <script type="text/javascript" th:src="@{/js/quick_menu_edit.js}" defer></script>
+</body>
+<!-- AceCounter Log Gathering Script V.7.5.2013010701 -->
+
+</html>

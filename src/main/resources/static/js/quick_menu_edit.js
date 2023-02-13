@@ -6527,781 +6527,7 @@ function moveBrandLookBook(brandCode) {
                 class="shop_list_brand one_depth"
                 id="brd_cate_2"
                 style="display: block">
-                <li class="one_lists">
-                  <div class="one_wrap">
-                    <a
-                      href="javascript:noLink();"
-                      class="one_link"
-                      onclick="GA_Event('공통_브랜드', '1DEPTH', 'LANVIN BLANC');">
-                      <span class="logo lanvin-blanc"
-                        >LANVIN BLANC<img
-                          class="icon-new-m"
-                          src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common_sub/icon_new_m.png"
-                          alt="newIcon" />
-                      </span>
-                    </a>
-                    <input
-                      type="hidden"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR63"
-                      value="NEW_NORMAL_BRANDS_ME#BR63#LANVIN BLANC#0#false#2" />
-                    <button
-                      type="button"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR63_like"
-                      class="like"
-                      onclick="applyNavBrand('gnb_br_NEW_NORMAL_BRANDS_ME_BR63', 'single');">
-                      찜하기</button
-                    ><!-- 찜한 브랜드에 on 클래스 붙음 -->
-                  </div>
-                  <div class="two_depth" style="">
-                    <div class="two-depth-arrow">
-                      <div class="two_depth_inner">
-                        <ul class="depth_two depth_two_01">
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/br63/br63"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'LANVIN BLANC_전체보기');"
-                              >전체보기</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:void(0);"
-                              class="two_link"
-                              onclick="moveBrandLookBook('br63');GA_Event('공통_브랜드', '2DEPTH', 'LANVIN BLANC_룩북');"
-                              >룩북*</a
-                            >
-                          </li>
-                        </ul>
-                        <ul class="depth_two depth_two_02">
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/gf01/br63"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'LANVIN BLANC_여성웨어');">
-                              여성웨어</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/gf02/br63"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'LANVIN BLANC_남성웨어');">
-                              남성웨어</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/gf03/br63"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'LANVIN BLANC_ACC');">
-                              ACC</a
-                            >
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="one_lists">
-                  <div class="one_wrap">
-                    <a
-                      href="javascript:noLink();"
-                      class="one_link"
-                      onclick="GA_Event('공통_브랜드', '1DEPTH', 'TIME HOMME');">
-                      <span class="logo">TIME HOMME</span>
-                    </a>
-                    <input
-                      type="hidden"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR06"
-                      value="NEW_NORMAL_BRANDS_ME#BR06#TIME HOMME#1#false#1" />
-                    <button
-                      type="button"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR06_like"
-                      class="like"
-                      onclick="applyNavBrand('gnb_br_NEW_NORMAL_BRANDS_ME_BR06', 'single');">
-                      찜하기</button
-                    ><!-- 찜한 브랜드에 on 클래스 붙음 -->
-                  </div>
-                  <div class="two_depth" style="">
-                    <div class="two-depth-arrow">
-                      <div class="two_depth_inner">
-                        <ul class="depth_two depth_two_01">
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/br06/br06"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'TIME HOMME_전체보기');"
-                              >전체보기</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:void(0);"
-                              class="two_link"
-                              onclick="moveBrandLookBook('br06');GA_Event('공통_브랜드', '2DEPTH', 'TIME HOMME_룩북');"
-                              >룩북*</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/me09/br06"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'TIME HOMME_SPECIAL SHOP*');">
-                              SPECIAL SHOP*</a
-                            >
-                          </li>
-                        </ul>
-                        <ul class="depth_two depth_two_02">
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'TIME HOMME_남성');">
-                              남성</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me03/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '아우터');">
-                                  아우터</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me10/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '니트');">
-                                  니트</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me01/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '탑');">
-                                  탑</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me02/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '팬츠');">
-                                  팬츠</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me04/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '수트');">
-                                  수트</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'TIME HOMME_잡화');">
-                              잡화</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as02/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '남성슈즈');">
-                                  남성슈즈</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as04/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '남성백');">
-                                  남성백</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as05/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '머플러/스카프');">
-                                  머플러/스카프</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as07/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '기타 ACC');">
-                                  기타 ACC</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'TIME HOMME_라이프스타일');">
-                              라이프스타일</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/ls01/br06"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '홈');">
-                                  홈</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="one_lists">
-                  <div class="one_wrap">
-                    <a
-                      href="javascript:noLink();"
-                      class="one_link"
-                      onclick="GA_Event('공통_브랜드', '1DEPTH', 'SYSTEM HOMME');">
-                      <span class="logo">SYSTEM HOMME</span>
-                    </a>
-                    <input
-                      type="hidden"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR07"
-                      value="NEW_NORMAL_BRANDS_ME#BR07#SYSTEM HOMME#2#false#1" />
-                    <button
-                      type="button"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR07_like"
-                      class="like"
-                      onclick="applyNavBrand('gnb_br_NEW_NORMAL_BRANDS_ME_BR07', 'single');">
-                      찜하기</button
-                    ><!-- 찜한 브랜드에 on 클래스 붙음 -->
-                  </div>
-                  <div class="two_depth" style="">
-                    <div class="two-depth-arrow">
-                      <div class="two_depth_inner">
-                        <ul class="depth_two depth_two_01">
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/br07/br07"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'SYSTEM HOMME_전체보기');"
-                              >전체보기</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:void(0);"
-                              class="two_link"
-                              onclick="moveBrandLookBook('br07');GA_Event('공통_브랜드', '2DEPTH', 'SYSTEM HOMME_룩북');"
-                              >룩북*</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/me09/br07"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'SYSTEM HOMME_SPECIAL SHOP*');">
-                              SPECIAL SHOP*</a
-                            >
-                          </li>
-                        </ul>
-                        <ul class="depth_two depth_two_02">
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'SYSTEM HOMME_남성');">
-                              남성</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me03/br07"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '아우터');">
-                                  아우터</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me10/br07"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '니트');">
-                                  니트</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me01/br07"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '탑');">
-                                  탑</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me02/br07"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '팬츠');">
-                                  팬츠</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me04/br07"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '수트');">
-                                  수트</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'SYSTEM HOMME_잡화');">
-                              잡화</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as02/br07"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '남성슈즈');">
-                                  남성슈즈</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as04/br07"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '남성백');">
-                                  남성백</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as05/br07"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '머플러/스카프');">
-                                  머플러/스카프</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as07/br07"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '기타 ACC');">
-                                  기타 ACC</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="one_lists">
-                  <div class="one_wrap">
-                    <a
-                      href="javascript:noLink();"
-                      class="one_link"
-                      onclick="GA_Event('공통_브랜드', '1DEPTH', 'the CASHMERE');">
-                      <span class="logo">the CASHMERE</span>
-                    </a>
-                    <input
-                      type="hidden"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR08"
-                      value="NEW_NORMAL_BRANDS_ME#BR08#the CASHMERE#3#false#2" />
-                    <button
-                      type="button"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR08_like"
-                      class="like"
-                      onclick="applyNavBrand('gnb_br_NEW_NORMAL_BRANDS_ME_BR08', 'single');">
-                      찜하기</button
-                    ><!-- 찜한 브랜드에 on 클래스 붙음 -->
-                  </div>
-                  <div class="two_depth" style="">
-                    <div class="two-depth-arrow">
-                      <div class="two_depth_inner">
-                        <ul class="depth_two depth_two_01">
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/br08/br08"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'the CASHMERE_전체보기');"
-                              >전체보기</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:void(0);"
-                              class="two_link"
-                              onclick="moveBrandLookBook('br08');GA_Event('공통_브랜드', '2DEPTH', 'the CASHMERE_룩북');"
-                              >룩북*</a
-                            >
-                          </li>
-                        </ul>
-                        <ul class="depth_two depth_two_02">
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'the CASHMERE_남성');">
-                              남성</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me03/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '아우터');">
-                                  아우터</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me10/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '니트');">
-                                  니트</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me01/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '탑');">
-                                  탑</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me02/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '팬츠');">
-                                  팬츠</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'the CASHMERE_잡화');">
-                              잡화</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as01/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '여성슈즈');">
-                                  여성슈즈</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as03/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '여성백');">
-                                  여성백</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as05/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '머플러/스카프');">
-                                  머플러/스카프</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as07/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '기타 ACC');">
-                                  기타 ACC</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'the CASHMERE_뷰티');">
-                              뷰티</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/be01/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '스킨케어');">
-                                  스킨케어</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/be02/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '메이크업');">
-                                  메이크업</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/be03/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '바디/헤어케어');">
-                                  바디/헤어케어</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/be04/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '향수');">
-                                  향수</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'the CASHMERE_라이프스타일');">
-                              라이프스타일</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/ls01/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '홈');">
-                                  홈</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/ls02/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '배스');">
-                                  배스</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/ls03/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '키친');">
-                                  키친</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/ls04/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '데스크');">
-                                  데스크</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/ls06/br08"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '키즈');">
-                                  키즈</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-                <li class="one_lists">
-                  <div class="one_wrap">
-                    <a
-                      href="javascript:noLink();"
-                      class="one_link"
-                      onclick="GA_Event('공통_브랜드', '1DEPTH', 'CLUB MONACO');">
-                      <span class="logo">CLUB MONACO</span>
-                    </a>
-                    <input
-                      type="hidden"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR44"
-                      value="NEW_NORMAL_BRANDS_ME#BR44#CLUB MONACO#4#false#2" />
-                    <button
-                      type="button"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR44_like"
-                      class="like"
-                      onclick="applyNavBrand('gnb_br_NEW_NORMAL_BRANDS_ME_BR44', 'single');">
-                      찜하기</button
-                    ><!-- 찜한 브랜드에 on 클래스 붙음 -->
-                  </div>
-                  <div class="two_depth" style="">
-                    <div class="two-depth-arrow">
-                      <div class="two_depth_inner">
-                        <ul class="depth_two depth_two_01">
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/br44/br44"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'CLUB MONACO_전체보기');"
-                              >전체보기</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:void(0);"
-                              class="two_link"
-                              onclick="moveBrandLookBook('br44');GA_Event('공통_브랜드', '2DEPTH', 'CLUB MONACO_룩북');"
-                              >룩북*</a
-                            >
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="/ko/c/me09/br44"
-                              class="two_link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'CLUB MONACO_SPECIAL SHOP*');">
-                              SPECIAL SHOP*</a
-                            >
-                          </li>
-                        </ul>
-                        <ul class="depth_two depth_two_02">
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'CLUB MONACO_남성');">
-                              남성</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me03/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '아우터');">
-                                  아우터</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me10/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '니트');">
-                                  니트</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me01/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '탑');">
-                                  탑</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me02/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '팬츠');">
-                                  팬츠</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/me04/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '수트');">
-                                  수트</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                          <li class="two_lists">
-                            <a
-                              href="javascript:noLink();"
-                              class="two_link js-brand-link"
-                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'CLUB MONACO_잡화');">
-                              잡화</a
-                            >
-                            <ul class="three_depth" style="">
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as02/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '남성슈즈');">
-                                  남성슈즈</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as03/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '여성백');">
-                                  여성백</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as04/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '남성백');">
-                                  남성백</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as05/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '머플러/스카프');">
-                                  머플러/스카프</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as06/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '주얼리');">
-                                  주얼리</a
-                                >
-                              </li>
-                              <li class="three_lists">
-                                <a
-                                  href="/ko/c/as07/br44"
-                                  class="three_link"
-                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '기타 ACC');">
-                                  기타 ACC</a
-                                >
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+                 </ul>
 
               <div
                 class="flag_fixed_wrap2002"
@@ -7711,9 +6937,7 @@ $('.hsome_quickMenu .shop a').click(function (e) {
 		type: 'get',
 		url: '/wck/products/category',
 		success: function (result) {
-			
-			console.log(result);
-			
+						
 			let categorylist = '';
 			categorylist += `<div class="cate_shop_cate_wrap2004">
 							<ul class="shop_list_category ctgr one_depth" style="min-height: 633px">`
@@ -7800,8 +7024,6 @@ $('.hsome_quickMenu .shop a').click(function (e) {
              }                 
 			 categorylist += `</ul></div>`
              
-            console.log("*****결과 확인******");
-			console.log(categorylist);
              
 	$("#tab_02").html(categorylist);
 		}, 
@@ -7810,6 +7032,101 @@ $('.hsome_quickMenu .shop a').click(function (e) {
 		}
 	})
 	
+	
+	$.ajax({
+			type: 'get',
+			url: '/wck/products/brand',
+			success: function (result) {
+				
+				console.log(result);
+				
+				brandName = '';
+				for(var i = 0; i<result.length; i++) {
+					
+					brandName += `<li class="one_lists">
+					 <div class="one_wrap">
+					 <a href="javascript:noLink();"
+					 class="one_link"
+					 onclick="GA_Event('공통_브랜드', '1DEPTH', 'LANVIN BLANC');">
+					 <span class="logo lanvin-blanc"
+					 >${result[i].brandname}<img
+					 class="icon-new-m"
+					 src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common_sub/icon_new_m.png"
+                          alt="newIcon" />
+                     </span>
+                     </a>
+                     <input
+                     type="hidden"
+                     id="gnb_br_NEW_NORMAL_BRANDS_ME_BR63"
+                      value="NEW_NORMAL_BRANDS_ME#BR63#LANVIN BLANC#0#false#2" />
+                    <button
+                      type="button"
+                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR63_like"
+                      class="like"
+                      onclick="applyNavBrand('gnb_br_NEW_NORMAL_BRANDS_ME_BR63', 'single');">
+                      찜하기</button
+                    ><!-- 찜한 브랜드에 on 클래스 붙음 -->
+                  </div>
+					`
+					brandName += `<div class="two_depth" style="">
+                    <div class="two-depth-arrow">
+                      <div class="two_depth_inner">
+                        <ul class="depth_two depth_two_01">
+                        <li class="two_lists">
+                            <a
+                              href="/wck/products/brandinfo?brand=${result[i].brandcode}"
+                              class="two_link"
+                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'LANVIN BLANC_전체보기');"
+                              >전체보기</a
+                            >
+                          </li>
+                          </ul>
+                          <ul class="depth_two depth_two_02">`
+					
+					for(var s = 0; s<result[i].firstCategory.length; s++){
+						brandName += `
+						<li class="two_lists">
+                            <a
+                              href="javascript:noLink();"
+                              class="two_link js-brand-link"
+                              onclick="GA_Event('공통_브랜드', '2DEPTH', 'LANVIN BLANC_여성웨어');">
+                              ${result[i].firstCategory[s].firstname}</a>
+                              <ul class="three_depth" style="">
+                          `
+                          
+                          	for(var t = 0; t<result[i].firstCategory[s].secondCategory.length; t++){
+								brandName += `
+								<li class="three_lists">
+		                                <a
+		                                  href="/wck/products/brandinfo?brand=${result[i].brandcode}&gender=${result[i].firstCategory[s].depth1name}&secCat=${result[i].firstCategory[s].secondCategory[t].depth2name}"
+		                                  class="three_link"
+		                                  onclick="GA_Event('공통_브랜드', '3DEPTH', '아우터');">
+		                                  ${result[i].firstCategory[s].secondCategory[t].secondname}</a
+		                                >
+		                              </li>
+								`
+							}
+						brandName += '</ul></li> '
+					}
+					brandName += `</ul> `
+					brandName += `</div> </div> </div> </li>`
+			
+				}
+				
+				
+				
+				
+				
+				    
+               $("#brd_cate_2").html(brandName);
+			
+			}, 
+			error : function () {
+				console.log("통신 실패");
+			}
+		})
+			
+			
 
 	
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.wck.domain.BrandCategoryVO;
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.FirstCategoryVO;
@@ -35,12 +36,16 @@ public interface ProductMapper {
 	
 	public int getProductsCount(@Param("br") String br, @Param("gd") String gd, 
 			@Param("sC") String sC, @Param("tC") String tC);
+	
+	public String getBrandImg(String br);
 
 	public List<FirstCategoryVO> getCategoryName();
 	
 	public List<SecondCategoryVO> getSecondCategory(String depth1name);
 	
 	public List<ThirdCategoryVO> getThirdCategory(String depth2name);
+	
+	public List<BrandCategoryVO> getBrandCategory();
 	
 	public int deleteLikeProduct(String mId, String pId); 
 	

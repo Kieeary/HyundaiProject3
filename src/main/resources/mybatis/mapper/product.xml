@@ -92,32 +92,6 @@
  		<result property="ColorName" column="COLORNAME" />
  	</resultMap>
  	
-<!-- 
-	<select id="getProducts" resultMap = "productsMap">
-        SELECT pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
-        pstock.psstock
-        from product_common pcom
-        INNER JOIN product_category pcat
-		ON pcom.pid = pcat.pid
-        INNER JOIN category c
-		<if test="gd != null">
-			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
-			<if test="sC!= null">
-				AND c.depth2name = #{sC}
-			</if>
-			<if test="tC!= null">
-				AND c.depth3name = #{tC}
-			</if>
-		</if>
-		INNER JOIN product_color pcolor
-		ON pcolor.pid = pcom.pid
-        INNER JOIN product_stock pstock
-        ON pstock.pcid = pcolor.pcid
-        group by pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
-        pstock.psstock
-        
-	</select>
- -->
  
  	<select id="getProducts" resultMap = "productsMap">
  		SELECT sub.pid, sub.pcid, sub.pname, sub.bname, sub.pstatus, sub.bno, 
@@ -131,8 +105,12 @@
         INNER JOIN product_category pcat
 		ON pcom.pid = pcat.pid
         INNER JOIN category c
+        ON c.cateno = pcat.cateno
+        <if test="br != null">
+			AND pcom.bno = #{br}
+		</if>
 		<if test="gd != null">
-			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
+			 AND c.depth1name = #{gd}
 			<if test="sC!= null">
 				AND c.depth2name = #{sC}
 			</if>
@@ -195,7 +173,13 @@
 	</select>
 	
 	
-	
+	<select id="getBrandImg" resultType = "string">
+		select bimg, bname
+        from brand b
+        inner join brand_img bi
+        on b.bno = bi.bno
+        and b.bno = #{br}
+	</select>
 	
 	
 	
@@ -317,6 +301,31 @@
 		from category_name cn
 		inner join category c on c.cateno = cn.cateno
 	</select>
+	
+	
+	<!-- 브랜드별 카테고리 가져오기 -->
+	
+	<resultMap type="brandCategory" id="brandCategory">
+		<id property="brandname" column="BNAME" />
+		<result property="brandcode" column="BNO" />
+		<collection property="firstCategory" resultMap="firstCategory"/>
+	</resultMap>
+	
+	<select id="getBrandCategory" resultMap="brandCategory">
+		select distinct b.bname, b.bno, cname.firstname, c.depth1name, cname.secondname, c.depth2name
+		from product_common pcom
+		inner join brand b
+		on b.bno = pcom.bno
+		inner join product_category pc
+		on pc.pid = pcom.pid
+		inner join category c
+		on c.cateno = pc.cateno
+		inner join category_name cname
+		on cname.cateno = pc.cateno
+		group by b.bname, b.bno, cname.firstname, c.depth1name, cname.secondname, c.depth2name
+		order by b.bname, b.bno, cname.firstname, c.depth1name, cname.secondname, c.depth2name
+	</select>
+	
 	
 	<select id="getColorChip" resultType="productColorChip">
 		select pcolor.pcchipimg, pcolor.pccolorcode, pcolor.pcid, pcolor.pid

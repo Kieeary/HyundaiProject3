@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.wck.domain.BrandCategoryVO;
 import com.wck.domain.CategoryVO;
 import com.wck.domain.FirstCategoryVO;
 import com.wck.domain.ProductColorChipVO;
@@ -148,12 +149,76 @@ public class ProductController {
 	
 	@ResponseBody
 	@GetMapping("/category")
-	public Object getfCategory() {
+	public Object getCategory() {
 		
 		List<FirstCategoryVO> category = productService.getCategoryName();
 		
 		return category;
 	}
+	
+	@ResponseBody
+	@GetMapping("/brand")
+	public Object getBrandName() {
+		
+		List<BrandCategoryVO> brand = productService.getBrandCategory();
+		return brand;
+	}
+	
+	@GetMapping("/brandinfo")
+	public String getBrandPage(Model model,
+			@RequestParam(value="brand", required=false) String brand,
+			@RequestParam(value="gender", required=false) String gender,
+			@RequestParam(value="secCat", required=false) String secCat,
+			@RequestParam(value="thrCat", required=false) String thrCat) {
+		
+		CategoryVO category = new CategoryVO();
 
+		if(brand != null)	{
+			category.setBrand(brand);
+			String brImg = productService.getBrandImg(brand);
+			model.addAttribute("brand", brImg);
+		}
+		if(gender != null)	{
+			category.setGender(gender);
+	//		List<SecondCategoryVO> secondCategory = productService.getSecondCategory(gender);
+	//		model.addAttribute("detailcategory", secondCategory);
+		}
+		if(secCat != null)	{
+			category.setSecCat(secCat);
+	//		List<ThirdCategoryVO> thirdCategory = productService.getThirdCategory(secCat);
+	//		model.addAttribute("detailcategory", thirdCategory);
+		}
+		
+		if(thrCat != null)	category.setThrCat(thrCat);
+		
+		
+		model.addAttribute("category", category);
+		
+		
+		return "wck/product/brand";
+	}
+	
+	@GetMapping("/brandinfo/p")
+	@ResponseBody
+	public Object getBrandProduct(@RequestParam(value="brand", required=false) String brand,
+			   @RequestParam(value="gender", required=false) String gender,
+			   @RequestParam(value="secCat", required=false) String secCat,
+			   @RequestParam(value="thrCat", required=false) String thrCat,
+			   @RequestParam(value="start") int start, @RequestParam(value="last") int last) {
+		
+		String br = brand;
+		String gd = gender;
+		String sC = secCat;
+		String tC = thrCat;
+		
+		List<ProductVO> list = productService.productList(br, gd, sC, tC, start, last);
+		
+		for(ProductVO a : list) {
+			log.info(a.getPid());
+		}
+		
+		return list;
+		
+	}
 	
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class ProductVO {
+	
 	private String pid;
 	private String pname;
 	private int pstatus;

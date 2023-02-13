@@ -142,5 +142,19 @@
 		WHERE o.PMCODE = pm.PMCODE AND o.OID = oi.OID AND ps.PSID = oi.PSID
 			AND pm.PMCODE = #{pmcode}
 	</select>
+	
+	<select id="getOId">
+		SELECT OID 
+		FROM ORDERS o, PAYMENT_METHOD pm 
+		WHERE o.PMCODE = pm.PMCODE AND pm.PMCODE = #{merchant_uid}
+	</select>
+	
+	<delete id="deleteFailOrder">
+		DELETE ORDERS WHERE "OID" = #{oid}
+	</delete>
+	
+	<delete id="deleteFailPaymentMethod	">
+		DELETE PAYMENT_METHOD WHERE PMCODE = #{merchant_uid}
+	</delete>
 
 </mapper> 

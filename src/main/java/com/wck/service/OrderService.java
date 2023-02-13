@@ -105,5 +105,17 @@ public class OrderService {
 		
 		return orderMapper.cancelOrder(order.getOid());
 	}
-
+	
+	public String getOrderId(String pmCode) {
+		return orderMapper.getOId(pmCode);
+	}
+	
+	@Transactional
+	public boolean deleteFailOrder(String pmCode) {
+		String oid = orderMapper.getOId(pmCode);
+		int result = orderMapper.deleteFailOrder(oid);
+		result += orderMapper.deleteFailPaymentMethod(pmCode);
+		
+		return result==2 ? true : false;
+	}
 }

@@ -122,19 +122,12 @@ public class OrderController {
 		return "/wck/order/order_sheet";
 	}
 	
-	@GetMapping(value = "/ordersheet")
-	public String getOrderSheet(Map<String, Object> check) {
-		log.info("{}", check);
-		return "/wck/home";
-	}
-
 	
-	
-	// KG
-	@GetMapping("/orderConfirmation2/{imp_uid}")
+	// KG 이니시스
+	@GetMapping("/orderConfirmation2/{oid}")
 	public String orderConfirmForm(
 			@AuthenticationPrincipal Account user,
-			@PathVariable("imp_uid") String oid,
+			@PathVariable("oid") String oid,
 			Model model) {
 		System.out.println();
 		System.out.println();
@@ -153,7 +146,7 @@ public class OrderController {
 	}
 	
 	
-	// Kakao
+	// KakaoPay
 	@PostMapping("/orderConfirmation1")
 	@ResponseBody
 	public ResponseEntity<String> orderConfirmForm(@AuthenticationPrincipal Account user,

@@ -34,6 +34,7 @@ import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 import com.wck.domain.InsertOrderDTO;
 import com.wck.security.domain.Account;
+import com.wck.service.OrderService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -45,8 +46,9 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 public class VerifyController {
 	private IamportClient api;
-//    private final ParticipantService participantService;
-//    private final ChallengeService challengeService;
+	
+	@Autowired
+	private final OrderService orderService;
 	
 	@Value("${iamport.restapi.key}") 
     private String restapi;
@@ -60,12 +62,6 @@ public class VerifyController {
 		this.api = new IamportClient(restapi,secret);
 	}
 	
-	// 생성자를 통해 REST API 와 REST API secret 입력
-//	@Autowired
-//	public VerifyController() {
-//		this.api = new IamportClient(restapi,secret);
-//	}
-
 	// iamport를 이용하여 결제하기를 완료하였을때
 	@PostMapping("/verifyIamport/{imp_uid}")
 	public IamportResponse<Payment> paymentByImpUid(@PathVariable String imp_uid, HttpServletRequest request)
@@ -97,16 +93,17 @@ public class VerifyController {
 			log.info("imp_uid(=oId) : " + imp_uid);
 			log.info("merchant_uid : " + merchant_uid);
 			
-//			return "redirect:wck/checkout/orderConfirmation2/"+imp_uid;
+			// merchant_uid(pmcode)로 oid 찾기
+			String oId  = orderService.getOrderId(merchant_uid);
 			
-			URI redirectUri = new URI("http://"+privateIp+"/wck/checkout/orderConfirmation2/"+imp_uid);
+			URI redirectUri = new URI("http://"+privateIp+"/wck/checkout/orderConfirmation2/"+oId);
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setLocation(redirectUri);
 			return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 		} else {
-			//DB 날리기 Order_item, Order, Payment 
+			boolean deleteResult = orderService.deleteFailOrder(merchant_uid);
+			log.info("Delete Fail Order Info in DB result : "+deleteResult);
 			return new ResponseEntity<> ("http://"+privateIp+"/wck/shoppingbag", HttpStatus.OK);
-//			return "redirect:wck/shoppingbag";
 		}
 		
 	}

@@ -51,12 +51,12 @@ public class InsertOrderDTO {
 	public OrderVO toOrderVO() {
 		OrderVO order = new OrderVO();
 		
-//		String pattern = "yyMMdd";
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, new Locale("ko", "KR"));
-//        String date = simpleDateFormat.format(new Date());
+		String pattern = "yyMMdd";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, new Locale("ko", "KR"));
+        String date = simpleDateFormat.format(new Date());
         long unixTime = System.currentTimeMillis() / 1000;
-//        String oid = date + "P" + String.valueOf(unixTime);
-//        this.oid = oid;
+        String oid = date + "P" + String.valueOf(unixTime);
+        this.oid = oid;
         
         String memo = "";
         if(!gl_radio_dlvr_msg.equals("") & !frontDoorSelectMessage.equals("")) {

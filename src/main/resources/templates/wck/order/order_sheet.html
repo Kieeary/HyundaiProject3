@@ -162,7 +162,14 @@
         return;
       }
 
-      doOrder();
+      let pmMode = $("#pmMode").val();
+
+      if(pmMode == 'html5_inicis') {
+        KGOrder();
+      } else {
+        kakaoOrder();
+      }
+
     }
 
     function selectPMCompany(obj) {
@@ -170,11 +177,16 @@
       $("#pmMode").val($(obj).data('mode'));
     }
 
-    function doOrder() {
-      let privateIp = [[${privateIp}]];
-      let token = $("meta[name='_csrf']").attr("content");
-      let header = $("meta[name='_csrf_header']").attr("content");
+    let privateIp = [[${privateIp}]];
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
 
+    var IMP = window.IMP;
+    IMP.init("imp15254201");
+
+
+    function KGOrder() {
+      console.log('KG 이니시스 결제');
       let name = '[[${prods[0].pName}]]' + '외 [[${prods.size()-1}]]건';
       let amount = $("#afterprice").val();
       let buyer_name = '[[${mem.name}]]';
@@ -184,11 +196,49 @@
       let address = $('#address1').val() + " " +$('#address2').val();
       let buyer_postcode = $("#zipcode").val();
 
-      console.log(name);
-      console.log(address);
+      let formValues = $("form[name=orderForm]").serialize() ;
 
-      var IMP = window.IMP;
-      IMP.init("imp15254201");
+      $.ajax({
+        type: "POST",
+        beforeSend : function(xhr) {
+                      xhr.setRequestHeader(header, token);
+        },
+        url: "/wck/checkout/orderConfirmation1",
+        data : formValues,
+        dataType : "text",
+        success: function (result) {
+
+          IMP.request_pay({
+            // param
+		        pg : pmMode,
+		        pay_method : "card",
+            m_redirect_url: 'http://'+privateIp+'/orderCompleteMobile',
+		        merchant_uid : pmCode,
+		        name : name,
+		        amount : 100,
+		        buyer_name : buyer_name,
+		        buyer_tel : phone,
+		        buyer_addr : address,
+		        buyer_postcode : buyer_postcode,
+            appScheme : 'myapp://action'
+          }, /* callback 함수 실행되지 않음 */ );
+        },
+        error: function (request) {
+          console.log(request);
+        }
+      })
+    }
+
+    function kakaoOrder() {
+
+      let name = '[[${prods[0].pName}]]' + '외 [[${prods.size()-1}]]건';
+      let amount = $("#afterprice").val();
+      let buyer_name = '[[${mem.name}]]';
+      let pmCode = $("#pmCode").val();
+      let pmMode = $("#pmMode").val();
+      let phone = $("#hp0 option:selected").val() + '-' + $("#hp1").val() + '-' + $("#hp2").val();
+      let address = $('#address1').val() + " " +$('#address2').val();
+      let buyer_postcode = $("#zipcode").val();
 
       IMP.request_pay({
          // param
@@ -210,9 +260,7 @@
 			  	alert("결제 성공" + name);
 			  	// 결제번호(imp_uid)와 주문번호(merchant_uid)를 서버에 전달하는 로직
 
-          $("#oid").val(rsp.imp_uid);
           let formValues = $("form[name=orderForm]").serialize() ;
-
 
           $.ajax({
             type: "POST",
@@ -227,54 +275,13 @@
             },
             error: function (request) {
               console.log(request);
-              alert('알수 없는 이유로 주문에 실패하였습니다.');
               layerAlert('알수 없는 이유로 주문에 실패하였습니다.');
             }
           })
 			  } else {
-			  	alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+			  	layerAlert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
 			  }
       });
-
-      
-
-        // $.ajax({
-        //   type: "POST",
-        //   beforeSend : function(xhr) {
-        //                 xhr.setRequestHeader(header, token);
-        //   },
-        //   url: "/wck/checkout/orderConfirmation",
-        //   data : formValues,
-        //   dataType : "text",
-        //   success: function (result) {
-
-        //     let IMP = window.IMP;
-      	//     IMP.init("imp15254201");
-
-
-        //     // 결제 API
-        //     // IMP.request_pay(param, callback) 결제창 호출
-		    //     IMP.request_pay(
-        //       {
-        //         // param
-		    //     	  pg : pmMode,
-		    //     	  pay_method : "card",
-        //         m_redirect_url: 'http://localhost/orderCompleteMobile',
-		    //     	  merchant_uid : pmCode,
-		    //     	  name : name,
-		    //     	  amount : 100,
-		    //     	  buyer_name : buyer_name,
-		    //     	  buyer_tel : phone,
-		    //     	  buyer_addr : address,
-		    //     	  buyer_postcode : buyer_postcode
-		    //       },
-        //       /* callback : 모바일 환경에서 callback 실행 안됨(redirect way) */);
-        //   },
-        //   error: function (request) {
-        //     console.log(request);
-        //     layerAlert('알수 없는 이유로 주문에 실패하였습니다.');
-        //   }
-        // })
     }
 
     function calculateDueAmount() {
@@ -1031,7 +1038,6 @@
           <input type="hidden" name="pmCode" id="pmCode" value="" /> 
           <input type="hidden" name="pmMode" id="pmMode" value="html5_inicis" /> 
           <input type="hidden" name="phone" id="phone" value="" /> 
-          <input type="hidden" name="oid" id="oid" value="" /> 
         </div>
         <!-- ########## final price end ########## -->
 

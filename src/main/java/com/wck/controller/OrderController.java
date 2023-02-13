@@ -124,31 +124,31 @@ public class OrderController {
 
 	
 	
-	// /wck/checkout/orderConfirmation/
-//	@GetMapping("/orderConfirmation/{muui}")
-//	public String orderConfirmForm(
-//			@AuthenticationPrincipal Account user,
-//			@PathVariable("muui") String pmcode,
-//			Model model) {
-//		System.out.println();
-//		System.out.println();
-//		System.out.println("Get mapping >>>>>>>>>>>>>>>>>>>>>");
-//		OrderVO order = orderService.getOrderInfo(pmcode);
-//		log.info("{}",order);
-//		model.addAttribute("order", order);
-//
-//		// 적립 예정 마일리지 계산
-//		long totalOrderPrice = memberService.getTotalUsePrice(user.getId());
-//		int grade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
-//		int expectAddMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(grade).getAccruRate());
-//		model.addAttribute("addM", expectAddMileage);
-//
-//		return "/wck/order/order_comp";
-//	}
+	// KG
+	@GetMapping("/orderConfirmation2/{imp_uid}")
+	public String orderConfirmForm(
+			@AuthenticationPrincipal Account user,
+			@PathVariable("imp_uid") String oid,
+			Model model) {
+		System.out.println();
+		System.out.println();
+		System.out.println("Get mapping >>>>>>>>>>>>>>>>>>>>>");
+		OrderVO order = orderService.getOrderInfo(user.getId(), oid);
+		log.info("{}",order);
+		model.addAttribute("order", order);
+
+		// 적립 예정 마일리지 계산
+		long totalOrderPrice = memberService.getTotalUsePrice(user.getId());
+		int grade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
+		int expectAddMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(grade).getAccruRate());
+		model.addAttribute("addM", expectAddMileage);
+
+		return "/wck/order/order_comp";
+	}
 	
 	
-	// original
-	@PostMapping("/orderConfirmation")
+	// Kakao
+	@PostMapping("/orderConfirmation1")
 	@ResponseBody
 	public ResponseEntity<String> orderConfirmForm(@AuthenticationPrincipal Account user,
 									@Valid @ModelAttribute("insertOrder") InsertOrderDTO insertOrder,
@@ -162,8 +162,25 @@ public class OrderController {
 		insertOrder.setMId(user.getId());
 		log.info("{}", insertOrder);
 		orderService.insertOrder(insertOrder);
-		model.addAttribute("oId", insertOrder.getOId());		
-		return new ResponseEntity<> (insertOrder.getOId(), HttpStatus.OK);
+		model.addAttribute("oId", insertOrder.getOid());		
+		return new ResponseEntity<> (insertOrder.getOid(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/orderConfirmation1")
+	public String orderConfirmForm1(@AuthenticationPrincipal Account user,
+									@RequestParam("oId") String oId,
+									Model model) {
+		OrderVO order = orderService.getOrderInfo(user.getId(), oId);
+		log.info("{}",order);
+		model.addAttribute("order", order);
+		
+		// 적립 예정 마일리지 계산
+		long totalOrderPrice = memberService.getTotalUsePrice(user.getId());
+		int grade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
+		int expectAddMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(grade).getAccruRate());
+		model.addAttribute("addM", expectAddMileage);
+		
+		return "/wck/order/order_comp";
 	}
 	
 	
@@ -196,21 +213,6 @@ public class OrderController {
 //		return api.paymentByImpUid(imp_uid);
 //	}
 	
-	@GetMapping("/orderConfirmation")
-	public String orderConfirmForm(@AuthenticationPrincipal Account user,
-									@RequestParam("oId") String oId,
-									Model model) {
-		OrderVO order = orderService.getOrderInfo(user.getId(), oId);
-		log.info("{}",order);
-		model.addAttribute("order", order);
-		
-		// 적립 예정 마일리지 계산
-		long totalOrderPrice = memberService.getTotalUsePrice(user.getId());
-		int grade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
-		int expectAddMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(grade).getAccruRate());
-		model.addAttribute("addM", expectAddMileage);
-		
-		return "/wck/order/order_comp";
-	}
+	
 	
 }

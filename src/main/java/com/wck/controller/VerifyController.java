@@ -68,9 +68,9 @@ public class VerifyController {
 	}
 	
 	@RequestMapping(value = "/orderCompleteMobile", method = RequestMethod.GET)
-	public ResponseEntity<Object> orderCompleteMobile(
-			@RequestParam(required = false) String imp_uid,
-			@RequestParam(required = false) String merchant_uid, 
+	public ResponseEntity<String> orderCompleteMobile(
+			@RequestParam("imp_uid") String imp_uid,
+			@RequestParam("merchant_uid") String merchant_uid, 
 			Model model, 
 			Locale locale, 
 			HttpSession session)
@@ -80,15 +80,20 @@ public class VerifyController {
 
 		// 결제 가격과 검증결과를 비교한다.
 		if (result.getResponse().getAmount().compareTo(BigDecimal.valueOf(100)) == 0) {
-			System.out.println("검증통과");
-			System.out.println("merchant_uid : " + merchant_uid);
-			URI redirectUri = new URI("http://localhost/wck/checkout/orderConfirmation/"+merchant_uid);
+			log.info("KG 이니시스 결제 완료");
+			log.info("imp_uid(=oId) : ", imp_uid);
+			log.info("merchant_uid : ", merchant_uid);
+			
+//			return "redirect:wck/checkout/orderConfirmation2/"+imp_uid;
+			
+			URI redirectUri = new URI("http://localhost/wck/checkout/orderConfirmation2/"+imp_uid);
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setLocation(redirectUri);
 			return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 		} else {
 			//DB 날리기 Order_item, Order, Payment 
-			return new ResponseEntity<> ("http://localhost/wck", HttpStatus.OK);
+			return new ResponseEntity<> ("http://localhost/wck/shoppingbag", HttpStatus.OK);
+//			return "redirect:wck/shoppingbag";
 		}
 		
 	}

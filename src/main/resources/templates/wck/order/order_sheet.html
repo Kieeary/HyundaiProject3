@@ -186,8 +186,6 @@
       console.log(name);
       console.log(address);
 
-      let formValues = $("form[name=orderForm]").serialize() ;
-
       var IMP = window.IMP;
       IMP.init("imp15254201");
 
@@ -195,7 +193,7 @@
          // param
 		    pg : pmMode,
 		    pay_method : "card",
-        // m_redirect_url: 'http://localhost/orderCompleteMobile',
+        m_redirect_url: 'http://localhost/orderCompleteMobile',
 		    merchant_uid : pmCode,
 		    name : name,
 		    amount : 100,
@@ -211,16 +209,20 @@
 			  	alert("결제 성공" + name);
 			  	// 결제번호(imp_uid)와 주문번호(merchant_uid)를 서버에 전달하는 로직
 
+          $("#oid").val(rsp.imp_uid);
+          let formValues = $("form[name=orderForm]").serialize() ;
+
+
           $.ajax({
             type: "POST",
             beforeSend : function(xhr) {
                           xhr.setRequestHeader(header, token);
             },
-            url: "/wck/checkout/orderConfirmation",
+            url: "/wck/checkout/orderConfirmation1",
             data : formValues,
             dataType : "text",
             success: function (result) {
-              location.href = '/wck/checkout/orderConfirmation?oId=' + result;
+              location.href = '/wck/checkout/orderConfirmation1?oId=' + result;
             },
             error: function (request) {
               console.log(request);
@@ -1028,6 +1030,7 @@
           <input type="hidden" name="pmCode" id="pmCode" value="" /> 
           <input type="hidden" name="pmMode" id="pmMode" value="html5_inicis" /> 
           <input type="hidden" name="phone" id="phone" value="" /> 
+          <input type="hidden" name="oid" id="oid" value="" /> 
         </div>
         <!-- ########## final price end ########## -->
 

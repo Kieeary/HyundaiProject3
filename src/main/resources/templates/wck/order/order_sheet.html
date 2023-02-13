@@ -103,7 +103,7 @@
   	})
   </script>
 
-  <script type="text/javascript">
+  <script type="text/javascript" th:inline="javascript">
 
     function submitOrder() {
       let payPrice = parseInt($("#afterprice").val());
@@ -171,6 +171,7 @@
     }
 
     function doOrder() {
+      let privateIp = [[${privateIp}]];
       let token = $("meta[name='_csrf']").attr("content");
       let header = $("meta[name='_csrf_header']").attr("content");
 
@@ -193,7 +194,7 @@
          // param
 		    pg : pmMode,
 		    pay_method : "card",
-        m_redirect_url: 'http://localhost/orderCompleteMobile',
+        m_redirect_url: 'http://'+privateIp+'/orderCompleteMobile',
 		    merchant_uid : pmCode,
 		    name : name,
 		    amount : 100,

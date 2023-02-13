@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,11 +62,16 @@ public class OrderController {
 	@Autowired
 	private final OrderService orderService;
 	
+	@Value("${private.ip}") 
+    private String privateIp;
+	
 	@PostMapping(value = "/ordersheet")
 	public String orderForm(@AuthenticationPrincipal Account user, 
 							HttpServletRequest request,
 							RedirectAttributes redirect,
 							Model model) {
+		model.addAttribute("privateIp", privateIp);
+		
 		List<String> psids = new LinkedList<String>();
 		List<Integer> qtys = new LinkedList<Integer>();
 		

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,12 +46,18 @@ public class VerifyController {
 	private final IamportClient api;
 //    private final ParticipantService participantService;
 //    private final ChallengeService challengeService;
-
+	
+	@Value("${iamport.restapi.key}") 
+    private String restapi;
+	@Value("${iamport.secret.key}") 
+    private String secret;
+	@Value("${private.ip}") 
+    private String privateIp;
+	
 	// 생성자를 통해 REST API 와 REST API secret 입력
 	@Autowired
 	public VerifyController() {
-		this.api = new IamportClient("2044056807142784",
-				"o5m3n0p0EXBVdQ8QwGwnPgaxXf5NFTtezip8wnIJWi7E8PdJCP1qDVwCWKDVD9agqKm2KhAvcoHoxYV2");
+		this.api = new IamportClient(restapi,secret);
 	}
 
 	// iamport를 이용하여 결제하기를 완료하였을때
@@ -75,24 +82,24 @@ public class VerifyController {
 			Locale locale, 
 			HttpSession session)
 			throws IamportResponseException, IOException, URISyntaxException {
-		
+		log.info("===================orderCompleteMobile");
 		IamportResponse<Payment> result = api.paymentByImpUid(imp_uid);
 
 		// 결제 가격과 검증결과를 비교한다.
 		if (result.getResponse().getAmount().compareTo(BigDecimal.valueOf(100)) == 0) {
 			log.info("KG 이니시스 결제 완료");
-			log.info("imp_uid(=oId) : ", imp_uid);
-			log.info("merchant_uid : ", merchant_uid);
+			log.info("imp_uid(=oId) : " + imp_uid);
+			log.info("merchant_uid : " + merchant_uid);
 			
 //			return "redirect:wck/checkout/orderConfirmation2/"+imp_uid;
 			
-			URI redirectUri = new URI("http://localhost/wck/checkout/orderConfirmation2/"+imp_uid);
+			URI redirectUri = new URI("http://"+privateIp+"/wck/checkout/orderConfirmation2/"+imp_uid);
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setLocation(redirectUri);
 			return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 		} else {
 			//DB 날리기 Order_item, Order, Payment 
-			return new ResponseEntity<> ("http://localhost/wck/shoppingbag", HttpStatus.OK);
+			return new ResponseEntity<> ("http://"+privateIp+"/wck/shoppingbag", HttpStatus.OK);
 //			return "redirect:wck/shoppingbag";
 		}
 		

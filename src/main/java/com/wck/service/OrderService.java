@@ -69,11 +69,11 @@ public class OrderService {
 		memberMapper.updateMemberInfo(mId, nowMileage+addMileage, grade);
 	}
 	
-	public OrderVO getOrderInfo(String mId, String oId) {
-		return orderMapper.getOrderInfo(mId, oId);
+	public OrderVO getOrderInfo(String oId) {
+		return orderMapper.getOrderInfo(oId);
 	}
 	
-	public OrderVO getOrderInfo(String pmcode) {
+	public OrderVO getOrderInfoWithPMcode(String pmcode) {
 		return orderMapper.getOrderInfoWithPMcode(pmcode);
 	}
 	

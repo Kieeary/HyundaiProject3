@@ -126,18 +126,16 @@ public class OrderController {
 	// KG 이니시스
 	@GetMapping("/orderConfirmation2/{oid}")
 	public String orderConfirmForm(
-			@AuthenticationPrincipal Account user,
 			@PathVariable("oid") String oid,
 			Model model) {
 		System.out.println(oid);
-		log.info(user);
 		System.out.println("Get mapping >>>>>>>>>>>>>>>>>>>>>");
-		OrderVO order = orderService.getOrderInfo(user.getId(), oid);
+		OrderVO order = orderService.getOrderInfo(oid);
 		log.info("{}",order);
 		model.addAttribute("order", order);
 
 		// 적립 예정 마일리지 계산
-		long totalOrderPrice = memberService.getTotalUsePrice(user.getId());
+		long totalOrderPrice = memberService.getTotalUsePrice(order.getMid());
 		int grade = MemberGrade.of(totalOrderPrice - order.getObeforePrice());
 		int expectAddMileage = (int) Math.floor(order.getObeforePrice() * MemberGrade.of(grade).getAccruRate());
 		model.addAttribute("addM", expectAddMileage);
@@ -169,7 +167,7 @@ public class OrderController {
 	public String orderConfirmForm1(@AuthenticationPrincipal Account user,
 									@RequestParam("oId") String oId,
 									Model model) {
-		OrderVO order = orderService.getOrderInfo(user.getId(), oId);
+		OrderVO order = orderService.getOrderInfo(oId);
 		log.info("{}",order);
 		model.addAttribute("order", order);
 		

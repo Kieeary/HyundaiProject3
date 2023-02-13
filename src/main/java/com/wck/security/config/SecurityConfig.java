@@ -4,6 +4,8 @@ package com.wck.security.config;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -24,12 +26,15 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import com.wck.security.interceptor.UrlFilterInvocationSecurityMetadataSource;
 import com.wck.security.provider.FormAuthenticationProvider;
@@ -53,6 +58,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private SecurityResourceService securityResourceService;
 	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	private DataSource dataSource;
+	
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
@@ -72,7 +83,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	}
 	
 	
-	
+	@Bean
+    public PersistentTokenRepository tokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
+    }
     
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -115,9 +131,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			
 		.and()
 			.addFilterBefore(customFilterSecurityInterceptor(), FilterSecurityInterceptor.class)
-//			.csrf()
-//			.disable()
-			
+
+			.rememberMe()
+			.userDetailsService(userDetailsService)
+			.tokenValiditySeconds(3600)
+			.tokenRepository(tokenRepository())
+		.and()
 			.logout()
 			.logoutUrl("/wck/logout")
 			.logoutSuccessUrl("/wck/")

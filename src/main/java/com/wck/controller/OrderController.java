@@ -129,8 +129,8 @@ public class OrderController {
 			@AuthenticationPrincipal Account user,
 			@PathVariable("oid") String oid,
 			Model model) {
-		System.out.println();
-		System.out.println();
+		System.out.println(oid);
+		log.info(user);
 		System.out.println("Get mapping >>>>>>>>>>>>>>>>>>>>>");
 		OrderVO order = orderService.getOrderInfo(user.getId(), oid);
 		log.info("{}",order);

@@ -143,7 +143,7 @@
 			AND pm.PMCODE = #{pmcode}
 	</select>
 	
-	<select id="getOId">
+	<select id="getOId" resultType="string">
 		SELECT OID 
 		FROM ORDERS o, PAYMENT_METHOD pm 
 		WHERE o.PMCODE = pm.PMCODE AND pm.PMCODE = #{merchant_uid}

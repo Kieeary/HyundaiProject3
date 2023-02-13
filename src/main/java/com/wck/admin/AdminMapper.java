@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.wck.domain.Criteria;
+import com.wck.domain.EventVO;
 import com.wck.domain.MemberVO;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
@@ -32,4 +33,6 @@ public interface AdminMapper {
 	public void insertResource(String resourceName, String httpMethod, int orderNum, String role);
 	
 	public void deleteResource(int id);
+
+	public List<EventVO> getEvnetList();
 }

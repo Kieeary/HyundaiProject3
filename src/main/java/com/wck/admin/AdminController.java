@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wck.domain.Criteria;
+import com.wck.domain.EventVO;
 import com.wck.domain.MemberVO;
 import com.wck.domain.PageDTO;
 import com.wck.domain.ProductCommonVO;
@@ -62,7 +63,11 @@ public class AdminController {
 		return "admin/order";
 	}
 	@GetMapping("/event")
-	public String event() {
+	public String event(Model model) {
+		
+		List<EventVO> events =  adminService.getEventList();
+		model.addAttribute("events", events);
+		
 		return "admin/event";
 	}
 	@GetMapping("/security")
@@ -71,5 +76,6 @@ public class AdminController {
 		model.addAttribute("resources", list);
 		return "admin/security";
 	}
+	
 
 }

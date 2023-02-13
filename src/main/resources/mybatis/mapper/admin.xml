@@ -78,4 +78,13 @@
 		delete from resources where id=#{id}
 	</delete>
 	
+	
+	<select id="getEvnetList" resultType="event">
+		select 
+			eno no, etitle title, econtent content, eissueDate issueDate, eexpiredate expiredate,
+			elimitcount limitcount, ecount count, eimg img, ediscount discount, estatus status,
+			edetailimg detailimg, ecoupontitle coupontitle
+		from event
+		order by eissueDate desc
+	</select>
 </mapper> 

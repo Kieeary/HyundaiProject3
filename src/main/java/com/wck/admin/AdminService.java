@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
+import com.wck.domain.EventVO;
 import com.wck.domain.MemberVO;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
@@ -61,6 +62,11 @@ public class AdminService {
 	
 	public void deleteResource(int id) {
 		mapper.deleteResource(id);
+	}
+
+	public List<EventVO> getEventList() {
+		List<EventVO> eventList = mapper.getEvnetList();
+		return eventList;
 	}
 
 }

@@ -117,5 +117,24 @@ public class AdminApi {
 		service.deleteResource(id);
 		return new ResponseEntity<String>("delete success", HttpStatus.OK);
 	}
+	
+	@PostMapping("/event/update")
+	public ResponseEntity<String> updateEvent(
+			@RequestBody Map<String, Object> map){
+		int no = Integer.parseInt((String) map.get("no"));
+		String title = (String) map.get("title");
+		String content = (String) map.get("content");
+		String issueDate = (String) map.get("issueDate");
+		String expireDate = (String) map.get("expireDate");
+		int limitCount = Integer.parseInt((String) map.get("limitCount"));
+//		String img = (String) map.get("img");
+		int discount = Integer.parseInt((String) map.get("discount"));
+		int status = Integer.parseInt((String) map.get("status"));
+//		String detailImg = (String) map.get("detailImg");
+//		String couponTitle = (String) map.get("couponTitle");
+		
+		
+		return new ResponseEntity<String>("event update success",HttpStatus.OK);
+	}
 
 }

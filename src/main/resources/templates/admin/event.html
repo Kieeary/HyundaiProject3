@@ -5,7 +5,8 @@
       layout:decorate="~{admin/layout}">
     
     <th:block layout:fragment="content"> 
-<table class="table" style="width : 90%; margin:30px auto;">
+<div style="width : 90%; margin:30px auto;">    
+<table class="table">
   <thead>
     <tr>
       <th scope="col">NO</th>
@@ -19,56 +20,52 @@
       <th scope="col">DETAILIMG</th>
       <th scope="col">DISCOUNT</th>
       <th scope="col">COUPONTITLE</th>
+      <th scope="col">STATUS</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row"><a href='#' data-toggle="modal" data-target=".event_modal">123123</a></th>
-      <td>신규회원님을 위한 특별 혜택1</td>
-      <td>23/02/03</td>
-      <td>23/02/04</td>
-      <td>100</td>
-      <td><a href='#' data-toggle="modal" data-target=".issue_modal">30</a></td>
+    <tr th:each="e :  ${events}">
+      <th 
+      th:data-no="${e.no}" th:data-title="${e.title}" th:data-issuedate="${e.issueDate}"
+      th:data-expiredate="${e.expireDate}" th:data-limitcount="${e.limitCount}"
+      th:data-img="${e.img}" th:data-countent=${e.content} th:data-detailImg="${e.detailImg}"
+      th:data-status="${e.status}" th:data-discount="${e.discount}" th:data-coupontitle="${e.couponTitle}"
+  		class="eventNo"
+      scope="row"><a href='#' data-toggle="modal" data-target=".event_modal" th:text="${e.no}">123123</a></th>
+      <td th:text="${e.title}" >신규회원님을 위한 특별 혜택1</td>
+      <td th:text="${e.issueDate}">23/02/03</td>
+      <td th:text="${e.expireDate}">23/02/04</td>
+      <td th:text="${e.limitCount}">100</td>
+      <td><a href='#' data-toggle="modal" data-target=".issue_modal" th:text="${e.count}">30</a></td>
       <td><div style="width:100px;">
-      <img src="http://cdn.thehandsome.com/mobile/event/list/banner/20221213_57502766621122035_ko.jpg"
+      <img th:src="${e.img}" src="http://cdn.thehandsome.com/mobile/event/list/banner/20221213_57502766621122035_ko.jpg"
+      	style="width:100%; height:100%"
+      /></div> 
+      </td>
+      <td><div style="width:70px;">
+      <img th:src="${e.content}" src="http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_01.jpg"
       	style="width:100%; height:100%"
       /></div> </td>
       <td><div style="width:70px;">
-      <img src="http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_01.jpg"
+      <img th:src="${e.detailImg}" src="http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_02.jpg"
       	style="width:100%; height:100%"
       /></div> </td>
-      <td><div style="width:70px;">
-      <img src="http://cdn.thehandsome.com/mobile/event/detail/image/handsome_202212/event_newmember_dec_mob_img_02.jpg"
-      	style="width:100%; height:100%"
-      /></div> </td>
-      <td>30</td>
-      <td>가입축하쿠폰</td>
+      <td th:text="${e.discount}">30</td>
+      <td th:text="${e.couponTitle}">가입축하쿠폰</td>
+    <th:block th:switch="${e.status}">
+		   <td th:case="1">진행중</td>
+		   <td th:case="0">종료</td>
+		   <td th:case="-1">소진</td>
+	</th:block>
     </tr>
   </tbody>
 </table>
 
-
-<div style="width:100%; display:flex; justify-content:center">
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-        <span class="sr-only">Previous</span>
-      </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-        <span class="sr-only">Next</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+<div style="display:flex; justify-content: flex-end">
+<button type="button" class="btn btn-primary">ADD</button>
 </div>
+</div>
+
 
 <!-- https://getbootstrap.com/docs/4.1/components/modal/ -->
 <!-- issue_modal -->
@@ -152,65 +149,80 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+<form>
+<input type="hidden" id="modalType">
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">NO</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="123123">
+      <input type="text" readonly class="form-control-plaintext" id="noInput" value="123123">
     </div>
   </div>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">TITLE</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="staticEmail" value="신규회원님을 위한 특별혜택1">
+      <input type="text" class="form-control" id="titleInput" value="신규회원님을 위한 특별혜택1">
     </div>
   </div>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">ISSUEDATE</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="staticEmail" value="23/02/03">
+      <input type="text" class="form-control" id="issueDateInput" value="23/02/03">
     </div>
   </div>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">EXPIREDATE</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="staticEmail" value="23/02/04">
+      <input type="text" class="form-control" id="expireDateInput" value="23/02/04">
     </div>
   </div>
    <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">IMG</label>
     <div class="col-sm-10">
-      <input type="file" class="form-control" id="staticEmail">
+      <input type="file" class="form-control" id="imgInput">
     </div>
   </div>
    <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">CONTENT</label>
     <div class="col-sm-10">
-      <input type="file" class="form-control" id="staticEmail">
+      <input type="file" class="form-control" id="contentInput">
     </div>
   </div>
    <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">DETAILIMG</label>
     <div class="col-sm-10">
-      <input type="file" class="form-control" id="staticEmail">
-    </div>
-  </div>
-  <div class="form-group row">
-    <label for="staticEmail" class="col-sm-2 col-form-label">COUNT</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="staticEmail" value="30">
+      <input type="file" class="form-control" id="detailImgInput">
     </div>
   </div>
   <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">COUPONTITLE</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="staticEmail" value="가입축하쿠폰">
+      <input type="text" class="form-control" id="couponTitleInput" value="가입축하쿠폰">
     </div>
+  </div>
+    <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">DISCOUNT</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="discountInput" value="30">
+    </div>
+  </div>
+    <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">LIMITCOUNT</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="limitCountInput" value="1000">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">STATUS</label>
+    <select class="form-control" id="statusInput">
+      <option value='1'>진행중</option>
+      <option value='0'>종료</option>
+      <option value='-1'>소진</option>
+    </select>
   </div>
   
   <div class="form-group" style="display:flex; justify-content: flex-end;">
-  <button type="button" class="btn btn-danger" style='margin-right : 10px'>CANCEL</button>
-  <button type="button" class="btn btn-primary">SAVE</button>
+  <button type="button" class="cancelBtn btn btn-danger" style='margin-right : 10px'>CANCEL</button>
+  <button type="button" class="saveBtn btn btn-primary">SAVE</button>
   
   </div>
 </form>
@@ -222,9 +234,72 @@
 </div>
 
 <script>
-	/* $(document).ready(function(){
+	 $(document).ready(function(){
+		$('.cancelBtn').click(function(){
+			$('.close').click();
+		})
+			
 		console.log('tt');
-	}) */
+		$('.eventNo').click(function(e){
+			$('#modalType').val('update')
+			$('#noInput').val($(this).data('no'));
+			$('#titleInput').val($(this).data('title'));
+			$('#issueDateInput').val($(this).data('issuedate'))
+			$('#expireDateInput').val($(this).data('expiredate'))
+			$('#statusInput').val($(this).data('status'))
+			$('#limitCountInput').val($(this).data('limitcount'))
+			$('#discountInput').val($(this).data('discount'))
+// 			$('#imgInput').val($(this).data('input'));
+// 			$('#contentInput').val($(this).data('content'))
+// 			$('#detailImgInput').val($(this).data('detailimg'))
+			$('#couponTitleInput').val($(this).data('coupontitle'))
+		})
+		
+		$('.saveBtn').click(function(e){
+			if($('#modalType').val() =='update'){
+				let no = $('#noInput').val();
+				let title = $('#titleInput').val();
+				let issueDate = $('#issueDateInput').val()
+				let expireDate = $('#expireDateInput').val()
+// 				let img = $('#imgInput').val();
+// 				let content = $('#contentInput').val()
+// 				let detailImg = $('#detailImgInput').val()
+				let couponTitle = $('#couponTitleInput').val()
+				let limitCount = $('#limitCountInput').val()
+				let status = $('#statusInput').val()
+				let discount = $('#discountInput').val();
+				
+				console.log(no,title,issueDate,expireDate,couponTitle, limitCount, status)
+			 
+				$.ajax({
+				beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+              	},
+				url:"/api/admin/event/update",
+				data: JSON.stringify({
+					no : no,
+					title : title,
+					issueDate : issueDate,
+					expireDate : expireDate,
+					couponTitle : couponTitle,
+					limitCount: limitCount,
+					status : status,
+					discount : discount
+				}),
+				method : 'POST',
+				contentType: 'application/json; charset=utf-8',
+				success : function(data){
+					alert(data);
+					location.reload();
+				}
+			}) 
+			}else{
+				
+			}
+		})
+		
+		
+	}) 
 </script>
 </th:block>
 </html>

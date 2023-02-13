@@ -189,45 +189,91 @@
 
       let formValues = $("form[name=orderForm]").serialize() ;
 
+      let IMP = window.IMP;
+      IMP.init("imp15254201");
+
+
+      IMP.request_pay({
+         // param
+		    pg : pmMode,
+		    pay_method : "card",
+        // m_redirect_url: 'http://localhost/orderCompleteMobile',
+		    merchant_uid : pmCode,
+		    name : name,
+		    amount : 100,
+		    buyer_name : buyer_name,
+		    buyer_tel : phone,
+		    buyer_addr : address,
+		    buyer_postcode : buyer_postcode,
+        appScheme : 'myapp://action'
+      }, function(rsp) { 
+        // callback
+			  if (rsp.success) {
+			  	// 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+			  	alert("결제 성공" + name);
+			  	// 결제번호(imp_uid)와 주문번호(merchant_uid)를 서버에 전달하는 로직
+
+          $.ajax({
+            type: "POST",
+            beforeSend : function(xhr) {
+                          xhr.setRequestHeader(header, token);
+            },
+            url: "/wck/checkout/orderConfirmation",
+            data : formValues,
+            dataType : "text",
+            success: function (result) {
+              location.href = '/wck/checkout/orderConfirmation?oId=' + result;
+            },
+            error: function (request) {
+              console.log(request);
+              alert('알수 없는 이유로 주문에 실패하였습니다.');
+              layerAlert('알수 없는 이유로 주문에 실패하였습니다.');
+            }
+          })
+			  } else {
+			  	alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+			  }
+      });
+
       
 
-        $.ajax({
-          type: "POST",
-          beforeSend : function(xhr) {
-                        xhr.setRequestHeader(header, token);
-          },
-          url: "/wck/checkout/orderConfirmation",
-          data : formValues,
-          dataType : "text",
-          success: function (result) {
+        // $.ajax({
+        //   type: "POST",
+        //   beforeSend : function(xhr) {
+        //                 xhr.setRequestHeader(header, token);
+        //   },
+        //   url: "/wck/checkout/orderConfirmation",
+        //   data : formValues,
+        //   dataType : "text",
+        //   success: function (result) {
 
-            let IMP = window.IMP;
-      	    IMP.init("imp15254201");
+        //     let IMP = window.IMP;
+      	//     IMP.init("imp15254201");
 
 
-            // 결제 API
-            // IMP.request_pay(param, callback) 결제창 호출
-		        IMP.request_pay(
-              {
-                // param
-		        	  pg : pmMode,
-		        	  pay_method : "card",
-                m_redirect_url: 'http://localhost/orderCompleteMobile',
-		        	  merchant_uid : pmCode,
-		        	  name : name,
-		        	  amount : 100,
-		        	  buyer_name : buyer_name,
-		        	  buyer_tel : phone,
-		        	  buyer_addr : address,
-		        	  buyer_postcode : buyer_postcode
-		          },
-              /* callback : 모바일 환경에서 callback 실행 안됨(redirect way) */);
-          },
-          error: function (request) {
-            console.log(request);
-            layerAlert('알수 없는 이유로 주문에 실패하였습니다.');
-          }
-        })
+        //     // 결제 API
+        //     // IMP.request_pay(param, callback) 결제창 호출
+		    //     IMP.request_pay(
+        //       {
+        //         // param
+		    //     	  pg : pmMode,
+		    //     	  pay_method : "card",
+        //         m_redirect_url: 'http://localhost/orderCompleteMobile',
+		    //     	  merchant_uid : pmCode,
+		    //     	  name : name,
+		    //     	  amount : 100,
+		    //     	  buyer_name : buyer_name,
+		    //     	  buyer_tel : phone,
+		    //     	  buyer_addr : address,
+		    //     	  buyer_postcode : buyer_postcode
+		    //       },
+        //       /* callback : 모바일 환경에서 callback 실행 안됨(redirect way) */);
+        //   },
+        //   error: function (request) {
+        //     console.log(request);
+        //     layerAlert('알수 없는 이유로 주문에 실패하였습니다.');
+        //   }
+        // })
     }
 
     function calculateDueAmount() {

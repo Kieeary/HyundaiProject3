@@ -244,7 +244,6 @@
          // param
 		    pg : pmMode,
 		    pay_method : "card",
-        m_redirect_url: 'http://'+privateIp+'/orderCompleteMobile',
 		    merchant_uid : pmCode,
 		    name : name,
 		    amount : 100,
@@ -938,15 +937,12 @@
             <!-- tab_cont : 일반결제 s -->
             <div class="cont  on" id="general_pay">
               <div class="general_pay_wrap " style="overflow:hidden;">
-                <ul class="general_pay_list gpd_tab_w1">
-                  <li class="on"><a href="#none" class="gpd_a_credit" data-kind="credit"
-                      data-mode="html5_inicis" onclick="selectPMCompany(this)">신용카드</a></li>
-                </ul>
                 <ul class="general_pay_list gpd_tab_w3">
+                  <li class="on"><a href="#none" class="gpd_a_credit" data-kind="credit"
+                    data-mode="html5_inicis" onclick="selectPMCompany(this)">신용카드</a>
+                  </li>
                   <li><a href="#none" class="gpd_a_kakakopay" data-kind="kakakopay"
-                      data-mode="kakaopay.TC0ONETIME" onclick="selectPMCompany(this)">카카오페이</a></li>
-                  <li><a href="#none" class="gpd_a_tosspay" data-kind="tosspay" 
-                      data-mode="tosspay" onclick="selectPMCompany(this)">토스</a>
+                      data-mode="kakaopay.TC0ONETIME" onclick="selectPMCompany(this)">카카오페이</a>
                   </li>
                 </ul>
               </div>

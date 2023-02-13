@@ -26,4 +26,10 @@ public interface AdminMapper {
 	public List<ProductColorVO> getProductColorList(String pid);
 
 	public List<ProductStockVO> getProductStockList(String pcid);
+
+	public void updateResource(int id, String resourceName, String httpMethod, int orderNum, String role);
+
+	public void insertResource(String resourceName, String httpMethod, int orderNum, String role);
+	
+	public void deleteResource(int id);
 }

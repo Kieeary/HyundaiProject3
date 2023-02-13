@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nimbusds.oauth2.sdk.Response;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductStockVO;
 
@@ -78,6 +79,43 @@ public class AdminApi {
 		List<ProductStockVO> list = service.getProductStockList(pcid);
 		log.info(list);
 		return new ResponseEntity<List<ProductStockVO>>(list,HttpStatus.OK);
+	}
+	
+	@PostMapping("/security/update")
+	public ResponseEntity<String> updateResource(
+			@RequestBody Map<String, Object> map){
+		int id = Integer.parseInt((String) map.get("id"));
+		String resourceName = (String) map.get("resourceName");
+		String httpMethod = (String) map.get("httpMethod");
+		int orderNum = Integer.parseInt((String) map.get("orderNum"));
+		String role = (String) map.get("role");
+		
+		service.updateResource(id, resourceName, httpMethod, orderNum, role);
+		
+		return new ResponseEntity<String>("update success", HttpStatus.OK);
+	}
+	
+	@PostMapping("/security/insert")
+	public ResponseEntity<String> insertResource(
+			@RequestBody Map<String, Object> map){
+		
+		String resourceName = (String) map.get("resourceName");
+		String httpMethod = (String) map.get("httpMethod");
+		int orderNum = Integer.parseInt((String) map.get("orderNum"));
+		String role = (String) map.get("role");
+		
+		service.insertResource(resourceName, httpMethod, orderNum, role);
+		return new ResponseEntity<String>("insert success", HttpStatus.OK);
+	}
+	
+	@PostMapping("/security/delete")
+	public ResponseEntity<String> deleteResource(
+			@RequestBody Map<String, Object> map){
+		
+		int id = Integer.parseInt((String) map.get("id"));
+		
+		service.deleteResource(id);
+		return new ResponseEntity<String>("delete success", HttpStatus.OK);
 	}
 
 }

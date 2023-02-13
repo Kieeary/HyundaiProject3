@@ -9,13 +9,10 @@ import com.wck.security.service.SecurityResourceService;
 @Configuration
 public class AppConfig {
 	
-	
 	@Bean
 	public SecurityResourceService securityResourceService (ResourceMapper resourceMapper) {
 		SecurityResourceService securityResourceService = new SecurityResourceService(resourceMapper);
 		return securityResourceService;
 	}
-	
-	
 
 }

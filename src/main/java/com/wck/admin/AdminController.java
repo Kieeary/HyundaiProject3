@@ -13,6 +13,9 @@ import com.wck.domain.MemberVO;
 import com.wck.domain.PageDTO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductVO;
+import com.wck.mapper.ResourceMapper;
+import com.wck.security.domain.Resources;
+import com.wck.security.service.SecurityResourceService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,6 +27,7 @@ import lombok.extern.log4j.Log4j2;
 public class AdminController {
 	
 	private final AdminService adminService;
+	private final ResourceMapper resourceMapper;
 	
 	@GetMapping("/user")
 	public String user(Model model) {
@@ -62,7 +66,9 @@ public class AdminController {
 		return "admin/event";
 	}
 	@GetMapping("/security")
-	public String access() {
+	public String access(Model model) {
+		List<Resources> list = resourceMapper.findAllResources();
+		model.addAttribute("resources", list);
 		return "admin/security";
 	}
 

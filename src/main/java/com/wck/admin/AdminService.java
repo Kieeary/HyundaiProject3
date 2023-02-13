@@ -50,5 +50,17 @@ public class AdminService {
 		List<ProductStockVO> list = mapper.getProductStockList(pcid);
 		return list;
 	}
+	
+	public void updateResource(int id, String resourceName, String httpMethod, int orderNum, String role) {
+		mapper.updateResource(id, resourceName,httpMethod, orderNum, role);
+	}
+
+	public void insertResource(String resourceName, String httpMethod, int orderNum, String role) {
+		mapper.insertResource(resourceName,httpMethod, orderNum, role);
+	}
+	
+	public void deleteResource(int id) {
+		mapper.deleteResource(id);
+	}
 
 }

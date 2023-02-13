@@ -61,4 +61,21 @@
 		where pcid = #{pcid}
 	</select>
 	
+	<update id="updateResource">
+		update resources
+		set 
+			resourceName=#{resourceName}, httpMethod=#{httpMethod},
+			orderNum=#{orderNum}, role=#{role}
+		where id = #{id}
+	</update>
+	
+	<insert id="insertResource">
+		insert into resources (id, resourceName, httpMethod, orderNum, role )
+		values (seq_resource.nextval, #{resourceName}, #{httpMethod}, #{orderNum}, #{role})
+	</insert>
+	
+	<delete id="deleteResource">
+		delete from resources where id=#{id}
+	</delete>
+	
 </mapper> 

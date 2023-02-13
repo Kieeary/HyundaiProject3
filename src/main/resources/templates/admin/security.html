@@ -1,72 +1,205 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Admin</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="/admin/styles.css" rel="stylesheet" />
-    </head>
-    <body>
-        <div class="d-flex" id="wrapper">
-            <!-- Sidebar-->
-            <div class="border-end bg-white" id="sidebar-wrapper">
-                <div class="sidebar-heading border-bottom bg-light">어드민</div>
-                <div class="list-group list-group-flush">
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">대시보드</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">유저</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">주문</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">상품</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">이벤트</a>
-                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">인증</a>
-                    
-                </div>
-            </div>
-            <!-- Page content wrapper-->
-            <div id="page-content-wrapper">
-                <!-- Top navigation-->
-                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <div class="container-fluid">
-                        <button class="btn btn-primary" id="sidebarToggle">Toggle Menu</button>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                                <li class="nav-item active"><a class="nav-link" href="#!">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#!">Action</a>
-                                        <a class="dropdown-item" href="#!">Another action</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#!">Something else here</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-                <!-- Page content-->
-                <div class="container-fluid">
-                    <h1 class="mt-4">Simple Sidebar</h1>
-                    <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-                    <p>
-                        Make sure to keep all page content within the
-                        <code>#page-content-wrapper</code>
-                        . The top navbar is optional, and just for demonstration. Just create an element with the
-                        <code>#sidebarToggle</code>
-                        ID which will toggle the menu when clicked.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="/admin/scripts.js"></script>
-    </body>
+<html lang="en" 	  
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+    
+    <th:block layout:fragment="content">
+
+<div style="width : 90%; margin:30px auto;">
+<table class="table">
+  <thead>
+    <tr>
+    <th scope="col">#</th>
+      <th scope="col">RESOURCENAME</th>
+      <th scope="col">HTTPMETHOD</th>
+      <th scope="col">ORDERNUM</th>
+      <th scope="col">ROLE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="re : ${resources}">
+	    <th  
+	    th:data-id=${re.id} th:data-resourceName="${re.resourceName}"
+	    th:data-httpMethod="${re.httpMethod}" th:data-orderNum="${re.orderNum}"
+	    th:data-role="${re.role}"
+	    scope="row" data-toggle="modal" data-target=".bd-example-modal-lg"
+	    	th:text="${re.id}">1</th>
+	    <td th:text="${re.resourceName}">/wck/myapge</td>
+	    <td th:text="${re.httpMethod}">/GET</td>
+	    <td th:text="${re.orderNum}">1</td>
+	    <td th:text="${re.role}">ROLE_USER</td>
+    </tr>
+  </tbody>
+</table>
+<div style="display:flex; justify-content: flex-end">
+<button type="button" class="addBtn btn btn-primary"  scope="row" data-toggle="modal" data-target=".bd-example-modal-lg">ADD</button>
+</div>
+</div>
+
+
+<!-- https://getbootstrap.com/docs/4.1/components/modal/ -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h4" id="myLargeModalLabel">시큐리티 수정</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<form>
+	<input type="hidden" name="type" id="modalType">
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">ID</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="idInput">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">RESOURCENAME</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="resourceNameInput" >
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">ORDERNUM</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="orderNumInput">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="exampleFormControlSelect1">GRADE</label>
+    <select class="form-control" id="httpMethodSelect">
+      <option value="GET">GET</option>
+      <option value="POST">POST</option>
+    </select>
+  </div>
+    <div class="form-group">
+    <label for="exampleFormControlSelect1">ROLE</label>
+    <select class="form-control" id="roleSelect">
+      <option value='ROLE_USER'>ROLE_USER</option>
+      <option value='ROLE_ADMIN'>ROLE_ADMIN</option>
+    </select>
+  </div>
+<div style="display:flex;justify-content: space-between;">
+<button id="removeBtn" type="button" class="btn btn-secondary" style='margin-right : 10px'>REMOVE</button>
+  <div class="form-group" style="display:flex; justify-content: flex-end;">
+  <button id="cancelBtn" type="button" class="btn btn-danger" style='margin-right : 10px'>CANCEL</button>
+  <button id="saveBtn" type="button" class="btn btn-primary">SAVE</button>
+  </div>
+ </div>
+</form>
+
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$('#addBtn').click(function(e){
+			$('#modalType').val('insert');
+			$('#idInput').val('')
+			$('#resourceNameInput').val('');
+			$('#httpMethodSelect').val('');
+			$('#orderNumInput').val('');
+			$('#roleSelect').val('');
+		})
+		
+		$('#removeBtn').click(function(e){
+			let id = $('#idInput').val()
+			if(id == '') return;
+			 $.ajax({
+					beforeSend : function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	              	},
+					url:"/api/admin/security/delete",
+					data: JSON.stringify({
+						id : id
+					}),
+					method : 'POST',
+					contentType: 'application/json; charset=utf-8',
+					success : function(data){
+						alert(data);
+						location.reload();
+					}
+				})
+		
+		})
+		
+		$('#cancelBtn').click(function(e){
+			$('.close').click();
+		})
+		
+		$('th').click(function(e){
+			console.log('ttt');
+			$('#modalType').val('update');
+			$('#idInput').val($(this).data('id'))
+			$('#resourceNameInput').val($(this).data('resourcename'));
+			$('#httpMethodSelect').val($(this).data('httpmethod'));
+			$('#orderNumInput').val($(this).data('ordernum'));
+			$('#roleSelect').val($(this).data('role'));
+		})
+		
+		$('#saveBtn').click(function(){
+			let id = $('#idInput').val()
+			let resourceName = $('#resourceNameInput').val();
+			let httpMethod = $('#httpMethodSelect').val();
+			let orderNum =  $('#orderNumInput').val();
+			let role = $('#roleSelect').val();
+			
+			console.log(id, resourceName, httpMethod, orderNum, role);
+			
+			if($('#modalType').val() == 'update'){
+				 $.ajax({
+					beforeSend : function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	              	},
+					url:"/api/admin/security/update",
+					data: JSON.stringify({
+						id : id,
+						resourceName : resourceName,
+						httpMethod : httpMethod,
+						orderNum : orderNum,
+						role : role
+					}),
+					method : 'POST',
+					contentType: 'application/json; charset=utf-8',
+					success : function(data){
+						alert(data);
+						location.reload();
+					}
+				})
+			}else{
+				$.ajax({
+					beforeSend : function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	              	},
+					url:"/api/admin/security/insert",
+					data: JSON.stringify({
+						resourceName : resourceName,
+						httpMethod : httpMethod,
+						orderNum : orderNum,
+						role : role
+					}),
+					method : 'POST',
+					contentType: 'application/json; charset=utf-8',
+					success : function(data){
+						alert(data);
+						location.reload();
+					}
+				})
+			}
+		})
+		
+		
+		
+		
+	})
+</script>
+</th:block>
 </html>

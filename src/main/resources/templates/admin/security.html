@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" 	  
+	  xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/layout}">
+    
+    <th:block layout:fragment="content">
+
+<div style="width : 90%; margin:30px auto;">
+<table class="table">
+  <thead>
+    <tr>
+    <th scope="col">#</th>
+      <th scope="col">RESOURCENAME</th>
+      <th scope="col">HTTPMETHOD</th>
+      <th scope="col">ORDERNUM</th>
+      <th scope="col">ROLE</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="re : ${resources}">
+	    <th  
+	    th:data-id=${re.id} th:data-resourceName="${re.resourceName}"
+	    th:data-httpMethod="${re.httpMethod}" th:data-orderNum="${re.orderNum}"
+	    th:data-role="${re.role}"
+	    scope="row" data-toggle="modal" data-target=".bd-example-modal-lg"
+	    	th:text="${re.id}">1</th>
+	    <td th:text="${re.resourceName}">/wck/myapge</td>
+	    <td th:text="${re.httpMethod}">/GET</td>
+	    <td th:text="${re.orderNum}">1</td>
+	    <td th:text="${re.role}">ROLE_USER</td>
+    </tr>
+  </tbody>
+</table>
+<div style="display:flex; justify-content: flex-end">
+<button type="button" class="addBtn btn btn-primary"  scope="row" data-toggle="modal" data-target=".bd-example-modal-lg">ADD</button>
+</div>
+</div>
+
+
+<!-- https://getbootstrap.com/docs/4.1/components/modal/ -->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title h4" id="myLargeModalLabel">시큐리티 수정</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+<form>
+	<input type="hidden" name="type" id="modalType">
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">ID</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="idInput">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">RESOURCENAME</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="resourceNameInput" >
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">ORDERNUM</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="orderNumInput">
+    </div>
+  </div>
+    <div class="form-group">
+    <label for="exampleFormControlSelect1">GRADE</label>
+    <select class="form-control" id="httpMethodSelect">
+      <option value="GET">GET</option>
+      <option value="POST">POST</option>
+    </select>
+  </div>
+    <div class="form-group">
+    <label for="exampleFormControlSelect1">ROLE</label>
+    <select class="form-control" id="roleSelect">
+      <option value='ROLE_USER'>ROLE_USER</option>
+      <option value='ROLE_ADMIN'>ROLE_ADMIN</option>
+    </select>
+  </div>
+<div style="display:flex;justify-content: space-between;">
+<button id="removeBtn" type="button" class="btn btn-secondary" style='margin-right : 10px'>REMOVE</button>
+  <div class="form-group" style="display:flex; justify-content: flex-end;">
+  <button id="cancelBtn" type="button" class="btn btn-danger" style='margin-right : 10px'>CANCEL</button>
+  <button id="saveBtn" type="button" class="btn btn-primary">SAVE</button>
+  </div>
+ </div>
+</form>
+
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		$('#addBtn').click(function(e){
+			$('#modalType').val('insert');
+			$('#idInput').val('')
+			$('#resourceNameInput').val('');
+			$('#httpMethodSelect').val('');
+			$('#orderNumInput').val('');
+			$('#roleSelect').val('');
+		})
+		
+		$('#removeBtn').click(function(e){
+			let id = $('#idInput').val()
+			if(id == '') return;
+			 $.ajax({
+					beforeSend : function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	              	},
+					url:"/api/admin/security/delete",
+					data: JSON.stringify({
+						id : id
+					}),
+					method : 'POST',
+					contentType: 'application/json; charset=utf-8',
+					success : function(data){
+						alert(data);
+						location.reload();
+					}
+				})
+		
+		})
+		
+		$('#cancelBtn').click(function(e){
+			$('.close').click();
+		})
+		
+		$('th').click(function(e){
+			console.log('ttt');
+			$('#modalType').val('update');
+			$('#idInput').val($(this).data('id'))
+			$('#resourceNameInput').val($(this).data('resourcename'));
+			$('#httpMethodSelect').val($(this).data('httpmethod'));
+			$('#orderNumInput').val($(this).data('ordernum'));
+			$('#roleSelect').val($(this).data('role'));
+		})
+		
+		$('#saveBtn').click(function(){
+			let id = $('#idInput').val()
+			let resourceName = $('#resourceNameInput').val();
+			let httpMethod = $('#httpMethodSelect').val();
+			let orderNum =  $('#orderNumInput').val();
+			let role = $('#roleSelect').val();
+			
+			console.log(id, resourceName, httpMethod, orderNum, role);
+			
+			if($('#modalType').val() == 'update'){
+				 $.ajax({
+					beforeSend : function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	              	},
+					url:"/api/admin/security/update",
+					data: JSON.stringify({
+						id : id,
+						resourceName : resourceName,
+						httpMethod : httpMethod,
+						orderNum : orderNum,
+						role : role
+					}),
+					method : 'POST',
+					contentType: 'application/json; charset=utf-8',
+					success : function(data){
+						alert(data);
+						location.reload();
+					}
+				})
+			}else{
+				$.ajax({
+					beforeSend : function(xhr) {
+	                    xhr.setRequestHeader(header, token);
+	              	},
+					url:"/api/admin/security/insert",
+					data: JSON.stringify({
+						resourceName : resourceName,
+						httpMethod : httpMethod,
+						orderNum : orderNum,
+						role : role
+					}),
+					method : 'POST',
+					contentType: 'application/json; charset=utf-8',
+					success : function(data){
+						alert(data);
+						location.reload();
+					}
+				})
+			}
+		})
+		
+		
+		
+		
+	})
+</script>
+</th:block>
+</html>

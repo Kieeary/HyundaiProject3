@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wck.admin.AdminMapper">
+
+	<select id="getMemberList" resultType="member">
+		select 
+			mid id, mname name, memail email, mbirth birth, 
+			mgender gender, mlogintype logintype, menabled enabled, mrole role, mgrade grade,
+			mmileage mileage
+		from member
+		order by mid
+	</select>
+	
+	<update id="updateMember">
+		update member
+		set mgrade = #{grade}, menabled = #{enabled}, mrole = #{role}
+		where mid = #{id} 
+	</update>
+	
+	<select id="getProductCommonList" resultType="productCommon">
+		select *
+		from (
+			select rownum rn, 
+				pid, pname, pnote, pstatus,
+				bno, bname
+			from (
+				select 
+					pid, pname, pnote, pstatus,
+					b.bno, b.bname
+				from product_common p
+				inner join brand b on (b.bno = p.bno)
+				order by pid
+<![CDATA[
+			) 
+			where rownum <= #{currentPage} * #{pageSize}
+		)
+		where rn > (#{currentPage} - 1) * #{pageSize}
+]]>
+	</select>
+	
+	<select id="getProductCommonCount" resultType="int">
+		select count(*) from product_common
+	</select>
+	
+	<update id="updateProductCommon">
+		update product_common 
+		set pname = #{name}, pnote = #{note}, bno = #{bno}, pstatus=#{status}
+		where pid = #{id} 
+	</update>
+	
+	<select id="getProductColorList" resultType="productColor">
+		select * 
+		from product_color
+		where pid = #{pid}
+	</select>
+	
+	<select id="getProductStockList" resultType="productStock">
+		select *
+		from product_stock
+		where pcid = #{pcid}
+	</select>
+	
+	<update id="updateResource">
+		update resources
+		set 
+			resourceName=#{resourceName}, httpMethod=#{httpMethod},
+			orderNum=#{orderNum}, role=#{role}
+		where id = #{id}
+	</update>
+	
+	<insert id="insertResource">
+		insert into resources (id, resourceName, httpMethod, orderNum, role )
+		values (seq_resource.nextval, #{resourceName}, #{httpMethod}, #{orderNum}, #{role})
+	</insert>
+	
+	<delete id="deleteResource">
+		delete from resources where id=#{id}
+	</delete>
+	
+	
+	<select id="getEvnetList" resultType="event">
+		select 
+			eno no, etitle title, econtent content, eissueDate issueDate, eexpiredate expiredate,
+			elimitcount limitcount, ecount count, eimg img, ediscount discount, estatus status,
+			edetailimg detailimg, ecoupontitle coupontitle
+		from event
+		order by eissueDate desc
+	</select>
+</mapper> 

@@ -44,7 +44,7 @@ public class OrderServiceTest {
 		String mId = "7c-41f8-8c6a-739159990a8d";
 		String oId = "230212P1676129267";
 		
-		OrderVO order = orderService.getOrderInfo(mId, oId);
+		OrderVO order = orderService.getOrderInfo(oId);
 		log.info("{}", order);
 	}
 	
@@ -53,7 +53,7 @@ public class OrderServiceTest {
 		String mId = "7c-41f8-8c6a-739159990a8d";
 		String oId = "230212P1676129267";
 		
-		OrderVO order = orderService.getOrderInfo(mId, oId);
+		OrderVO order = orderService.getOrderInfo(oId);
 		
 		int result = orderService.cancelOrder(mId, order);
 		log.info("cancel result > "+result);

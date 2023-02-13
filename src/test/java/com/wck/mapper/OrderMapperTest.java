@@ -79,7 +79,7 @@ public class OrderMapperTest {
 		String mId = "7c-41f8-8c6a-739159990a8d";
 		String oId = "230212P1676129267";
 		
-		OrderVO order = orderMapper.getOrderInfo(mId, oId);
+		OrderVO order = orderMapper.getOrderInfo(oId);
 		log.info("{}", order);
 	}
 	

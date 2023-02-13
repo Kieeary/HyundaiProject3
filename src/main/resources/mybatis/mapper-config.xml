@@ -27,5 +27,7 @@
         <typeAlias type="com.wck.domain.OrderProductVO" alias="productSimpleInfo"/>  
         <typeAlias type="com.wck.domain.ProductColorChipVO" alias="productColorChip"/>  
         <typeAlias type="com.wck.domain.OrderVO" alias="order"/>
+        
+        <typeAlias type="com.wck.security.domain.Resources" alias="resources"/>
     </typeAliases>  
 </configuration>

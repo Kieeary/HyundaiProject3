@@ -1209,7 +1209,7 @@
                   </div>
 
                   <div class="price">
-                    <span th:text="${productInfo.pcprice}"></span>
+                    <span th:text="'₩' + |${#numbers.formatInteger(productInfo.pcprice, 3, 'COMMA')}|"></span>
                   </div>
 
                   <div class="number" id="copy_pcid">
@@ -1581,7 +1581,7 @@
                         th:otherpcimg1="${colorchip.otherpcimg1}"
                         th:idx="${i.index}"
                         onclick="chngColorChip(this.getAttribute('otherpcid'), this.getAttribute('otherpcimg1'), this.getAttribute('idx'));"
-                        class="chip on"
+                        class="chip"
                         th:style="'background:'+${colorchip.pccolorcode}+' url('+${colorchip.pcchipimg}+');'"                        
                         ></button>
                     </div>
@@ -1592,7 +1592,7 @@
                       <a href="/ko/p/CM2D1WSH150WM1_LE">
                         <div class="logo" th:text="${wProduct.bname}"></div>
                         <div class="name" th:text="${wProduct.pname}"></div>
-                        <p class="price" th:text="${wProduct.pcprice}"></p>
+                        <p class="price" th:text="'₩' + |${#numbers.formatInteger(wProduct.pcprice, 3, 'COMMA')}|"></p>
                       </a>
 
                       <div class="number" th:id="'withProductPcid_' + ${i.index}">

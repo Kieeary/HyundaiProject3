@@ -29,7 +29,7 @@ public class EventApi {
 	
 	/*
 	 * author : 왕종휘
-	 * 진행 중인 이벤트 / 종료한 이벤트
+	 * purpose : 진행 중인 이벤트 / 종료한 이벤트
 	 */
 	@GetMapping("/list")
 	public ResponseEntity<List<EventVO>> getList(
@@ -48,7 +48,7 @@ public class EventApi {
 
 	/*
 	 * author : 왕종휘
-	 * 내 쿠폰 확인
+	 * purpose : 내 쿠폰 확인
 	 */
 	@GetMapping("/mycoupon")
 	public ResponseEntity<List<EventCouponVO>> getMyCoupon(
@@ -59,7 +59,7 @@ public class EventApi {
 	
 	/*
 	 * author : 왕종휘
-	 * 해당 이벤트에 참여 헀는지 확인
+	 * purpose : 해당 이벤트에 참여 헀는지 확인
 	 */
 	@GetMapping("{eventId}/check")
 	public ResponseEntity<Boolean> checkAlreayJoin(
@@ -74,7 +74,7 @@ public class EventApi {
 	
 	/*
 	 * author : 왕종휘
-	 * 쿠폰 발급
+	 * purpose : 쿠폰 발급
 	 */
 	@PostMapping("{eventId}/coupon")
 	public ResponseEntity<String> getCoupon(

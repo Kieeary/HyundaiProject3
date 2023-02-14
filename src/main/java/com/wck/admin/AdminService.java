@@ -49,10 +49,18 @@ public class AdminService {
 		return mapper.getProductCommonList(cri);
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 대분류 상품 건수 조회
+	 */
 	public int getProductCommonCount() {
 		return mapper.getProductCommonCount();
 	}
 
+	/*
+	 * author : 왕종휘
+	 * purpose : 대분류 상품 수정 수행
+	 */
 	public void updateProductCommon(String id, String name, String note, Boolean status, String bno) {
 		int row = mapper.updateProductCommon(id,name,note,status,bno);
 		if(row == 0) throw new RuntimeException("updateProductCommon Error");

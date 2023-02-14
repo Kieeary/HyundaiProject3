@@ -29,7 +29,7 @@ public class CartApi {
 	private final MemberMapper memberMapper;
 	
 	/* author : 왕종휘
-	 * 장바구니 추가
+	 * purpose : 장바구니 추가
 	 */
 	@PostMapping("/add")
 	public ResponseEntity<String> addCartApi(

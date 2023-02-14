@@ -848,7 +848,7 @@
 						productlist += '<p class="brand">' + result[i].bname + '</p>'
 						productlist += '<p class="name">' + result[i].pname + '</p>'
 						productlist += '<p class="price" id="listPrice0">'
-						productlist += '<span id="price_CM2D1KTO513W_TG">' + result[i].pcprice + '</span></p>'
+						productlist += '<span id="price_CM2D1KTO513W_TG">' + '₩' + result[i].pcprice.toLocaleString() + '</span></p>'
 						productlist += '</div>'
 						productlist += '</div>'
 						productlist += '</li>'

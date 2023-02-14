@@ -1,5 +1,6 @@
 <html lang="ko" class="">
   <head>
+  <script type="text/javascript" th:src="@{/js/layers.js}"></script>
   
   	<meta id="_csrf" name="_csrf" th:content="${_csrf.token}" />
 	<meta id="_csrf_header" name="_csrf_header"
@@ -951,11 +952,12 @@
           </div>
 
           <ul class="h_gnbMenu">
-            <li class="like">
+            <li th:class="'like ' + ${isLike? 'on':''}">
               <a
                 href="#"
+                class = "likeit"
                 th:pcid="${productInfo.pcid}"
-                onclick="likeProduct(this.getAttribute('pcid'));"
+                onclick="likeProduct(this.getAttribute('pcid'), this);"
                 ><span>좋아요</span></a
               >
             </li>
@@ -1272,7 +1274,7 @@
 						font-size: 16px; color: #000; line-height: 38px; text-align: center; border: none; vertical-align: top; font: inherit;margin: 0;">
 						<button type="button" class="plus" onclick="javascript:plusQty();" style=" display: inline-block; width: 25px; height: 38px;  border: 0; padding: 0; background: none; font-weight: normal;  font: inherit; margin: 0; color: inherit; font-size:17px">+</button>
 	                         </div>
-					<p id="strPrice" class="price" style="display: table-cell; padding-left: 10px; font-size: 18px; color: #222; font-weight: bold; text-align: right; vertical-align: middle;" th:value="${productInfo.pcprice}" th:text="${productInfo.pcprice}"></p>
+					<p id="strPrice" class="price" style="display: table-cell; padding-left: 10px; font-size: 18px; color: #222; font-weight: bold; text-align: right; vertical-align: middle; padding-right :7%" th:value="${productInfo.pcprice}" th:text="'₩' + |${#numbers.formatInteger(productInfo.pcprice, 3, 'COMMA')}|"></p>
 				</div>
                 
               </div>
@@ -1562,12 +1564,7 @@
                             th:src="${wProduct.pcimg1}"
                             alt="" />
                         </a>
-                        <button
-                          type="button"
-                          class="CM2D1WSH150WM1_LELIKE like"
-                          onclick="addWishListProdClick('CM2D1WSH150WM1_LE');GA_Event('스타일', '코디상품 좋아요', 'the CASHMERE_히든 버튼 셔츠');">
-                          찜하기
-                        </button>
+                     
                       </li>
                     </ul>
                     <!-- <div class="swiper-pagination"></div> -->
@@ -1901,10 +1898,14 @@
 	</script>
 	
 	<script>
-		function likeProduct(pcid) {
+		function likeProduct(pcid, obj) {
 			
 			let token = $("meta[name='_csrf']").attr("content");
             let header = $("meta[name='_csrf_header']").attr("content");
+            
+            const pushHeartBtn = document.querySelector(".like");
+            
+            $('button').addClass
 			
 			console.log(pcid);
 			
@@ -1919,7 +1920,12 @@
                 url: '/api/member/like/' + pid,
                type: 'post',
                success: function (result) {
-                	alert("전송 완료");
+            	   if ($(obj).parents('li').hasClass("on") === true) {
+                       $(obj).parents('li').removeClass("on");
+                     
+                     } else {
+                       $(obj).parents('li').addClass("on");
+                       }
                },
                error: function (xhr, Status, error) {},
              });

@@ -232,7 +232,7 @@
   			$(keywords.split('/')).each(function(idx, keyword){
   	  			let template = `
   	    			<li>
-  	                  <a class="txt">${keyword}</a>
+  	                  <a class="txt" href="/wck/search/result?query=${keyword}">${keyword}</a>
   	                  <a class="del" onclick="removeKeyword(this)">삭제</a>
   	                </li>
   	    			`;

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wck.domain.DetailProductVO;
+import com.wck.mapper.MemberMapper;
 import com.wck.security.domain.Account;
 import com.wck.service.CartService;
 import com.wck.service.ProductService;
@@ -33,16 +34,16 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class CartController {
 	
-	@Autowired
 	private final CartService cartService;
 	
-	@Autowired
 	private final ProductService productService;
 	
 //	author : 김한울
 //	purpose : 장바구니 상품 삭제
 	@GetMapping("/deleteProd")
-	public String deleteProd(@RequestParam("mid") String mId, @RequestParam(value = "psid", required = false) String psid) {
+	public String deleteProd(
+			@AuthenticationPrincipal Account account,
+			@RequestParam("mid") String mId, @RequestParam(value = "psid", required = false) String psid) {
 		log.info("user id > "+mId);
 		
 		if (psid == null) {
@@ -52,14 +53,19 @@ public class CartController {
 			cartService.deleteCartProd(mId, psid);
 		}
 		
+		
 		return "redirect:/wck/shoppingbag";
 	}
 	
 	@GetMapping("/deleteProds")
-	public String deleteProds(@RequestParam("mid") String mId, @RequestParam("psids") List<String> psids) {
+	public String deleteProds(
+			@AuthenticationPrincipal Account account,
+			@RequestParam("mid") String mId, @RequestParam("psids") List<String> psids) {
 		log.info("user id > " + mId);
 		log.info("{}",psids);
 		cartService.deleteSelectedProds(mId, psids);
+		
+
 		return "redirect:/wck/shoppingbag";
 	}
 	
@@ -109,5 +115,7 @@ public class CartController {
 			return new ResponseEntity<> (result, HttpStatus.OK);
 		}
 	}
+	
+	
 }
 	

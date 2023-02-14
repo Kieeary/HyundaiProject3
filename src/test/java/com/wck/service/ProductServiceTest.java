@@ -60,7 +60,7 @@ public class ProductServiceTest {
 	@Test
 	void getSecondCategory() {
 		String depth1name = "me";
-		List<SecondCategoryVO> a = productService.getSecondCategory(depth1name);
+		List<SecondCategoryVO> a = productService.getSecondCategory(depth1name, null);
 		
 		for(SecondCategoryVO s : a) {
 			log.info(s.getSecondname());

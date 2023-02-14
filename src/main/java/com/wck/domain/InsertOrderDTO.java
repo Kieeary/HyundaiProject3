@@ -11,6 +11,12 @@ import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 
+/*
+ * author : 김한울
+ * purpose : FORM 태그 안의 데이터들 한번에 받기 위한 용도
+ * 			 OrderVO로 변환되어 출력되는 함수 가지고 있음
+ */
+
 @Data
 public class InsertOrderDTO {
 

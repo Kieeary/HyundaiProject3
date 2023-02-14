@@ -124,15 +124,27 @@ public class MemberService {
 		if(row == 0) throw new RuntimeException("disabledMember DB 에러발생");
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : 회원의 마일리지 적립률 출력
+	 */
 	public double getMileageAddRate(String mId) {
 		MemberGrade grade = MemberGrade.of(memberMapper.getGradeById(mId));
 		return grade.getAccruRate();
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : 회원 email로 보유 쿠폰 출력
+	 */
 	public List<EventCouponVO> getCoupon(String email) {
 		return memberMapper.getCouponByEmail(email);
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : 회원의 전체 구매 금액(해당 연도 내) 출력
+	 */
 	public long getTotalUsePrice(String mId) {
 		return memberMapper.getTotalOrderPrice(mId);
 	}

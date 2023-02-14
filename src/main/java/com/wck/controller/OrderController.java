@@ -1,18 +1,13 @@
 package com.wck.controller;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.logging.LogLevel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,15 +19,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.siot.IamportRestClient.IamportClient;
-import com.siot.IamportRestClient.exception.IamportResponseException;
-import com.siot.IamportRestClient.response.IamportResponse;
-import com.siot.IamportRestClient.response.Payment;
 import com.wck.domain.EventCouponVO;
 import com.wck.domain.InsertOrderDTO;
 import com.wck.domain.MemberGrade;
@@ -65,6 +55,12 @@ public class OrderController {
 	@Value("${private.ip}") 
     private String privateIp;
 	
+	/*
+	 * author : 김한울
+	 * purpose : 수령자 정보 작성하는 주문서 작성 페이지로 이동
+	 * 			 장바구니에서 상품 주문 가능
+	 * 			 상품 상세 페이지에서 상품 바로 주문 가능
+	 */
 	@PostMapping(value = "/ordersheet")
 	public String orderForm(@AuthenticationPrincipal Account user, 
 							HttpServletRequest request,
@@ -123,13 +119,14 @@ public class OrderController {
 	}
 	
 	
-	// KG 이니시스
+	/*
+	 * author : 김한울
+	 * purpose : KG 이니시스 결제(DB 정보 insert) 과정
+	 */
 	@GetMapping("/orderConfirmation2/{oid}")
 	public String orderConfirmForm(
 			@PathVariable("oid") String oid,
 			Model model) {
-		System.out.println(oid);
-		System.out.println("Get mapping >>>>>>>>>>>>>>>>>>>>>");
 		OrderVO order = orderService.getOrderInfo(oid);
 		log.info("{}",order);
 		model.addAttribute("order", order);
@@ -144,7 +141,10 @@ public class OrderController {
 	}
 	
 	
-	// KakaoPay
+	/*
+	 * author : 김한울
+	 * purpose : KakaoPay 결제 (DB 정보 insert) 과정
+	 */
 	@PostMapping("/orderConfirmation1")
 	@ResponseBody
 	public ResponseEntity<String> orderConfirmForm(@AuthenticationPrincipal Account user,
@@ -163,6 +163,10 @@ public class OrderController {
 		return new ResponseEntity<> (insertOrder.getOid(), HttpStatus.OK);
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : KakaoPay 결제 완료 페이지로 이동
+	 */
 	@GetMapping("/orderConfirmation1")
 	public String orderConfirmForm1(@AuthenticationPrincipal Account user,
 									@RequestParam("oId") String oId,
@@ -179,37 +183,4 @@ public class OrderController {
 		
 		return "/wck/order/order_comp";
 	}
-	
-	
-	
-//	@Autowired(required=true)
-//	private IamportClient api;
-//	
-//	@ResponseBody
-//	@RequestMapping(value = "/orderConfirmation/{imp_uid}")
-//	public IamportResponse<Payment> paymentByImpUid(
-//			@PathVariable(value = "imp_uid") String imp_uid
-//			, @RequestParam(required = false) String merchant_uid
-//			, Model model
-//			, HttpSession session)
-//					throws IamportResponseException, IOException {
-//		log.info("Get order Confirmation >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-//		// imp_uid=imp_389291808416
-//		// merchant_uid=nobody_1676246291597
-//		// imp_success=false
-//		// error_msg=F0005%3A결제가+중단되었습니다%28imp_389291808416%29.01+%7C+사용자가+결제를+취소+하였습니다.
-//		
-//		// http//locaslhost/wck/checkout/orderConfirmation?imp_uid=imp_904255033222&merchant_uid=403e-60a0-4e0f-85e8-673c&imp_success=true
-//			
-//		log.info("imp uid ", imp_uid);
-////		log.info("imp success ", imp_success);
-//		log.info("imp MU ", merchant_uid);
-////		log.info("imp error msg ", msg);
-////		log.info("{}", insertOrder);
-//		
-//		return api.paymentByImpUid(imp_uid);
-//	}
-	
-	
-	
 }

@@ -14,7 +14,7 @@ ALTER TABLE order_item ADD CONSTRAINT order_item_pk PRIMARY KEY ( psid, oid );
 CREATE TABLE orders (
     oid          VARCHAR2(40 BYTE) NOT NULL,
     pmcode       VARCHAR2(30 BYTE) NOT NULL,
-    mid          VARCHAR2(15 BYTE) NOT NULL,
+    mid          VARCHAR2(30 BYTE) NOT NULL,
     oreceiver    VARCHAR2(10 BYTE) NOT NULL,
     oaddress1    VARCHAR2(100 BYTE) NOT NULL,
     oaddress2    VARCHAR2(100 BYTE),

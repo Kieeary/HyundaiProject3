@@ -92,7 +92,6 @@
  		<result property="ColorName" column="COLORNAME" />
  	</resultMap>
  	
- 
  	<select id="getProducts" resultMap = "productsMap">
  		SELECT sub.pid, sub.pcid, sub.pname, sub.bname, sub.pstatus, sub.bno, 
         sub.pcprice, sub.pccolorcode, sub.pcimg1, sub.pcchipimg,sub.psstock, sub.preleasedate, sub.rnum
@@ -433,35 +432,47 @@
 		select count(*) from likes
 		where mid = #{mId}
 	</select>
-	
+
+<!-- author : 김한울
+	 purpose : 해당 상품(color 선택) 구매 가능한 사이즈 조회 -->
 	<select id="getSizeSet" resultType="string">
 		SELECT PSIZE FROM PRODUCT_STOCK WHERE PSSTOCK != 0 AND PCID = #{pcId} ORDER BY PSIZE
 	</select>
-	
+		
+<!-- author : 김한울
+	 purpose : 해당 상품의 선택 가능한 color 정보 조회 -->
 	<select id="getColorSet" resultType="detailProduct">
 		SELECT pc.PCID, pc.PCCHIPIMG, pc.PCCOLORCODE, pci.COLORNAME 
 		FROM PRODUCT_COLOR pc, PRODUCT_COLOR_INFO pci 
 		WHERE pc.PCID = pci.PCID AND PID = #{pId}
 		ORDER BY pc.PCID DESC
 	</select>
-	
+
+<!-- author : 김한울
+	 purpose : 해당 상품의 재고 수량 조회 -->
 	<select id="getProductStock" resultType="int">
 		SELECT PSSTOCK FROM PRODUCT_STOCK WHERE PSID = #{psId}
 	</select>
 	
+<!-- author : 김한울
+	 purpose : 해당 상품의 이름, 브랜드명 조회 -->
 	<select id="getProducSimpleInfo" resultType="productCommon">
 		SELECT b.BNAME, pc.PNAME
 		FROM PRODUCT_COMMON pc, BRAND b  
 		WHERE pc.BNO = b.BNO AND PID = #{pId}
 	</select>
-	
+
+<!-- author : 김한울
+	 purpose : 색상명을 포함한 상품 정보 조회 -->
 	<select id="getProductInfoWithColorName" resultType="productSimpleInfo">
 		SELECT ps.PSID, b.BNAME, pc1.PNAME, pci.COLORNAME, pc2.PCPRICE, ps.PSIZE, pci.PIMG 
 		FROM PRODUCT_STOCK ps, PRODUCT_COMMON pc1, PRODUCT_COLOR pc2, PRODUCT_COLOR_INFO pci, BRAND b
 		WHERE ps.PCID = pc2.PCID AND pc1.PID = pc2.PID AND pc1.BNO = b.BNO AND pc2.PCID = pci.PCID 
 		AND ps.PSID = #{psId}
 	</select>
-	
+
+<!-- author : 김한울
+	 purpose : 특정 상품의 재고 감소 업데이트 -->
 	<update id="updateProductStock">
 		UPDATE PRODUCT_STOCK SET PSSTOCK = PSSTOCK - #{subQty} WHERE PSID = #{psId}
 	</update>

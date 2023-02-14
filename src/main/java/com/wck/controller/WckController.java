@@ -157,7 +157,10 @@ public class WckController {
 		return "wck/sample/prod_detail";
 	}
 	
-	@PreAuthorize("hasRole('USER')")
+	/*
+	 * author : 김한울
+	 * purpose : 장바구니 페이지로 이동
+	 */
 	@GetMapping("/shoppingbag")
 	public String cartForm(@AuthenticationPrincipal Account user,
 							@RequestParam(required = false, name = "error") String msg,

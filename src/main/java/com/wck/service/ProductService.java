@@ -186,10 +186,18 @@ public class ProductService {
 		return productMapper.getColorChip(pid);
 	}
 
+	/*
+	 * author : 김한울
+	 * purpose : 해당 상품(color 선택) 구매 가능한 사이즈 조회
+	 */
 	public List<String> getSizeSet(String pcId) {
 		return productMapper.getSizeSet(pcId);
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : 해당 상품의 선택 가능한 color 정보 조회
+	 */
 	public List<DetailProductVO> getColorSet(String pId) {
 		return productMapper.getColorSet(pId);
 
@@ -201,6 +209,10 @@ public class ProductService {
 		return productMapper.getProductsCount(br, gd, sC, tC);
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : 해당 상품의 재고 수량 조회
+	 */
 	public String getProductStock(String psId, int qty) {
 		String pId = psId.split("_")[0];
 		int stock = productMapper.getProductStock(psId);
@@ -215,6 +227,10 @@ public class ProductService {
 		return msg;
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : 색상명을 포함한 상품 정보 조회
+	 */
 	public OrderProductVO getPsIdInfo(String psid){
 		return productMapper.getProductInfoWithColorName(psid);
 	}

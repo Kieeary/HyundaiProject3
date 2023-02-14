@@ -89,8 +89,7 @@
 				where mid = #{mId}
 <![CDATA[
 				 and odate >= add_months(sysdate, #{cri.month} * -1)
-				 order by odate
-				        
+				 order by odate desc
 			    )
 			    where rownum <= #{cri.currentPage} * #{cri.pageSize}
 

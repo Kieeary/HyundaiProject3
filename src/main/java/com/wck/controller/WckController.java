@@ -123,8 +123,10 @@ public class WckController {
 	 */
 	@PostMapping("/login/change")
 	public String changeFormPost(@ModelAttribute("member") UpdateMemberDTO member) {
+		log.info("===========================/login/change");
 		log.info(member);
 		memberService.updateInfo(member);
+		
 		return "redirect:/wck/login";
 	}
 	

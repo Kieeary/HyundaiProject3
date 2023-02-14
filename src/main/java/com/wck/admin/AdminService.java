@@ -2,6 +2,7 @@ package com.wck.admin;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wck.domain.Criteria;
@@ -10,6 +11,7 @@ import com.wck.domain.MemberVO;
 import com.wck.domain.ProductColorVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductStockVO;
+import com.wck.security.interceptor.UrlFilterInvocationSecurityMetadataSource;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,9 @@ import lombok.RequiredArgsConstructor;
 public class AdminService {
 
 	private final AdminMapper mapper;
+	
+	@Autowired
+	private UrlFilterInvocationSecurityMetadataSource securityMetadataSource;
 	
 	List<MemberVO> getMemberList(){
 		return mapper.getMemberList();
@@ -54,14 +59,17 @@ public class AdminService {
 	
 	public void updateResource(int id, String resourceName, String httpMethod, int orderNum, String role) {
 		mapper.updateResource(id, resourceName,httpMethod, orderNum, role);
+		securityMetadataSource.reload();
 	}
 
 	public void insertResource(String resourceName, String httpMethod, int orderNum, String role) {
 		mapper.insertResource(resourceName,httpMethod, orderNum, role);
+		securityMetadataSource.reload();
 	}
 	
 	public void deleteResource(int id) {
 		mapper.deleteResource(id);
+		securityMetadataSource.reload();
 	}
 
 	public List<EventVO> getEventList() {

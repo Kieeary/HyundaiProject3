@@ -100,7 +100,6 @@
                   <div class="stage coupon_stage" id="myCouponList">
                     <div class="s-tit">
                       <b>쿠폰</b>
-                      <a href="/ko/mypage/voucher" class="more">전체조회</a>
                     </div>
                     <div id="mypageCouponList">
                     </div>
@@ -245,12 +244,15 @@
     					 let item_html = '';
     					 $(t.orderProducts).each(function(idx, d){
     						 console.log("idx : "+ idx);
-    						 console.log("d : "+ d);
+    						 console.log(d);
+    						 let pid = (d.psId).split("_")[0];
+    						 let psid = pid+'_'+(d.psId).split("_")[1];
+    						 
         					 let item_template = `
          					 	<div class="order_product" style="padding-top:10px">
          		                 <!-- 개 -->
          		                 <a
-         		                   href="/ko/p/SH2C1ACK416M_GY_FR">
+         		                   href="/wck/products/p?pid=${pid}&pcid=${psid}">
          		                   <div class="img">
          		                     <img
          		                       src="${d.pimg}"
@@ -360,7 +362,7 @@
     			 /*<![CDATA[*/
     			 let template = `
     				<li>
-    			      <a href="/ko/p/MM2D1WOT022HDE">
+    			      <a href="/wck/products/p?pid=${like.pid}&pcid=${like.colors[0].pcId}">
     			        <img
     			          src="${like.colors[0].pcImg1}"
     			          style="width: 86px; height: 130px"

@@ -9,30 +9,8 @@
     </style>
     <div class="hsome_allContents">
       <!-- ################## header ################## -->
-      <header class="hsome_header">
-        <h1 class="h_ttl ellipsis" id="headerTitle">로그인</h1>
-        <a href="/ko/main" class="h_top_home"><span>홈</span></a>
-
-        <a href="javascript:noLink();" onclick="goBack();" class="h_prev"
-          >이전 페이지로 가기</a
-        >
-        <ul class="h_gnbMenu">
-          <li class="search">
-            <a
-              href="/ko/mobilecommon/search"
-              onclick="GA_Event('공통', '헤더', '검색');"
-              ><span>search</span></a
-            >
-          </li>
-          <li class="cart">
-            <a
-              href="/ko/shoppingbag"
-              onclick="GA_Event('공통', '헤더', '쇼핑백');"
-              ><span>cart</span><i>0</i></a
-            >
-          </li>
-        </ul>
-      </header>
+         <th:block th:replace="wck/includes/header :: header_tag(title='로그인')"></th:block>
+ 
       <!-- //################## header ################## -->
       <script type="text/javascript">
         //<![CDATA[

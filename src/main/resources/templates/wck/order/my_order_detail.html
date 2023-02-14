@@ -2,6 +2,27 @@
 <th:block th:replace="wck/includes/head :: head_tag(title='나의주문내역상세 | 더한섬닷컴')"></th:block>
 
 <body class="back">
+<script type="text/javascript">
+function cancelOrder(oid) {
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
+    $.ajax({
+      url: '/wck/mypage/cancelRequest/' + oid,
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader(header, token);
+      },
+      method: 'post',
+      success : function(result){
+        if(result == "SUCCESS"){
+      	  console.log('cancel order complete');
+          location.href = '/wck/mypage/order';
+        }
+      },
+      error : function(){
+      }
+    })
+  }
+</script>
   <!-- Loading -->
   <div style="display: none">
     <div id="loadingBarDiv" style="display: none"></div>
@@ -82,8 +103,9 @@
                     </li>
                   </ul>
                   <div class="btn_wrap btn_wrap_div2" style="opacity: 1">
-                    <a href="/ko/mypage/order/cancelRequestPopup?code=230128P16572180&amp;isall=Y"
-                      class="btnstl border_btn_gray layerpopupOpen" onclick="GA_Event('주문상세조회', '상세조회', '주문취소');">
+                    <a href="#"
+                    	th:onclick='cancelOrder([[${order.oid}]]);'
+                      class="btnCancel btnstl border_btn_gray layerpopupOpen">
                       <span>주문취소</span>
                     </a>
                   </div>

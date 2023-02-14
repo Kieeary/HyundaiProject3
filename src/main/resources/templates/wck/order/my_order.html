@@ -245,7 +245,7 @@
       function printOrder(data) {
         let item_html = '';
         $(data.orderProducts).each(function (i, product) {
-
+		console.log(product);
           let item_template = `
   	  	  		<li>
   	                <div class="mpord_goods_item gl_item">
@@ -273,7 +273,7 @@
   	                      <a href="javascript:;" class="btn_more_action_ul_close"><span>닫기</span></a>
   	                      <ul class="more_action_ul">
   	                        <li>
-  	                          <a href="#" class="layerpopupOpen" onclick="cancelOrder('${data.oid}');">주문취소</a>
+  	                          <a href="#" class="layerpopupOpen"  onclick="cancelOrder('${data.oid}');">주문취소</a>
   	                        </li>
   	                      </ul>
   	                    </div>

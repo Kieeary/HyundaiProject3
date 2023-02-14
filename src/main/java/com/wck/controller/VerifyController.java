@@ -78,12 +78,13 @@ public class VerifyController {
 			
 			// 결제 성공 화면으로 이동
 			URI redirectUri = new URI("http://"+privateIp+"/wck/checkout/orderConfirmation2/"+oId);
+			
 			HttpHeaders httpHeaders = new HttpHeaders();
 			httpHeaders.setLocation(redirectUri);
 
-			// 로그인이 된 사용자가 세션을 사용하고 있으므로 false 세팅을 해준것임
-			HttpSession session = request.getSession(false);
-			session.setMaxInactiveInterval(120); // 120초 동안 세션 유지
+//			// 로그인이 된 사용자가 세션을 사용하고 있으므로 false 세팅을 해준것임
+//			HttpSession session = request.getSession(false);
+//			session.setMaxInactiveInterval(120); // 120초 동안 세션 유지
 			
 			return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 		} else {

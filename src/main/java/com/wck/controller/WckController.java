@@ -54,8 +54,13 @@ public class WckController {
 	 * 로그인 페이지
 	 */
 	@GetMapping("/login")
-	public String loginForm(@RequestParam(required = false, name = "error") String error,
+	public String loginForm(
+			@AuthenticationPrincipal Account account,
+			@RequestParam(required = false, name = "error") String error,
 			Model model) {
+		if(account != null) {
+			return "redirect:/wck";
+		}
 		log.info("===login page====");
 		model.addAttribute("error",error);
 		return "wck/login";
@@ -118,8 +123,10 @@ public class WckController {
 	 */
 	@PostMapping("/login/change")
 	public String changeFormPost(@ModelAttribute("member") UpdateMemberDTO member) {
+		log.info("===========================/login/change");
 		log.info(member);
 		memberService.updateInfo(member);
+		
 		return "redirect:/wck/login";
 	}
 	

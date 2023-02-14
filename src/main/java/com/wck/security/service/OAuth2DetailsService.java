@@ -92,7 +92,7 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 		String role = "ROLE_USER";
 		int grade = 1;
 		int mileage = 0;
-		
+		// TODO : oauth2 로직 확인
 		String zipCode = "123";
 		String address1 = "address1";
 		String address2 = "address2";

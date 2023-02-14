@@ -2,11 +2,14 @@ package com.wck.service;
 
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.wck.domain.CartVO;
 import com.wck.mapper.CartMapper;
+import com.wck.mapper.MemberMapper;
+import com.wck.security.domain.Account;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -16,6 +19,7 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class CartService {
 	private final CartMapper cartMapper;
+	private final MemberMapper memberMapper;
 	
 	/*
 	 * author : 김한울
@@ -33,6 +37,8 @@ public class CartService {
 			int result = cartMapper.insertCart(mId, pSId, addQuantity);
 			log.info(result == 1 ? "장바구니 담기 완료" : "장바구니 담기 실패");
 		}
+		
+		updateCartCount();
 	}
 
 	/*
@@ -48,7 +54,9 @@ public class CartService {
 	 * purpose : 단일 상품 장바구니에서 삭제하기
 	 */
 	public int deleteCartProd(String mId, String pSId) {
-		return cartMapper.deleteCart(mId, pSId);
+		int row = cartMapper.deleteCart(mId, pSId);
+		updateCartCount();
+		return row;
 	}
 
 	/*
@@ -56,7 +64,9 @@ public class CartService {
 	 * purpose : 장바구니 전체 상품 삭제
 	 */
 	public int deleteCart(String mId) {
-		return cartMapper.deleteCartAll(mId);
+		int row = cartMapper.deleteCartAll(mId);
+		updateCartCount();
+		return row;
 	}
 
 	/*
@@ -68,5 +78,17 @@ public class CartService {
 		for (String psid : pSIds) {
 			cartMapper.deleteCart(mId, psid);
 		}
+		updateCartCount();
+	}
+	
+	/*
+	 * author : 왕종휘
+	 * purpose : 세션에 있는 장바구니 개수 변경
+	 */
+	private void updateCartCount() {
+		Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int count = memberMapper.getCartCount(account.getId());
+		account.setCartCount(count);
+		
 	}
 }

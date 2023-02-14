@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wck.domain.DetailProductVO;
+import com.wck.security.domain.Account;
 import com.wck.service.CartService;
 import com.wck.service.ProductService;
 
@@ -29,10 +30,8 @@ import lombok.extern.log4j.Log4j2;
 @RequiredArgsConstructor
 public class CartController {
 	
-	@Autowired
 	private final CartService cartService;
 	
-	@Autowired
 	private final ProductService productService;
 	
 	/*
@@ -40,7 +39,9 @@ public class CartController {
 	 * purpose : 장바구니 상품 삭제
 	 */
 	@GetMapping("/deleteProd")
-	public String deleteProd(@RequestParam("mid") String mId, @RequestParam(value = "psid", required = false) String psid) {
+	public String deleteProd(
+			@AuthenticationPrincipal Account account,
+			@RequestParam("mid") String mId, @RequestParam(value = "psid", required = false) String psid) {
 		log.info("user id > "+mId);
 		
 		if (psid == null) {
@@ -50,6 +51,7 @@ public class CartController {
 			cartService.deleteCartProd(mId, psid);
 		}
 		
+		
 		return "redirect:/wck/shoppingbag";
 	}
 	
@@ -58,10 +60,14 @@ public class CartController {
 	 * purpose : 여러 상품 삭제
 	 */
 	@GetMapping("/deleteProds")
-	public String deleteProds(@RequestParam("mid") String mId, @RequestParam("psids") List<String> psids) {
+	public String deleteProds(
+			@AuthenticationPrincipal Account account,
+			@RequestParam("mid") String mId, @RequestParam("psids") List<String> psids) {
 		log.info("user id > " + mId);
 		log.info("{}",psids);
 		cartService.deleteSelectedProds(mId, psids);
+		
+
 		return "redirect:/wck/shoppingbag";
 	}
 	
@@ -123,5 +129,7 @@ public class CartController {
 			return new ResponseEntity<> (result, HttpStatus.OK);
 		}
 	}
+	
+	
 }
 	

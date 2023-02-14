@@ -1,5 +1,4 @@
 <html lang="ko" class="back" xmlns:th="http://www.thymeleaf.org">
-<script type="text/javascript" th:src="@{/js/layers.js}"></script>
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -174,7 +173,12 @@
 
 			<!-- ################## header ################## -->
 			<header class="hsome_header">
-
+				<h1 class="h_ttl ellipsis" id="headerTitle">
+					<a href="javascript:noLink();" onclick="openGnbPopup();" 
+					class=""
+					th:text="${bname}">
+					</a>
+				</h1>
 				<script type="text/javascript">
 					$(document).ready(function () { });
 				</script>
@@ -216,57 +220,56 @@
 			<!-- ################## contents ################## -->
 			<div class="hs_product_list_wrap">
 					<!-- flag_wrap -->
-
-			<div class="flag_wrap case swiper-container depth2 swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal"> <!-- //전체보기 아닌 case(이전카테고리 노출될경우) class 추가-->
-	             <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.brand} == null and ${category.gender} != null and ${category.secCat} == null and ${category.thrCat} == null ">
-                     <li class="swiper-slide flag on" id="categoryNav01" style="margin-right: 6px;"><a th:href="@{/wck/products/list(gender=${category.gender})}" class="name" th:text="${category.gendername} + ' 모든 상품'"onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">&nbsp;전체</a></li>
-                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
-                     
-	                 <li th:each="detail : ${detailcategory}" class="swiper-slide flag" style="margin-right: 6px;">
-	                 	<a th:href="@{/wck/products/list(gender=${category.gender},secCat=${detail.depth2name})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');" th:text="${detail.secondname}"></a></li>
-		                 </ul>
-		                 
-	             <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.brand} != null and ${category.gender} != null and ${category.secCat} == null">
-                     <li class="swiper-slide flag on" id="categoryNav02" style="margin-right: 6px;"><a th:href="@{/wck/products/list(brand=${category.brand},gender=${category.gender})}" class="name" th:text="${category.gendername} +' 모든 제품'"onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');">&nbsp;전체</a></li>
-                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
-                     
-	                 <li th:each="detail : ${detailcategory}" class="swiper-slide flag" style="margin-right: 6px;">
-	                 	<a th:href="@{/wck/products/list(brand=${category.brand},gender=${category.gender},secCat=${detail.depth2name})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');" th:text="${detail.secondname}"></a></li>
-		                 </ul>
-		                 
-		                
-		          <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.brand} != null and ${category.gender} != null and ${category.secCat} != null and ${category.thrCat == null} ">
-                     <li class="swiper-slide flag on" id="categoryNav03" style="margin-right: 6px;"><a th:href="@{/wck/products/list(brand=${category.brand},gender=${category.gender},secCat=${category.secCat})}" class="name" th:text="${category.secCatname} + ' 모든 상품'" onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');"></a></li>
-                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
-                     
-	                 <li th:each="detail : ${detailcategory}" class="swiper-slide flag" style="margin-right: 6px;">
-	                 	<a th:href="@{/wck/products/list(brand=${category.brand},gender=${category.gender},secCat=${category.secCat},thrCat=${detail.depth3name})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');" th:text="${detail.detailname}"></a></li>
-		                 </ul>
-		                 
-		          <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.brand} == null and ${category.secCat} != null and ${category.thrCat != null} ">
-                     <li class="swiper-slide flag on" id="categoryNav04" style="margin-right: 6px;"><a th:href="@{/wck/products/list(gender=${category.gender},secCat=${category.secCat})}" class="name" th:text="${category.secCatname} + ' 모든 상품'" onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');"></a></li>
-                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
-                     
-	                 <li th:each="detail : ${detailcategory}" class="swiper-slide flag" style="margin-right: 6px;">
-	                 	<a th:href="@{/wck/products/list(gender=${category.gender},thrCat=${detail.depth3name})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');" th:text="${detail.detailname}"></a></li>
-		                 </ul>
-		                 
-		          <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.brand} == null and ${category.gender} != null and ${category.secCat} == null and ${category.thrCat != null} ">
-		                 </ul>
-		                 
-		          <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.brand} == null and ${category.gender} != null and  ${category.secCat} != null and ${category.thrCat == null} ">
-                     <li class="swiper-slide flag on" id="categoryNav04" style="margin-right: 6px;"><a th:href="@{/wck/products/list(gender=${category.gender},secCat=${category.secCat})}" class="name" th:text="${category.secCatname} + ' 모든 상품'"  onclick="GA_Event('카테고리_리스트', '카테고리', '아우터&nbsp;전체');"></a></li>
-                            <!-- #1141 - 상위 카테고리(여성/남성/패션잡화/라이프스타일 처리) -->
-                     
-	                 <li th:each="detail : ${detailcategory}" class="swiper-slide flag" style="margin-right: 6px;">
-	                 	<a th:href="@{/wck/products/list(gender=${category.gender},thrCat=${detail.depth3name})}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', '재킷');" th:text="${detail.detailname}"></a></li>
-		                 </ul>
-		                 
-		          <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.brand} != null and ${category.gender} != null and ${category.secCat} != null and ${category.thrCat != null} ">
-                         </ul>
-		                 
+					
+			<div class="brand_cont" style="margin-bottom:0px">
+			<div class="cate_wrap191028">
+                    <!--//previous_category191028 -->
+	                
+	                <!-- flag_wrap -->
+                    <div class="flag_wrap case swiper-container swiper-container-horizontal swiper-container-free-mode swiper-container-android swiper-container-wp8-horizontal"> <!-- //전체보기 아닌 case(이전카테고리 노출될경우) class 추가-->
+	                    <ul class="swiper-wrapper" style="transform: translate3d(0px, 0px, 0px);" th:if="${category.brand} != null and ${category.gender} == null"><!-- //아울렛 전체보기 임시주석처리 -->
+                            <li class="swiper-slide flag on swiper-slide-active" id="categoryNav01" style="margin-right: 6px;">
+                            <a href="@{/wck/products/list(brand=${category.brand}}" class="name" onclick="GA_Event('카테고리_리스트', '카테고리', 'TIME&nbsp;전체');"
+                            th:text="${bname} + ' 제품'">&nbsp;</a></li>
+	                        <li th:each="detail : ${detailcategory}" class="swiper-slide flag " style="margin-right: 6px;">
+	                        <a th:href="@{/wck/products/list(brand=${category.brand},gender=${detail.depth1name})}" class="name" th:text="${detail.firstname}" onclick="GA_Event('카테고리_리스트', '카테고리', '여성');"></a></li>                            
+			                </ul>
+			   
                     </div>
-				<div class="sort_tit">
+					<!--// flag_wrap -->
+				</div>
+			
+			</div>		
+                    
+            <div id="brandBanner">
+               
+			<div class="img_cont">
+				<a href="javascript:noLink();">
+				<div class="img" th:style="'background-image: url('+ ${brand} +' );'">
+				<img th:src="${brand}" th:style="${'width:100%'}" alt=""/></div>
+				<p class="txt"></p></a>
+			</div>
+			</div>
+
+					<!--// brand_video_slide -->
+					<script type="text/javascript">
+						var rate_en = '',
+							symbol_en = '',
+							rate_zh = '',
+							symbol_zh = '';
+
+						function initSwiperFn() {
+							var productSwiper01 = new Swiper('.hs_editshop_list', {
+								slidesPerView: '3.3',
+								freeMode: true,
+								spaceBetween: 10,
+							});
+						}
+					</script>
+
+				
+				<!-- sort_tit -->
+				<div class="sort_tit" style="margin-top:1%">
 					<p class="num_txt" id="totalSpan" th:text="${count} + '개'"></p>
 					<div class="hs_tit_select">
 						<select id="st2" title="신상품" onchange="setGAProdSort(this.selectedOptions[0].value);">
@@ -279,11 +282,246 @@
 					</div>
 				</div>
 				<!--// sort_tit -->
+
+
+				<!--// filter_wrap -->
+				<!-- product_list -->
 				<div class="hs_product_list" id="hsProductList">
 					<ul id="listBody">
 					</ul>
 				</div>
+				<!--// product_list -->
 			</div>
+
+			<script>
+		      function GA_Event(Category, Action, Label) {
+		          Label = unescape(Label)
+		            .replace(/\&#039;/gi, "'")
+		            .replace(/\&amp;/g, '&');
+
+		          var v_Label = Label;
+		          var v_Category = Category;
+		          var v_Action = Action;
+		          //공백처리을  _ 처리
+		          if (Category != null) {
+		            v_Category = Category.replace(/\s{2,}/gi, ' ')
+		              .trim()
+		              .replace(/\s/gi, '_');
+		          }
+		          if (Action != null) {
+		            v_Action = Action.replace(/\s{2,}/gi, ' ')
+		              .trim()
+		              .replace(/\s/gi, '_');
+		          }
+		          if (Label != null) {
+		            v_Label = Label.replace(/\s{2,}/gi, ' ')
+		              .trim()
+		              .replace(/\s/gi, '_');
+		          }
+		          console.log(v_Category, v_Action, v_Label);
+		          ga('gp.send', 'event', v_Category, v_Action, v_Label);
+		        }
+			
+			</script>
+			
+			<!-- //레이어 팝업 -->
+			<script type="text/javascript">
+				//<![CDATA[
+				var height = 20;
+				var num = 0;
+				var max = height * num;
+				var move = 0;
+				var lastChild;
+				var notiCnt = 0;
+				var curTabId = 0;
+
+          /**********************Footer Notice End****************************/
+          //]]>
+			</script>
+			<script>
+				$(window).load(function () {
+					function noticeRolling() {
+						if (notiCnt > 1) {
+							height = 20;
+							num = notiCnt;
+							max = height * num;
+							move += height;
+
+							//메인여부 체크(메인진입시 1개, 메인탭별 푸터 진입시 1개씩 추가)
+							if ($('.notice-wrap').length > 1) {
+								$('#topNav1909 li').each(function (index) {
+									if ($(this).hasClass('on')) {
+										curTabId = index;
+									}
+								});
+								$('footer#footer' + curTabId + ' .notice-wrap').animate(
+									{top: -move},
+									600,
+									function () {
+										if (move >= max) {
+											$(this).css('top', 0);
+											move = 0;
+										}
+									}
+								);
+							} else {
+								$('.notice-wrap').animate({top: -move}, 600, function () {
+									if (move >= max) {
+										$(this).css('top', 0);
+										move = 0;
+									}
+								});
+							}
+						}
+					}
+					noticeRollingOff = setInterval(noticeRolling, 3000);
+
+			
+				});
+			</script>
+			
+			<!-- ################## footer ################## -->
+			<!-- 푸터 공지 추가 220404 -->
+			<footer id="footer" class="hsome_footer new181127 footer_kr" style="display: none">
+				<div class="main-notice">
+					<div class="tit-notice">공지</div>
+					<div class="list-notice">
+						<ul class="notice-wrap" style="top: 0px">
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804711092144">[당첨자 발표] 2023 신년 기프트 향수 이벤트
+									당첨자 발표</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804547317680">[당첨자 발표] 1월 뷰티 릴레이 체험단
+									당첨</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804678520752">[당첨자 발표] 핸썸TV 더한섬닷컴 설선물 라이브
+									방송(1/17)
+									사은품 및 스페셜 마일리지 당첨자 발표</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804678487984">결제완료(주문완료) 페이지 오류 안내</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804711092144">[당첨자 발표] 2023 신년 기프트 향수 이벤트
+									당첨자 발표</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilenotice?noticeCode=8804711092144">[당첨자 발표] 2023 신년 기프트 향수 이벤트
+									당첨자 발표</a>
+							</li>
+						</ul>
+					</div>
+					<div class="btn-more">
+						<a href="/ko/svcenter/mobilenotice"><img
+								src="http://cdn.thehandsome.com/_ui/handsomemobile/images/main/btn_arr_notice.png"
+								alt="" /></a>
+					</div>
+				</div>
+				<div class="f_wrap">
+					<div class="f_menu re1911">
+						<!-- 수정 190207 -->
+						<ul class="top_line">
+							<li><a href="#"></a></li>
+							<li>
+								<a href="/ko/member/login" class="login" style="float: left"
+									onclick="GA_Event('공통', '푸터_메뉴', '로그인');">로그인
+									<!--로그인-->
+								</a>
+							</li>
+							<li>
+								<a href="/ko/svcenter/mobilemain?uiel=Mobile" class="customer"
+									style="float: left; width: 32%" onclick="GA_Event('공통', '푸터_메뉴', '고객센터');">고객센터
+									<!--고객센터-->
+								</a>
+							</li>
+							<li>
+								<a href="/ko/store-finder/storeInformation?uiel=Mobile" class="storeinfo"
+									style="float: left" onclick="GA_Event('공통', '푸터_메뉴', '매장안내');">매장안내</a>
+							</li>
+						</ul>
+						<ul class="btm_line1911">
+							<li>
+								<a href="/ko/svcenter/theClubInfo?uiel=Mobile" class="memberBenefit"
+									style="float: left; letter-spacing: -1px"
+									onclick="GA_Event('공통', '푸터_메뉴', '한섬 회원 혜택');">한섬 회원 혜택
+									<!-- 한섬 회원 혜택 -->
+								</a>
+							</li>
+							<li>
+								<a href="http://www.handsome.co.kr/ko/company/aboutHandsome.do?leng=ko" target="_blank"
+									style="float: left; letter-spacing: -1px"
+									onclick="GA_Event('공통', '푸터_메뉴', '회사소개');">회사소개</a>
+							</li>
+							<li id="family_site">
+								<span class="language family_site1911 for_iph_css1911"
+									onclick="familySiteSelect();GA_Event('공통', '푸터_CNT', 'FAMILYSITE');">FAMILY
+									SITE&nbsp;</span>
+							</li>
+						</ul>
+						<!-- 챗봇 테스트 -->
+					</div>
+
+					<div class="f_sns">
+						<a href="javascript:noLink();"
+							onclick="GA_Event('공통', '푸터_SNS', 'INSTAGRAM');window.open('https://instagram.com/thehandsome_official/','instagram');return false"
+							class="ist">인스타그램</a>
+						<a href="javascript:noLink();"
+							onclick="GA_Event('공통', '푸터_SNS', 'YOUTUBE');window.open('https://www.youtube.com/channel/UC0fmjgbVA8iZrPbIR3dppUQ','youtube');return false"
+							class="ytb">유튜브</a>
+					</div>
+					<div class="f_policy">
+						<a href="/ko/footer/footerTermBusiness?uiel=Mobile">서비스이용약관</a>
+						<a href="/ko/footer/footerPrivacy?uiel=Mobile" style="font-weight: bold">개인정보처리방침</a>
+
+						<!-- web -->
+						<!-- 180706 추가// -->
+						<span class="language">
+							<select id="footerSelectLang" onchange="if(this.value) language(this.value);"
+								onclick="GA_Event('공통', '푸터_CNT', 'LANGUAGE');">
+								<option value="" selected="selected" disabled="" hidden="">
+									LANGUAGE
+								</option>
+								<option value="ko">한국어</option>
+								<option value="en">ENGLISH</option>
+								<option value="zh">中文</option>
+							</select>
+						</span>
+						<!-- //180706 추가 -->
+					</div>
+
+					<div class="f_copyright">
+						COPYRIGHT © 2018 HANDSOME. ALL RIGHT RESERVED
+					</div>
+
+					<a href="javascript:noLink();" class="f_info_viewer" onclick="GA_Event('공통', '푸터_CNT', 'INFO');">
+						<span class="f-txt">(주) 한섬 </span>
+						<span class="f-logo"><img
+								src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common/mob-footer-handsome-logo.png"
+								alt="" /></span>
+					</a>
+
+					<div class="f_info">
+						<div class="corp">
+							대표이사 : 김민덕 | 서울시 강남구 도산대로 523 한섬빌딩<br />TEL
+							: 1800-5700 (유료) | FAX : 02-6078-2856 <br />개인정보보호책임자
+							: 윤인수 | 호스팅서비스 : (주) 한섬<br />사업자등록번호 :
+							120-81-26337<br />통신판매업신고번호 : 제 2009-서울강남-00826호
+						</div>
+						<div class="link">
+							<a href="https://recruit.ehyundai.com/recruit-info/announcement/list.nhd?pageNo=1&amp;hireGb=01&amp;coCd=HDHAN"
+								target="_blank" onclick="GA_Event('공통', '푸터_CNT', 'INFO_채용정보');">채용정보</a>
+							<a href="http://www.handsome.co.kr/ko/sustainability/sharedGrowth01.do" target="_blank"
+								onclick="GA_Event('공통', '푸터_CNT', 'INFO_동반성장');">동반성장</a>
+							<a href="http://www.handsome.co.kr/ko/sustainability/ecoFriendly01.do" target="_blank"
+								onclick="GA_Event('공통', '푸터_CNT', 'INFO_환경경영');">환경경영</a>
+						</div>
+					</div>
+				</div>
+			</footer>
+			<!-- // 푸터 공지 추가 220404 -->
+			<!-- //################## footer ################## -->
 		</div>
 	</div>
 	<!-- ################## //hsome_allContents_wrapper | ë³¸ë¬¸ ì»¨íì¸  ìì­ ################## -->
@@ -362,7 +600,26 @@
 	<div class="hsome_quickMenu_contents"></div>
 	<!-- //################## hsome_quickMenu_contents | 퀵메뉴 컨텐츠 영역 ################## -->
 
+	<script type="text/javascript">
+		$(document).ready(function () {
+			if (false) {
+				$('#cateTab').click();
+			}
+		});
+
+		function closeAction() {
+			$('.twoDepthNavPopup').hide();
+			$('.one_lists.on').toggleClass('on');
+		}
+	</script>
+	<div class="hsome_layer_popup hs_brand_category_pop2 multibrd-category-pop blk">
+
+		<a href="javascript:noLink();" onclick="closeAction();" class="pop-comm-cls">닫기</a>
+	</div>
+
 	<script>
+		$(document).ready(function () {
+		
 
 		function slideOnMain() {
 			var autocom_swiper = new Swiper('#autocompleteImg', {
@@ -372,7 +629,6 @@
 				freeMode: true,
 			});
 		}
-
 
 		//레이어 팝업 오픈
 		function layerPopupOpen(url, layer, pop) {
@@ -442,13 +698,6 @@
 			}, 400);
 			return false;
 		}
-		function oneclickPostLoaded() {
-			$('.iframe_popup_wrap').addClass('lp_stl_trans'); //black 배경 활성화
-			$('.iframe_popup_wrap').addClass('visible');
-			$('.iframe_popup_wrap').addClass('active');
-		}
-
-
 	</script>
 
 	<div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv"></div>
@@ -465,21 +714,66 @@
 				return false;
 			}
 		);
+
+		$(document).ready(function () {
+			$('.write_form_area .reply-write-line #comment').keyup(function (e) {
+				var content = $(this).val();
+				$('.reply_write_box #counter').html(content.length);
+			});
+
+			$('.sns_comment_pop #sns_commont_close').on('click', function () {
+				$('.sns_comment_ipt_pop .reply-call-btn').removeClass('on');
+				//         $('.sns_comment_ipt_pop .sns-comment-ipt').removeClass('active');
+				$('.hsome_allContents_wrapper').css('display', 'block');
+				scrollHeightHistory(); //$(window).scrollTop(win_Scroll);
+				$('.sns_comment_pop').scrollTop(0);
+
+				$('body').removeClass('hidden');
+			});
+
+			$('.reply_write_box').on('focus', 'textarea', putBlur);
+
+			// 20200706 댓글 버튼 active 액션
+			$('.sns_comment_ipt_pop').on(
+				'click',
+				'.reply-call-btn > button',
+				function () {
+					$('.sns_comment_ipt_pop .sns-comment-ipt').addClass('active');
+					$('.reply-call-btn').removeClass('on');
+					$('.sns-comment-ipt .reply_write_box #counter').html(0);
+				}
+			);
+
+			$('.sns_comment_ipt_pop').on(
+				'click',
+				'.reply-close-btn  a',
+				function (e) {
+					var replu_None = $(
+						'.sns_comment_ipt_pop .sns-comment-ipt .ipt-re-uploaded'
+					).hasClass('is-active');
+					e.preventDefault();
+
+					$('.sns_comment_ipt_pop .sns-comment-ipt').removeClass('active');
+					$('.sns_comment_ipt_pop .reply-call-btn').addClass('on');
+
+					if (replu_None == true) {
+						$(
+							'.sns_comment_ipt_pop .sns-comment-ipt .ipt-re-uploaded'
+						).removeClass('is-active');
+					}
+				}
+			);
+
+			function putBlur() {
+				var $thisTextarea = $(this);
+				$('.hsome_layer_popup').on('touchstart', function (e) {
+					$thisTextarea.blur();
+				});
+			}
+		});
 	</script>
 
-	<script>
-	$(document).on('click','.like',function(){
-		$('.like').click(function(e){
-			e.stopPropagation();
-			console.log('like click')
-	})
-		function callWishListClick(Pid) {
-			
-			
-			console.log(Pid);
-		}
-	
-	</script>
+
 
 	<script th:inline="javascript">
 		$(document).ready(function () {
@@ -490,9 +784,9 @@
 			  let sc = [[${category.secCat}]];
 			  let tc = [[${category.thrCat}]];
 		      /*]]>*/
-		     
-		    var index = 0;  
-			
+		      
+			var index = 0; 
+		      
 		    var start = 0;
 		    var last = 1;
 			var query = '';
@@ -507,6 +801,10 @@
 			query += "&start="+start+"&last="+last;
 			
 			console.log(query);
+			
+		//	url: '/wck/products/list/p?gender='+gd+'&brand='+br+'&secCat='+sc+'&thrCat='+tc,
+
+
 			$.ajax({
 				type: 'get',
 				url: '/wck/products/list/p?'+query,
@@ -514,6 +812,9 @@
 					console.log("통신");
 					let productlist = '';
 					
+				   
+					
+
 					for (var i = 0; i < result.length; i++) {
 
 						index = i;
@@ -521,7 +822,6 @@
 						productlist += `<li class="float active" id="listBody_li_${i}" value="hihi">`
 						productlist += `<div id="tmp_${i}">`
 						productlist += `<a id="pcid_${i}" onclick="goProductDetail('` + result[i].pid + `' ,'` + result[i].detailProduct[0].pcid + `')">`
-						productlist += `<button type="button" class="like" style="top:20px; right:0px;z-index:99" id="" onclick="callWishListClick(${result[i].pid});" data-value="">찜하기</button>`
 						productlist += `<div class="img index_img_${i}" style="margin-top:10%">`
 						productlist += '<img id="img_' + i + '" src="' + result[i].detailProduct[0].pcimg1 + '"/>'
 						productlist += '</div>'
@@ -565,7 +865,7 @@
 			
 			$(window).scroll(function(){
 				
-				if (Math.round($(window).scrollTop()) == $(document).height() - $(window).height()) {
+				if (Math.round($(window).scrollTop()) >= $(document).height() - $(window).height()) {
 				
 					 	start = last;
 					    last = last+1;
@@ -590,6 +890,7 @@
 								let productlist = '';
 								
 								index = index + 1;
+								
 
 								for (var i = 0; i < result.length; i++) {
 
@@ -663,9 +964,7 @@
 	
 		function chgColorChip(pcid, pid, pcimg1, index) {
 			
-			console.log("index!!!");
-			
-			console.log($('#listBody_li_'+index));
+			console.log($('#listBody_li_'+index).val());
 			var tmp = `<a onclick="goProductDetail('` + pid + `' , '` + pcid + `')"><div class="img" style="margin-top:10%"><img src="${pcimg1}"></div></a>`
 			
 			$('#tmp_'+index).html(tmp); 
@@ -674,7 +973,6 @@
 		}
 
 	</script>
-
 	
     <script type="text/javascript" th:src="@{/js/search.js}" defer></script>
     <script type="text/javascript" th:src="@{/js/quick_menu_edit.js}" defer></script>

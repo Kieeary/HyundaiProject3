@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import com.wck.domain.BrandCategoryVO;
 import com.wck.domain.Criteria;
 import com.wck.domain.DetailProductVO;
 import com.wck.domain.FirstCategoryVO;
@@ -61,17 +62,13 @@ public class ProductService {
 			@Nullable String tC, int start, int last) {
 
 		List<ProductVO> productList = productMapper.getProducts(br, gd, sC, tC, start, last);
-
-		log.info("service 임");
-		
-		log.info("====="+br+"=====");
-		log.info("====="+gd+"=====");
-		log.info("====="+sC+"=====");
-		log.info("====="+tC+"=====");
 		
 		return productList;
 
-		
+	}
+	
+	public String getBrandImg(String br) {
+		return productMapper.getBrandImg(br);
 	}
 	
 	
@@ -112,9 +109,9 @@ public class ProductService {
 	/*
 	 * 정기범
 	 */
-	public List<ThirdCategoryVO> ThirdCategoryName(String depth2name) {
+	public List<ThirdCategoryVO> ThirdCategoryName(@Nullable String depth2name, @Nullable String brand) {
 		
-		List<ThirdCategoryVO> categoryName = productMapper.getThirdCategory(depth2name);
+		List<ThirdCategoryVO> categoryName = productMapper.getThirdCategory(depth2name, brand);
 		return categoryName;
 		
 	}
@@ -122,28 +119,68 @@ public class ProductService {
 	/*
 	 * 정기범
 	 */
-	public List<SecondCategoryVO> getSecondCategory(String depth1name) {
-		List<SecondCategoryVO> categoryName = productMapper.getSecondCategory(depth1name);
-		return categoryName;
-	}
-	
-	/*
-	 * 정기범
-	 */
-	public List<ThirdCategoryVO> getThirdCategory(String depth2name) {
-		List<ThirdCategoryVO> categoryName = productMapper.getThirdCategory(depth2name);
+	public List<FirstCategoryVO> getFirstCategory(String brand) {
+		
+		List<FirstCategoryVO> categoryName = productMapper.getFirstCategory(brand);
 		return categoryName;
 	}
 
+	
+	/*
+	 * 정기범
+	 */
+	public List<SecondCategoryVO> getSecondCategory(@Nullable String depth1name, @Nullable String brand) {
+		List<SecondCategoryVO> categoryName = productMapper.getSecondCategory(depth1name, brand);
+		return categoryName;
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<ThirdCategoryVO> getThirdCategory(@Nullable String depth2name, @Nullable String brand) {
+		List<ThirdCategoryVO> categoryName = productMapper.getThirdCategory(depth2name, brand);
+		return categoryName;
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public List<BrandCategoryVO> getBrandCategory(){
+		List<BrandCategoryVO> brandCategory = productMapper.getBrandCategory();
+		return brandCategory;
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public String gender(String depth1name) {
+		return productMapper.genderName(depth1name);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public String secondCategory(String depth2name) {
+		return productMapper.secondCategoryName(depth2name);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	public String brand(int bno) {
+		return productMapper.brandName(bno);
+	}
+	
+	public ProductInfoVO getProductInfo(String pcid, String pid) {
+		
+		return productMapper.getProductInfo(pcid, pid);
+	}
 	
 	public int getLikeProductCount(String id) {
 		return productMapper.getLikeProductCount(id);
 	}
 
-	public ProductInfoVO getProductInfo(String pcid, String pid) {
-		
-		return productMapper.getProductInfo(pcid, pid);
-	}
+
 	
 	public List<ProductColorChipVO> getColorChip(String pid){
 		return productMapper.getColorChip(pid);

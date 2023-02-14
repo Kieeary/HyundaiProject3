@@ -20,6 +20,7 @@
         <typeAlias type="com.wck.domain.FirstCategoryVO" alias="firstCategory"/>
         <typeAlias type="com.wck.domain.SecondCategoryVO" alias="secondCategory"/>
         <typeAlias type="com.wck.domain.ThirdCategoryVO" alias="thirdCategory"/>
+        <typeAlias type="com.wck.domain.BrandCategoryVO" alias="brandCategory"/>
                 
         <typeAlias type="com.wck.domain.DetailProductVO" alias="detailProduct"/>
         <typeAlias type="com.wck.domain.ProductVO" alias="product"/>    

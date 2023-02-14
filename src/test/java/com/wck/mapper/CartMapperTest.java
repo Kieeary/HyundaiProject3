@@ -1,7 +1,5 @@
 package com.wck.mapper;
 
-import static org.mockito.ArgumentMatchers.intThat;
-
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -43,9 +41,7 @@ public class CartMapperTest {
 		String mId = "7c-41f8-8c6a-739159990a8d";
 		List<CartVO> prods = cartMapper.readCart(mId);
 		for (CartVO cartVO : prods) {
-			log.info(cartVO.getBName());
-			log.info(cartVO.getPName());
-			log.info(cartVO.getPColorName());
+			log.info(cartVO);
 		}
 	}
 	

@@ -4,6 +4,13 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+ * author : 김한울, 왕종휘, 정기범
+ * purpose : DB 상의 size 데이터 sorting
+ * 			 ex1) 8, 9, 10, 11, 12
+ * 			 ex2) 44(55), 55(66), 80(70)
+ * 			 ex3) XS, S, M, L, XL
+ */
 public class SizeSortUtil {
 	static public Comparator<String> sizeSortComp = new Comparator<String>() {
         public int compare(String a, String b) {

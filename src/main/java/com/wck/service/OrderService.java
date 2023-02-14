@@ -35,7 +35,16 @@ public class OrderService {
 		return orderMapper.getOrderCount(cri, mid);
 	}
 	
-	
+	/*
+	 * author : 김한울
+	 * purpose : 주문 DB에 등록
+	 * 			 결제 정보(Payment method table) 입력
+	 * 			 장바구니에 존재하는 해당 상품(품번, 수량 일치시) 제거
+	 * 			 상품 재고 업데이트
+	 * 			 회원이 사용한 쿠폰 정보 업데이트
+	 *	  		 마일리지 변경 사항 반영
+	 *			 회원 등급 변경 사항 반영
+	 */
 	@Transactional
 	public void insertOrder(InsertOrderDTO insertOrder) {
 		OrderVO order = insertOrder.toOrderVO();
@@ -69,14 +78,30 @@ public class OrderService {
 		memberMapper.updateMemberInfo(mId, nowMileage+addMileage, grade);
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : OID로 주문 정보 조회
+	 */
 	public OrderVO getOrderInfo(String oId) {
 		return orderMapper.getOrderInfo(oId);
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : Payment code로 주문 정보 조회
+	 */
 	public OrderVO getOrderInfoWithPMcode(String pmcode) {
 		return orderMapper.getOrderInfoWithPMcode(pmcode);
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : 주문 취소
+	 * 			 마일리지 변경 사항(사용, 적립) 반영
+	 * 			 등급 변경 사항 반영
+	 * 			 사용된 쿠폰 원복
+	 * 			 상품 재고 업데이트
+	 */
 	@Transactional
 	public int cancelOrder(String mId, OrderVO order) {
 		// 적립된 마일리지 (이전 등급의 적립률이 적용됨)
@@ -92,7 +117,7 @@ public class OrderService {
 		memberMapper.updateMemberInfo(mId, nowMileage - expectSubMileage, beforeGrade);
 		
 		if(order.getCpid() != null) {
-			// 쿠폰 사용 -> 쿠폰 원복시키기
+			// 사용된 쿠폰 원복시키기
 			eventMapper.cancelUseCoupon(order.getCpid());
 		}
 
@@ -106,10 +131,18 @@ public class OrderService {
 		return orderMapper.cancelOrder(order.getOid());
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : Payment code로 OID 조회
+	 */
 	public String getOrderId(String pmCode) {
 		return orderMapper.getOId(pmCode);
 	}
 	
+	/*
+	 * author : 김한울
+	 * purpose : 실패한 주문 DB에서 삭제
+	 */
 	@Transactional
 	public boolean deleteFailOrder(String pmCode) {
 		String oid = orderMapper.getOId(pmCode);

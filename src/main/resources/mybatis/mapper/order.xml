@@ -3,6 +3,8 @@
 
 <mapper namespace="com.wck.mapper.OrderMapper">
 
+	<!-- orderMap declare and definition -->
+	<!-- property : java variable, column = DB variable -->
 	<resultMap type="order" id="orderMap">
 		<id property="oid" column="OID"/>
 		<result property="odate" column="ODATE"/>
@@ -27,6 +29,7 @@
 		<collection property="orderProducts" resultMap="orderProdMap"/>
 	</resultMap>
 	
+	<!-- orderProdMap declare and definition -->
 	<resultMap type="productSimpleInfo" id="orderProdMap">
 		<id property="psId" column="PSID"/>
 		<result property="quantity" column="OICOUNT"/>
@@ -37,7 +40,9 @@
 		<result property="pSize" column="PSIZE"/>
 		<result property="pcPrice" column="PCPRICE"/>
 	</resultMap>
-	
+
+<!-- author : 김한울
+	 purpose : OID로 주문 정보 조회 -->
 	<select id="getOrderInfo" resultMap="orderMap">
 		SELECT o.OID, ODATE, ORECEIVER, OPHONE, OZIPCODE, OADDRESS1, OADDRESS2, OMEMO, OSTATUS, MID,
 				OBEFOREPRICE, OAFTERPRICE, CPID, OUSEDMILEAGE, SUBSTR(pm.PMCOMPANY, 1, INSTR(pm.PMCOMPANY, 'P') - 1) AS PMCOMPANY,
@@ -46,7 +51,8 @@
 		WHERE o.PMCODE = pm.PMCODE AND o.OID = oi.OID AND ps.PSID = oi.PSID
 			AND o.OID = #{oId}
 	</select>
-	
+
+
 	<select id="getOrderCount" resultType="int">
 		select count(*)
 		from orders
@@ -106,12 +112,16 @@
 		where rn > (#{cri.currentPage} - 1) * #{cri.pageSize}
 ]]>
 	</select>
-	
+
+<!-- author : 김한울
+	 purpose : 결제 정보(payment method) insert -->
 	<insert id="insertPaymentMethod">
 		INSERT INTO PAYMENT_METHOD (pmcode, pmcompany, pmmethod)
 		VALUES (#{pmCode}, #{pmCompany}, #{pmMethod})
 	</insert>
 
+<!-- author : 김한울
+	 purpose : 주문 정보(order) insert -->
 	<insert id="insertOrder" parameterType="order">
 		INSERT INTO ORDERS
 			(oid, ozipcode, oaddress1, oaddress2, oreceiver,
@@ -122,18 +132,24 @@
 			#{ophone}, #{otel}, #{omemo}, #{oemail}, #{ousedMileage},
 			#{obeforePrice}, #{oafterPrice}, #{ostatus}, #{mid}, #{pmCode}, sysdate, #{cpid})
 	</insert>
-	
+
+<!-- author : 김한울
+	 purpose : 주문 상품들 정보 insert -->
 	<insert id="insertOrderItem">
 		INSERT INTO ORDER_ITEM (psid, oid, oicount, oitotalprice)
 		VALUES (#{psid}, #{oid}, #{qty}, #{totalPrice})
 	</insert>
 	
+<!-- author : 김한울
+	 purpose : 주문 취소 업데이트 -->
 	<update id="cancelOrder">
 		UPDATE ORDERS 
 		SET OSTATUS = '주문 취소'
 		WHERE OID = #{oId}
 	</update>
-	
+
+<!-- author : 김한울
+	 purpose : 결제 정보(Payment code)로 주문 정보 조회 -->
 	<select id="getOrderInfoWithPMcode" resultMap="orderMap">
 		SELECT o.OID, ODATE, ORECEIVER, OPHONE, OZIPCODE, OADDRESS1, OADDRESS2, OMEMO, OSTATUS,
 				OBEFOREPRICE, OAFTERPRICE, CPID, OUSEDMILEAGE, SUBSTR(pm.PMCOMPANY, 1, INSTR(pm.PMCOMPANY, 'P') - 1) AS PMCOMPANY,
@@ -142,17 +158,23 @@
 		WHERE o.PMCODE = pm.PMCODE AND o.OID = oi.OID AND ps.PSID = oi.PSID
 			AND pm.PMCODE = #{pmcode}
 	</select>
-	
+
+<!-- author : 김한울
+	 purpose : 결제 정보(Payment code)로 OID 조회 -->
 	<select id="getOId" resultType="string">
 		SELECT OID 
 		FROM ORDERS o, PAYMENT_METHOD pm 
 		WHERE o.PMCODE = pm.PMCODE AND pm.PMCODE = #{merchant_uid}
 	</select>
-	
+
+<!-- author : 김한울
+	 purpose : 특정 주문 삭제 -->
 	<delete id="deleteFailOrder">
 		DELETE ORDERS WHERE "OID" = #{oid}
 	</delete>
-	
+
+<!-- author : 김한울
+	 purpose : 특정 결제 정보 삭제 -->
 	<delete id="deleteFailPaymentMethod	">
 		DELETE PAYMENT_METHOD WHERE PMCODE = #{merchant_uid}
 	</delete>

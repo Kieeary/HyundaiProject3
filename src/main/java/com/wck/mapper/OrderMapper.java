@@ -13,7 +13,6 @@ public interface OrderMapper {
 
 	public List<OrderVO> getOrderList(@Param("cri") OrderCriteria cri, @Param("mId") String mId);
 	public int getOrderCount(@Param("cri") OrderCriteria cri, @Param("mId") String mId);
-
 	public int insertPaymentMethod(OrderVO order);
 	public int insertOrder(OrderVO order);
 	public int insertOrderItem(String psid, String oid, int qty, int totalPrice);

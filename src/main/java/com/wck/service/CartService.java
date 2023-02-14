@@ -21,10 +21,10 @@ public class CartService {
 	private final CartMapper cartMapper;
 	private final MemberMapper memberMapper;
 	
-//	author : 김한울
-//	purpose : 장바구니에 상품 추가
-//			  이미 존재하는 상품의 경우 수량 증가
-//			  존재하지 않는 상품의 경우 추가
+	/*
+	 * author : 김한울
+	 * purpose : 장바구니에 상품 추가 이미 존재하는 상품의 경우 수량 증가 존재하지 않는 상품의 경우 추가
+	 */
 	@Transactional
 	public void addCart(String mId, String pSId, int addQuantity) {
 		int count = cartMapper.countCart(mId, pSId);
@@ -41,28 +41,38 @@ public class CartService {
 		updateCartCount();
 	}
 
-//	author : 김한울
-//	purpose : 장바구니 상품 정보 불러오기
+	/*
+	 * author : 김한울
+	 * purpose : 장바구니 상품 정보 불러오기
+	 */
 	public List<CartVO> readCartList(String mId) {
 		return cartMapper.readCart(mId);
 	}
 
-//	author : 김한울
-//	purpose : 장바구니 상품 삭제하기
+	/*
+	 * author : 김한울
+	 * purpose : 단일 상품 장바구니에서 삭제하기
+	 */
 	public int deleteCartProd(String mId, String pSId) {
 		int row = cartMapper.deleteCart(mId, pSId);
 		updateCartCount();
 		return row;
 	}
 
-//	author : 김한울
-//	purpose : 장바구니 전체 상품 삭제
+	/*
+	 * author : 김한울
+	 * purpose : 장바구니 전체 상품 삭제
+	 */
 	public int deleteCart(String mId) {
 		int row = cartMapper.deleteCartAll(mId);
 		updateCartCount();
 		return row;
 	}
 
+	/*
+	 * author : 김한울
+	 * purpose : 들어온 상품 장바구니에서 삭제
+	 */
 	@Transactional
 	public void deleteSelectedProds(String mId, List<String> pSIds) {
 		for (String psid : pSIds) {
@@ -81,6 +91,4 @@ public class CartService {
 		account.setCartCount(count);
 		
 	}
-
-	
 }

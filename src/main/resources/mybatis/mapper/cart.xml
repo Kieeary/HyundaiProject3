@@ -4,8 +4,8 @@
 <mapper namespace="com.wck.mapper.CartMapper">
 
 	<!-- cartMap declare and definition -->
-	<!-- property : java variable, column = db variable -->
- 	<resultMap type="com.wck.domain.CartVO" id="cartMap">
+	<!-- property : java variable, column = DB variable -->
+ 	<resultMap type="cart" id="cartMap">
  		<result property="PSId" column="PSID"/>
  		<result property="PImg" column="PIMG"/>
  		<result property="BName" column="BNAME"/>
@@ -18,17 +18,23 @@
  		<result property="like" column="LIKE"/>
  	</resultMap>
 
+<!-- author : 김한울
+	 purpose : 특정 상품 정해진 수량으로 장바구니에 insert -->
 	<insert id="insertCart">
 		INSERT INTO CART (MID, PSID, PQUANTITY)
 		VALUES (#{mId}, #{pSId}, #{pQuantity})
 	</insert>
-	
+
+<!-- author : 김한울
+	 purpose : 장바구니에 담긴 상품 수량 조회 -->
 	<select id="countCart" resultType="int">
 		SELECT PQUANTITY FROM CART WHERE MID = #{mId} AND PSID = #{pSId}
 		UNION ALL
 		SELECT 0 AS PQUANTITY FROM DUAL WHERE NOT EXISTS (SELECT * FROM CART WHERE MID = #{mId} AND PSID = #{pSId})
 	</select>
-	
+
+<!-- author : 김한울
+	 purpose : 장바구니 정보 조회(좋아요 정보 포함) -->
 	<select id="readCart" resultMap="cartMap">
 		SELECT ps.PSID, pc2.PNAME, pci.PIMG, pc1.PCPRICE, pci.COLORNAME, ps.PSIZE, c.PQUANTITY,
 			(SELECT BNAME  FROM BRAND WHERE BNO = pc2.BNO) AS BNAME,
@@ -38,20 +44,28 @@
 		WHERE pc1.PID = pc2.PID AND ps.PCID = pc1.PCID AND pc1.PCID = pci.PCID AND ps.PSID = c.PSID AND c.MID = #{mId}
 		ORDER BY c.PSID DESC
 	</select>
-	
+
+<!-- author : 김한울
+	 purpose : 장바구니 수량 업데이트 -->
 	<update id="updateCart">
 		UPDATE CART SET PQUANTITY = #{pQuantity} 
 		WHERE PSID = #{pSId} AND MID = #{mId}
 	</update>
-	
+
+<!-- author : 김한울
+	 purpose : 특정 회원의 특정 장바구니 상품 삭제 -->
 	<delete id="deleteCart">
 		DELETE FROM CART WHERE MID = #{mId} AND PSID = #{pSId}
 	</delete>
-	
+
+<!-- author : 김한울
+	 purpose : 특정 회원의 모든 장바구니 내역 삭제 -->
 	<delete id="deleteCartAll">
 		DELETE FROM CART WHERE MID = #{mId}
 	</delete>
-	
+
+<!-- author : 김한울
+	 purpose : 특정 회원의 특정 상품의 특정 수량이 일치하는 경우 삭제 -->
 	<delete id="deleteSpecificCart">
 		DELETE FROM CART WHERE MID = #{mId} AND PSID = #{pSId} AND PQUANTITY = #{quantity}
 	</delete>

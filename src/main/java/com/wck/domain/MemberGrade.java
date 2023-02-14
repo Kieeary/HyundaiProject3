@@ -2,6 +2,13 @@ package com.wck.domain;
 
 import lombok.Getter;
 
+/*
+ * author : 김한울
+ * purpose : 회원 등급 ENUM
+ * 			 of(return MemberGrade) -> DB 상의 데이터(number type)으로 해당 등급 조회 할 수 있는 함수
+ * 			 of(return int) -> 들어온 금액에 해당하는 등급을 출력하는 함수 
+ */
+
 @Getter
 public enum MemberGrade {
 	FRIEND(1),

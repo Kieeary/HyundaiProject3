@@ -376,7 +376,7 @@
 				
 				<!-- sort_tit -->
 				<div class="sort_tit">
-					<p class="num_txt" id="totalSpan">1,824 개</p>
+					<p class="num_txt" id="totalSpan"></p>
 					<div class="hs_tit_select">
 						<select id="st2" title="신상품" onchange="setGAProdSort(this.selectedOptions[0].value);">
 							<option value="NEW">신상품</option>
@@ -3317,7 +3317,7 @@
 						productlist += '<p class="brand">' + result[i].bname + '</p>'
 						productlist += '<p class="name">' + result[i].pname + '</p>'
 						productlist += '<p class="price" id="listPrice0">'
-						productlist += '<span id="price_CM2D1KTO513W_TG">' + result[i].pcprice + '</span></p>'
+						productlist += '<span id="price_CM2D1KTO513W_TG">' + '₩' + result[i].pcprice.toLocaleString() + '</span></p>'
 						productlist += '</div>'
 						productlist += '</div>'
 						productlist += '</li>'

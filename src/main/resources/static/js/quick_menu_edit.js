@@ -7017,13 +7017,7 @@ $('.hsome_quickMenu .shop a').click(function (e) {
                      type="hidden"
                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR63"
                       value="NEW_NORMAL_BRANDS_ME#BR63#LANVIN BLANC#0#false#2" />
-                    <button
-                      type="button"
-                      id="gnb_br_NEW_NORMAL_BRANDS_ME_BR63_like"
-                      class="like"
-                      onclick="applyNavBrand('gnb_br_NEW_NORMAL_BRANDS_ME_BR63', 'single');">
-                      찜하기</button
-                    ><!-- 찜한 브랜드에 on 클래스 붙음 -->
+                  	  <!-- 찜한 브랜드에 on 클래스 붙음 -->
                   </div>
 					`
 					brandName += `<div class="two_depth" style="">

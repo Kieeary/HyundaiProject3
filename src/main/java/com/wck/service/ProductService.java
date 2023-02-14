@@ -1,5 +1,6 @@
 package com.wck.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.lang.Nullable;
@@ -13,11 +14,13 @@ import com.wck.domain.OrderProductVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductCommonVO;
 import com.wck.domain.ProductInfoVO;
+import com.wck.domain.ProductStockVO;
 import com.wck.domain.ProductVO;
 import com.wck.domain.SecondCategoryVO;
 import com.wck.domain.ThirdCategoryVO;
 import com.wck.domain.WithProductVO;
 import com.wck.mapper.ProductMapper;
+import com.wck.util.SizeSortUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -173,6 +176,8 @@ public class ProductService {
 	
 	public ProductInfoVO getProductInfo(String pcid, String pid) {
 		
+		
+		
 		return productMapper.getProductInfo(pcid, pid);
 	}
 	
@@ -191,7 +196,9 @@ public class ProductService {
 	 * purpose : 해당 상품(color 선택) 구매 가능한 사이즈 조회
 	 */
 	public List<String> getSizeSet(String pcId) {
-		return productMapper.getSizeSet(pcId);
+		List<String> sizeSet = productMapper.getSizeSet(pcId);
+		sizeSet.sort(SizeSortUtil.sizeSortComp);
+		return sizeSet;
 	}
 	
 	/*

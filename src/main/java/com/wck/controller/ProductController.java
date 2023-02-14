@@ -1,5 +1,6 @@
 package com.wck.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import com.wck.domain.CategoryVO;
 import com.wck.domain.FirstCategoryVO;
 import com.wck.domain.ProductColorChipVO;
 import com.wck.domain.ProductInfoVO;
+import com.wck.domain.ProductStockVO;
 import com.wck.domain.ProductVO;
 import com.wck.domain.SecondCategoryVO;
 import com.wck.domain.ThirdCategoryVO;
@@ -37,10 +39,9 @@ public class ProductController {
 	private final ProductService productService;
 	
 	/*
-	 * 정기범
-	 * 역할 : 상품 리스트를 조회하는 페이지를 렌더링
-	 * 매개변수 : model, brand(브랜드), gender(성별), secCat(두번째 카테고리), thrCat(세번째 카테고리)
-	 * 매개변수중 브랜드 ~ 세번째 카테고리는 널 값 허용. 쿼리 스트링으로 어떠한 값이 들어오냐에 따라 보여주는 데이터가 달라지기 때문
+	 * author : 정기범
+	 * purpose : 상품 목록을 보여주는 페이지를 렌더링. 이때 쿼리스트링으로 들어온 카테고리값에 따라 상품이 조회됨
+	 * 
 	 */
 	// 상품 조회
 	@GetMapping("/list")
@@ -117,12 +118,25 @@ public class ProductController {
 		log.info(pci);
 		
 		ProductInfoVO productInfo = productService.getProductInfo(pcid, pid);
+		
+		List<String> sizeset = productService.getSizeSet(pcid);
+		
 		List<ProductColorChipVO> colorChip = productService.getColorChip(pid);
 		List<WithProductVO> withProduct = productService.getWithProducts(pcid);
 		boolean isLike = false;
 		if(account != null) isLike = productService.isLikeProduct(account.getId(), pid);
 		
 		log.info("size" + productInfo.getSizeNstock().size());
+		
+		for(int i =0; i<productInfo.getSizeNstock().size(); i++) {
+			productInfo.getSizeNstock().get(i).setPSize(sizeset.get(i));
+		}
+		for(ProductStockVO a: productInfo.getSizeNstock()) {
+			for(String str : sizeset) {
+				a.setPsId(str);
+			}
+		}
+		model.addAttribute("sizeset", sizeset);
 		model.addAttribute("productInfo", productInfo);
 		model.addAttribute("productColor", colorChip);
 		model.addAttribute("withProduct", withProduct);

@@ -2,6 +2,7 @@ package com.wck.service;
 
 import java.util.List;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import com.wck.mapper.EventMapper;
 import com.wck.mapper.MemberMapper;
 import com.wck.mapper.OrderMapper;
 import com.wck.mapper.ProductMapper;
+import com.wck.security.domain.Account;
 
 import lombok.RequiredArgsConstructor;
 
@@ -60,6 +62,7 @@ public class OrderService {
 			cartMapper.deleteSpecificCart(order.getMid(), psid, qty);
 			productMapper.updateProductStock(psid, qty);
 		}
+		updateCartCount();
 		
 		String mId = order.getMid();
 		
@@ -150,5 +153,16 @@ public class OrderService {
 		result += orderMapper.deleteFailPaymentMethod(pmCode);
 		
 		return result==2 ? true : false;
+	}
+	
+	/*
+	 * author : 왕종휘
+	 * purpose : 세션에 있는 장바구니 개수 변경
+	 */
+	private void updateCartCount() {
+		Account account = (Account) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		int count = memberMapper.getCartCount(account.getId());
+		account.setCartCount(count);
+		
 	}
 }

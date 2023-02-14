@@ -151,17 +151,6 @@ public class WckController {
 		return searchResult;
 	}
 	
-	/*
-	@GetMapping("/search/result")
-	public String searchResult(
-			@RequestParam("query") String query) {
-		log.info("query : " +query);
-		
-		productService.searchProductsList(query);
-		
-		return "wck/search_result";
-	}
-	*/
 
 	@GetMapping("/sampleProductDetail")
 	public String samplePD() {

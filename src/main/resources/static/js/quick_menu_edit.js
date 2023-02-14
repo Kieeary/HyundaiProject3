@@ -71,14 +71,13 @@ function moveBrandLookBook(brandCode) {
 <div class="hand_footer_gnb_wrap hand_footer_gnb_wrap2002">
 <div class="header">
   <h2>샵</h2>
-  <ul class="ui_tab red_border_tab active">
-    <li class=""><a href="#tab_01" id="navTab01">브랜드</a></li>
-    <li class="on"><a href="#tab_02" id="navTab02">카테고리</a></li>
+  <ul class="ui_tab red_border_tab active" >
+    <li class="on" style="width:50%"><a href="#tab_01" id="navTab01" >브랜드</a></li>
+    <li class=""><a href="#tab_02" id="navTab02">카테고리</a></li>
 
-    <li class="fcs" style="transform: translateX(124.5px)"></li>
+    <li class="fcs" style="transform: translateX(0px); width:50%"></li>
   </ul>
 
-  <a href="#" class="pre"><i>이전</i>스마트 필터링</a>
 </div>
 <div class="container">
   <div class="content">
@@ -350,53 +349,20 @@ function moveBrandLookBook(brandCode) {
           }
 
           //브랜드 탭메뉴 클릭
-          function lnbBrandTab() {
-            $('.js-brand-tab-btn-2012 a').on('click', function () {
-              scrollTopAnimate_s0(0);
-              var $el = $(this);
-              var $el_parent = $el.closest('li');
-              var tab_id = $el.attr('id');
-              var $tab_cont = $(tab_id);
 
-              if (tab_id != '#brd_cate_0') {
-                $('#brd_cate_0').hide();
-              } else {
-                $("[id^='brd_cate_']").hide();
-              }
-
-              $el_parent.siblings('li').removeClass('on');
-              $tab_cont.siblings('ul').hide();
-              $el_parent.addClass('on');
-              $tab_cont.show();
-            });
-          }
         </script>
-        <div class="cont" id="tab_01">
+        <div class="cont on" id="tab_01">
           <div class="brd_navigator_bar2012_wrap">
             <div class="brd_navigator_bar2012">
               <ul class="ui_tab2_202012">
-                <li class="js-brand-tab-btn-2012">
-                  <a
-                    href="#"
-                    id="#brd_cate_0"
-                    onclick="GA_Event('공통_브랜드', '브랜드 탭', '전체');">
-                    전체</a
-                  >
+           
                 </li>
-                <li class="js-brand-tab-btn-2012">
-                  <a
-                    href="#"
-                    id="#brd_cate_1"
-                    onclick="GA_Event('공통_브랜드', '브랜드 탭', '여성');">
-                    여성</a
-                  >
-                </li>
-                <li class="js-brand-tab-btn-2012 on">
+                <li class="js-brand-tab-btn-2012" style="width:inherit">
                   <a
                     href="#"
                     id="#brd_cate_2"
                     onclick="GA_Event('공통_브랜드', '브랜드 탭', '남성');">
-                    남성</a
+                    브랜드 별로 보기</a
                   >
                 </li>
               </ul>
@@ -1645,10 +1611,7 @@ function moveBrandLookBook(brandCode) {
                     class="one_link"
                     onclick="GA_Event('공통_브랜드', '1DEPTH', 'LANVIN BLANC');">
                     <span class="logo lanvin-blanc"
-                      >LANVIN BLANC<img
-                        class="icon-new-m"
-                        src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common_sub/icon_new_m.png"
-                        alt="newIcon" />
+                      >LANVIN BLANC
                     </span>
                   </a>
                   <button
@@ -4454,8 +4417,7 @@ function moveBrandLookBook(brandCode) {
                     onclick="GA_Event('공통_브랜드', '1DEPTH', 'OUR LEGACY');">
                     <span class="logo ourlegacy"
                       >OUR LEGACY<img
-                        class="icon-new-m"
-                        src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common_sub/icon_new_m.png"
+                        class=""
                         alt="newIcon" />
                     </span>
                   </a>
@@ -5174,8 +5136,7 @@ function moveBrandLookBook(brandCode) {
                       onclick="GA_Event('공통_브랜드', '1DEPTH', 'LANVIN BLANC');">
                       <span class="logo lanvin-blanc"
                         >LANVIN BLANC<img
-                          class="icon-new-m"
-                          src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common_sub/icon_new_m.png"
+                          class=""
                           alt="newIcon" />
                       </span>
                     </a>
@@ -6911,7 +6872,7 @@ function moveBrandLookBook(brandCode) {
             $shopCateList.css('min-height', shopCateListH + 'px');
           }
         </script>
-        <div class="cont on" id="tab_02">
+        <div class="cont" id="tab_02">
  
         </div>
         <!--// 카테고리 -->
@@ -7049,10 +7010,7 @@ $('.hsome_quickMenu .shop a').click(function (e) {
 					 class="one_link"
 					 onclick="GA_Event('공통_브랜드', '1DEPTH', 'LANVIN BLANC');">
 					 <span class="logo lanvin-blanc"
-					 >${result[i].brandname}<img
-					 class="icon-new-m"
-					 src="http://cdn.thehandsome.com/_ui/handsomemobile/images/common_sub/icon_new_m.png"
-                          alt="newIcon" />
+					 >${result[i].brandname}
                      </span>
                      </a>
                      <input

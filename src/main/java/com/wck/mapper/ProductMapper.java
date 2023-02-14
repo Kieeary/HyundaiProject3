@@ -41,11 +41,19 @@ public interface ProductMapper {
 
 	public List<FirstCategoryVO> getCategoryName();
 	
-	public List<SecondCategoryVO> getSecondCategory(String depth1name);
+	public List<FirstCategoryVO> getFirstCategory(String br);
 	
-	public List<ThirdCategoryVO> getThirdCategory(String depth2name);
+	public List<SecondCategoryVO> getSecondCategory(@Param("depth1name") String depth1name, @Param("br") String br);
+	
+	public List<ThirdCategoryVO> getThirdCategory(@Param("depth2name") String depth2name, @Param("br") String br);
 	
 	public List<BrandCategoryVO> getBrandCategory();
+	
+	public String brandName(int bno);
+	
+	public String genderName(String depth1name);
+	
+	public String secondCategoryName(String depth2name);
 	
 	public int deleteLikeProduct(String mId, String pId); 
 	

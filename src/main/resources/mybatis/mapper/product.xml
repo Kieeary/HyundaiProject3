@@ -182,9 +182,6 @@
 	</select>
 	
 	
-	
-	
-
 	<resultMap type="productInfo" id="productInfo">
 		<id property="pcid" column="PCID" />
 		<result property="bname" column="BNAME" />
@@ -257,24 +254,33 @@
 		ON pcolor.pid = sub.pid
 	
 	</select>
-	
-	<!-- 카테고리별 상품 갯수 조회 -->
-	<select id="getProductsCount" resultType="int">
-		SELECT COUNT(pcom.pid) as cnt
-		from product_common pcom
-		INNER JOIN product_category pcat
-		ON pcom.pid = pcat.pid
-		INNER JOIN category c
-		<if test="gd != null">
-			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
-		<if test="sC!= null">
-			AND c.depth2name = #{sC}
-		</if>
-		<if test="tC!= null">
-			AND c.depth3name = #{tC}
-		</if>
-		</if>
-	</select>
+	 
+	 <select id="getProductsCount" resultType="int">
+	 	select count(distinct pcom.pid) from
+        product_common pcom inner join product_color pcolor 
+        on pcolor.pid = pcom.pid
+        inner join product_stock pstock
+        on pstock.pcid = pcolor.pcid
+        inner join product_category cp
+        on cp.pid = pcom.pid
+        inner join category c
+        on c.cateno = cp.cateno
+        <if test="gd != null">
+        	and c.depth1name = #{gd}
+        </if>
+        <if test="sC != null">
+        	and c.depth2name = #{sC}
+        </if>
+        <if	test="tC != null">
+        	and c.depth3name = #{tC}
+        </if>
+        inner join brand b
+        on b.bno = pcom.bno
+        <if test="br != null">
+        	and b.bno = #{br}
+        </if>
+	 
+	 </select>
 	
 	
 	<!-- 카테고리 정보 가져오기 -->
@@ -340,7 +346,15 @@
 		FROM category_name cn
 		INNER JOIN category c 
 		ON cn.cateno = c.cateno
-		WHERE c.depth1name = #{keyword}
+		<if test = "br != null">
+        INNER JOIN product_category pcat
+        ON pcat.cateno = c.cateno
+        INNER JOIN product_common pcom
+        ON pcom.pid = pcat.pid
+        INNER JOIN brand b
+        ON b.bno = pcom.bno AND b.bno = #{br}
+        </if>
+		WHERE c.depth1name = #{depth1name}
 		GROUP BY secondname, depth2name
 		ORDER BY secondname
 	</select>
@@ -350,11 +364,55 @@
 		FROM category_name cn
 		inner join category c 
 		on cn.cateno = c.cateno
-		where c.depth2name = #{keyword}
+		<if test = "br != null and depth2name != null">
+        INNER JOIN product_category pcat
+        ON pcat.cateno = c.cateno
+        INNER JOIN product_common pcom
+        ON pcom.pid = pcat.pid
+        INNER JOIN brand b
+        ON b.bno = pcom.bno AND b.bno = #{br}
+        </if>
+		where c.depth2name = #{depth2name}
 		group by detailname, depth3name
 		order by detailname
 	</select>
 	
+	<select id="getFirstCategory" resultType="firstCategory">
+		SELECT firstname, depth1name
+        FROM category_name cn
+		INNER JOIN category c 
+		ON cn.cateno = c.cateno
+        INNER JOIN product_category pcat
+        ON pcat.cateno = c.cateno
+        INNER JOIN product_common pcom
+        ON pcom.pid = pcat.pid
+        INNER JOIN brand b
+        ON b.bno = pcom.bno AND b.bno = #{br}
+		GROUP BY firstname, depth1name
+		ORDER BY firstname
+	</select>
+	
+	<select id="genderName" resultType="string">
+		select distinct cn.firstname
+        from category_name cn
+        inner join category c
+        on c.cateno = cn.cateno
+        and c.depth1name = #{depth1name}
+	</select>
+	
+	<select id="secondCategoryName" resultType="string">
+		select distinct cn.secondname
+        from category_name cn
+        inner join category c
+        on c.cateno = cn.cateno
+        and c.depth2name = #{depth2name}
+	</select>	
+	
+	<select id="brandName" resultType="string">
+		select bname
+        from brand b
+        where bno = #{bno}
+	</select>
 
 	<select id="existLikeProduct" resultType="boolean">
 		select count(*) from likes

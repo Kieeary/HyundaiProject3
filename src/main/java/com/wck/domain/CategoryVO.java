@@ -6,7 +6,11 @@ import lombok.Data;
 public class CategoryVO {
 	
 	private String brand;
+	private String brandname;
 	private String gender;
+	private String gendername;
 	private String secCat;
+	private String secCatname;
 	private String thrCat;
+	private String thrCatname;
 }

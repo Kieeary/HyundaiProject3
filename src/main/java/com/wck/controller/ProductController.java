@@ -36,6 +36,12 @@ public class ProductController {
 
 	private final ProductService productService;
 	
+	/*
+	 * 정기범
+	 * 역할 : 상품 리스트를 조회하는 페이지를 렌더링
+	 * 매개변수 : model, brand(브랜드), gender(성별), secCat(두번째 카테고리), thrCat(세번째 카테고리)
+	 * 매개변수중 브랜드 ~ 세번째 카테고리는 널 값 허용. 쿼리 스트링으로 어떠한 값이 들어오냐에 따라 보여주는 데이터가 달라지기 때문
+	 */
 	// 상품 조회
 	@GetMapping("/list")
 	@Transactional
@@ -50,12 +56,14 @@ public class ProductController {
 		if(brand != null)	category.setBrand(brand);
 		if(gender != null)	{
 			category.setGender(gender);
-			List<SecondCategoryVO> secondCategory = productService.getSecondCategory(gender);
+			category.setGendername(productService.gender(gender));
+			List<SecondCategoryVO> secondCategory = productService.getSecondCategory(gender, brand);
 			model.addAttribute("detailcategory", secondCategory);
 		}
 		if(secCat != null)	{
 			category.setSecCat(secCat);
-			List<ThirdCategoryVO> thirdCategory = productService.getThirdCategory(secCat);
+			category.setSecCatname(productService.secondCategory(secCat));
+			List<ThirdCategoryVO> thirdCategory = productService.getThirdCategory(secCat,brand);
 			model.addAttribute("detailcategory", thirdCategory);
 		}
 		
@@ -175,24 +183,35 @@ public class ProductController {
 
 		if(brand != null)	{
 			category.setBrand(brand);
+			int pi = Integer.parseInt(brand);
+			String bname = productService.brand(pi);
 			String brImg = productService.getBrandImg(brand);
+			List<FirstCategoryVO> firstCategory = productService.getFirstCategory(brand);
+			model.addAttribute("bname", bname);
+			model.addAttribute("detailcategory", firstCategory);
 			model.addAttribute("brand", brImg);
+			
+			if(gender != null)	{
+				category.setGender(gender);
+				List<SecondCategoryVO> secondCategory = productService.getSecondCategory(gender, brand);
+				model.addAttribute("detailcategory", secondCategory);
+				if(secCat != null)	{
+					category.setSecCat(secCat);
+					List<ThirdCategoryVO> thirdCategory = productService.getThirdCategory(secCat,brand);
+					model.addAttribute("detailcategory", thirdCategory);
+				}
+			}
 		}
-		if(gender != null)	{
-			category.setGender(gender);
-	//		List<SecondCategoryVO> secondCategory = productService.getSecondCategory(gender);
-	//		model.addAttribute("detailcategory", secondCategory);
-		}
-		if(secCat != null)	{
-			category.setSecCat(secCat);
-	//		List<ThirdCategoryVO> thirdCategory = productService.getThirdCategory(secCat);
-	//		model.addAttribute("detailcategory", thirdCategory);
-		}
+
+
 		
 		if(thrCat != null)	category.setThrCat(thrCat);
 		
 		
+		int cnt = productService.getProductsCount(category.getBrand(), category.getGender(), category.getSecCat(), category.getThrCat());
+		
 		model.addAttribute("category", category);
+		model.addAttribute("count", cnt);
 		
 		
 		return "wck/product/brand";

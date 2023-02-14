@@ -195,11 +195,25 @@ public class ProductMapperTest {
 	 * 정기범
 	 */
 	@Test
+	void getFirstCategory() {
+		String brand = "3";
+		
+		List<FirstCategoryVO> a = productMapper.getFirstCategory(brand);
+		for(FirstCategoryVO s : a) {
+			log.info(s.getFirstname());
+		}
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
 	void getSecondCategory() {
 		
 		String depth1name = "me";
+		String br = null;
 		
-			List<SecondCategoryVO> a = productMapper.getSecondCategory(depth1name);
+			List<SecondCategoryVO> a = productMapper.getSecondCategory(depth1name, null);
 			for(SecondCategoryVO s : a) {
 				log.info(s.getSecondname());
 			}
@@ -212,8 +226,9 @@ public class ProductMapperTest {
 	void getThirdCategory() {
 		
 		String depth2name = "me03";
+		String br = null;
 		
-			List<ThirdCategoryVO> a = productMapper.getThirdCategory(depth2name);
+			List<ThirdCategoryVO> a = productMapper.getThirdCategory(depth2name, br);
 			for(ThirdCategoryVO s : a) {
 				log.info(s.getDetailname());
 			}
@@ -229,6 +244,38 @@ public class ProductMapperTest {
 		for(BrandCategoryVO s : a) {
 			log.info(s.getBrandname());
 		}
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void gender() {
+		String gd = "we";
+		String a = productMapper.genderName(gd);
+		
+		log.info(a);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	@Test
+	void secondCategory() {
+		String sc = "we03";
+		String a = productMapper.secondCategoryName(sc);
+		
+		log.info(a);
+	}
+	
+	/*
+	 * 정기범
+	 */
+	void brand() {
+		int br = 3;
+		String a = productMapper.brandName(br);
+		
+		log.info(a);
 	}
 	
 	@Transactional

@@ -10,6 +10,7 @@
     }
   </style>
   <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"type="text/javascript"></script>
   <script>
   	$(document).ready(function(){
     	var element_layer = document.getElementById('addr_layer');
@@ -102,7 +103,7 @@
   	})
   </script>
 
-  <script type="text/javascript">
+  <script type="text/javascript" th:inline="javascript">
 
     function submitOrder() {
       let payPrice = parseInt($("#afterprice").val());
@@ -161,41 +162,125 @@
         return;
       }
 
-      doOrder();
+      let pmMode = $("#pmMode").val();
+
+      if(pmMode == 'html5_inicis') {
+        KGOrder();
+      } else {
+        kakaoOrder();
+      }
+
     }
 
     function selectPMCompany(obj) {
       $("#pmCompany").val($(obj).data('kind'));
+      $("#pmMode").val($(obj).data('mode'));
     }
 
-    function doOrder() {
-      let token = $("meta[name='_csrf']").attr("content");
-      let header = $("meta[name='_csrf_header']").attr("content");
+    let privateIp = [[${privateIp}]];
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
 
-      console.log('진짜 주문 시작');
+    var IMP = window.IMP;
+    IMP.init("imp15254201");
+
+
+    function KGOrder() {
+      console.log('KG 이니시스 결제');
+      let name = '[[${prods[0].pName}]]' + '외 [[${prods.size()-1}]]건';
+      let amount = $("#afterprice").val();
+      let buyer_name = '[[${mem.name}]]';
       let pmCode = $("#pmCode").val();
-      console.log(pmCode);
+      let pmMode = $("#pmMode").val();
+      let phone = $("#hp0 option:selected").val() + '-' + $("#hp1").val() + '-' + $("#hp2").val();
+      let address = $('#address1').val() + " " +$('#address2').val();
+      let buyer_postcode = $("#zipcode").val();
 
-      var formValues = $("form[name=orderForm]").serialize() ;
+      let formValues = $("form[name=orderForm]").serialize() ;
 
-      // 결제 API
       $.ajax({
         type: "POST",
         beforeSend : function(xhr) {
                       xhr.setRequestHeader(header, token);
         },
-        url: "/wck/checkout/orderConfirmation",
+        url: "/wck/checkout/orderConfirmation1",
         data : formValues,
         dataType : "text",
         success: function (result) {
-          console.log('컨트롤러 넘거가기 성공');
-          location.href = '/wck/checkout/orderConfirmation?oId='+result;
+
+          IMP.request_pay({
+            // param
+		        pg : pmMode,
+		        pay_method : "card",
+            m_redirect_url: 'http://'+privateIp+'/orderCompleteMobile',
+		        merchant_uid : pmCode,
+		        name : name,
+		        amount : 100,
+		        buyer_name : buyer_name,
+		        buyer_tel : phone,
+		        buyer_addr : address,
+		        buyer_postcode : buyer_postcode,
+            appScheme : 'myapp://action'
+          }, /* callback 함수 실행되지 않음 */ );
         },
         error: function (request) {
           console.log(request);
         }
       })
+    }
 
+    function kakaoOrder() {
+
+      let name = '[[${prods[0].pName}]]' + '외 [[${prods.size()-1}]]건';
+      let amount = $("#afterprice").val();
+      let buyer_name = '[[${mem.name}]]';
+      let pmCode = $("#pmCode").val();
+      let pmMode = $("#pmMode").val();
+      let phone = $("#hp0 option:selected").val() + '-' + $("#hp1").val() + '-' + $("#hp2").val();
+      let address = $('#address1').val() + " " +$('#address2').val();
+      let buyer_postcode = $("#zipcode").val();
+
+      IMP.request_pay({
+         // param
+		    pg : pmMode,
+		    pay_method : "card",
+		    merchant_uid : pmCode,
+		    name : name,
+		    amount : 100,
+		    buyer_name : buyer_name,
+		    buyer_tel : phone,
+		    buyer_addr : address,
+		    buyer_postcode : buyer_postcode,
+        appScheme : 'myapp://action'
+      }, function(rsp) { 
+        // callback
+			  if (rsp.success) {
+			  	// 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+			  	alert("결제 성공" + name);
+			  	// 결제번호(imp_uid)와 주문번호(merchant_uid)를 서버에 전달하는 로직
+
+          let formValues = $("form[name=orderForm]").serialize() ;
+
+          $.ajax({
+            type: "POST",
+            beforeSend : function(xhr) {
+                          xhr.setRequestHeader(header, token);
+            },
+            url: "/wck/checkout/orderConfirmation1",
+            data : formValues,
+            dataType : "text",
+            success: function (result) {
+              location.href = '/wck/checkout/orderConfirmation1?oId=' + result;
+            },
+            error: function (request) {
+              console.log(request);
+              layerAlert('알수 없는 이유로 주문에 실패하였습니다.');
+            }
+          })
+			  } else {
+			  	layerAlert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+			  }
+      });
     }
 
     function calculateDueAmount() {
@@ -331,11 +416,11 @@
     // }
 
     function uuidv4() { 
-    return 'xxxx-xxxx-4xxx-yxxx-xxxx'.replace(/[xy]/g, function(c) { 
-        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8); return v.toString(16); 
-    }); 
-} 
-console.log(uuidv4());
+      return 'xxxx-xxxx-4xxx-yxxx-xxxx'.replace(/[xy]/g, function(c) { 
+          var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8); 
+          return v.toString(16); 
+      }); 
+    } 
 
   </script>
 
@@ -852,14 +937,12 @@ console.log(uuidv4());
             <!-- tab_cont : 일반결제 s -->
             <div class="cont  on" id="general_pay">
               <div class="general_pay_wrap " style="overflow:hidden;">
-                <ul class="general_pay_list gpd_tab_w1">
-                  <li class="on"><a href="#none" class="gpd_a_credit" data-kind="credit"
-                      data-mode="html5_inicis" onclick="selectPMCompany(this)">신용카드</a></li>
-                </ul>
                 <ul class="general_pay_list gpd_tab_w3">
+                  <li class="on"><a href="#none" class="gpd_a_credit" data-kind="credit"
+                    data-mode="html5_inicis" onclick="selectPMCompany(this)">신용카드</a>
+                  </li>
                   <li><a href="#none" class="gpd_a_kakakopay" data-kind="kakakopay"
-                      data-mode="kakaopay" onclick="selectPMCompany(this)">카카오페이</a></li>
-                  <li><a href="#none" class="gpd_a_tosspay" data-kind="tosspay" data-mode="kakaopay" onclick="selectPMCompany(this)">토스</a>
+                      data-mode="kakaopay.TC0ONETIME" onclick="selectPMCompany(this)">카카오페이</a>
                   </li>
                 </ul>
               </div>
@@ -949,6 +1032,7 @@ console.log(uuidv4());
           <input type="hidden" id="customDueAmount" value="0" />
           <input type="hidden" name="pmCompany" id="pmCompany" value="credit" />
           <input type="hidden" name="pmCode" id="pmCode" value="" /> 
+          <input type="hidden" name="pmMode" id="pmMode" value="html5_inicis" /> 
           <input type="hidden" name="phone" id="phone" value="" /> 
         </div>
         <!-- ########## final price end ########## -->
@@ -1023,7 +1107,7 @@ console.log(uuidv4());
           </div>
           <ul class="btn_wrap btn_wrap_div1">
             <li class="pymt_call_pg">
-              <a href="#none" class="btnstl6 solid_btn_point" id="doOrderBtn" onclick="submitOrder()"><span><b>0</b>
+              <a href="#none" class="btnstl6 solid_btn_point" id="doOrderBtn" onclick="submitOrder();"><span><b>0</b>
                   원&nbsp;주문하기</span></a>
             </li>
           </ul>
@@ -1039,7 +1123,13 @@ console.log(uuidv4());
     </div>
   </div>
 
-  <div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv"
+</form>
+
+<div id="addr_layer" style="display:none;position:fixed;overflow:hidden;z-index:10;-webkit-overflow-scrolling:touch;">
+<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" alt="닫기 버튼">
+</div>
+
+<div class="divpop_wrap_dev pop_mbr pop_alert_confirm" id="popAlertConfirmDiv"
     style="left: 0px; position: fixed; top: 101px; z-index: 9999; opacity: 1; display: none;">
     <div class="dvp_container">
       <div class="dvp_close_btn b-close" id="confirmCloseDiv"><span>닫기</span></div>
@@ -1050,13 +1140,6 @@ console.log(uuidv4());
           class="btn btn_bg_b btn-alert-confirm"></button> </div>
     </div>
   </div>
-
-
-</form>
-
-<div id="addr_layer" style="display:none;position:fixed;overflow:hidden;z-index:10;-webkit-overflow-scrolling:touch;">
-<img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnCloseLayer" style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" alt="닫기 버튼">
-</div>
 </body>
 
 </html>

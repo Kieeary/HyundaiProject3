@@ -131,7 +131,7 @@ public class MypageController {
 	public String orderDetailForm(
 			@AuthenticationPrincipal Account account,
 			@PathVariable("oid") String oid, Model model) {
-		OrderVO order = orderService.getOrderInfo(account.getId(), oid);
+		OrderVO order = orderService.getOrderInfo(oid);
 		
 		model.addAttribute("order", order);
 		

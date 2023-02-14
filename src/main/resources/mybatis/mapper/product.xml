@@ -92,32 +92,6 @@
  		<result property="ColorName" column="COLORNAME" />
  	</resultMap>
  	
-<!-- 
-	<select id="getProducts" resultMap = "productsMap">
-        SELECT pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
-        pstock.psstock
-        from product_common pcom
-        INNER JOIN product_category pcat
-		ON pcom.pid = pcat.pid
-        INNER JOIN category c
-		<if test="gd != null">
-			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
-			<if test="sC!= null">
-				AND c.depth2name = #{sC}
-			</if>
-			<if test="tC!= null">
-				AND c.depth3name = #{tC}
-			</if>
-		</if>
-		INNER JOIN product_color pcolor
-		ON pcolor.pid = pcom.pid
-        INNER JOIN product_stock pstock
-        ON pstock.pcid = pcolor.pcid
-        group by pcom.pid, pcolor.pcid, pcom.pname, pcom.bname, pcom.pstatus, pcom.bno, pcolor.pcprice, pcolor.pccolorcode, pcolor.pcimg1, pcolor.pcchipimg,
-        pstock.psstock
-        
-	</select>
- -->
  
  	<select id="getProducts" resultMap = "productsMap">
  		SELECT sub.pid, sub.pcid, sub.pname, sub.bname, sub.pstatus, sub.bno, 
@@ -131,8 +105,12 @@
         INNER JOIN product_category pcat
 		ON pcom.pid = pcat.pid
         INNER JOIN category c
+        ON c.cateno = pcat.cateno
+        <if test="br != null">
+			AND pcom.bno = #{br}
+		</if>
 		<if test="gd != null">
-			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
+			 AND c.depth1name = #{gd}
 			<if test="sC!= null">
 				AND c.depth2name = #{sC}
 			</if>
@@ -195,12 +173,15 @@
 	</select>
 	
 	
+	<select id="getBrandImg" resultType = "string">
+		select bimg, bname
+        from brand b
+        inner join brand_img bi
+        on b.bno = bi.bno
+        and b.bno = #{br}
+	</select>
 	
 	
-	
-	
-	
-
 	<resultMap type="productInfo" id="productInfo">
 		<id property="pcid" column="PCID" />
 		<result property="bname" column="BNAME" />
@@ -273,24 +254,33 @@
 		ON pcolor.pid = sub.pid
 	
 	</select>
-	
-	<!-- 카테고리별 상품 갯수 조회 -->
-	<select id="getProductsCount" resultType="int">
-		SELECT COUNT(pcom.pid) as cnt
-		from product_common pcom
-		INNER JOIN product_category pcat
-		ON pcom.pid = pcat.pid
-		INNER JOIN category c
-		<if test="gd != null">
-			ON c.cateno = pcat.cateno and c.depth1name = #{gd}
-		<if test="sC!= null">
-			AND c.depth2name = #{sC}
-		</if>
-		<if test="tC!= null">
-			AND c.depth3name = #{tC}
-		</if>
-		</if>
-	</select>
+	 
+	 <select id="getProductsCount" resultType="int">
+	 	select count(distinct pcom.pid) from
+        product_common pcom inner join product_color pcolor 
+        on pcolor.pid = pcom.pid
+        inner join product_stock pstock
+        on pstock.pcid = pcolor.pcid
+        inner join product_category cp
+        on cp.pid = pcom.pid
+        inner join category c
+        on c.cateno = cp.cateno
+        <if test="gd != null">
+        	and c.depth1name = #{gd}
+        </if>
+        <if test="sC != null">
+        	and c.depth2name = #{sC}
+        </if>
+        <if	test="tC != null">
+        	and c.depth3name = #{tC}
+        </if>
+        inner join brand b
+        on b.bno = pcom.bno
+        <if test="br != null">
+        	and b.bno = #{br}
+        </if>
+	 
+	 </select>
 	
 	
 	<!-- 카테고리 정보 가져오기 -->
@@ -318,6 +308,31 @@
 		inner join category c on c.cateno = cn.cateno
 	</select>
 	
+	
+	<!-- 브랜드별 카테고리 가져오기 -->
+	
+	<resultMap type="brandCategory" id="brandCategory">
+		<id property="brandname" column="BNAME" />
+		<result property="brandcode" column="BNO" />
+		<collection property="firstCategory" resultMap="firstCategory"/>
+	</resultMap>
+	
+	<select id="getBrandCategory" resultMap="brandCategory">
+		select distinct b.bname, b.bno, cname.firstname, c.depth1name, cname.secondname, c.depth2name
+		from product_common pcom
+		inner join brand b
+		on b.bno = pcom.bno
+		inner join product_category pc
+		on pc.pid = pcom.pid
+		inner join category c
+		on c.cateno = pc.cateno
+		inner join category_name cname
+		on cname.cateno = pc.cateno
+		group by b.bname, b.bno, cname.firstname, c.depth1name, cname.secondname, c.depth2name
+		order by b.bname, b.bno, cname.firstname, c.depth1name, cname.secondname, c.depth2name
+	</select>
+	
+	
 	<select id="getColorChip" resultType="productColorChip">
 		select pcolor.pcchipimg, pcolor.pccolorcode, pcolor.pcid, pcolor.pid
 		from product_color pcolor
@@ -331,7 +346,15 @@
 		FROM category_name cn
 		INNER JOIN category c 
 		ON cn.cateno = c.cateno
-		WHERE c.depth1name = #{keyword}
+		<if test = "br != null">
+        INNER JOIN product_category pcat
+        ON pcat.cateno = c.cateno
+        INNER JOIN product_common pcom
+        ON pcom.pid = pcat.pid
+        INNER JOIN brand b
+        ON b.bno = pcom.bno AND b.bno = #{br}
+        </if>
+		WHERE c.depth1name = #{depth1name}
 		GROUP BY secondname, depth2name
 		ORDER BY secondname
 	</select>
@@ -341,11 +364,55 @@
 		FROM category_name cn
 		inner join category c 
 		on cn.cateno = c.cateno
-		where c.depth2name = #{keyword}
+		<if test = "br != null and depth2name != null">
+        INNER JOIN product_category pcat
+        ON pcat.cateno = c.cateno
+        INNER JOIN product_common pcom
+        ON pcom.pid = pcat.pid
+        INNER JOIN brand b
+        ON b.bno = pcom.bno AND b.bno = #{br}
+        </if>
+		where c.depth2name = #{depth2name}
 		group by detailname, depth3name
 		order by detailname
 	</select>
 	
+	<select id="getFirstCategory" resultType="firstCategory">
+		SELECT firstname, depth1name
+        FROM category_name cn
+		INNER JOIN category c 
+		ON cn.cateno = c.cateno
+        INNER JOIN product_category pcat
+        ON pcat.cateno = c.cateno
+        INNER JOIN product_common pcom
+        ON pcom.pid = pcat.pid
+        INNER JOIN brand b
+        ON b.bno = pcom.bno AND b.bno = #{br}
+		GROUP BY firstname, depth1name
+		ORDER BY firstname
+	</select>
+	
+	<select id="genderName" resultType="string">
+		select distinct cn.firstname
+        from category_name cn
+        inner join category c
+        on c.cateno = cn.cateno
+        and c.depth1name = #{depth1name}
+	</select>
+	
+	<select id="secondCategoryName" resultType="string">
+		select distinct cn.secondname
+        from category_name cn
+        inner join category c
+        on c.cateno = cn.cateno
+        and c.depth2name = #{depth2name}
+	</select>	
+	
+	<select id="brandName" resultType="string">
+		select bname
+        from brand b
+        where bno = #{bno}
+	</select>
 
 	<select id="existLikeProduct" resultType="boolean">
 		select count(*) from likes

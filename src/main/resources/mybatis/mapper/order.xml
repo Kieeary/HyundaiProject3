@@ -18,6 +18,7 @@
 		<result property="cpid" column="CPID"/>
 		<result property="pmCompany" column="PMCOMPANY"/>
 		<result property="ostatus" column="OSTATUS"/>
+		<result property="mid" column="MID"/>
 		
 		<result property="cpid" column="cpid"/>
 		<result property="eno" column="eno"/>
@@ -38,12 +39,12 @@
 	</resultMap>
 	
 	<select id="getOrderInfo" resultMap="orderMap">
-		SELECT o.OID, ODATE, ORECEIVER, OPHONE, OZIPCODE, OADDRESS1, OADDRESS2, OMEMO, OSTATUS,
+		SELECT o.OID, ODATE, ORECEIVER, OPHONE, OZIPCODE, OADDRESS1, OADDRESS2, OMEMO, OSTATUS, MID,
 				OBEFOREPRICE, OAFTERPRICE, CPID, OUSEDMILEAGE, SUBSTR(pm.PMCOMPANY, 1, INSTR(pm.PMCOMPANY, 'P') - 1) AS PMCOMPANY,
 				ps.PSID, oi.OICOUNT, ps.BNAME, ps.PNAME, ps.COLORNAME, ps.PIMG, ps.PSIZE, ps.PCPRICE 
 		FROM ORDERS o, PAYMENT_METHOD pm, ORDER_ITEM oi, V_PRODUCT_STOCK_INFO ps
 		WHERE o.PMCODE = pm.PMCODE AND o.OID = oi.OID AND ps.PSID = oi.PSID
-			AND o.OID = #{oId} AND MID = #{mId}
+			AND o.OID = #{oId}
 	</select>
 	
 	<select id="getOrderCount" resultType="int">
@@ -132,5 +133,28 @@
 		SET OSTATUS = '주문 취소'
 		WHERE OID = #{oId}
 	</update>
+	
+	<select id="getOrderInfoWithPMcode" resultMap="orderMap">
+		SELECT o.OID, ODATE, ORECEIVER, OPHONE, OZIPCODE, OADDRESS1, OADDRESS2, OMEMO, OSTATUS,
+				OBEFOREPRICE, OAFTERPRICE, CPID, OUSEDMILEAGE, SUBSTR(pm.PMCOMPANY, 1, INSTR(pm.PMCOMPANY, 'P') - 1) AS PMCOMPANY,
+				ps.PSID, oi.OICOUNT, ps.BNAME, ps.PNAME, ps.COLORNAME, ps.PIMG, ps.PSIZE, ps.PCPRICE 
+		FROM ORDERS o, PAYMENT_METHOD pm, ORDER_ITEM oi, V_PRODUCT_STOCK_INFO ps
+		WHERE o.PMCODE = pm.PMCODE AND o.OID = oi.OID AND ps.PSID = oi.PSID
+			AND pm.PMCODE = #{pmcode}
+	</select>
+	
+	<select id="getOId" resultType="string">
+		SELECT OID 
+		FROM ORDERS o, PAYMENT_METHOD pm 
+		WHERE o.PMCODE = pm.PMCODE AND pm.PMCODE = #{merchant_uid}
+	</select>
+	
+	<delete id="deleteFailOrder">
+		DELETE ORDERS WHERE "OID" = #{oid}
+	</delete>
+	
+	<delete id="deleteFailPaymentMethod	">
+		DELETE PAYMENT_METHOD WHERE PMCODE = #{merchant_uid}
+	</delete>
 
 </mapper> 

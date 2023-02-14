@@ -46,7 +46,7 @@ public class InsertOrderDTO {
 	private String status = "결제 완료";
 	private String tel;
 	private String email;
-	private String oId;
+	private String oid;
 
 	public OrderVO toOrderVO() {
 		OrderVO order = new OrderVO();
@@ -56,7 +56,7 @@ public class InsertOrderDTO {
         String date = simpleDateFormat.format(new Date());
         long unixTime = System.currentTimeMillis() / 1000;
         String oid = date + "P" + String.valueOf(unixTime);
-        this.oId = oid;
+        this.oid = oid;
         
         String memo = "";
         if(!gl_radio_dlvr_msg.equals("") & !frontDoorSelectMessage.equals("")) {

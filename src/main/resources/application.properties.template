@@ -41,3 +41,9 @@ spring.security.oauth2.client.registration.google.client-id=XXXXXXXXXXXXXXXXXXXX
 spring.security.oauth2.client.registration.google.client-secret=XXXXXXXXXXXXXXXXXXXXXXX
 spring.security.oauth2.client.registration.google.scope=email
 
+#iamport Key
+iamport.restapi.key=
+iamport.secret.key=
+
+# private IP
+private.ip=192.168.45.99

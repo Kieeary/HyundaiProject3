@@ -1,11 +1,14 @@
 package com.wck.service;
 
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.wck.domain.BrandCategoryVO;
 import com.wck.domain.ProductVO;
 import com.wck.domain.SecondCategoryVO;
 
@@ -61,6 +64,15 @@ public class ProductServiceTest {
 		
 		for(SecondCategoryVO s : a) {
 			log.info(s.getSecondname());
+		}
+	}
+	
+	@Test
+	void getBrandCategory() {
+		List<BrandCategoryVO> a = productService.getBrandCategory();
+		
+		for(BrandCategoryVO s : a) {
+			log.info(s.getBrandname() + ", " + s.getBrandcode());
 		}
 	}
 	

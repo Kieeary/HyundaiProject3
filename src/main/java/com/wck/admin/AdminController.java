@@ -30,6 +30,10 @@ public class AdminController {
 	private final AdminService adminService;
 	private final ResourceMapper resourceMapper;
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 회원 조회 페이지
+	 */
 	@GetMapping("/user")
 	public String user(Model model) {
 		List<MemberVO> members = adminService.getMemberList();
@@ -37,6 +41,11 @@ public class AdminController {
 		model.addAttribute("members", members);
 		return "admin/user";
 	}
+	
+	/*
+	 * author : 왕종휘
+	 * purpose : 상품 조회 페이지
+	 */
 	@GetMapping("/product")
 	public String product(
 			@RequestParam(value = "currentPage", defaultValue = "1") int currentPage,
@@ -58,10 +67,20 @@ public class AdminController {
 		
 		return "admin/product";
 	}
+	
+	/*
+	 * author : 왕종휘
+	 * purpose : 주문 조회 페이지
+	 */
 	@GetMapping("/order")
 	public String order() {
 		return "admin/order";
 	}
+	
+	/*
+	 * author : 왕종휘
+	 * purpose : 이벤트 조회 페이지
+	 */
 	@GetMapping("/event")
 	public String event(Model model) {
 		
@@ -70,6 +89,11 @@ public class AdminController {
 		
 		return "admin/event";
 	}
+	
+	/*
+	 * author : 왕종휘
+	 * purpose : 리소스 조회 페이지
+	 */
 	@GetMapping("/security")
 	public String access(Model model) {
 		List<Resources> list = resourceMapper.findAllResources();

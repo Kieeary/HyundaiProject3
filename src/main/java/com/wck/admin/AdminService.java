@@ -24,23 +24,43 @@ public class AdminService {
 	@Autowired
 	private UrlFilterInvocationSecurityMetadataSource securityMetadataSource;
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 회원 조회 수행
+	 */
 	List<MemberVO> getMemberList(){
 		return mapper.getMemberList();
 	}
 
+	/*
+	 * author : 왕종휘
+	 * purpose : 회원 수정 수행
+	 */
 	public void updateMember(String id, Integer grade, Boolean enabled, String role) {
 		int row = mapper.updateMember(id, grade, enabled, role);
 		if(row == 0) throw new RuntimeException("updateMember Error");
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 대분류 상품 조회 페이지
+	 */
 	public List<ProductCommonVO> getProductCommonList(Criteria cri){
 		return mapper.getProductCommonList(cri);
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 대분류 상품 건수 조회
+	 */
 	public int getProductCommonCount() {
 		return mapper.getProductCommonCount();
 	}
 
+	/*
+	 * author : 왕종휘
+	 * purpose : 대분류 상품 수정 수행
+	 */
 	public void updateProductCommon(String id, String name, String note, Boolean status, String bno) {
 		int row = mapper.updateProductCommon(id,name,note,status,bno);
 		if(row == 0) throw new RuntimeException("updateProductCommon Error");

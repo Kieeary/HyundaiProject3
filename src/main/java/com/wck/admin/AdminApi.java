@@ -28,6 +28,10 @@ public class AdminApi {
 	
 	private final AdminService service;
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 회원 업데이트 수행
+	 */
 	@PostMapping("/member/update")
 	public ResponseEntity<String> updateUser(
 			@RequestBody Map<String, Object> map){
@@ -43,6 +47,10 @@ public class AdminApi {
 		
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 상품 업데이터 수행
+	 */
 	@PostMapping("/productcommon/update")
 	public ResponseEntity<String> updateProductCommon(
 			@RequestBody Map<String, Object> map
@@ -63,6 +71,10 @@ public class AdminApi {
 		return new ResponseEntity<>("["+id+"] product update success", HttpStatus.OK);
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 상품 대분류 조회
+	 */
 	@GetMapping("/productcommon/{pid}")
 	public ResponseEntity<List<ProductColorVO>> getProductColorList(
 			@PathVariable("pid") String pid){
@@ -72,6 +84,10 @@ public class AdminApi {
 		return new ResponseEntity<List<ProductColorVO>>(list,HttpStatus.OK);
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 상품 중분류 조회
+	 */
 	@GetMapping("/productcolor/{pcid}")
 	public ResponseEntity<List<ProductStockVO>> getProductStockList(
 			@PathVariable("pcid") String pcid){
@@ -81,6 +97,10 @@ public class AdminApi {
 		return new ResponseEntity<List<ProductStockVO>>(list,HttpStatus.OK);
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 리소스 업데이트
+	 */
 	@PostMapping("/security/update")
 	public ResponseEntity<String> updateResource(
 			@RequestBody Map<String, Object> map){
@@ -95,6 +115,10 @@ public class AdminApi {
 		return new ResponseEntity<String>("update success", HttpStatus.OK);
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose :리소스 추가
+	 */
 	@PostMapping("/security/insert")
 	public ResponseEntity<String> insertResource(
 			@RequestBody Map<String, Object> map){
@@ -108,6 +132,10 @@ public class AdminApi {
 		return new ResponseEntity<String>("insert success", HttpStatus.OK);
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 회원 업데이트 삭제
+	 */
 	@PostMapping("/security/delete")
 	public ResponseEntity<String> deleteResource(
 			@RequestBody Map<String, Object> map){
@@ -118,6 +146,10 @@ public class AdminApi {
 		return new ResponseEntity<String>("delete success", HttpStatus.OK);
 	}
 	
+	/*
+	 * author : 왕종휘
+	 * purpose : 이벤트 수정
+	 */
 	@PostMapping("/event/update")
 	public ResponseEntity<String> updateEvent(
 			@RequestBody Map<String, Object> map){
